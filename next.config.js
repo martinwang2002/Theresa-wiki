@@ -1,4 +1,8 @@
 module.exports = {
+  images: {
+    domains: ["s3-torappu.martinwang2002.com"],
+  },
+  poweredByHeader: false,
   async rewrites () {
     return [
       {

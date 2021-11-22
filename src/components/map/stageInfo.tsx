@@ -11,52 +11,56 @@ class StageInfo extends React.PureComponent<StageInfoProps> {
     const { stageInfo, stageJsonOptions } = this.props
     // delete stageInfo.stageDropInfo
     // delete stageInfo.unlockCondition
-
+    /* eslint-disable react/jsx-max-depth */
     return (
       <table>
-        <tr>
-          <th>
-            Key
-          </th>
+        <thead>
+          <tr>
+            <th>
+              Key
+            </th>
 
-          <th>
-            Value
-          </th>
-        </tr>
+            <th>
+              Value
+            </th>
+          </tr>
+        </thead>
 
-        {Object.entries(stageInfo).map(
-          (entry: Readonly<string[]>) => {
-            const [key, value] = entry
-            return (
-              <tr key={key}>
-                <td>
-                  {key}
-                </td>
+        <tbody>
+          {Object.entries(stageInfo).map(
+            (entry: Readonly<string[]>) => {
+              const [key, value] = entry
+              return (
+                <tr key={key}>
+                  <td>
+                    {key}
+                  </td>
 
-                <td>
-                  {String(value)}
-                </td>
-              </tr>
-            )
-          }
-        )}
+                  <td>
+                    {String(value)}
+                  </td>
+                </tr>
+              )
+            }
+          )}
 
-        {stageJsonOptions != null && Object.entries(stageJsonOptions).map(
-          (entry: Readonly<string[]>) => {
-            const [key, value] = entry
-            return (
-              <tr key={key}>
-                <td>
-                  {key}
-                </td>
+          {stageJsonOptions != null && Object.entries(stageJsonOptions).map(
+            (entry: Readonly<string[]>) => {
+              const [key, value] = entry
+              return (
+                <tr key={key}>
+                  <td>
+                    {key}
+                  </td>
 
-                <td>
-                  {String(value)}
-                </td>
-              </tr>
-            )
-          }
-        )}
+                  <td>
+                    {String(value)}
+                  </td>
+                </tr>
+              )
+            }
+          )}
+        </tbody>
       </table>
     )
   }

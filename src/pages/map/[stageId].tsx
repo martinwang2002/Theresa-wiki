@@ -6,19 +6,18 @@ import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next
 import { stagesArray, getStageInfo } from "@/models/stages"
 
 import StageInfo from "@/components/map/stageInfo"
+import LoadingPic from "@/components/map/loadingPic"
 
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
   stageInfo: Record<string, string>
-  stageJson: {
-    options: Record<string, string>
-  }
+  stageJson: IStageJson
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const stageIds = await stagesArray()
-  const numPreRender = -50
+  const numPreRender = -5
   const paths = stageIds.slice(numPreRender).map((stageId) => ({
     params: {
       server: "CN",
@@ -34,7 +33,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 interface IStageJson {
   [key: string]: unknown
+  options: Record<string, string>
   levelId: string
+  loadingPicId: string
 }
 
 export const getStaticProps: GetStaticProps = async (context: Readonly<GetStaticPropsContext>) => {
@@ -85,6 +86,8 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageId, stageInfo, stageJson } = this.props
+    const { loadingPicId } = stageInfo
+
     // const router = this.props.router
     // // const { server} = router.query
     // const { server, mapid} = router.query
@@ -108,34 +111,23 @@ class Map extends React.PureComponent<MapProps> {
     return (
       <div className="container">
         <Head>
+          <meta charSet="utf-8" />
+
           <title>
-            {stageId}
+            {`${stageInfo.code} ${stageInfo.name} ${server}`}
           </title>
 
-          <link
-            href="/favicon.ico"
-            rel="icon"
-          />
         </Head>
 
         <main>
 
           <h1 className="title">
-
-            {server}
-
-            {" "}
-
-            {stageId}
+            {`${stageInfo.code} ${stageInfo.name} ${server}`}
           </h1>
 
-          <div>
-            {/* {Object.entries(this.props.stageJson.options).map(
-            ([key, value]) => {
-              return value
-            }
-          )} */}
-          </div>
+          {stageId}
+
+          <LoadingPic loadingPicId={loadingPicId} />
 
           <StageInfo
             stageInfo={stageInfo}

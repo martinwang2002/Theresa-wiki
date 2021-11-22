@@ -11,7 +11,7 @@ interface IStageInfo {
 }
 
 const fetchStageTable = async (): Promise<IStageTable> => {
-  const url = "https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/gamedata/excel/stage_table.json"
+  const url = "https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json"
   const stageTableRes = await fetch(url)
   const stageTableJson = await stageTableRes.json() as IStageTable
   return stageTableJson
