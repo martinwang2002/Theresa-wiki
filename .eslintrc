@@ -6,7 +6,8 @@
     },
     "extends": [
         "plugin:@typescript-eslint/all",
-        "plugin:react/all",
+        "plugin:react/recommended",
+        "plugin:@next/next/recommended",
         "standard"
     ],
     "overrides": [
@@ -87,7 +88,8 @@
             "error",
             2
         ],
-        "react/jsx-no-literals": "off"
+        "react/jsx-no-literals": "off",
+        "@typescript-eslint/member-ordering": "off"
     },
     "settings": {
         "react": {

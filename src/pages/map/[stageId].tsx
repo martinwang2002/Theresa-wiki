@@ -1,12 +1,15 @@
 import React from "react"
 import Head from "next/head"
+import dynamic from "next/dynamic"
 
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 // import type { ParsedUrlQuery } from "querystring"
 import { stagesArray, getStageInfo } from "@/models/stages"
 
 import StageInfo from "@/components/map/stageInfo"
-import LoadingPic from "@/components/map/loadingPic"
+// import LoadingPic from "@/components/map/loadingPic"
+import type { IMapData } from "@/components/map/mapScene"
+import LoadingPict from "@/components/map/loadingPic"
 
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
@@ -36,6 +39,7 @@ interface IStageJson {
   options: Record<string, string>
   levelId: string
   loadingPicId: string
+  mapData: IMapData
 }
 
 export const getStaticProps: GetStaticProps = async (context: Readonly<GetStaticPropsContext>) => {
@@ -67,7 +71,9 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
 
   let stageJson
   if (levelId != null) {
-    const stageRes = await fetch(`https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/gamedata/levels/${String(levelId).toLowerCase()}.json`)
+    const stageUrl = `https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
+    console.log(stageUrl)
+    const stageRes = await fetch(stageUrl)
     stageJson = await stageRes.json() as IStageJson
   } else {
     stageJson = {}
@@ -87,7 +93,13 @@ class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageId, stageInfo, stageJson } = this.props
     const { loadingPicId } = stageInfo
-
+    const { mapData } = stageJson
+    console.log(stageJson)
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const CsrMapScene = dynamic(async () => import("@/components/map/mapScene"), {
+      ssr: false,
+      loading: () => <LoadingPict loadingPicId={loadingPicId}></LoadingPict>
+    })
     // const router = this.props.router
     // // const { server} = router.query
     // const { server, mapid} = router.query
@@ -127,8 +139,24 @@ class Map extends React.PureComponent<MapProps> {
 
           {stageId}
 
-          <LoadingPic loadingPicId={loadingPicId} />
-
+          <span style={{
+            width: 100,
+            height: 100,
+            backgroundImage: "linear-graident(45deg,red,green)",
+            transform: "rotateX(30deg) translateZ(20px)"
+          }}/>
+          <div
+            style={{
+              aspectRatio: "16/9",
+              display: "block",
+              width: "100%",
+              overflow: "hidden",
+              position: "relative"
+            }}
+          >
+            <CsrMapScene mapData={mapData} />
+            {/* <CsrMapScene mapData={mapData} /> */}
+          </div>
           <StageInfo
             stageInfo={stageInfo}
             stageJsonOptions={stageJson.options}

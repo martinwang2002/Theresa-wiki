@@ -1,9 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
+import React from "react"
 
 import { useRouter } from "next/router"
 
 import Head from "next/head"
-import React from "react"
+import Link from "next/link"
 
 export default function home (): React.ReactNode {
   const router = useRouter()
@@ -41,7 +42,7 @@ export default function home (): React.ReactNode {
 
           {server}
         </p>
-
+        <Link href="/map/main_00-10">test</Link>
       </main>
 
       <style jsx>
