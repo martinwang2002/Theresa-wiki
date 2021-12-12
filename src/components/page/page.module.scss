@@ -1,0 +1,41 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/utilities";
+
+.container-lg {
+    width: auto;
+}
+
+.navbar_theresa {
+    background-image:linear-gradient(to right, #4da9f5 , #afdbff); 
+    box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+    @extend .navbar;
+}
+
+// TODO: CDN support; glyphhanger
+@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=ZCOOL+QingKe+HuangYou&display=swap");
+
+.theresa_title_clickable {
+    cursor: pointer;
+    height: 2rem;
+}
+
+.theresa {
+    margin: 0;
+    margin-left: 0.75rem;
+    margin-top: 0.33rem;
+    font-size: 2rem;
+    font-family: "Corinthia", cursive;
+}
+
+.theresa_cn {
+    margin: 0;
+    margin-top: 0.33rem;
+    font-size: 1.5rem;
+    font-family: "ZCOOL QingKe HuangYou", cursive;
+}
