@@ -6,7 +6,7 @@
     },
     "extends": [
         "plugin:@typescript-eslint/all",
-        "plugin:react/recommended",
+        "plugin:react/all",
         "plugin:@next/next/recommended",
         "standard"
     ],
@@ -89,7 +89,10 @@
             2
         ],
         "react/jsx-no-literals": "off",
-        "@typescript-eslint/member-ordering": "off"
+        "react/no-set-state": "off",
+        "@typescript-eslint/member-ordering": "off",
+        "react/jsx-no-bind": "off",
+        "@typescript-eslint/unbound-method": "off"
     },
     "settings": {
         "react": {
