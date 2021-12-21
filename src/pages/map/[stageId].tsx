@@ -120,7 +120,6 @@ class Map extends React.PureComponent<MapProps> {
     return (
       <Page>
         <Head>
-          <meta charSet="utf-8" />
 
           <title>
             {`${stageInfo.code} ${stageInfo.name} ${server}`}
