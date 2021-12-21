@@ -55,6 +55,7 @@
     opacity: 0.25;
     transition: "opacity 2s linear";
     user-select: "none";
+    cursor: wait;
     & a {
         cursor: wait;
     }

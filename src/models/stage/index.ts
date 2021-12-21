@@ -3,11 +3,35 @@ import redisClient from "@/configurations/redis"
 interface IStageTable {
   [key: string]: unknown
   stages: Record<string, IStageInfo>
+  tileInfo: Record<string, ITileInfo>
 }
 
 interface IStageInfo {
   [key: string]: unknown
   stageType: string
+}
+
+interface ITileInfo {
+  tileKey: string
+  name: string
+  description: string
+  isFunctional: boolean
+}
+
+interface IMapDataTiles {
+  blackboard: unknown
+  buildableType: unknown
+  effects: unknown
+  heightType: unknown
+  passableMask: unknown
+  tileKey: string
+}
+
+interface IMapData {
+  height: number
+  map: [number[]]
+  tiles: [IMapDataTiles]
+  width: number
 }
 
 const fetchStageTable = async (): Promise<IStageTable> => {
@@ -52,3 +76,20 @@ export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
   const { stages } = await stageTable()
   return stages[convertedStageId]
 }
+
+export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
+  const { tileInfo: _tileInfo } = await stageTable()
+  const tileEmptyExtra = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    tile_empty: {
+      tileKey: "tile_empty",
+      name: "空",
+      description: "不可放置单位，不可通行",
+      isFunctional: false
+    }
+  }
+
+  return { ..._tileInfo, ...tileEmptyExtra }
+}
+
+export type { IMapData, ITileInfo, IMapDataTiles }

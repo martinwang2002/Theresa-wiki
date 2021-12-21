@@ -1,0 +1,14 @@
+.map_scene_container {
+    aspect-ratio: 16/9;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.map_scene_tiles {
+    margin: auto auto;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    width: min(95%, 95% * 9/16 * var(--map-scene-tiles-width) / var(--map-scene-tiles-height));
+}

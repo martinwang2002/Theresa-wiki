@@ -10,6 +10,9 @@
         "plugin:@next/next/recommended",
         "standard"
     ],
+    "globals": {
+        "JSX": "readonly"
+    },
     "overrides": [
         {
             "files": [
@@ -92,7 +95,9 @@
         "react/no-set-state": "off",
         "@typescript-eslint/member-ordering": "off",
         "react/jsx-no-bind": "off",
-        "@typescript-eslint/unbound-method": "off"
+        "@typescript-eslint/unbound-method": "off",
+        "no-extra-parens": "off",
+        "@typescript-eslint/no-extra-parens": "off"
     },
     "settings": {
         "react": {

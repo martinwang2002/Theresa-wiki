@@ -1,21 +1,22 @@
 import React from "react"
 import Head from "next/head"
-import dynamic from "next/dynamic"
-
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
-// import type { ParsedUrlQuery } from "querystring"
-import { stagesArray, getStageInfo } from "@/models/stages"
 
+import { stagesArray, getStageInfo, tileInfo as getTileInfo } from "@/models/stage"
+import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo"
-// import LoadingPic from "@/components/map/loadingPic"
-import type { IMapData } from "@/components/map/mapScene"
-import LoadingPict from "@/components/map/loadingPic"
+import MapScene from "@/components/map/scene/index"
+import type { ITileInfo, IMapData } from "@/models/stage"
+import { TileInfoContext } from "@/models/stage/context"
+
+import style from "./[stageId].module.scss"
 
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
   stageInfo: Record<string, string>
   stageJson: IStageJson
+  tileInfo: Record<string, ITileInfo>
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -69,10 +70,11 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
   // const stageJson = await stageRes.json()
   const { levelId } = stageInfo
 
+  const tileInfo = await getTileInfo()
+
   let stageJson
   if (levelId != null) {
     const stageUrl = `https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
-    console.log(stageUrl)
     const stageRes = await fetch(stageUrl)
     stageJson = await stageRes.json() as IStageJson
   } else {
@@ -83,7 +85,8 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
       server: "CN",
       stageId: stageId,
       stageInfo: stageInfo,
-      stageJson: stageJson
+      stageJson: stageJson,
+      tileInfo: tileInfo
     },
     revalidate: 3600
   }
@@ -91,15 +94,9 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { server, stageId, stageInfo, stageJson } = this.props
-    const { loadingPicId } = stageInfo
+    const { server, stageInfo, stageJson, tileInfo } = this.props
     const { mapData } = stageJson
-    console.log(stageJson)
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const CsrMapScene = dynamic(async () => import("@/components/map/mapScene"), {
-      ssr: false,
-      loading: () => <LoadingPict loadingPicId={loadingPicId}></LoadingPict>
-    })
+
     // const router = this.props.router
     // // const { server} = router.query
     // const { server, mapid} = router.query
@@ -121,7 +118,7 @@ class Map extends React.PureComponent<MapProps> {
     // }
 
     return (
-      <div className="container">
+      <Page>
         <Head>
           <meta charSet="utf-8" />
 
@@ -131,40 +128,26 @@ class Map extends React.PureComponent<MapProps> {
 
         </Head>
 
-        <main>
+        <h1 className={style.h1_title}>
+          {`${stageInfo.code} ${stageInfo.name}`}
 
-          <h1 className="title">
-            {`${stageInfo.code} ${stageInfo.name} ${server}`}
-          </h1>
+          <span className={style.h1_title_badge}>
+            {server}
+          </span>
+        </h1>
 
-          {stageId}
-
-          <span style={{
-            width: 100,
-            height: 100,
-            backgroundImage: "linear-graident(45deg,red,green)",
-            transform: "rotateX(30deg) translateZ(20px)"
-          }}/>
-          <div
-            style={{
-              aspectRatio: "16/9",
-              display: "block",
-              width: "100%",
-              overflow: "hidden",
-              position: "relative"
-            }}
-          >
-            <CsrMapScene mapData={mapData} />
-            {/* <CsrMapScene mapData={mapData} /> */}
-          </div>
-          <StageInfo
-            stageInfo={stageInfo}
-            stageJsonOptions={stageJson.options}
+        <TileInfoContext.Provider value={tileInfo}>
+          <MapScene
+            mapData={mapData}
           />
+        </TileInfoContext.Provider>
 
-        </main>
+        <StageInfo
+          stageInfo={stageInfo}
+          stageJsonOptions={stageJson.options}
+        />
 
-      </div>
+      </Page>
     )
   }
 }
