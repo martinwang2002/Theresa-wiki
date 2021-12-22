@@ -13,25 +13,42 @@ interface ITileProps {
 class Tile extends React.PureComponent<ITileProps> {
   public render (): React.ReactNode {
     const { tile } = this.props
-    const colorMap = new Map([
-      ["tile_empty", "#fafafa"],
-      ["tile_wall", "#bcbcbc"],
-      ["tile_forbidden", "#f5f5f5"],
-      ["tile_road", "#e0e0e0"],
-      ["tile_start", "#ff616f"],
-      ["tile_flystart", "pink"],
-      ["tile_end", "#29b6f6"]
-    ])
+    // /* eslint-disable @typescript-eslint/naming-convention */
+    // const colorMap: Record<string, React.CSSProperties> = {
+    //   tile_empty: {
+    //     backgroundColor: "#fafafa"
+    //   },
+    //   tile_wall: {
+    //     backgroundColor: "#bcbcbc"
+    //   },
+    //   tile_forbidden: {
+    //     backgroundColor: "#f5f5f5"
+    //   },
+    //   tile_road: {
+    //     backgroundColor: "#e0e0e0"
+    //   },
+    //   tile_start: {
+    //     backgroundColor: "#ff616f"
+    //   },
+    //   tile_flystart: {
+    //     // backgroundColor: "pink"
+    //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    //   },
+    //   tile_end: {
+    //     // backgroundColor: "#29b6f6"
+    //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    //     backgroundImage: tileStartEnd
+    //   }
+    // }
+    // /* eslint-enable @typescript-eslint/naming-convention */
+
     return (
       <span
         className={style.tile}
-        // TODO tile style
-        style={{
-          backgroundColor: colorMap.get(tile.tileKey)
-        }}
       >
         <TileInfoContext.Consumer>
           {(tileInfo: Readonly<Record<string, ITileInfo>>): JSX.Element => {
+            console.log(tileInfo)
             const content: JSX.Element = (
               <div>
                 <h3 style={{ margin: 0 }}>
@@ -49,7 +66,7 @@ class Tile extends React.PureComponent<ITileProps> {
                 delay={TooltipDelay.medium}
                 directionalHint={DirectionalHint.topCenter}
               >
-                <div style={{ width: "100%", height: "100%" }} />
+                <div className={style[tile.tileKey]} />
               </TooltipHost>
             )
           }}
