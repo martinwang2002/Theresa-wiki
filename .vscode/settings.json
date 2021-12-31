@@ -1,0 +1,30 @@
+{
+    //editor
+    "editor.codeActionsOnSave": {
+        "source.fixAll.stylelint": true,
+        "source.fixAll.eslint": true
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    // languages
+    "[scss]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "css.validate": true,
+    "scss.validate": true,
+    // extensions
+    "npm.packageManager": "yarn",
+    "eslint.packageManager": "yarn",
+    "stylelint.validate": [
+        "css",
+        "scss"
+    ],
+    "stylelint.packageManager": "yarn",
+    "stylelint.enable": true,
+}
