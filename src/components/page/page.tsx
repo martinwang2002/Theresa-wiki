@@ -4,7 +4,7 @@ import { withRouter } from "next/router"
 import Head from "next/head"
 
 import Header from "./header"
-
+import Footer from "./footer"
 import style from "./page.module.scss"
 
 interface PageProps{
@@ -139,6 +139,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
         <main className={!indeterminate ? style.main_container : style.main_container_fadeout}>
           {children}
         </main>
+
+        <Footer />
       </>
 
     )

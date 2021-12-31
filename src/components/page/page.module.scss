@@ -80,3 +80,34 @@
     background-color: #ff8f00;
     transition: "width 1.2s ease";
 }
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 8rem;
+    background-color: #18191a;
+    text-align: center;
+}
+
+.footer_links {
+    display: flex;
+    flex-direction: column;
+    margin: auto auto;
+    a {
+        margin: 0.2em auto;
+        color: #d2dbd9;
+        text-decoration: none;
+        transition: color 500ms ease;
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+.version {
+    margin: 0.5em auto;
+    color: #d2dbd9;
+    font-size: xx-small;
+    font-family: "Roboto Mono", monospace;
+    text-transform: uppercase;
+}

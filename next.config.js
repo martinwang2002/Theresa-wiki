@@ -1,3 +1,13 @@
+let commitHash
+
+try {
+  commitHash = require('child_process')
+    .execSync('git rev-parse --short HEAD')
+    .toString().trim() || 'unknown'
+} catch (e) {
+  commitHash = 'unknown'
+}
+
 module.exports = {
   images: {
     domains: ["s3-torappu.martinwang2002.com"],
@@ -17,5 +27,9 @@ module.exports = {
       loader: "raw-loader",
     });
     return config;
-  }
+  },
+  publicRuntimeConfig: {
+    THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
+    GIT_COMMIT: commitHash,
+  },
 }
