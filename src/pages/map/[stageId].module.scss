@@ -1,20 +1,19 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/badge";
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-
-.h1_title {
-    font-family: "Roboto Mono", monospace;
-    margin: 0.5em 0em;
+.h1-title {
+  margin: 0.5em 0;
+  font-family: "Roboto Mono", monospace;
 }
 
-.h1_title_badge {
-    @extend .badge;
-    vertical-align: super;
-    font-size: 0.35em;
-    margin-left: 1em;
-    padding: 0.35em 0.45em;
-    background-color: #ff8f00;
+.h1-title-badge {
+  display: inline-block;
+  vertical-align: super;
+  margin-left: 1em;
+  padding: 0.35em 0.45em;
+  border-radius: 0.25rem;
+  background-color: #ff8f00;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.35em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
 }

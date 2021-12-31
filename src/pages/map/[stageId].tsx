@@ -127,10 +127,10 @@ class Map extends React.PureComponent<MapProps> {
 
         </Head>
 
-        <h1 className={style.h1_title}>
+        <h1 className={style["h1-title"]}>
           {`${stageInfo.code} ${stageInfo.name}`}
 
-          <span className={style.h1_title_badge}>
+          <span className={style["h1-title-badge"]}>
             {server}
           </span>
         </h1>
