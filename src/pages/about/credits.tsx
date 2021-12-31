@@ -4,7 +4,7 @@ import { TextField, Shimmer, ShimmerElementsGroup, ShimmerElementType } from "@f
 import type { IShimmerElement } from "@fluentui/react"
 
 import Page from "@/components/page/page"
-import style from "./about.module.scss"
+import style from "./index.module.scss"
 
 interface ICreditsState {
   openSourceLicenses: string

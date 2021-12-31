@@ -10,5 +10,12 @@ module.exports = {
         destination: '/:path*?server=:server'
       }
     ]
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.module.rules.push({
+      test: /\.md$/i,
+      loader: "raw-loader",
+    });
+    return config;
   }
 }
