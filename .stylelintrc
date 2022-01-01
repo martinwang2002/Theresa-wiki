@@ -6,6 +6,7 @@
         "stylelint-order"
     ],
     "rules": {
+        "indentation": 2,
         "order/order": [
             [
                 "dollar-variables",

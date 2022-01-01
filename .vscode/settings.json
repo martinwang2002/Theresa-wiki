@@ -6,6 +6,9 @@
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    "files.associations": {
+        "*.stylintrc": "jsonc"
+    },
     // languages
     "[scss]": {
         "editor.defaultFormatter": "stylelint.vscode-stylelint"
