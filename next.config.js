@@ -13,6 +13,7 @@ module.exports = {
     domains: ["s3-torappu.martinwang2002.com"],
   },
   poweredByHeader: false,
+  reactStrictMode: true,
   async rewrites () {
     return [
       {

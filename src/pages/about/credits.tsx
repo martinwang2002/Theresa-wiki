@@ -1,15 +1,14 @@
 import React from "react"
 import Head from "next/head"
-import { TextField, Shimmer, ShimmerElementsGroup, ShimmerElementType } from "@fluentui/react"
-import type { IShimmerElement } from "@fluentui/react"
+import Skeleton from "@mui/material/Skeleton"
 
 import Page from "@/components/page/page"
+import style from "./credits.module.scss"
 
 interface ICreditsState {
   openSourceLicenses: string
   openSourceLicensesLoaded: boolean
   openSourceLicensesLoadingError: boolean
-  shimmerElements: IShimmerElement[]
 }
 
 const contentsLicenses = `\
@@ -31,26 +30,11 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
     this.state = {
       openSourceLicenses: "",
       openSourceLicensesLoaded: false,
-      openSourceLicensesLoadingError: false,
-      shimmerElements: []
-
+      openSourceLicensesLoadingError: false
     }
   }
 
   public async componentDidMount (): Promise<void> {
-    const shimmerLength = 10
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({
-      shimmerElements: Array(shimmerLength).fill(undefined).map(() => {
-        const oneHundred = 100
-        const randomWidthPercentage = Math.round(Math.random() * oneHundred)
-        return [
-          { type: ShimmerElementType.line, width: `${randomWidthPercentage}%`, height: 14 },
-          { type: ShimmerElementType.gap, width: `${oneHundred - randomWidthPercentage}%`, height: 14 },
-          { type: ShimmerElementType.gap, width: "100%", height: 10 }
-        ]
-      }).flat()
-    })
     const response = await fetch("/LICENSES.txt")
     const openSourceLicenses = await response.text()
     // eslint-disable-next-line react/no-did-mount-set-state
@@ -62,41 +46,41 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
   }
 
   public render (): React.ReactNode {
-    const { openSourceLicenses, openSourceLicensesLoaded, openSourceLicensesLoadingError, shimmerElements } = this.state
+    const { openSourceLicenses, openSourceLicensesLoaded, openSourceLicensesLoadingError } = this.state
 
     const openSourceLicensesErrorPrompt: JSX.Element = (
       <p>
         Error in loading licenses
       </p>
     )
+
     const openSourceLicensesTextField: JSX.Element = (
-      <TextField
-        label="开源许可列表"
-        multiline
-        readOnly
-        rows={30}
-        value={openSourceLicenses}
-      />
-    )
-    const getCustomElements = (): JSX.Element => {
-      return (
-        <div>
-          <ShimmerElementsGroup
-            flexWrap
-            shimmerElements={[
-              { type: ShimmerElementType.gap, width: "100%", height: 5 },
-              { type: ShimmerElementType.line, width: "6em", height: 14 },
-              { type: ShimmerElementType.gap, width: "calc(100% - 6em)", height: 14 },
-              { type: ShimmerElementType.gap, width: "100%", height: 10 },
-              ...shimmerElements
-            ]}
-            width="100%"
-          />
+      <>
+        <h3>
+          开源许可列表
+        </h3>
+
+        <div className={style.license}>
+          {openSourceLicenses}
         </div>
+      </>
+    )
+
+    const skeleton = (): JSX.Element => {
+      return (
+        <>
+          <Skeleton
+            variant="text"
+            width="6em"
+          />
+
+          <Skeleton variant="text" />
+
+          <Skeleton variant="text" />
+        </>
       )
     }
     return (
-
       <Page>
         <Head>
 
@@ -107,23 +91,17 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
         </Head>
 
         <div>
-          <TextField
-            autoAdjustHeight
-            label="网站内容声明"
-            multiline
-            readOnly
-            value={contentsLicenses}
-          />
+          <h3>
+            网站内容声明
+          </h3>
 
-          <Shimmer
-            customElementsGroup={getCustomElements()}
-            isDataLoaded={openSourceLicensesLoaded}
-            width="300"
-          >
-            {openSourceLicensesLoadingError
-              ? openSourceLicensesErrorPrompt
-              : openSourceLicensesTextField}
-          </Shimmer>
+          <div className={style.license}>
+            {contentsLicenses}
+          </div>
+
+          {openSourceLicensesLoaded
+            ? (openSourceLicensesLoadingError ? openSourceLicensesErrorPrompt : openSourceLicensesTextField)
+            : skeleton}
 
         </div>
 
