@@ -4,7 +4,6 @@ import { TextField, Shimmer, ShimmerElementsGroup, ShimmerElementType } from "@f
 import type { IShimmerElement } from "@fluentui/react"
 
 import Page from "@/components/page/page"
-import style from "./index.module.scss"
 
 interface ICreditsState {
   openSourceLicenses: string
@@ -102,12 +101,12 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
         <Head>
 
           <title>
-            内容来源 Theresa.wiki
+            内容来源 | Theresa.wiki
           </title>
 
         </Head>
 
-        <div className={style.container}>
+        <div>
           <TextField
             autoAdjustHeight
             label="网站内容声明"
