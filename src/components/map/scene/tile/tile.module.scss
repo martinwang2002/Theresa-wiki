@@ -1,57 +1,98 @@
-.tile {
-  width: calc(100% / var(--map-scene-tiles-width));
+%tile {
+  display: block;
+  width: calc(100% / var(--map-scene-tiles-width)); 
   aspect-ratio: 1;
 }
 
-%tile_display {
-  width: 100%;
-  height: 100%;
+%tile_roadlike {
+  @extend %tile;
+  width: 95%;
+  height: 95%;
+  margin: 2.5%;
+  border-radius: 20%;
 }
 
 .tile___undefined__ {
-  @extend %tile_display;
+  @extend %tile;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334A1FF'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/%3E%3C/svg%3E");
 }
 
 .tile_empty {
-  @extend %tile_display;
+  @extend %tile;
   background-color: #fafafa;
 }
 
 .tile_wall {
-  @extend %tile_display;
-  width: 95%;
-  height: 95%;
-  margin: 2.5%;
-  border-radius: 20%;
-  background-color: #bcbcbc;
-}
-
-.tile_forbidden {
-  @extend %tile_display;
-  background-color: #f5f5f5;
+  @extend %tile;
+  span {
+    @extend %tile_roadlike;
+    background-color: #bcbcbc;
+  }
 }
 
 .tile_road {
-  @extend %tile_display;
-  width: 95%;
-  height: 95%;
-  margin: 2.5%;
-  border-radius: 20%;
-  background-color: #e0e0e0;
+  @extend %tile;
+  span {
+    @extend %tile_roadlike;
+    background-color: #e0e0e0;
+  }
 }
 
 .tile_start {
-  @extend %tile_display;
+  @extend %tile;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128' style='fill: %23FF3333;'%3E%3Crect x='20.5' y='5' width='3' height='30' transform='translate(-7.7 21.41) rotate(-45)'/%3E%3Cpath d='M128,128H0V0H128ZM2.93,125.07H125.07V2.93H2.93Z'/%3E%3Crect x='7' y='104.5' width='30' height='3' transform='translate(-68.51 46.6) rotate(-45)'/%3E%3Crect x='91' y='20.5' width='30' height='3' transform='translate(15.49 81.4) rotate(-45)'/%3E%3Crect x='104.5' y='91' width='3' height='30' transform='translate(-43.91 106) rotate(-45)'/%3E%3Cpath d='M94.31,89.5H33.69L64,37Zm-55.42-3H89.12L64,43Z'/%3E%3Crect x='61.5' y='51' width='5' height='26'/%3E%3Crect x='61.5' y='78.5' width='5' height='5'/%3E%3C/svg%3E");
 }
 
 .tile_flystart {
-  @extend %tile_display;
+  @extend %tile;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128' style='fill: %23FF3333;'%3E%3Cpolygon class='a' points='36 36 64 52.69 92 36 75.31 64 92 92 64 75.31 36 92 52.69 64 36 36'/%3E%3Cpath class='a' d='M36,51.5A15.49,15.49,0,1,1,50.57,41.3l-2.82-1a12.49,12.49,0,1,0-7.48,7.48l1,2.82A15.45,15.45,0,0,1,36,51.5Z'/%3E%3Cpath class='a' d='M92,107.5A15.51,15.51,0,0,1,76.5,92a15.22,15.22,0,0,1,.94-5.3l2.81,1a12.49,12.49,0,1,0,7.48-7.48l-1-2.81A15.22,15.22,0,0,1,92,76.5a15.5,15.5,0,0,1,0,31Z'/%3E%3Cpath class='a' d='M36,107.5a15.5,15.5,0,0,1,0-31,15.22,15.22,0,0,1,5.3.94l-1,2.81a12.49,12.49,0,1,0,7.48,7.48l2.82-1A15.51,15.51,0,0,1,36,107.5Z'/%3E%3Cpath class='a' d='M92,51.5a15.45,15.45,0,0,1-5.3-.93l1-2.82a12.49,12.49,0,1,0-7.48-7.48l-2.81,1A15.22,15.22,0,0,1,76.5,36,15.5,15.5,0,1,1,92,51.5Z'/%3E%3Crect class='a' x='6' y='6' width='12' height='12'/%3E%3Crect class='a' x='6' y='110' width='12' height='12'/%3E%3Crect class='a' x='110' y='110' width='12' height='12'/%3E%3Crect class='a' x='110' y='6' width='12' height='12'/%3E%3C/svg%3E%0A");
 }
 
 .tile_end {
-  @extend %tile_display;
+  @extend %tile;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128' style='fill: %2334A1FF;'%3E%3Crect x='20.5' y='5' width='3' height='30' transform='translate(-7.7 21.41) rotate(-45)'/%3E%3Cpath d='M128,128H0V0H128ZM2.93,125.07H125.07V2.93H2.93Z'/%3E%3Crect x='7' y='104.5' width='30' height='3' transform='translate(-68.51 46.6) rotate(-45)'/%3E%3Crect x='91' y='20.5' width='30' height='3' transform='translate(15.49 81.4) rotate(-45)'/%3E%3Crect x='104.5' y='91' width='3' height='30' transform='translate(-43.91 106) rotate(-45)'/%3E%3Cpath d='M94.31,89.5H33.69L64,37Zm-55.42-3H89.12L64,43Z'/%3E%3Crect x='61.5' y='51' width='5' height='26'/%3E%3Crect x='61.5' y='78.5' width='5' height='5'/%3E%3C/svg%3E");
 }
+
+.tile_forbidden {
+  @extend %tile;
+  background-color: #f5f5f5;
+}
+
+// tile ice starts
+%tile_icestr {
+  @extend %tile;
+  span {
+    @extend %tile_roadlike;
+    background-color: #b3e5fc;
+  }
+}
+
+.tile_icestr {
+  @extend %tile_icestr;
+}
+
+// tile_icetur 转角冰面 starts 
+
+.tile_icetur_lt {
+  @extend %tile_icestr;
+  border-top-left-radius: 85%;
+}
+
+.tile_icetur_rt {
+  @extend %tile_icestr;
+  border-top-right-radius: 85%;
+}
+
+.tile_icetur_lb {
+  @extend %tile_icestr;
+  border-bottom-left-radius: 85%;
+}
+
+.tile_icetur_rb {
+  @extend %tile_icestr;
+  border-bottom-right-radius: 85%;
+}
+
+// tile_icetur 转角冰面 ends 
+
+// tile ice ends
