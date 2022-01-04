@@ -1,8 +1,17 @@
 import React from "react"
-
+import type { IStageInfo } from "@/models/gamedata/excel/stage"
 interface StageInfoProps{
-  stageInfo: Record<string, string>
+  stageInfo: IStageInfo
   stageJsonOptions: Record<string, string> | null
+}
+
+const stageInfoDescriptionParser = (description: string): JSX.Element => {
+  const replacedDescription = description.replaceAll("\\n", "\n")
+  return (
+    <span>
+      {replacedDescription}
+    </span>
+  )
 }
 
 class StageInfo extends React.PureComponent<StageInfoProps> {
@@ -12,56 +21,83 @@ class StageInfo extends React.PureComponent<StageInfoProps> {
     // delete stageInfo.stageDropInfo
     // delete stageInfo.unlockCondition
     /* eslint-disable react/jsx-max-depth */
+    console.log(stageInfo.description)
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>
-              Key
-            </th>
+      <>
+        <p style={{ fontSize: "0.87em", whiteSpace: "pre-line" }}>
+          {stageInfoDescriptionParser(stageInfo.description)}
+        </p>
 
-            <th>
-              Value
-            </th>
-          </tr>
-        </thead>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                Key
+              </th>
 
-        <tbody>
-          {Object.entries(stageInfo).map(
-            (entry: Readonly<string[]>) => {
-              const [key, value] = entry
-              return (
-                <tr key={key}>
-                  <td>
-                    {key}
-                  </td>
+              <th>
+                Value
+              </th>
+            </tr>
+          </thead>
 
-                  <td>
-                    {String(value)}
-                  </td>
-                </tr>
-              )
-            }
-          )}
+          <tbody>
+            {Object.entries(stageInfo).map(
+              (entry: Readonly<[string, unknown]>) => {
+                const [key, value] = entry
+                return (
+                  <tr key={key}>
+                    <td>
+                      {key}
+                    </td>
 
-          {stageJsonOptions != null && Object.entries(stageJsonOptions).map(
-            (entry: Readonly<string[]>) => {
-              const [key, value] = entry
-              return (
-                <tr key={key}>
-                  <td>
-                    {key}
-                  </td>
+                    <td>
+                      {JSON.stringify(value)}
+                    </td>
+                  </tr>
+                )
+              }
+            )}
 
-                  <td>
-                    {String(value)}
-                  </td>
-                </tr>
-              )
-            }
-          )}
-        </tbody>
-      </table>
+            <tr>
+              <td>
+                --
+              </td>
+
+              <td>
+                /
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                --
+              </td>
+
+              <td>
+                --
+              </td>
+            </tr>
+
+            {stageJsonOptions != null && Object.entries(stageJsonOptions).map(
+              (entry: Readonly<string[]>) => {
+                const [key, value] = entry
+                return (
+                  <tr key={key}>
+                    <td>
+                      {key}
+                    </td>
+
+                    <td>
+                      {String(value)}
+                    </td>
+                  </tr>
+                )
+              }
+            )}
+          </tbody>
+        </table>
+      </>
     )
   }
 }

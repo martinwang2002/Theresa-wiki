@@ -1,8 +1,8 @@
 import React from "react"
 import Tooltip from "@mui/material/Tooltip"
 
-import type { IMapDataTiles, ITileInfo } from "@/models/stage"
-import { TileInfoContext } from "@/models/stage/context"
+import type { IMapDataTiles, ITileInfo } from "@/models/gamedata/excel/stage"
+import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import style from "./tile.module.scss"
 

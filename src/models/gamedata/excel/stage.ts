@@ -7,8 +7,15 @@ interface IStageTable {
 }
 
 interface IStageInfo {
-  [key: string]: unknown
   stageType: string
+  code: string
+  name: string
+  description: string
+  hardStagedId: string
+  loadingPicId: string
+  apCost: number
+  apFailReturn: number
+  [key: string]: unknown
 }
 
 interface ITileInfo {
@@ -60,18 +67,26 @@ const stageTable = async (): Promise<IStageTable> => {
   return stageTableResult
 }
 
+export const stageIdtoLodash = (stageId: string): string => {
+  return stageId.replaceAll("#", "__")
+}
+
+export const stageIdtoHash = (stageId: string): string => {
+  return stageId.replaceAll("__", "#")
+}
+
 export const stagesArray = async (): Promise<string[]> => {
   const { stages } = await stageTable()
 
   // replace # with __
   const stagesArrayResult = Object.keys(stages).map((stageId) => {
-    return stageId.replaceAll("#", "__")
+    return stageIdtoLodash(stageId)
   })
   return stagesArrayResult
 }
 
 export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
-  const convertedStageId = stageId.replaceAll("__", "#")
+  const convertedStageId = stageIdtoHash(stageId)
 
   const { stages } = await stageTable()
   return stages[convertedStageId]
@@ -92,4 +107,4 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   return { ..._tileInfo, ...tileEmptyExtra }
 }
 
-export type { IMapData, ITileInfo, IMapDataTiles }
+export type { IStageInfo, IMapData, ITileInfo, IMapDataTiles }

@@ -1,6 +1,6 @@
 import React from "react"
 
-import type { ITileInfo } from "./index"
+import type { ITileInfo } from "../gamedata/stage"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TileInfoContext = React.createContext<Record<string, ITileInfo>>({

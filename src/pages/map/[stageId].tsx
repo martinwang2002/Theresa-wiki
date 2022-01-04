@@ -2,19 +2,19 @@ import React from "react"
 import Head from "next/head"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 
-import { stagesArray, getStageInfo, tileInfo as getTileInfo } from "@/models/stage"
+import { stagesArray, getStageInfo, tileInfo as getTileInfo } from "@/models/gamedata/excel/stage"
 import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo"
 import MapScene from "@/components/map/scene/index"
-import type { ITileInfo, IMapData } from "@/models/stage"
-import { TileInfoContext } from "@/models/stage/context"
+import type { IStageInfo, ITileInfo, IMapData } from "@/models/gamedata/excel/stage"
+import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import style from "./[stageId].module.scss"
 
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
-  stageInfo: Record<string, string>
+  stageInfo: IStageInfo
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
 }
@@ -123,6 +123,9 @@ class Map extends React.PureComponent<MapProps> {
 
           <title>
             {`${stageInfo.code} ${stageInfo.name} ${server}`}
+
+            {" "}
+            | Theresa.wiki
           </title>
 
         </Head>
@@ -135,16 +138,16 @@ class Map extends React.PureComponent<MapProps> {
           </span>
         </h1>
 
+        <StageInfo
+          stageInfo={stageInfo}
+          stageJsonOptions={stageJson.options}
+        />
+
         <TileInfoContext.Provider value={tileInfo}>
           <MapScene
             mapData={mapData}
           />
         </TileInfoContext.Provider>
-
-        <StageInfo
-          stageInfo={stageInfo}
-          stageJsonOptions={stageJson.options}
-        />
 
       </Page>
     )
