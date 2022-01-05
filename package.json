@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "yarn licenses generate-disclaimer --silent > public/LICENSES.txt && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "npm-run-all lint:*",
+    "lint:ts": "next lint",
+    "lint:scss": "stylelint **/*.scss"
   },
   "dependencies": {
     "@babel/core": "^7.16.7",
@@ -50,6 +52,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "npm-run-all": "^4.1.5",
     "stylelint": "^14.2.0",
     "stylelint-config-hudochenkov": "^6.0.1",
     "stylelint-config-recommended-scss": "^5.0.2",
@@ -60,5 +63,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "type-check"
+  ]
 }
