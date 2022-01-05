@@ -8,9 +8,9 @@
   text-align: center;
 }
 
-.breathe-mission-star { 
+.breathe-mission-star {
   width: min(50vw, 50vh);
-  margin: auto; 
+  margin: auto;
   background-image: url("/favicon.svg");
   animation-name: breathe;
   animation-duration: 5s;
@@ -19,8 +19,8 @@
   animation-direction: alternate;
   aspect-ratio: 1;
 
-  @media (max-width: 576px) { 
-    width: min(100%, 50vh)
+  @media (max-width: 576px) {
+    width: min(100%, 50vh);
   }
 }
 
@@ -35,5 +35,5 @@
 }
 
 .back-to-home {
-  color:gray;
+  color: gray;
 }

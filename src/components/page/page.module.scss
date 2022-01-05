@@ -14,6 +14,7 @@
 
 .navbar_theresa {
   @extend .navbar;
+
   position: fixed;
   top: 0;
   right: 0;
@@ -45,22 +46,25 @@
 
 .main_container {
   @extend .container-lg;
+
   width: auto;
-  // Header height 2rem + 16px 
+  // Header height 2rem + 16px
   // main container padding-bottom 1rem
   // Footer min height 8rem
   min-height: calc(100vh - 2rem - 16px - 8rem - 1rem);
   padding-top: calc(2rem + 16px);
   padding-bottom: 1rem;
-  opacity: 1
+  opacity: 1;
 }
 
 .main_container_fadeout {
   @extend .main_container;
+
+  opacity: 0.25;
   cursor: wait;
   user-select: "none";
-  opacity: 0.25;
   transition: "opacity 2s linear";
+
   & a {
     cursor: wait;
   }
@@ -68,6 +72,7 @@
 
 .placebo {
   @extend .progress;
+
   position: fixed;
   top: 0;
   right: 0;
@@ -80,6 +85,7 @@
 
 .placebo_bar {
   @extend .progress-bar;
+
   z-index: 1040;
   background-color: #ff8f00;
   transition: "width 1.2s ease";
@@ -96,12 +102,14 @@
 .footer_links {
   display: flex;
   flex-direction: column;
-  margin: auto auto;
+  margin: auto;
+
   a {
     margin: 0.2em auto;
     color: #d2dbd9;
     text-decoration: none;
     transition: color 500ms ease;
+
     &:hover {
       color: #fff;
     }

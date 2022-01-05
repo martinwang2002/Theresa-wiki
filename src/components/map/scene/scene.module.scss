@@ -10,5 +10,5 @@
   display: flex;
   flex-wrap: wrap-reverse;
   width: min(95%, 95% * 9 / 16 * var(--map-scene-tiles-width) / var(--map-scene-tiles-height));
-  margin: auto auto;
+  margin: auto;
 }

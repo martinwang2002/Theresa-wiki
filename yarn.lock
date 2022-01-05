@@ -5337,6 +5337,11 @@ styled-jsx@5.0.0-beta.3:
     stylis "3.5.4"
     stylis-rule-sheet "0.0.10"
 
+stylelint-config-hudochenkov@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-config-hudochenkov/-/stylelint-config-hudochenkov-6.0.1.tgz#66a013c84b3c46b21396b0f5c58f32fb15a9e3bb"
+  integrity sha512-jCiHBTn9FZwZ2SZgsBgIIyqIfAwuwv3AnxEvj1ITLTTHB0g53opW5E8aKSAUPgmJpXseDTWWrGODiUjTSPj1AA==
+
 stylelint-config-recommended-scss@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/stylelint-config-recommended-scss/-/stylelint-config-recommended-scss-5.0.2.tgz#193f483861c76a36ece24c52eb6baca4838f4a48"
