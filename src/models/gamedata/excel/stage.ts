@@ -11,6 +11,7 @@ interface IStageInfo {
   code: string
   name: string
   description: string
+  levelId: string
   hardStagedId: string
   loadingPicId: string
   apCost: number
@@ -46,7 +47,7 @@ const stageTable = cacheable(async (): Promise<IStageTable> => {
   const stageTableRes = await fetch(url)
   const stageTableJson = await stageTableRes.json() as IStageTable
   return stageTableJson
-}, { cacheKey: "stageTable", expiryMode: "EX", ttl: 3600 })
+}, { cacheKey: "stageTable", expiryMode: "EX", ttl: 86400 })
 
 export const stageIdtoLodash = (stageId: string): string => {
   return stageId.replaceAll("#", "__")
@@ -88,4 +89,19 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   return { ..._tileInfo, ...tileEmptyExtra }
 }
 
-export type { IStageInfo, IMapData, ITileInfo, IMapDataTiles }
+interface IStageJson {
+  options: Record<string, string>
+  levelId: string
+  loadingPicId: string
+  mapData: IMapData
+  [key: string]: unknown
+}
+
+export const stageJson = async (levelId: string): Promise<IStageJson> => {
+  const stageUrl = `https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
+  const stageRes = await fetch(stageUrl)
+  const stageJsonResult = await stageRes.json() as IStageJson
+  return stageJsonResult
+}
+
+export type { IStageInfo, IMapData, ITileInfo, IMapDataTiles, IStageJson }

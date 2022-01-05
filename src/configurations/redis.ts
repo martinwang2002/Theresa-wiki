@@ -31,7 +31,7 @@ const cacheable = <T extends unknown[], U>(fn: (...args: T) => Promise<U> | U, o
       let result: U
       const cacheKey = options.cacheKey + args.join("_")
       result = await redisClient.get(cacheKey).then(async (redisResult) => {
-        if (redisResult != null) {
+        if (redisResult !== null) {
           return JSON.parse(redisResult) as U
         } else {
           result = await fn(...args)
