@@ -32,19 +32,27 @@ interface MapProps{
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const stageIds = await stagesArray()
-  const numPreRender = -5
-  const paths = stageIds.slice(numPreRender).map((stageId) => ({
-    params: {
-      server: "CN",
-      stageId
-    }
-  }))
+  // ignore SSR when developing and in build stage
+  if (process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true") {
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths: [], fallback: "blocking" }
+  } else {
+    const stageIds = await stagesArray()
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: blocking } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: "blocking" }
+    const paths = stageIds.map((stageId) => ({
+      params: {
+        server: "CN",
+        stageId
+      }
+    }))
+
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths, fallback: "blocking" }
+  }
 }
 
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {

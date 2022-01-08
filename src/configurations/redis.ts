@@ -15,7 +15,8 @@ const redisConfig: Redis.RedisOptions = {
 
 const redisClient = new Redis(process.env.REDIS_URL, redisConfig)
 
-if (process.env.REDIS_URL === "") {
+// ignore redis cache when developing and in build stage
+if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event === "build") {
   redisClient.on("error", (error: Readonly<Error>) => {
     if (error.message.includes("ECONNREFUSED")) {
       // empty

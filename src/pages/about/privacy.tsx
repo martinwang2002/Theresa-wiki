@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
 import Page from "@/components/page/page"
-import privacyMarkdown from "privacy.md"
+import privacyMarkdown from "PRIVACY.md"
 
 export default class Privacy extends React.PureComponent {
   public render (): React.ReactNode {
