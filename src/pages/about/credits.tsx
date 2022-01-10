@@ -80,6 +80,7 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
         </>
       )
     }
+
     return (
       <Page>
         <Head>
@@ -101,7 +102,7 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
 
           {openSourceLicensesLoaded
             ? (openSourceLicensesLoadingError ? openSourceLicensesErrorPrompt : openSourceLicensesTextField)
-            : skeleton}
+            : skeleton()}
 
         </div>
 
