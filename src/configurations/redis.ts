@@ -10,7 +10,8 @@ interface ICachable {
 
 const redisConfig: Redis.RedisOptions = {
   autoResubscribe: false,
-  lazyConnect: true
+  lazyConnect: true,
+  keyPrefix: "FRONTEND_"
 }
 
 const redisClient = new Redis(process.env.REDIS_URL, redisConfig)
