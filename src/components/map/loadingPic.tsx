@@ -19,6 +19,7 @@ interface LoadingPicProps{
 class LoadingPict extends React.PureComponent<LoadingPicProps> {
   public render (): React.ReactNode {
     const { loadingPicId } = this.props
+    // FIXME no longer available
     const imageSrc = `https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/arts/[uc]loadingillusts/${loadingPicId.toLocaleLowerCase()}.png`
     return (
       <div style={{

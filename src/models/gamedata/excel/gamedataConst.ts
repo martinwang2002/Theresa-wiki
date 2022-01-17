@@ -1,4 +1,6 @@
+// configs
 import cachable from "@/configurations/redis"
+import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface IGamedataConst {
   richTextStyles: Record<string, string>
@@ -6,7 +8,7 @@ interface IGamedataConst {
 }
 
 const gamedataConst = cachable(async (): Promise<IGamedataConst> => {
-  const url = "https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/gamedata_const.json"
+  const url = `${serverRuntimeConfig.THERESA_S3}api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/gamedata_const.json`
   const gamedataConstRes = await fetch(url)
   const gamedataConstJson = await gamedataConstRes.json() as IGamedataConst
   return gamedataConstJson

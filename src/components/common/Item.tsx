@@ -4,7 +4,7 @@ import React from "react"
 import Badge from "@mui/material/Badge"
 
 // models
-import { publicRuntimeConfig } from "@/configurations/publicRuntimeConfig"
+import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ItemProps{
   itemId: number | string

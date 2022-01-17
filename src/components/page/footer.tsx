@@ -1,20 +1,13 @@
 /* eslint-disable react/jsx-max-depth */
+// libs
 import React from "react"
 import Link from "next/link"
-import getConfig from "next/config"
 
+// models
+import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
+
+// styles
 import style from "./page.module.scss"
-
-interface IPublicRuntimeConfig {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  THERESA_WIKI_VERSION: string
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  GIT_COMMIT: string
-}
-
-const { publicRuntimeConfig } = getConfig() as {
-  publicRuntimeConfig: IPublicRuntimeConfig
-}
 
 class Footer extends React.PureComponent {
   public render (): React.ReactNode {

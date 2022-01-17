@@ -10,6 +10,7 @@ try {
 
 module.exports = {
   images: {
+    // FIXME no longer available
     domains: ["s3-torappu.martinwang2002.com"],
   },
   poweredByHeader: false,
@@ -32,5 +33,9 @@ module.exports = {
   publicRuntimeConfig: {
     THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
     GIT_COMMIT: commitHash,
+    THERESA_STATIC: process.env.THERESA_STATIC ?? ""
+  },
+  serverRuntimeConfig: {
+    THERESA_S3: process.env.THERESA_S3?? ""
   },
 }

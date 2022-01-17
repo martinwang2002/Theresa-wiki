@@ -16,7 +16,10 @@
 .tile___undefined__ {
   @extend %tile;
 
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334A1FF'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/%3E%3C/svg%3E");
+  // FIXME no longer available
+  background-image: url("https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/arts/[pack]common/missing.png");
+  background-size: contain;
+  // background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334A1FF'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/%3E%3C/svg%3E");
 }
 
 .tile_empty {
@@ -31,7 +34,17 @@
   span {
     @extend %tile_roadlike;
 
-    background-color: #bcbcbc;
+    background-color: #fbb83f;
+  }
+}
+
+.tile_floor {
+  @extend %tile;
+
+  span {
+    @extend %tile_roadlike;
+
+    background-color: #e0e0e0;
   }
 }
 
@@ -41,7 +54,7 @@
   span {
     @extend %tile_roadlike;
 
-    background-color: #e0e0e0;
+    background-color: #f7d493;
   }
 }
 
@@ -89,25 +102,33 @@
 .tile_icetur_lt {
   @extend %tile_icestr;
 
-  border-top-left-radius: 85%;
+  span {
+    border-top-left-radius: 85%;
+  }
 }
 
 .tile_icetur_rt {
   @extend %tile_icestr;
 
-  border-top-right-radius: 85%;
+  span {
+    border-top-right-radius: 85%;
+  }
 }
 
 .tile_icetur_lb {
   @extend %tile_icestr;
 
-  border-bottom-left-radius: 85%;
+  span {
+    border-bottom-left-radius: 85%;
+  }
 }
 
 .tile_icetur_rb {
   @extend %tile_icestr;
 
-  border-bottom-right-radius: 85%;
+  span {
+    border-bottom-right-radius: 85%;
+  }
 }
 
 // tile_icetur 转角冰面 ends
