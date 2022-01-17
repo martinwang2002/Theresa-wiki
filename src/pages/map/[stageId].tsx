@@ -6,7 +6,7 @@ import { pick as lodashPick } from "lodash"
 
 // Components
 import Page from "@/components/page/page"
-import StageInfo from "@/components/map/stageInfo"
+import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 
 // models

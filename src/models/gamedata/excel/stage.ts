@@ -16,6 +16,10 @@ interface IStageInfo {
   loadingPicId: string
   apCost: number
   apFailReturn: number
+  dangerLevel: string
+  practiceTicketCost: number
+  canPractice: boolean
+  canBattleReplay: boolean
   [key: string]: unknown
 }
 
