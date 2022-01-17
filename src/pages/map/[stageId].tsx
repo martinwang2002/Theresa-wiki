@@ -1,53 +1,61 @@
+// libs
 import React from "react"
 import Head from "next/head"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+import { pick as lodashPick } from "lodash"
 
-import { stagesArray, getStageInfo, tileInfo as getTileInfo } from "@/models/stage"
+// Components
 import Page from "@/components/page/page"
-import StageInfo from "@/components/map/stageInfo"
+import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
-import type { ITileInfo, IMapData } from "@/models/stage"
-import { TileInfoContext } from "@/models/stage/context"
 
+// models
+import { stagesArray, getStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stage"
+import type { IStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stage"
+import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+
+// reactContext
+import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
+import { GamedataContext } from "@/models/reactContext/gamedataContext"
+
+// styles
 import style from "./[stageId].module.scss"
 
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
-  stageInfo: Record<string, string>
+  stageInfo: IStageInfo
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
+  gamedataConst: Pick<IGamedataConst, "richTextStyles">
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const stageIds = await stagesArray()
-  const numPreRender = -5
-  const paths = stageIds.slice(numPreRender).map((stageId) => ({
-    params: {
-      server: "CN",
-      stageId
-    }
-  }))
+  // ignore SSR when developing and in build stage
+  if (process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true") {
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths: [], fallback: "blocking" }
+  } else {
+    const stageIds = await stagesArray()
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: blocking } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: "blocking" }
+    const paths = stageIds.map((stageId) => ({
+      params: {
+        server: "CN",
+        stageId
+      }
+    }))
+
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths, fallback: "blocking" }
+  }
 }
 
-interface IStageJson {
-  [key: string]: unknown
-  options: Record<string, string>
-  levelId: string
-  loadingPicId: string
-  mapData: IMapData
-}
-
-export const getStaticProps: GetStaticProps = async (context: Readonly<GetStaticPropsContext>) => {
-  // const stageTableRes = await fetch('https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/gamedata/excel/stage_table.json')
-  // const stageTableRes = await fetch('http://localhost:3000/api/stage_table')
-  // const stageTableJson = await stageTableRes.json()
-  // const { stages } = stageTableJson
+export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
   const stageIds = await stagesArray()
   const { params } = context
   const stageId = String(params?.stageId)
@@ -55,7 +63,6 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
   try {
     if (stageIds.includes(stageId)) {
       // stage id exists
-
     } else {
       return {
         notFound: true
@@ -66,27 +73,24 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
       notFound: true
     }
   }
+
   const stageInfo = await getStageInfo(stageId)
-  // const stageJson = await stageRes.json()
+
   const { levelId } = stageInfo
+  const stageJson = await getStageJson(levelId)
 
   const tileInfo = await getTileInfo()
 
-  let stageJson
-  if (levelId != null) {
-    const stageUrl = `https://s3-torappu.martinwang2002.com/api/v0/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
-    const stageRes = await fetch(stageUrl)
-    stageJson = await stageRes.json() as IStageJson
-  } else {
-    stageJson = {}
-  }
+  const gamedataConst = await getGamedataConst()
+
   return {
     props: {
       server: "CN",
       stageId: stageId,
       stageInfo: stageInfo,
       stageJson: stageJson,
-      tileInfo: tileInfo
+      tileInfo: tileInfo,
+      gamedataConst: lodashPick(gamedataConst, "richTextStyles")
     },
     revalidate: 3600
   }
@@ -94,58 +98,41 @@ export const getStaticProps: GetStaticProps = async (context: Readonly<GetStatic
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { server, stageInfo, stageJson, tileInfo } = this.props
+    const { server, stageInfo, stageJson, tileInfo, gamedataConst } = this.props
     const { mapData } = stageJson
-
-    // const router = this.props.router
-    // // const { server} = router.query
-    // const { server, mapid} = router.query
-    // // const mapid = "act12side_01"
-
-    // // const zoneId = "act12side"
-    // // const levelId = "01"
-
-    // try {
-    //   var stages = this.props.stage_json['stages']
-    //   if ( Object.keys(stages).includes(String(mapid))){
-    //     e
-    //   }else{
-
-    //   }
-
-    // }catch{
-
-    // }
-
     return (
       <Page>
         <Head>
-          <meta charSet="utf-8" />
 
           <title>
             {`${stageInfo.code} ${stageInfo.name} ${server}`}
+
+            {" "}
+            | Theresa.wiki
           </title>
 
         </Head>
 
-        <h1 className={style.h1_title}>
+        <h1 className={style["h1-title"]}>
           {`${stageInfo.code} ${stageInfo.name}`}
 
-          <span className={style.h1_title_badge}>
+          <span className={style["h1-title-badge"]}>
             {server}
           </span>
         </h1>
+
+        <GamedataContext.Provider value={gamedataConst}>
+          <StageInfo
+            stageInfo={stageInfo}
+            stageJsonOptions={stageJson.options}
+          />
+        </GamedataContext.Provider>
 
         <TileInfoContext.Provider value={tileInfo}>
           <MapScene
             mapData={mapData}
           />
         </TileInfoContext.Provider>
-
-        <StageInfo
-          stageInfo={stageInfo}
-          stageJsonOptions={stageJson.options}
-        />
 
       </Page>
     )

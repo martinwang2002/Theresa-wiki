@@ -1,7 +1,7 @@
 import React from "react"
 
-import type { IMapData, IMapDataTiles } from "@/models/stage"
-import Tile from "./tile"
+import type { IMapData, IMapDataTiles } from "@/models/gamedata/excel/stage"
+import Tile from "./tile/tile"
 
 import style from "./scene.module.scss"
 

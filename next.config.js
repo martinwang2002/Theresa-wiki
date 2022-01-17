@@ -1,5 +1,16 @@
+let commitHash
+
+try {
+  commitHash = require('child_process')
+    .execSync('git rev-parse --short HEAD')
+    .toString().trim() || 'unknown'
+} catch (e) {
+  commitHash = 'unknown'
+}
+
 module.exports = {
   images: {
+    // FIXME no longer available
     domains: ["s3-torappu.martinwang2002.com"],
   },
   poweredByHeader: false,
@@ -11,5 +22,20 @@ module.exports = {
         destination: '/:path*?server=:server'
       }
     ]
-  }
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.module.rules.push({
+      test: /\.md$/i,
+      loader: "raw-loader",
+    });
+    return config;
+  },
+  publicRuntimeConfig: {
+    THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
+    GIT_COMMIT: commitHash,
+    THERESA_STATIC: process.env.THERESA_STATIC ?? ""
+  },
+  serverRuntimeConfig: {
+    THERESA_S3: process.env.THERESA_S3?? ""
+  },
 }

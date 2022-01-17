@@ -1,0 +1,22 @@
+.description {
+  display: flex;
+  font-size: 0.87em;
+  white-space: pre-line;
+}
+
+.description-content {
+  margin-left: 2em;
+  padding: 0.5em 1em;
+  border-radius: 0.75em;
+  background: #2f2f2f;
+  color: #a9a9a9;
+}
+
+.stageInfoRow {
+  display: flex;
+
+  & > span {
+    display: inline-block;
+    padding: 0.75em;
+  }
+}

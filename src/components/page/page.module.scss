@@ -1,3 +1,4 @@
+/* stylelint-disable scss/at-extend-no-missing-placeholder */
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
@@ -8,74 +9,117 @@
 @import "bootstrap/scss/progress";
 @import "bootstrap/scss/utilities";
 
+// TODO: CDN support; glyphhanger
+@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=ZCOOL+QingKe+HuangYou&family=Roboto+Mono&display=swap");
+
 .navbar_theresa {
-    background-image: linear-gradient(to right, #4da9f5, #afdbff);
-    box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
-    @extend .navbar;
-    // fixed at top
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
+  @extend .navbar;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  background-image: linear-gradient(to right, #4da9f5, #afdbff);
+  box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
 }
 
-// TODO: CDN support; glyphhanger
-@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=ZCOOL+QingKe+HuangYou&display=swap");
-
 .theresa_title_clickable {
-    cursor: pointer;
-    height: 2rem;
+  height: 2rem;
+  cursor: pointer;
 }
 
 .theresa {
-    margin: 0;
-    margin-left: 0.75rem;
-    margin-top: 0.33rem;
-    font-size: 2rem;
-    font-family: "Corinthia", cursive;
+  margin: 0;
+  margin-top: 0.33rem;
+  margin-left: 0.75rem;
+  font-size: 2rem;
+  font-family: "Corinthia", cursive;
 }
 
 .theresa_cn {
-    margin: 0;
-    margin-top: 0.33rem;
-    font-size: 1.5rem;
-    font-family: "ZCOOL QingKe HuangYou", cursive;
+  margin: 0;
+  margin-top: 0.33rem;
+  font-size: 1.5rem;
+  font-family: "ZCOOL QingKe HuangYou", cursive;
 }
 
 .main_container {
-    @extend .container-lg;
-    width: auto;
-    opacity: 1;
-    padding-top: calc(2rem + 16px);
+  @extend .container-lg;
+
+  width: auto;
+  // Header height 2rem + 16px
+  // main container padding-bottom 1rem
+  // Footer min height 8rem
+  min-height: calc(100vh - 2rem - 16px - 8rem - 1rem);
+  padding-top: calc(2rem + 16px);
+  padding-bottom: 1rem;
+  opacity: 1;
 }
 
 .main_container_fadeout {
-    @extend .main_container;
-    opacity: 0.25;
-    transition: "opacity 2s linear";
-    user-select: "none";
+  @extend .main_container;
+
+  opacity: 0.25;
+  cursor: wait;
+  user-select: "none";
+  transition: "opacity 2s linear";
+
+  & a {
     cursor: wait;
-    & a {
-        cursor: wait;
-    }
+  }
 }
 
 .placebo {
-    @extend .progress;
-    width: 100%;
-    height: 0.25rem;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1050;
-    background-color: transparent;
+  @extend .progress;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 0.25rem;
+  background-color: transparent;
 }
 
 .placebo_bar {
-    @extend .progress-bar;
-    z-index: 1040;
-    transition: "width 1.2s ease";
-    background-color: #ff8f00;
+  @extend .progress-bar;
+
+  z-index: 1040;
+  background-color: #ff8f00;
+  transition: "width 1.2s ease";
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 8rem;
+  background-color: #18191a;
+  text-align: center;
+}
+
+.footer_links {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  a {
+    margin: 0.2em auto;
+    color: #d2dbd9;
+    text-decoration: none;
+    transition: color 500ms ease;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.version {
+  margin-bottom: 1em;
+  color: #d2dbd9;
+  font-size: x-small;
+  font-family: "Roboto Mono", monospace;
+  text-transform: uppercase;
 }

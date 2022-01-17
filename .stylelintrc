@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "stylelint-config-hudochenkov/full",
+        "stylelint-config-recommended-scss"
+    ],
+    "plugins": [
+        "stylelint-order"
+    ],
+    "rules": {
+        "indentation": 2,
+        "linebreaks": null,
+        "selector-max-type": null
+    }
+}

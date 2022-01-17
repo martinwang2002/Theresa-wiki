@@ -1,0 +1,39 @@
+.breathe-mission-star-container {
+  // Header height 2rem
+  // Footer min height 8rem
+  // padding top 12vh - 2rem (no need to consider 2rem offset)
+  min-height: calc(100vh - 2rem - 8rem - 12vh);
+  margin: auto;
+  padding-top: calc(12vh - 2rem);
+  text-align: center;
+}
+
+.breathe-mission-star {
+  width: min(50vw, 50vh);
+  margin: auto;
+  background-image: url("/favicon.svg");
+  animation-name: breathe;
+  animation-duration: 5s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  aspect-ratio: 1;
+
+  @media (max-width: 576px) {
+    width: min(100%, 50vh);
+  }
+}
+
+@keyframes breathe {
+  0% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.back-to-home {
+  color: gray;
+}
