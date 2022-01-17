@@ -97,7 +97,13 @@
         "react/jsx-no-bind": "off",
         "@typescript-eslint/unbound-method": "off",
         "no-extra-parens": "off",
-        "@typescript-eslint/no-extra-parens": "off"
+        "@typescript-eslint/no-extra-parens": "off",
+        "react/jsx-max-depth": [
+            "error",
+            {
+                "max": 3
+            }
+        ]
     },
     "settings": {
         "react": {
