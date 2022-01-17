@@ -22,6 +22,8 @@ FROM node:16-alpine AS builder
 ARG THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=False
 ENV THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES $THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES
 
+RUN apk update && apk add --no-cache git
+
 # Set yarn cache directory, copy previous cache to make yarn licenses work without fetching packages again
 ARG YARN_CACHE_DIR
 COPY --from=deps $YARN_CACHE_DIR $YARN_CACHE_DIR
