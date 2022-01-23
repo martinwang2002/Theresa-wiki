@@ -1,11 +1,10 @@
 import Redis from "ioredis"
 
-interface ICachable {
+interface ICacheable {
   cacheKey: string
   hashKey?: string
   expiryMode?: string | undefined
   ttl?: number | undefined
-  setMode?: number | string | undefined
 }
 
 const redisConfig: Redis.RedisOptions = {
@@ -27,7 +26,7 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   })
 }
 
-const cacheable = <T extends unknown[], U>(fn: (...args: T) => Promise<U> | U, options: Readonly<ICachable>) => {
+const cacheable = <T extends unknown[], U>(fn: (...args: T) => Promise<U> | U, options: Readonly<ICacheable>) => {
   return async (...args: T): Promise<U> => {
     try {
       let result: U
@@ -37,13 +36,14 @@ const cacheable = <T extends unknown[], U>(fn: (...args: T) => Promise<U> | U, o
           return JSON.parse(redisResult) as U
         } else {
           result = await fn(...args)
-          await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl, options.setMode)
+          await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl)
           return result
         }
       })
       return result
     } catch (error) {
       // TODO: Record error
+      console.log(error)
       return fn(...args)
     }
   }
