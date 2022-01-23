@@ -42,7 +42,10 @@ export default function home (): React.ReactNode {
 
           {server}
         </p>
-        <Link href="/map/main_00-10">test</Link>
+
+        <Link href="/map/main_00-10">
+          test
+        </Link>
       </main>
 
       <style jsx>
