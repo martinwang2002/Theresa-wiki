@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider"
 import Item from "@/components/common/Item"
 
 // models
-import type { IStageInfo } from "@/models/gamedata/excel/stage"
+import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 // style
 import style from "./stageInfo.module.scss"

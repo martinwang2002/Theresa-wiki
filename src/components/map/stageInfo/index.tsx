@@ -6,7 +6,7 @@ import StageInfoDescription from "./stageInfoDescription"
 import StageInfoTable from "./stageInfoTable"
 
 // models
-import type { IStageInfo } from "@/models/gamedata/excel/stage"
+import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoProps{
   stageInfo: IStageInfo

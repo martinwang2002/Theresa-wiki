@@ -10,8 +10,8 @@ import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 
 // models
-import { stagesArray, getStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stage"
-import type { IStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stage"
+import { stagesArray, getStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
+import type { IStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
 import { zonesArray } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
