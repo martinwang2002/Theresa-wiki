@@ -3,7 +3,7 @@ import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface IGamedataConst {
-  richTextStyles: Record<string, string>
+  richTextStyles: Readonly<Record<string, string>>
   [key: string]: unknown
 }
 

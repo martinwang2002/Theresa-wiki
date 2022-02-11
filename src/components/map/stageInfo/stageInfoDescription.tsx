@@ -71,17 +71,9 @@ class StageInfoDescription extends React.PureComponent<StageInfoDescriptionProps
         <span className={style["description-placeholder"]} />
 
         <GamedataContext.Consumer>
-          {(gamedataConst: Readonly<Partial<IGamedataConst>>): JSX.Element => {
+          {(gamedataConst: Readonly<IGamedataConst>): JSX.Element => {
             const { richTextStyles } = gamedataConst
-            if (richTextStyles) {
-              return stageInfoDescriptionParser(description, richTextStyles)
-            } else {
-              return (
-                <span style={{ color: "red" }}>
-                  Error: Cannot load description
-                </span>
-              )
-            }
+            return stageInfoDescriptionParser(description, richTextStyles)
           }}
         </GamedataContext.Consumer>
       </span>

@@ -17,7 +17,7 @@ class Tile extends React.PureComponent<ITileProps> {
     return (
 
       <TileInfoContext.Consumer>
-        {(tileInfo: Readonly<Record<string, ITileInfo>>): JSX.Element => {
+        {(tileInfo: Readonly<Record<string, Readonly<ITileInfo>>>): JSX.Element => {
           const tooltipContent: JSX.Element = (
             <div>
               <h3 style={{ margin: 0 }}>
