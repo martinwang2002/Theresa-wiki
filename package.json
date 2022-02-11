@@ -9,7 +9,7 @@
     "lint": "npm-run-all lint:*",
     "lint:ts": "next lint",
     "lint:scss": "stylelint **/*.scss",
-    "gen-license":"yarn licenses generate-disclaimer --silent > public/LICENSES.txt"
+    "gen-license": "yarn licenses generate-disclaimer --silent > public/LICENSES.txt"
   },
   "dependencies": {
     "@babel/core": "^7.16.7",
