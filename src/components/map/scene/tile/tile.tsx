@@ -1,7 +1,7 @@
 import React from "react"
 import Tooltip from "@mui/material/Tooltip"
 
-import type { IMapDataTiles, ITileInfo } from "@/models/gamedata/excel/stage"
+import type { IMapDataTiles, ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import style from "./tile.module.scss"
@@ -17,7 +17,7 @@ class Tile extends React.PureComponent<ITileProps> {
     return (
 
       <TileInfoContext.Consumer>
-        {(tileInfo: Readonly<Record<string, ITileInfo>>): JSX.Element => {
+        {(tileInfo: Readonly<Record<string, Readonly<ITileInfo>>>): JSX.Element => {
           const tooltipContent: JSX.Element = (
             <div>
               <h3 style={{ margin: 0 }}>
@@ -42,16 +42,11 @@ class Tile extends React.PureComponent<ITileProps> {
               placement="top"
               title={tooltipContent}
             >
-              {/* <span
-                className={style.tile}
-                id={tile.tileKey}
-              > */}
 
               <span className={style[tile.tileKey] ? style[tile.tileKey] : style.tile___undefined__} >
                 <span />
               </span>
 
-              {/* </span> */}
             </Tooltip>
 
           )

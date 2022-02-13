@@ -1,13 +1,13 @@
 // configs
-import cachable from "@/configurations/redis"
+import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface IGamedataConst {
-  richTextStyles: Record<string, string>
+  richTextStyles: Readonly<Record<string, string>>
   [key: string]: unknown
 }
 
-const gamedataConst = cachable(async (): Promise<IGamedataConst> => {
+const gamedataConst = cacheable(async (): Promise<IGamedataConst> => {
   const url = `${serverRuntimeConfig.THERESA_S3}api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/gamedata_const.json`
   const gamedataConstRes = await fetch(url)
   const gamedataConstJson = await gamedataConstRes.json() as IGamedataConst

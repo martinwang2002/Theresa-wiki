@@ -2,26 +2,28 @@
 // libs
 import React from "react"
 import Badge from "@mui/material/Badge"
+import type { SxProps } from "@mui/system"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ItemProps{
   itemId: number | string
-  count: number
+  count?: number | string
+  sx?: SxProps
 }
 
 class Item extends React.PureComponent<ItemProps> {
   public render (): React.ReactNode {
-    const { itemId, count } = this.props
+    const { itemId, count, sx } = this.props
     const imageSrc = `${publicRuntimeConfig.THERESA_STATIC}api/v0/AK_AB/CN/Android/latest/item/${itemId}`
 
     return (
       <div style={{
         aspectRatio: "1/1",
         display: "flex",
-        width: "3rem",
-        height: "3rem"
+        width: "4rem",
+        height: "4rem"
       }}
       >
         <Badge
@@ -32,6 +34,7 @@ class Item extends React.PureComponent<ItemProps> {
           badgeContent={count}
           color="info"
           overlap="circular"
+          sx={sx}
         >
           <img
             alt={`Item ${itemId}`}

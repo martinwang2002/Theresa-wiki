@@ -18,6 +18,7 @@ interface PageState {
 }
 
 class Page extends React.PureComponent<PageProps, PageState> {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   public constructor (props: PageProps | Readonly<PageProps>) {
     super(props)
     this.state = {
@@ -93,6 +94,11 @@ class Page extends React.PureComponent<PageProps, PageState> {
 
         <Head>
           <meta charSet="utf-8" />
+
+          <meta
+            content="width=device-width, initial-scale=1"
+            name="viewport"
+          />
 
           <link
             href="/favicon.svg"

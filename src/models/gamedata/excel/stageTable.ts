@@ -8,8 +8,39 @@ interface IStageTable {
   tileInfo: Record<string, ITileInfo>
 }
 
+interface IUnlockCondition {
+  stageId: string
+  completeState: number
+}
+
+interface IDisplayReward {
+  type: string
+  id: string
+  dropType: number
+}
+
+interface IDisplayDetailReward {
+  type: string
+  id: string
+  dropType: number
+  occPercent: 0 | 1 | 2 | 3 | 4
+}
+
+interface IStageDropInfo {
+  firstPassRewards: unknown
+  firstCompleteRewards: unknown
+  passRewards: unknown
+  completeRewards: unknown
+  displayRewards: IDisplayReward[]
+  displayDetailRewards: IDisplayDetailReward[]
+}
+
 interface IStageInfo {
   stageType: string
+  difficulty: string
+  unlockCondition: IUnlockCondition[]
+  stageId: string
+  zoneId: string
   code: string
   name: string
   description: string
@@ -22,6 +53,7 @@ interface IStageInfo {
   practiceTicketCost: number
   canPractice: boolean
   canBattleReplay: boolean
+  stageDropInfo: IStageDropInfo
   [key: string]: unknown
 }
 
@@ -80,6 +112,36 @@ export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
   return stages[convertedStageId]
 }
 
+interface ICustomStageInfo extends IStageInfo {
+  _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "name" | "stageId" | "zoneId">>
+}
+
+export const getCustomStageInfo = async (stageId: string): Promise<ICustomStageInfo> => {
+  const convertedStageId = stageIdtoHash(stageId)
+
+  const { stages } = await stageTable()
+
+  const result = stages[convertedStageId] as ICustomStageInfo
+
+  result._unlockConditionStageInfo = {}
+
+  // query for extra stage info data for rendering
+  for (const unlockCondition of result.unlockCondition) {
+    const _stageId = unlockCondition.stageId
+    const extraStageInfo = await getStageInfo(_stageId)
+
+    result._unlockConditionStageInfo[_stageId] = {
+      code: extraStageInfo.code,
+      name: extraStageInfo.name,
+      stageId: stageIdtoLodash(extraStageInfo.stageId),
+      zoneId: extraStageInfo.zoneId,
+      difficulty: extraStageInfo.difficulty
+    }
+  }
+
+  return result
+}
+
 export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   const { tileInfo: _tileInfo } = await stageTable()
   const tileEmptyExtra = {
@@ -110,4 +172,4 @@ export const stageJson = async (levelId: string): Promise<IStageJson> => {
   return stageJsonResult
 }
 
-export type { IStageInfo, IMapData, ITileInfo, IMapDataTiles, IStageJson }
+export type { IStageInfo, ICustomStageInfo, IDisplayDetailReward, IUnlockCondition, IMapData, ITileInfo, IMapDataTiles, IStageJson }

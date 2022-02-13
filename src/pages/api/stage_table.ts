@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { stagesArray } from "@/models/gamedata/excel/stage"
+import { stagesArray } from "@/models/gamedata/excel/stageTable"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {

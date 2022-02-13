@@ -103,6 +103,12 @@
             {
                 "max": 3
             }
+        ],
+        "@typescript-eslint/no-magic-numbers": [
+            "error",
+            {
+                "ignoreNumericLiteralTypes": true
+            }
         ]
     },
     "settings": {

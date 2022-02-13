@@ -9,6 +9,7 @@
     "files.associations": {
         "*.stylintrc": "jsonc"
     },
+    "files.insertFinalNewline": true,
     // languages
     "[scss]": {
         "editor.defaultFormatter": "stylelint.vscode-stylelint"

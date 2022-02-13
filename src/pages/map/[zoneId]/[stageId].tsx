@@ -10,8 +10,9 @@ import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 
 // models
-import { stagesArray, getStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stage"
-import type { IStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stage"
+import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
+import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
+import { zonesArray } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 
@@ -25,7 +26,7 @@ import style from "./[stageId].module.scss"
 interface MapProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
-  stageInfo: IStageInfo
+  stageInfo: ICustomStageInfo
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
@@ -55,14 +56,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
+// FIXME: eslint
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
+  const zoneIds = await zonesArray()
   const stageIds = await stagesArray()
+
   const { params } = context
+  const zoneId = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
   try {
-    if (stageIds.includes(stageId)) {
-      // stage id exists
+    if (zoneIds.includes(zoneId) && stageIds.includes(stageId)) {
+      // zoneId and stageId exists
+      // render page
     } else {
       return {
         notFound: true
@@ -74,7 +81,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
     }
   }
 
-  const stageInfo = await getStageInfo(stageId)
+  const stageInfo = await getCustomStageInfo(stageId)
 
   const { levelId } = stageInfo
   const stageJson = await getStageJson(levelId)
@@ -114,7 +121,14 @@ class Map extends React.PureComponent<MapProps> {
         </Head>
 
         <h1 className={style["h1-title"]}>
-          {`${stageInfo.code} ${stageInfo.name}`}
+          {stageInfo.difficulty === "FOUR_STAR" &&
+          <span className={style["h1-four-start-badge"]}>
+            突袭
+          </span>}
+
+          <span>
+            {`${stageInfo.code} ${stageInfo.name}`}
+          </span>
 
           <span className={style["h1-title-badge"]}>
             {server}

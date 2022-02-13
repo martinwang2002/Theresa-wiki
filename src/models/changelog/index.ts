@@ -26,8 +26,27 @@ export const changelogs: IChangelog[] = [
   //   contents: {}
   // },
   {
+    version: [0, 0, 2],
+    date: new Date("2022-02-14T0:00:00+0000"),
+    contents: {
+      added: [
+        "Minified favicon.svg",
+        "Component StageInfo",
+        "Docs for ENV THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=False"
+      ],
+      changed: [
+        "Dockerfile for gen-license",
+        "Page: /map/[stageId] -> /map/[zoneId]/[stageId]"
+      ],
+      fixed: [
+        "redis typo",
+        "eslint readonly"
+      ]
+    }
+  },
+  {
     version: [0, 0, 1],
-    date: new Date("2022-01-17T8:00:00+0800"),
+    date: new Date("2022-01-17T0:00:00+0000"),
     contents: {
       added: [
         "Initial Release",
