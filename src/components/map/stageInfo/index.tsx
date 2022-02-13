@@ -3,19 +3,19 @@ import React from "react"
 
 // Components
 import StageInfoDescription from "./stageInfoDescription"
-import StageInfoTable from "./stageInfoTable"
+import StageInfoTable from "./stageInfoTable/index"
 
 // models
-import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
+import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoProps{
-  stageInfo: IStageInfo
+  stageInfo: ICustomStageInfo
   stageJsonOptions: Record<string, string> | null
 }
 
 class StageInfo extends React.PureComponent<StageInfoProps> {
   public render (): React.ReactNode {
-    const { stageInfo, stageJsonOptions } = this.props
+    const { stageInfo } = this.props
 
     // FIXME: eslint
     /* eslint-disable react/jsx-max-depth */
@@ -33,78 +33,8 @@ class StageInfo extends React.PureComponent<StageInfoProps> {
           stageInfo={stageInfo}
         />
 
-        <table>
-          <thead>
-            <tr>
-              <th>
-                Key
-              </th>
-
-              <th>
-                Value
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {Object.entries(stageInfo).map(
-              (entry: Readonly<[string, unknown]>) => {
-                const [key, value] = entry
-                return (
-                  <tr key={key}>
-                    <td>
-                      {key}
-                    </td>
-
-                    <td>
-                      {JSON.stringify(value)}
-                    </td>
-                  </tr>
-                )
-              }
-            )}
-
-            <tr>
-              <td>
-                --
-              </td>
-
-              <td>
-                /
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                --
-              </td>
-
-              <td>
-                --
-              </td>
-            </tr>
-
-            {stageJsonOptions != null && Object.entries(stageJsonOptions).map(
-              (entry: Readonly<string[]>) => {
-                const [key, value] = entry
-                return (
-                  <tr key={key}>
-                    <td>
-                      {key}
-                    </td>
-
-                    <td>
-                      {String(value)}
-                    </td>
-                  </tr>
-                )
-              }
-            )}
-          </tbody>
-        </table>
-
         <a href="#stageInfo">
-          test
+          stageInfo anchor
         </a>
       </>
     )
