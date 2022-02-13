@@ -38,7 +38,8 @@ export const changelogs: IChangelog[] = [
         "Page: /map/[stageId] -> /map/[zoneId]/[stageId]"
       ],
       fixed: [
-        "redis typo"
+        "redis typo",
+        "eslint readonly"
       ]
     }
   },

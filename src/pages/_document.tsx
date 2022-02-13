@@ -73,7 +73,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ctx.renderPage = () =>
     originalRenderPage({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-readonly-parameter-types
       enhanceApp: (App) =>
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/prefer-readonly-parameter-types
         function myEnhanceApp (props) {
