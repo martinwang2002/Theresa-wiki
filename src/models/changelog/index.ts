@@ -26,7 +26,7 @@ export const changelogs: IChangelog[] = [
   //   contents: {}
   // },
   {
-    version: "0.0.2.canary",
+    version: [0, 0, 2],
     date: new Date("2022-02-14T0:00:00+0000"),
     contents: {
       added: [
