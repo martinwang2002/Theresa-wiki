@@ -31,7 +31,8 @@ export const changelogs: IChangelog[] = [
     contents: {
       added: [
         "Minified favicon.svg",
-        "Component StageInfo"
+        "Component StageInfo",
+        "Docs for ENV THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=False"
       ],
       changed: [
         "Dockerfile for gen-license",
