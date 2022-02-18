@@ -86,8 +86,7 @@ interface IMapData {
 
 const stageTable = cacheable(async (): Promise<IStageTable> => {
   const url = serializeUri({
-    scheme: "http",
-    host: serverRuntimeConfig.THERESA_S3,
+    ...serverRuntimeConfig.THERESA_S3,
     path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json"
   })
 
@@ -176,8 +175,7 @@ interface IStageJson {
 
 export const stageJson = async (levelId: string): Promise<IStageJson> => {
   const stageUrl = serializeUri({
-    scheme: "http",
-    host: serverRuntimeConfig.THERESA_S3,
+    ...serverRuntimeConfig.THERESA_S3,
     path: `/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
   })
 

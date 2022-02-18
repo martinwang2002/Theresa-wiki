@@ -12,8 +12,7 @@ interface IGamedataConst {
 
 const gamedataConst = cacheable(async (): Promise<IGamedataConst> => {
   const url = serializeUri({
-    scheme: "http",
-    host: serverRuntimeConfig.THERESA_S3,
+    ...serverRuntimeConfig.THERESA_S3,
     path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/gamedata_const.json"
   })
 

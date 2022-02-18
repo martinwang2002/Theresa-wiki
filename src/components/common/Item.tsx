@@ -18,8 +18,7 @@ class Item extends React.PureComponent<ItemProps> {
   public render (): React.ReactNode {
     const { itemId, count, sx } = this.props
     const imageSrc = serializeUri({
-      scheme: process.env.NODE_ENV === "production" ? "https" : "http",
-      host: publicRuntimeConfig.THERESA_STATIC,
+      ...publicRuntimeConfig.THERESA_STATIC,
       path: `/api/v0/AK_AB/CN/Android/latest/item/${itemId}`
     })
 

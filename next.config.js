@@ -10,8 +10,7 @@ try {
 
 module.exports = {
   images: {
-    // FIXME no longer available
-    domains: ["s3-torappu.martinwang2002.com"],
+    domains: [process.env.THERESA_STATIC],
   },
   poweredByHeader: false,
   reactStrictMode: true,
@@ -33,9 +32,15 @@ module.exports = {
   publicRuntimeConfig: {
     THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
     GIT_COMMIT: commitHash,
-    THERESA_STATIC: process.env.THERESA_STATIC ?? ""
+    THERESA_STATIC: {
+      scheme: process.env.NODE_ENV === "production" ? "https" : "http",
+      host: process.env.THERESA_STATIC ?? ""
+    }
   },
   serverRuntimeConfig: {
-    THERESA_S3: process.env.THERESA_S3?? ""
+    THERESA_S3: {
+      scheme:  "http",
+      host: process.env.THERESA_S3 ?? ""
+    }
   },
 }

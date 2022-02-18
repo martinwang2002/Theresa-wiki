@@ -11,8 +11,7 @@ interface IZoneTable {
 
 const zoneTable = cacheable(async (): Promise<IZoneTable> => {
   const url = serializeUri({
-    scheme: "http",
-    host: serverRuntimeConfig.THERESA_S3,
+    ...serverRuntimeConfig.THERESA_S3,
     path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/zone_table.json"
   })
 
