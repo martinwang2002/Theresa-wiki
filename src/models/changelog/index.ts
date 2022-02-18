@@ -29,6 +29,9 @@ export const changelogs: IChangelog[] = [
     version: [0, 0, 3].join(".") + ".canary",
     date: new Date("2022-02-20T8:00:00+0800"),
     contents: {
+      added: [
+        "eslint jsonc"
+      ],
       changed: [
         "use uri-js to format url"
       ],

@@ -7,6 +7,7 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "files.associations": {
+        "*.eslintrc": "jsonc",
         "*.stylintrc": "jsonc"
     },
     "files.insertFinalNewline": true,
@@ -20,6 +21,9 @@
     "[typescript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
+    "[jsonc]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
     "css.validate": true,
     "scss.validate": true,
     // extensions
@@ -31,4 +35,8 @@
     ],
     "stylelint.packageManager": "yarn",
     "stylelint.enable": true,
+    "eslint.validate": [
+        "json",
+        "jsonc"
+    ]
 }

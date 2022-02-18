@@ -1,11 +1,11 @@
 let commitHash
 
 try {
-  commitHash = require('child_process')
-    .execSync('git rev-parse --short HEAD')
-    .toString().trim() || 'unknown'
+  commitHash = require("child_process")
+    .execSync("git rev-parse --short HEAD")
+    .toString().trim() || "unknown"
 } catch (e) {
-  commitHash = 'unknown'
+  commitHash = "unknown"
 }
 
 module.exports = {
@@ -17,8 +17,8 @@ module.exports = {
   async rewrites () {
     return [
       {
-        source: '/:server(CN|US|JP|TW|KR)/:path*',
-        destination: '/:path*?server=:server'
+        source: "/:server(CN|US|JP|TW|KR)/:path*",
+        destination: "/:path*?server=:server"
       }
     ]
   },
@@ -26,8 +26,8 @@ module.exports = {
     config.module.rules.push({
       test: /\.md$/i,
       loader: "raw-loader",
-    });
-    return config;
+    })
+    return config
   },
   publicRuntimeConfig: {
     THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",

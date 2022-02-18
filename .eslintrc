@@ -4,29 +4,141 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "plugin:@typescript-eslint/all",
-        "plugin:react/all",
-        "plugin:@next/next/recommended",
-        "standard"
-    ],
     "globals": {
         "JSX": "readonly"
     },
     "overrides": [
         {
+            "extends": [
+                "plugin:@typescript-eslint/all",
+                "plugin:react/all",
+                "plugin:@next/next/recommended",
+                "standard"
+            ],
             "files": [
                 "*.ts",
                 "*.tsx"
             ],
+            "parser": "@typescript-eslint/parser",
             "parserOptions": {
                 "project": [
                     "./tsconfig.json"
                 ]
+            },
+            "plugins": [
+                "react",
+                "@typescript-eslint"
+            ],
+            "rules": {
+                "@typescript-eslint/indent": [
+                    "error",
+                    2
+                ],
+                "@typescript-eslint/init-declarations": [
+                    "error",
+                    "never"
+                ],
+                "@typescript-eslint/member-delimiter-style": [
+                    "error",
+                    {
+                        "multiline": {
+                            "delimiter": "none"
+                        }
+                    }
+                ],
+                "@typescript-eslint/member-ordering": "off",
+                "@typescript-eslint/no-extra-parens": "off",
+                "@typescript-eslint/no-magic-numbers": [
+                    "error",
+                    {
+                        "ignoreNumericLiteralTypes": true
+                    }
+                ],
+                "@typescript-eslint/no-use-before-define": "off",
+                "@typescript-eslint/object-curly-spacing": [
+                    "error",
+                    "always"
+                ],
+                "@typescript-eslint/semi": [
+                    "error",
+                    "never"
+                ],
+                "@typescript-eslint/unbound-method": "off",  "no-extra-parens": "off",
+                "no-use-before-define": "off",
+                "quotes": [
+                    "error",
+                    "double"
+                ],
+                "react/jsx-filename-extension": [
+                    "error",
+                    {
+                        "extensions": [
+                            ".ts",
+                            ".tsx"
+                        ]
+                    }
+                ],
+                "react/jsx-indent": [
+                    "error",
+                    2
+                ],
+                "react/jsx-indent-props": [
+                    "error",
+                    2
+                ],
+                "react/jsx-max-depth": [
+                    "error",
+                    {
+                        "max": 3
+                    }
+                ],
+                "react/jsx-no-bind": "off",
+                "react/jsx-no-literals": "off",
+                "react/no-set-state": "off",
+                "react/prefer-stateless-function": "off",
+                "semi": [
+                    "error",
+                    "never"
+                ]
+            }
+        },
+        {
+            "extends": [
+                "plugin:jsonc/recommended-with-jsonc"
+            ],
+            "files": [
+                "*.json",
+                ".eslintrc",
+                ".stylelintrc"
+            ],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
+                "jsonc/comma-dangle": "error",
+                "jsonc/indent": ["error",
+                    4,
+                    {}
+                ],
+                "jsonc/key-spacing": ["error",
+                    {
+                        "afterColon": true,
+                        "beforeColon": false,
+                        "mode": "strict"
+                    }
+                ],
+                "jsonc/sort-array-values": [
+                    "error",
+                    { 
+                        "order": {
+                            "type": "asc"
+                        },
+                        "pathPattern": "^files$"
+                    }
+                ],
+                "jsonc/sort-keys": "error",
+                "no-multiple-empty-lines": ["error", { "max": 0, "maxEOF": 1 }]
             }
         }
     ],
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -34,11 +146,9 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
     "rules": {
+        "no-extra-parens": "off",
+        "no-use-before-define": "off",
         "quotes": [
             "error",
             "double"
@@ -46,69 +156,6 @@
         "semi": [
             "error",
             "never"
-        ],
-        "@typescript-eslint/semi": [
-            "error",
-            "never"
-        ],
-        "@typescript-eslint/object-curly-spacing": [
-            "error",
-            "always"
-        ],
-        "@typescript-eslint/init-declarations": [
-            "error",
-            "never"
-        ],
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/member-delimiter-style": [
-            "error",
-            {
-                "multiline": {
-                    "delimiter": "none"
-                }
-            }
-        ],
-        "react/prefer-stateless-function": "off",
-        "react/jsx-filename-extension": [
-            "error",
-            {
-                "extensions": [
-                    ".ts",
-                    ".tsx"
-                ]
-            }
-        ],
-        "@typescript-eslint/indent": [
-            "error",
-            2
-        ],
-        "react/jsx-indent": [
-            "error",
-            2
-        ],
-        "react/jsx-indent-props": [
-            "error",
-            2
-        ],
-        "react/jsx-no-literals": "off",
-        "react/no-set-state": "off",
-        "@typescript-eslint/member-ordering": "off",
-        "react/jsx-no-bind": "off",
-        "@typescript-eslint/unbound-method": "off",
-        "no-extra-parens": "off",
-        "@typescript-eslint/no-extra-parens": "off",
-        "react/jsx-max-depth": [
-            "error",
-            {
-                "max": 3
-            }
-        ],
-        "@typescript-eslint/no-magic-numbers": [
-            "error",
-            {
-                "ignoreNumericLiteralTypes": true
-            }
         ]
     },
     "settings": {
