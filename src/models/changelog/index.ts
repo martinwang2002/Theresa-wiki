@@ -31,6 +31,9 @@ export const changelogs: IChangelog[] = [
     contents: {
       changed: [
         "use uri-js to format url"
+      ],
+      fixed: [
+        "Dockerfile yarn install network error, adding tolerance"
       ]
     }
   },
