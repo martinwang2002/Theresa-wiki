@@ -26,6 +26,15 @@ export const changelogs: IChangelog[] = [
   //   contents: {}
   // },
   {
+    version: [0, 0, 3].join(".") + ".canary",
+    date: new Date("2022-02-20T8:00:00+0800"),
+    contents: {
+      changed: [
+        "use uri-js to format url"
+      ]
+    }
+  },
+  {
     version: [0, 0, 2],
     date: new Date("2022-02-14T0:00:00+0000"),
     contents: {

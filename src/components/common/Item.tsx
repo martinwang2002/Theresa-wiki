@@ -3,6 +3,7 @@
 import React from "react"
 import Badge from "@mui/material/Badge"
 import type { SxProps } from "@mui/system"
+import { serialize as serializeUri } from "uri-js"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -16,7 +17,11 @@ interface ItemProps{
 class Item extends React.PureComponent<ItemProps> {
   public render (): React.ReactNode {
     const { itemId, count, sx } = this.props
-    const imageSrc = `${publicRuntimeConfig.THERESA_STATIC}api/v0/AK_AB/CN/Android/latest/item/${itemId}`
+    const imageSrc = serializeUri({
+      scheme: process.env.NODE_ENV === "production" ? "https" : "http",
+      host: publicRuntimeConfig.THERESA_STATIC,
+      path: `/api/v0/AK_AB/CN/Android/latest/item/${itemId}`
+    })
 
     return (
       <div style={{
