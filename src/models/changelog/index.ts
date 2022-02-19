@@ -31,7 +31,8 @@ export const changelogs: IChangelog[] = [
     contents: {
       added: [
         "eslint jsonc",
-        "mappreview"
+        "mappreview",
+        "scrollbar"
       ],
       changed: [
         "use uri-js to format url",
