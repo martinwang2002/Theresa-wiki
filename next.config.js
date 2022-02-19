@@ -30,7 +30,6 @@ module.exports = {
     return config
   },
   publicRuntimeConfig: {
-    THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
     GIT_COMMIT: commitHash,
     THERESA_STATIC: {
       scheme: process.env.NODE_ENV === "production" ? "https" : "http",

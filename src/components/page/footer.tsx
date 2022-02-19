@@ -5,6 +5,7 @@ import Link from "next/link"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
+import { THERESA_WIKI_VERSION } from "@/models/changelog"
 
 // styles
 import style from "./page.module.scss"
@@ -34,7 +35,7 @@ class Footer extends React.PureComponent {
         </div>
 
         <div className={style.version}>
-          {publicRuntimeConfig.THERESA_WIKI_VERSION}
+          {THERESA_WIKI_VERSION}
 
           {" "}
 

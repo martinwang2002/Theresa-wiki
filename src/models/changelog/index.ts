@@ -14,7 +14,7 @@ interface IChangelogContent {
 }
 
 interface IChangelog {
-  version: string | [number, number, number]
+  version: [number, number, number, string?]
   date: Date
   contents: IChangelogContent
 }
@@ -26,14 +26,15 @@ export const changelogs: IChangelog[] = [
   //   contents: {}
   // },
   {
-    version: [0, 0, 3].join(".") + ".canary",
+    version: [0, 0, 3, "canary"],
     date: new Date("2022-02-20T8:00:00+0800"),
     contents: {
       added: [
         "eslint jsonc"
       ],
       changed: [
-        "use uri-js to format url"
+        "use uri-js to format url",
+        "use changelog version, instead of package.json version"
       ],
       fixed: [
         "Dockerfile yarn install network error, adding tolerance"
@@ -76,5 +77,7 @@ export const changelogs: IChangelog[] = [
     }
   }
 ]
+
+export const THERESA_WIKI_VERSION = changelogs[0].version.join(".")
 
 export type { IChangelog }
