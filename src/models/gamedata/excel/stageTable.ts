@@ -1,3 +1,6 @@
+// libs
+import { serialize as serializeUri } from "uri-js"
+
 // configs
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -23,6 +26,7 @@ interface IDisplayDetailReward {
   type: string
   id: string
   dropType: number
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   occPercent: 0 | 1 | 2 | 3 | 4
 }
 
@@ -81,7 +85,11 @@ interface IMapData {
 }
 
 const stageTable = cacheable(async (): Promise<IStageTable> => {
-  const url = `${serverRuntimeConfig.THERESA_S3}api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json`
+  const url = serializeUri({
+    ...serverRuntimeConfig.THERESA_S3,
+    path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json"
+  })
+
   const stageTableRes = await fetch(url)
   const stageTableJson = await stageTableRes.json() as IStageTable
   return stageTableJson
@@ -166,7 +174,11 @@ interface IStageJson {
 }
 
 export const stageJson = async (levelId: string): Promise<IStageJson> => {
-  const stageUrl = `${serverRuntimeConfig.THERESA_S3}api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
+  const stageUrl = serializeUri({
+    ...serverRuntimeConfig.THERESA_S3,
+    path: `/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
+  })
+
   const stageRes = await fetch(stageUrl)
   const stageJsonResult = await stageRes.json() as IStageJson
   return stageJsonResult

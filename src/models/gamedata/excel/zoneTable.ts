@@ -1,3 +1,6 @@
+// libs
+import { serialize as serializeUri } from "uri-js"
+
 // configs
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -7,7 +10,11 @@ interface IZoneTable {
 }
 
 const zoneTable = cacheable(async (): Promise<IZoneTable> => {
-  const url = `${serverRuntimeConfig.THERESA_S3}api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/zone_table.json`
+  const url = serializeUri({
+    ...serverRuntimeConfig.THERESA_S3,
+    path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/zone_table.json"
+  })
+
   const zoneTableRes = await fetch(url)
   const zoneTableJson = await zoneTableRes.json() as IZoneTable
   return zoneTableJson

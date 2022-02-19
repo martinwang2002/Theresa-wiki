@@ -52,7 +52,6 @@
   // main container padding-bottom 1rem
   // Footer min height 8rem
   min-height: calc(100vh - 2rem - 16px - 8rem - 1rem);
-  padding-top: calc(2rem + 16px);
   padding-bottom: 1rem;
   opacity: 1;
 }
@@ -67,6 +66,31 @@
 
   & a {
     cursor: wait;
+  }
+}
+
+.page-content {
+  overflow: auto;
+  width: auto;
+  height: calc(100vh - 3rem);
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #12354214;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: #12354221;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #12354270;
   }
 }
 

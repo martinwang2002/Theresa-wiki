@@ -8,6 +8,7 @@ import { pick as lodashPick } from "lodash"
 import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
+import MapPreview from "@/components/map/mapPreview"
 
 // models
 import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
@@ -105,7 +106,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { server, stageInfo, stageJson, tileInfo, gamedataConst } = this.props
+    const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId } = this.props
     const { mapData } = stageJson
     return (
       <Page>
@@ -141,6 +142,8 @@ class Map extends React.PureComponent<MapProps> {
             stageJsonOptions={stageJson.options}
           />
         </GamedataContext.Provider>
+
+        <MapPreview stageId={stageId} />
 
         <TileInfoContext.Provider value={tileInfo}>
           <MapScene

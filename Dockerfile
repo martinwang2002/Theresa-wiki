@@ -6,7 +6,7 @@ RUN apk add --no-cache libc6-compat git
 
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --network-timeout 100000
 
 # generate LICENSES.txt
 RUN mkdir public

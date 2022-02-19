@@ -1,14 +1,13 @@
 {
   "name": "theresa.wiki",
-  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "npm-run-all lint:*",
-    "lint:ts": "next lint",
-    "lint:scss": "stylelint **/*.scss",
+    "lint:eslint": "next lint",
+    "lint:stylelint": "stylelint **/*.scss",
     "gen-license": "yarn licenses generate-disclaimer --silent > public/LICENSES.txt"
   },
   "dependencies": {
@@ -32,6 +31,7 @@
     "react-markdown": "^7.1.1",
     "remark-gfm": "^3.0.1",
     "sass": "^1.44.0",
+    "uri-js": "^4.4.1",
     "webpack": "^5.65.0"
   },
   "devDependencies": {
@@ -49,6 +49,7 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsonc": "^2.2.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",

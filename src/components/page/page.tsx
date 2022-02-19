@@ -142,13 +142,19 @@ class Page extends React.PureComponent<PageProps, PageState> {
 
         <Header />
 
-        <main className={!indeterminate ? style.main_container : style.main_container_fadeout}>
-          {children}
-        </main>
+        <div style={{
+          height: "3rem"
+        }}
+        />
 
-        <Footer />
+        <div className={style["page-content"]}>
+          <main className={!indeterminate ? style.main_container : style.main_container_fadeout}>
+            {children}
+          </main>
+
+          <Footer />
+        </div>
       </>
-
     )
   }
 }

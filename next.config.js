@@ -1,25 +1,24 @@
 let commitHash
 
 try {
-  commitHash = require('child_process')
-    .execSync('git rev-parse --short HEAD')
-    .toString().trim() || 'unknown'
+  commitHash = require("child_process")
+    .execSync("git rev-parse --short HEAD")
+    .toString().trim() || "unknown"
 } catch (e) {
-  commitHash = 'unknown'
+  commitHash = "unknown"
 }
 
 module.exports = {
   images: {
-    // FIXME no longer available
-    domains: ["s3-torappu.martinwang2002.com"],
+    domains: [process.env.THERESA_STATIC],
   },
   poweredByHeader: false,
   reactStrictMode: true,
   async rewrites () {
     return [
       {
-        source: '/:server(CN|US|JP|TW|KR)/:path*',
-        destination: '/:path*?server=:server'
+        source: "/:server(CN|US|JP|TW|KR)/:path*",
+        destination: "/:path*?server=:server"
       }
     ]
   },
@@ -27,15 +26,20 @@ module.exports = {
     config.module.rules.push({
       test: /\.md$/i,
       loader: "raw-loader",
-    });
-    return config;
+    })
+    return config
   },
   publicRuntimeConfig: {
-    THERESA_WIKI_VERSION: process.env.npm_package_version || "unknown",
     GIT_COMMIT: commitHash,
-    THERESA_STATIC: process.env.THERESA_STATIC ?? ""
+    THERESA_STATIC: {
+      scheme: process.env.NODE_ENV === "production" ? "https" : "http",
+      host: process.env.THERESA_STATIC ?? ""
+    }
   },
   serverRuntimeConfig: {
-    THERESA_S3: process.env.THERESA_S3?? ""
+    THERESA_S3: {
+      scheme:  "http",
+      host: process.env.THERESA_S3 ?? ""
+    }
   },
 }

@@ -2,7 +2,9 @@
   position: relative;
   display: flex;
   overflow: hidden;
-  width: 100%;
+  width: auto;
+  max-height: 65vh;
+  margin: auto;
   aspect-ratio: 16/9;
 }
 
