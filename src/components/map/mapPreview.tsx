@@ -8,17 +8,13 @@ import type { ImageLoaderProps } from "next/image"
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// import type { ImageLoaderProps } from "next/image"
-
 interface MapPreviewProps{
   stageId: string
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types,  @typescript-eslint/no-unused-vars, no-unused-vars
-const myLoader = ({ src, width, quality }: ImageLoaderProps): string => {
-  return src
-  // const qualityFallback = 75
-  // return `https://example.com/${src}?w=${width}&q=${quality || qualityFallback}`
+const staticLoader = ({ src, width, quality }: Readonly<ImageLoaderProps>): string => {
+  const fallbackQuality = 75
+  return src.replace("width", String(width)).replace("quality", String(quality ?? fallbackQuality))
 }
 
 class MapPreview extends React.PureComponent<MapPreviewProps> {
@@ -28,7 +24,7 @@ class MapPreview extends React.PureComponent<MapPreviewProps> {
     const normalStageId = stageId.replace("__f__", "")
     const imageSrc = serialize({
       ...publicRuntimeConfig.THERESA_STATIC,
-      path: `/api/v0/AK_AB/CN/Android/latest/mappreview/${normalStageId}`
+      path: `/api/v0/AK_AB/CN/Android/latest/mappreview/${normalStageId}/width/quality`
     })
 
     return (
@@ -60,10 +56,8 @@ class MapPreview extends React.PureComponent<MapPreviewProps> {
             <Image
               alt={`Stage Preview Picture ${stageId}`}
               layout="fill"
-              loader={myLoader}
+              loader={staticLoader}
               src={imageSrc}
-              // TODO: optimize image
-              unoptimized
             />
           </Paper>
         </div>
