@@ -59,11 +59,19 @@
                     "error",
                     "always"
                 ],
+                "@typescript-eslint/prefer-readonly-parameter-types": [
+                    "error",
+                    {
+                        "ignoreInferredTypes": true,
+                        "treatMethodsAsReadonly": false
+                    }
+                ],
                 "@typescript-eslint/semi": [
                     "error",
                     "never"
                 ],
-                "@typescript-eslint/unbound-method": "off",  "no-extra-parens": "off",
+                "@typescript-eslint/unbound-method": "off",  
+                "no-extra-parens": "off",
                 "no-use-before-define": "off",
                 "quotes": [
                     "error",
@@ -113,18 +121,40 @@
             ],
             "parser": "jsonc-eslint-parser",
             "rules": {
+                "jsonc/array-bracket-newline": [
+                    "error",
+                    {
+                        "minItems": 0,
+                        "multiline": true
+                    }
+                ],
+                "jsonc/array-element-newline": [
+                    "error",
+                    "always"
+                ],
                 "jsonc/comma-dangle": "error",
-                "jsonc/indent": ["error",
+                "jsonc/indent": [
+                    "error",
                     4,
                     {}
                 ],
-                "jsonc/key-spacing": ["error",
+                "jsonc/key-spacing": [
+                    "error",
                     {
                         "afterColon": true,
                         "beforeColon": false,
                         "mode": "strict"
                     }
                 ],
+                "jsonc/object-curly-newline": [
+                    "error",
+                    {
+                        "consistent": true,
+                        "minProperties": 0,
+                        "multiline": true
+                    }
+                ],
+                "jsonc/object-property-newline": "error",
                 "jsonc/sort-array-values": [
                     "error",
                     { 
@@ -135,7 +165,13 @@
                     }
                 ],
                 "jsonc/sort-keys": "error",
-                "no-multiple-empty-lines": ["error", { "max": 0, "maxEOF": 1 }]
+                "no-multiple-empty-lines": [
+                    "error",
+                    {
+                        "max": 0,
+                        "maxEOF": 1 
+                    }
+                ]
             }
         }
     ],
