@@ -33,6 +33,7 @@ export const changelogs: IChangelog[] = [
         "nextjs standalone mode"
       ],
       changed: [
+        "page: scrollbar color, hover color"
       ],
       fixed: [
         "page: placebo rendered at server side"
