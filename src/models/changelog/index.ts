@@ -35,6 +35,7 @@ export const changelogs: IChangelog[] = [
       changed: [
       ],
       fixed: [
+        "page: placebo rendered at server side"
       ]
     }
   },

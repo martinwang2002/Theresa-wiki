@@ -17,9 +17,16 @@ interface PageState {
   progress: number
 }
 
+const progress0 = 0
+const progress80 = 80
+const progress100 = 100
+
+const opacity0 = 0
+const opacity1 = 1
+
 class Page extends React.PureComponent<PageProps, PageState> {
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-  public constructor (props: PageProps | Readonly<PageProps>) {
+  public constructor (props: Readonly<PageProps>) {
     super(props)
     this.state = {
       indeterminate: false,
@@ -48,19 +55,18 @@ class Page extends React.PureComponent<PageProps, PageState> {
   private readonly handleStart = (): void => {
     this.setState({
       indeterminate: true,
-      progress: 80
+      progress: typeof window !== "undefined" ? progress80 : progress0
     })
   }
 
   private readonly handleStop = (): void => {
     this.setState({
       indeterminate: false,
-      progress: 100
+      progress: typeof window !== "undefined" ? progress100 : progress0
     })
   }
 
   public handleTransitionEnd (): void {
-    const progress100 = 100
     const { progress } = this.state
     if (progress === progress100) {
       this.setState({
@@ -72,9 +78,6 @@ class Page extends React.PureComponent<PageProps, PageState> {
   public render (): React.ReactNode {
     const { children } = this.props
     const { indeterminate, progress } = this.state
-    const progress0 = 0
-    const opacity0 = 0
-    const opacity1 = 1
     return (
       <>
         <div className={style.placebo}>
