@@ -128,7 +128,7 @@
   flex-direction: column;
   margin: auto;
 
-  a {
+  span {
     margin: 0.2em auto;
     color: #d2dbd9;
     text-decoration: none;
@@ -136,6 +136,7 @@
 
     &:hover {
       color: #fff;
+      cursor: pointer;
     }
   }
 }

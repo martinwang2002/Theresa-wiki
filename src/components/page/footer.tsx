@@ -1,7 +1,11 @@
-/* eslint-disable react/jsx-max-depth */
 // libs
 import React from "react"
-import Link from "next/link"
+import SecurityIcon from "@mui/icons-material/Security"
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+// import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
+
+// components
+import FooterLink from "./footerLink"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -10,28 +14,36 @@ import { THERESA_WIKI_VERSION } from "@/models/changelog"
 // styles
 import style from "./page.module.scss"
 
+const iconSx = {
+  verticalAlign: "bottom",
+  marginRight: "0.25em",
+  fontSize: "1.25em"
+}
+
 class Footer extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <div className={style.footer}>
         <div className={style.footer_links}>
-          <Link
+
+          <FooterLink
             href="/about/privacy"
-          >
-            隐私权政策
-          </Link>
+            icon={<SecurityIcon sx={iconSx} />}
+            text="隐私权政策"
+          />
 
-          <Link
+          <FooterLink
             href="/about/credits"
-          >
-            内容来源
-          </Link>
+            icon={<VerifiedOutlinedIcon sx={iconSx} />}
+            text="内容来源"
+          />
 
-          {/* <Link
+          {/* <FooterLink
             href="/about/changelog"
-          >
-            更新记录
-          </Link> */}
+            icon={<ChangeHistoryIcon sx={iconSx} />}
+            text="更新记录"
+          /> */}
+
         </div>
 
         <div className={style.version}>
