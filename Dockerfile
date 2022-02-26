@@ -14,8 +14,9 @@ RUN yarn gen-license
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
+
 # SSR routes or not
-ARG THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=False
+ARG THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=True
 ENV THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES $THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES
 
 RUN apk update && apk add --no-cache git
@@ -49,16 +50,13 @@ ENV NODE_ENV production
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-COPY . .
-COPY --from=builder /app/package.json ./package.json
-RUN echo
-COPY --from=builder /app/node_modules ./node_modules
-
-COPY --from=builder /app/next.config.js ./
-RUN echo
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+# Automatically leverage output traces to reduce image size 
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
@@ -71,4 +69,4 @@ ENV PORT 3000
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-CMD ["yarn", "start"]
+CMD ["node", "server.js"]

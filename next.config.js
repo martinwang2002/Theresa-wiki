@@ -10,11 +10,14 @@ try {
 
 module.exports = {
   images: {
-    domains: [process.env.THERESA_STATIC],
+    domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
   },
   poweredByHeader: false,
   reactStrictMode: true,
-  async rewrites () {
+  experimental: {
+    outputStandalone: true,
+  },
+  async rewrites() {
     return [
       {
         source: "/:server(CN|US|JP|TW|KR)/:path*",
@@ -32,13 +35,14 @@ module.exports = {
   publicRuntimeConfig: {
     GIT_COMMIT: commitHash,
     THERESA_STATIC: {
-      scheme: process.env.NODE_ENV === "production" ? "https" : "http",
+      scheme: process.env.THERESA_STATIC !== "static.theresa.localhost" ? "https" : "http",
       host: process.env.THERESA_STATIC ?? ""
     }
   },
   serverRuntimeConfig: {
+    REDIS_URL: process.env.REDIS_URL ?? "",
     THERESA_S3: {
-      scheme:  "http",
+      scheme: "http",
       host: process.env.THERESA_S3 ?? ""
     }
   },

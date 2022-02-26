@@ -1,5 +1,8 @@
 import Redis from "ioredis"
 
+// models
+import { serverRuntimeConfig } from "./runtimeConfig"
+
 interface ICacheable {
   cacheKey: string
   hashKey?: string
@@ -13,7 +16,7 @@ const redisConfig: Redis.RedisOptions = {
   keyPrefix: "FRONTEND_"
 }
 
-const redisClient = new Redis(process.env.REDIS_URL, redisConfig)
+const redisClient = new Redis(serverRuntimeConfig.REDIS_URL, redisConfig)
 
 // ignore redis cache when developing and in build stage
 if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event === "build") {

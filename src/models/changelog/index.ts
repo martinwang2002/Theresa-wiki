@@ -26,7 +26,20 @@ export const changelogs: IChangelog[] = [
   //   contents: {}
   // },
   {
-    version: [0, 0, 3, "canary"],
+    version: [0, 0, 4, "canary"],
+    date: new Date("2022-02-28T8:00:00+0800"),
+    contents: {
+      added: [
+        "nextjs standalone mode"
+      ],
+      changed: [
+      ],
+      fixed: [
+      ]
+    }
+  },
+  {
+    version: [0, 0, 3],
     date: new Date("2022-02-20T8:00:00+0800"),
     contents: {
       added: [

@@ -11,6 +11,7 @@ interface IPublicRuntimeConfig {
 
 interface IServerRuntimeConfig {
   /* eslint-disable @typescript-eslint/naming-convention */
+  REDIS_URL: string
   THERESA_S3: URIComponents
   /* eslint-enable @typescript-eslint/naming-convention */
 }
