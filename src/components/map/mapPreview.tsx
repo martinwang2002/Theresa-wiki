@@ -12,6 +12,7 @@ interface MapPreviewProps{
   stageId: string
 }
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const staticLoader = ({ src, width, quality }: Readonly<ImageLoaderProps>): string => {
   const fallbackQuality = 75
   return src.replace("width", String(width)).replace("quality", String(quality ?? fallbackQuality))
