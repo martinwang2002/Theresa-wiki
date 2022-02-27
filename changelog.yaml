@@ -9,6 +9,7 @@ versions:
       changed:
         - "page: scrollbar color, hover color"
         - use changelog.yaml
+        - scrollbar width 10px -> 8px, without border
       fixed:
         - "page: placebo rendered at server side"
 

@@ -75,7 +75,7 @@
   height: calc(100vh - 3rem);
 
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   &::-webkit-scrollbar-track {
@@ -83,8 +83,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    border: 1px solid transparent;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #12354264;
     background-clip: content-box;
   }
