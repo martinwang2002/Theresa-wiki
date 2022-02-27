@@ -6,6 +6,7 @@ interface IPublicRuntimeConfig {
   /* eslint-disable @typescript-eslint/naming-convention */
   GIT_COMMIT: string
   THERESA_STATIC: URIComponents
+  THERESA_WIKI_VERSION: string
   /* eslint-enable @typescript-eslint/naming-convention */
 }
 

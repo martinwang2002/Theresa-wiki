@@ -2,14 +2,13 @@
 import React from "react"
 import SecurityIcon from "@mui/icons-material/Security"
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
-// import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
 
 // components
 import FooterLink from "./footerLink"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
-import { THERESA_WIKI_VERSION } from "@/models/changelog"
 
 // styles
 import style from "./page.module.scss"
@@ -38,16 +37,16 @@ class Footer extends React.PureComponent {
             text="内容来源"
           />
 
-          {/* <FooterLink
+          <FooterLink
             href="/about/changelog"
             icon={<ChangeHistoryIcon sx={iconSx} />}
             text="更新记录"
-          /> */}
+          />
 
         </div>
 
         <div className={style.version}>
-          {THERESA_WIKI_VERSION}
+          {publicRuntimeConfig.THERESA_WIKI_VERSION}
 
           {" "}
 

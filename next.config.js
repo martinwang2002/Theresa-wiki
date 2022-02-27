@@ -8,6 +8,20 @@ try {
   commitHash = "unknown"
 }
 
+let versionString
+
+try {
+  const YAML = require("yaml")
+  const fs = require("fs")
+  const changelog = YAML.parse(fs.readFileSync("./changelog.yaml", "utf8"))
+
+  const version = changelog.versions[0].version
+  versionString = version.join(".")
+} catch (e) {
+  versionString = "unknown"
+}
+
+
 module.exports = {
   images: {
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
@@ -30,9 +44,15 @@ module.exports = {
       test: /\.md$/i,
       loader: "raw-loader",
     })
+    config.module.rules.push({
+      test: /\.ya?ml$/,
+      type: "json",
+      use: "yaml-loader"
+    })
     return config
   },
   publicRuntimeConfig: {
+    THERESA_WIKI_VERSION: versionString,
     GIT_COMMIT: commitHash,
     THERESA_STATIC: {
       scheme: process.env.THERESA_STATIC !== "static.theresa.localhost" ? "https" : "http",

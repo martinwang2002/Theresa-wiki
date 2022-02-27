@@ -173,6 +173,36 @@
                     }
                 ]
             }
+        },
+        {
+            "extends": [
+                "eslint:all",
+                "plugin:yml/standard"
+            ],
+            "files": [
+                "*changelog.yaml"
+            ],
+            "rules": {
+                "linebreak-style": "off",
+                "yml/key-spacing": "error",
+                "yml/sort-keys": [
+                    "error",
+                    {
+                        "order": [
+                            "version",
+                            "date",
+                            "contents",
+                            "added",
+                            "changed",
+                            "deprecated",
+                            "removed",
+                            "fixed",
+                            "security"
+                        ],
+                        "pathPattern": ".*"
+                    }
+                ]
+            }
         }
     ],
     "parserOptions": {

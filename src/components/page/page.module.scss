@@ -50,8 +50,8 @@
   width: auto;
   // Header height 2rem + 16px
   // main container padding-bottom 1rem
-  // Footer min height 8rem
-  min-height: calc(100vh - 2rem - 16px - 8rem - 1rem);
+  // Footer min height 10rem
+  min-height: calc(100vh - 2rem - 16px - 10rem - 1rem);
   padding-bottom: 1rem;
   opacity: 1;
 }
@@ -118,7 +118,7 @@
 .footer {
   display: flex;
   flex-direction: column;
-  min-height: 8rem;
+  min-height: 10rem;
   background-color: #18191a;
   text-align: center;
 }

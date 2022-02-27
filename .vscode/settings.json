@@ -24,6 +24,9 @@
     "[jsonc]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
+    "[yaml]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
     "css.validate": true,
     "scss.validate": true,
     // extensions
@@ -37,6 +40,8 @@
     "stylelint.enable": true,
     "eslint.validate": [
         "json",
-        "jsonc"
+        "jsonc",
+        "yaml",
+        "yml"
     ]
 }

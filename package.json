@@ -32,7 +32,9 @@
     "remark-gfm": "^3.0.1",
     "sass": "^1.44.0",
     "uri-js": "^4.4.1",
-    "webpack": "^5.65.0"
+    "webpack": "^5.65.0",
+    "yaml": "^1.10.2",
+    "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
     "@types/ioredis": "^4.27.1",
@@ -55,6 +57,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-yml": "^0.14.0",
     "npm-run-all": "^4.1.5",
     "stylelint": "^14.2.0",
     "stylelint-config-hudochenkov": "^6.0.1",
