@@ -69,7 +69,10 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                   }
                 }}
                 >
-                  <MuiLink sx={{ marginLeft: "0.5em", cursor: "pointer" }}>
+                  <MuiLink
+                    sx={{ marginLeft: "0.5em", cursor: "pointer" }}
+                    underline="hover"
+                  >
                     {`${extraStageInfo.code} ${extraStageInfo.name}`}
                   </MuiLink>
                 </NextLink>
