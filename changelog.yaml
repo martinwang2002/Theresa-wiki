@@ -1,7 +1,13 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
-  - version: [0, 0, 4, canary]
+  - version: [0, 0, 5, canary]
+    date: 2022-03-07T8:00:00+0800
+    contents:
+      added:
+        - Table of Contents
+
+  - version: [0, 0, 4]
     date: 2022-02-28T8:00:00+0800
     contents:
       added:

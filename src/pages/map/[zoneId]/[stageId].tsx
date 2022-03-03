@@ -9,6 +9,9 @@ import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 import MapPreview from "@/components/map/mapPreview"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import HeadingAnchor from "@/components/common/ToC/headingAnchor"
+import StageInfoDescription from "@/components/map/stageInfo/stageInfoDescription"
 
 // models
 import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
@@ -137,19 +140,37 @@ class Map extends React.PureComponent<MapProps> {
         </h1>
 
         <GamedataContext.Provider value={gamedataConst}>
-          <StageInfo
-            stageInfo={stageInfo}
-            stageJsonOptions={stageJson.options}
+          <StageInfoDescription
+            description={stageInfo.description}
           />
         </GamedataContext.Provider>
 
-        <MapPreview stageId={stageId} />
-
-        <TileInfoContext.Provider value={tileInfo}>
-          <MapScene
-            mapData={mapData}
+        <WithTableOfContents>
+          <HeadingAnchor
+            id="stageInfo"
+            text="作战信息"
           />
-        </TileInfoContext.Provider>
+
+          <GamedataContext.Provider value={gamedataConst}>
+            <StageInfo
+              stageInfo={stageInfo}
+              stageJsonOptions={stageJson.options}
+            />
+          </GamedataContext.Provider>
+
+          <HeadingAnchor
+            id="mapPreview"
+            text="地图预览"
+          />
+
+          <MapPreview stageId={stageId} />
+
+          <TileInfoContext.Provider value={tileInfo}>
+            <MapScene
+              mapData={mapData}
+            />
+          </TileInfoContext.Provider>
+        </WithTableOfContents>
 
       </Page>
     )
