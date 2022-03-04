@@ -11,7 +11,7 @@ import MapScene from "@/components/map/scene/index"
 import MapPreview from "@/components/map/mapPreview"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
-import StageInfoDescription from "@/components/map/stageInfo/stageInfoDescription"
+import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 
 // models
 import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
@@ -19,6 +19,7 @@ import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/
 import { zonesArray } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 // reactContext
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
@@ -129,6 +130,16 @@ class Map extends React.PureComponent<MapProps> {
             {" "}
             | Theresa.wiki
           </title>
+
+          <meta
+            content={stageInfoDescriptionToPlainTextParser(stageInfo.description)}
+            name="descirption"
+          />
+
+          <meta
+            content={[stageInfo.code, stageInfo.name, arknightsNameByServer(server)].join(", ")}
+            name="keywords"
+          />
 
         </Head>
 

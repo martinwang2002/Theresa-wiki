@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - Table of Contents
+        - meta tags for map/[zoneId]/[stageId]
       fixed:
         - map strict zoneId parameter (validation)
 
