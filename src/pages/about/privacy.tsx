@@ -19,11 +19,10 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div>
+        <div style={{ overflow: "hidden" }}>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {privacyMarkdown}
           </ReactMarkdown>
-
         </div>
 
       </Page>
