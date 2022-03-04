@@ -10,6 +10,7 @@ versions:
       fixed:
         - map strict zoneId parameter (validation)
         - /about/changelog /about/privacy overflow to be hidden
+        - emotion cache in page rendering
 
   - version: [0, 0, 4]
     date: 2022-02-28T8:00:00+0800
