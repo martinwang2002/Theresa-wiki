@@ -1,5 +1,3 @@
-// FIXME: @next/next/no-document-import-in-page is fixed in 11.1.3-canary.7 https://github.com/vercel/next.js/issues/29021
-/* eslint-disable @next/next/no-document-import-in-page */
 // libs
 import React from "react"
 import Document, { Html, Head, Main, NextScript } from "next/document"
