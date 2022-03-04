@@ -67,11 +67,11 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
   const stageIds = await stagesArray()
 
   const { params } = context
-  const zoneId = String(params?.zoneId)
+  const zoneIdFromParams = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
   try {
-    if (zoneIds.includes(zoneId) && stageIds.includes(stageId)) {
+    if (zoneIds.includes(zoneIdFromParams) && stageIds.includes(stageId)) {
       // zoneId and stageId exists
       // render page
     } else {
@@ -87,7 +87,15 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const stageInfo = await getCustomStageInfo(stageId)
 
-  const { levelId } = stageInfo
+  const { levelId, zoneId } = stageInfo
+
+  // return notFound when zoneId mismatch
+  if (zoneId !== zoneIdFromParams) {
+    return {
+      notFound: true
+    }
+  }
+
   const stageJson = await getStageJson(levelId)
 
   const tileInfo = await getTileInfo()

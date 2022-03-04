@@ -6,6 +6,8 @@ versions:
     contents:
       added:
         - Table of Contents
+      fixed:
+        - map strict zoneId parameter (validation)
 
   - version: [0, 0, 4]
     date: 2022-02-28T8:00:00+0800
