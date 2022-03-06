@@ -9,6 +9,9 @@ import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 import MapPreview from "@/components/map/mapPreview"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import HeadingAnchor from "@/components/common/ToC/headingAnchor"
+import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 
 // models
 import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
@@ -16,6 +19,7 @@ import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/
 import { zonesArray } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 // reactContext
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
@@ -64,11 +68,11 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
   const stageIds = await stagesArray()
 
   const { params } = context
-  const zoneId = String(params?.zoneId)
+  const zoneIdFromParams = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
   try {
-    if (zoneIds.includes(zoneId) && stageIds.includes(stageId)) {
+    if (zoneIds.includes(zoneIdFromParams) && stageIds.includes(stageId)) {
       // zoneId and stageId exists
       // render page
     } else {
@@ -84,7 +88,15 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const stageInfo = await getCustomStageInfo(stageId)
 
-  const { levelId } = stageInfo
+  const { levelId, zoneId } = stageInfo
+
+  // return notFound when zoneId mismatch
+  if (zoneId !== zoneIdFromParams) {
+    return {
+      notFound: true
+    }
+  }
+
   const stageJson = await getStageJson(levelId)
 
   const tileInfo = await getTileInfo()
@@ -119,6 +131,16 @@ class Map extends React.PureComponent<MapProps> {
             | Theresa.wiki
           </title>
 
+          <meta
+            content={stageInfoDescriptionToPlainTextParser(stageInfo.description)}
+            name="descirption"
+          />
+
+          <meta
+            content={[stageInfo.code, stageInfo.name, arknightsNameByServer(server)].join(", ")}
+            name="keywords"
+          />
+
         </Head>
 
         <h1 className={style["h1-title"]}>
@@ -137,19 +159,37 @@ class Map extends React.PureComponent<MapProps> {
         </h1>
 
         <GamedataContext.Provider value={gamedataConst}>
-          <StageInfo
-            stageInfo={stageInfo}
-            stageJsonOptions={stageJson.options}
+          <StageInfoDescription
+            description={stageInfo.description}
           />
         </GamedataContext.Provider>
 
-        <MapPreview stageId={stageId} />
-
-        <TileInfoContext.Provider value={tileInfo}>
-          <MapScene
-            mapData={mapData}
+        <WithTableOfContents>
+          <HeadingAnchor
+            id="stageInfo"
+            text="作战信息"
           />
-        </TileInfoContext.Provider>
+
+          <GamedataContext.Provider value={gamedataConst}>
+            <StageInfo
+              stageInfo={stageInfo}
+              stageJsonOptions={stageJson.options}
+            />
+          </GamedataContext.Provider>
+
+          <HeadingAnchor
+            id="mapPreview"
+            text="地图预览"
+          />
+
+          <MapPreview stageId={stageId} />
+
+          <TileInfoContext.Provider value={tileInfo}>
+            <MapScene
+              mapData={mapData}
+            />
+          </TileInfoContext.Provider>
+        </WithTableOfContents>
 
       </Page>
     )

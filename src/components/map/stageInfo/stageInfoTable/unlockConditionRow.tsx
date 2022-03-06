@@ -61,15 +61,20 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                   })
                 }
 
-                <NextLink href={{
-                  pathname: "/map/[zoneId]/[stageId]",
-                  query: {
-                    zoneId: extraStageInfo.zoneId,
-                    stageId: extraStageInfo.stageId
-                  }
-                }}
+                <NextLink
+                  href={{
+                    pathname: "/map/[zoneId]/[stageId]",
+                    query: {
+                      zoneId: extraStageInfo.zoneId,
+                      stageId: extraStageInfo.stageId
+                    }
+                  }}
+                  passHref
                 >
-                  <MuiLink sx={{ marginLeft: "0.5em", cursor: "pointer" }}>
+                  <MuiLink
+                    sx={{ marginLeft: "0.5em", cursor: "pointer" }}
+                    underline="hover"
+                  >
                     {`${extraStageInfo.code} ${extraStageInfo.name}`}
                   </MuiLink>
                 </NextLink>

@@ -29,40 +29,34 @@ class MapPreview extends React.PureComponent<MapPreviewProps> {
     })
 
     return (
-      <>
-        <h2 id="mapPreview">
-          地图预览
-        </h2>
+      <div style={{
+        aspectRatio: "16/9",
+        display: "block",
+        width: "auto",
+        overflow: "hidden",
+        position: "relative",
+        margin: "auto",
+        maxHeight: "50vh",
+        maxWidth: "90%",
+        borderRadius: "1rem"
+      }}
+      >
+        {/* TODO:  */}
 
-        <div style={{
-          aspectRatio: "16/9",
-          display: "block",
-          width: "auto",
-          overflow: "hidden",
-          position: "relative",
-          margin: "auto",
-          maxHeight: "50vh",
-          maxWidth: "90%",
-          borderRadius: "1rem"
-        }}
+        {/* mui model */}
+
+        <Paper
+          elevation={10}
+          sx={{ height: "100%" }}
         >
-          {/* TODO:  */}
-
-          {/* mui model */}
-
-          <Paper
-            elevation={10}
-            sx={{ height: "100%" }}
-          >
-            <Image
-              alt={`Stage Preview Picture ${stageId}`}
-              layout="fill"
-              loader={staticLoader}
-              src={imageSrc}
-            />
-          </Paper>
-        </div>
-      </>
+          <Image
+            alt={`Stage Preview Picture ${stageId}`}
+            layout="fill"
+            loader={staticLoader}
+            src={imageSrc}
+          />
+        </Paper>
+      </div>
     )
   }
 }

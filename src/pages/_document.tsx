@@ -1,19 +1,18 @@
-// FIXME: @next/next/no-document-import-in-page is fixed in 11.1.3-canary.7 https://github.com/vercel/next.js/issues/29021
-/* eslint-disable @next/next/no-document-import-in-page */
+// libs
 import React from "react"
 import Document, { Html, Head, Main, NextScript } from "next/document"
 import type { DocumentContext } from "next/document"
 import createEmotionServer from "@emotion/server/create-instance"
 
-import createCache from "@emotion/cache"
-
-// prepend: true moves MUI styles to the top of the <head> so they're loaded first.
-// It allows developers to easily override MUI styles with other styling solutions, like CSS modules.
-const key = "cache"
+// models
+import createEmotionCache from "@/models/createEmotionCache"
 
 interface MyDocumentProps {
   emotionStyleTags: JSX.Element
 }
+
+// setup emotion cache
+// see https://github.com/mui/material-ui/tree/298627c7339d1a5809518b0dbc212fe95c40a4e9/examples/nextjs-with-typescript
 
 export default class MyDocument extends Document<MyDocumentProps> {
   public render (): JSX.Element {
@@ -66,21 +65,20 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
 
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
-  const cache = createCache({ key, prepend: true })
+  const cache = createEmotionCache()
 
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ctx.renderPage = () =>
     originalRenderPage({
-      // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-readonly-parameter-types
-      enhanceApp: (App) =>
+      // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-readonly-parameter-types, @typescript-eslint/no-explicit-any
+      enhanceApp: (App: any) =>
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/prefer-readonly-parameter-types
         function myEnhanceApp (props) {
           return (
             <App
-              // FIXME: emotionCache
-              // emotionCache={cache}
+              emotionCache={cache}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
             />

@@ -55,14 +55,14 @@ class Page extends React.PureComponent<PageProps, PageState> {
   private readonly handleStart = (): void => {
     this.setState({
       indeterminate: true,
-      progress: typeof window !== "undefined" ? progress80 : progress0
+      progress: progress80
     })
   }
 
   private readonly handleStop = (): void => {
     this.setState({
       indeterminate: false,
-      progress: typeof window !== "undefined" ? progress100 : progress0
+      progress: progress100
     })
   }
 
@@ -84,7 +84,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
           <div
             aria-valuemax={100}
             aria-valuemin={0}
-            aria-valuenow={progress}
+            aria-valuenow={typeof window !== "undefined" ? progress : progress0}
             className={style.placebo_bar}
             onTransitionEnd={this.handleTransitionEnd}
             role="progressbar"

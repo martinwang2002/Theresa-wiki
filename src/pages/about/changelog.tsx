@@ -18,7 +18,7 @@ export default class Changelog extends React.PureComponent {
           </title>
         </Head>
 
-        <div style={{ whiteSpace: "break-spaces" }}>
+        <div style={{ whiteSpace: "break-spaces", overflow: "hidden" }}>
           {JSON.stringify(changelog, undefined, "\t")}
         </div>
       </Page>

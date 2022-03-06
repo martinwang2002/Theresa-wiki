@@ -58,6 +58,34 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
   )
 }
 
+export const stageInfoDescriptionToPlainTextParser = (description: string): string => {
+  // replace \\n with \n
+  const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
+
+  // recursively replace <@{akFormatStringKey}>{text}</> to <span style={{color: color}}>{text}<span>
+  /* eslint-disable @typescript-eslint/no-magic-numbers */
+  let plainTextDescriptionArray: string[]
+  plainTextDescriptionArray = []
+  let stringSliceIndex
+  stringSliceIndex = 0
+
+  for (const regexMatch of replacedBackSlashDescription.matchAll(/<@([^>]*)>(.*)<\/>/g)) {
+    plainTextDescriptionArray = [
+      ...plainTextDescriptionArray,
+      replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),
+      regexMatch[2]
+    ]
+    stringSliceIndex = (regexMatch.index ?? 0) + regexMatch[0].length
+  }
+  plainTextDescriptionArray = [
+    ...plainTextDescriptionArray,
+    replacedBackSlashDescription.slice(stringSliceIndex)
+  ]
+  /* eslint-enable @typescript-eslint/no-magic-numbers */
+
+  return plainTextDescriptionArray.join("")
+}
+
 interface StageInfoDescriptionProps {
   description: string
 }
