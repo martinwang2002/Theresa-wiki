@@ -1,8 +1,8 @@
 .breathe-mission-star-container {
-  // Header height 2rem
+  // Header height 2rem + 16px
+  // main container padding-bottom 1rem
   // Footer min height 10rem
-  // padding top 12vh - 2rem (no need to consider 2rem offset)
-  min-height: calc(100vh - 2rem - 10rem - 12vh);
+  min-height: calc(100vh - 2rem - 16px - 10rem - 1rem);
   margin: auto;
   padding-top: calc(12vh - 2rem);
   text-align: center;
