@@ -103,14 +103,14 @@ export const stageIdtoHash = (stageId: string): string => {
   return stageId.replaceAll("__", "#")
 }
 
-export const stagesArray = async (): Promise<string[]> => {
+export const stageIds = async (): Promise<string[]> => {
   const { stages } = await stageTable()
 
   // replace # with __
-  const stagesArrayResult = Object.keys(stages).map((stageId) => {
+  const _stageIds = Object.keys(stages).map((stageId) => {
     return stageIdtoLodash(stageId)
   })
-  return stagesArrayResult
+  return _stageIds
 }
 
 export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {

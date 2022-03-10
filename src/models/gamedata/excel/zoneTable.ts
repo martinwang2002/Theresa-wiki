@@ -20,14 +20,14 @@ const zoneTable = cacheable(async (): Promise<IZoneTable> => {
   return zoneTableJson
 }, { cacheKey: "zoneTable", expiryMode: "EX", ttl: 86400 })
 
-export const zonesArray = cacheable(async (): Promise<string[]> => {
+export const zoneIds = cacheable(async (): Promise<string[]> => {
   const { zones } = await zoneTable()
 
   // replace # with __
-  const _zonesArray = Object.keys(zones).map((zoneId) => {
+  const _zoneIds = Object.keys(zones).map((zoneId) => {
     return zoneId
   })
-  return _zonesArray
-}, { cacheKey: "zonesArray", expiryMode: "EX", ttl: 86400 })
+  return _zoneIds
+}, { cacheKey: "zoneIds", expiryMode: "EX", ttl: 86400 })
 
 export type { IZoneTable }

@@ -14,9 +14,9 @@ import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 
 // models
-import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
+import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
-import { zonesArray } from "@/models/gamedata/excel/zoneTable"
+import { zoneIds } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
@@ -45,9 +45,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // on-demand if the path doesn't exist.
     return { paths: [], fallback: "blocking" }
   } else {
-    const stageIds = await stagesArray()
+    const _stageIds = await stageIds()
 
-    const paths = stageIds.map((stageId) => ({
+    const paths = _stageIds.map((stageId) => ({
       params: {
         server: "CN",
         stageId
@@ -64,15 +64,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // FIXME: eslint
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
-  const zoneIds = await zonesArray()
-  const stageIds = await stagesArray()
+  const _zoneIds = await zoneIds()
+  const _stageIds = await stageIds()
 
   const { params } = context
   const zoneIdFromParams = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
   try {
-    if (zoneIds.includes(zoneIdFromParams) && stageIds.includes(stageId)) {
+    if (_zoneIds.includes(zoneIdFromParams) && _stageIds.includes(stageId)) {
       // zoneId and stageId exists
       // render page
     } else {
