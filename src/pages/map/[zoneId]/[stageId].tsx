@@ -13,6 +13,9 @@ import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 
+// configs
+import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
+
 // models
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
@@ -39,7 +42,7 @@ interface MapProps{
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // ignore SSR when developing and in build stage
-  if (process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true") {
+  if (serverRuntimeConfig.NO_DYNAMIC_ROUTES) {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
