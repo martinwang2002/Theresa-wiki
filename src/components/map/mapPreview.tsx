@@ -1,32 +1,17 @@
 // libs
 import React from "react"
-import Image from "next/image"
 import Paper from "@mui/material/Paper"
-import { serialize } from "uri-js"
-import type { ImageLoaderProps } from "next/image"
 
-// models
-import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
+// components
+import MapPreviewImage from "./mapPreviewImage"
 
 interface MapPreviewProps{
   stageId: string
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-const staticLoader = ({ src, width, quality }: Readonly<ImageLoaderProps>): string => {
-  const fallbackQuality = 75
-  return src.replace("width", String(width)).replace("quality", String(quality ?? fallbackQuality))
-}
-
 class MapPreview extends React.PureComponent<MapPreviewProps> {
   public render (): React.ReactNode {
     const { stageId } = this.props
-
-    const normalStageId = stageId.replace("__f__", "")
-    const imageSrc = serialize({
-      ...publicRuntimeConfig.THERESA_STATIC,
-      path: `/api/v0/AK_AB/CN/Android/latest/mappreview/${normalStageId}/width/quality`
-    })
 
     return (
       <div style={{
@@ -49,11 +34,8 @@ class MapPreview extends React.PureComponent<MapPreviewProps> {
           elevation={10}
           sx={{ height: "100%" }}
         >
-          <Image
-            alt={`Stage Preview Picture ${stageId}`}
-            layout="fill"
-            loader={staticLoader}
-            src={imageSrc}
+          <MapPreviewImage
+            stageId={stageId}
           />
         </Paper>
       </div>
