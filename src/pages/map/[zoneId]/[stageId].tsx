@@ -148,7 +148,7 @@ class Map extends React.PureComponent<MapProps> {
 
         <h1 className={style["h1-title"]}>
           {stageInfo.difficulty === "FOUR_STAR" &&
-          <span className={style["h1-four-start-badge"]}>
+          <span className={style["h1-four-star-badge"]}>
             突袭
           </span>}
 
