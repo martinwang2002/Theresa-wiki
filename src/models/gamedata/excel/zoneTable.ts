@@ -10,6 +10,7 @@ interface IZoneTable {
 }
 
 interface IZoneInfo {
+  // zoneID is AS IS see extracted zone_table.json
   zoneID: string
   zoneIndex: number
   type: string
@@ -48,6 +49,12 @@ export const getZoneInfo = async (zoneId: string): Promise<IZoneInfo> => {
   const { zones } = await zoneTable()
 
   return zones[zoneId]
+}
+
+export const getZones = async (): Promise<IZoneInfo[]> => {
+  const { zones } = await zoneTable()
+
+  return Object.values(zones)
 }
 
 export type { IZoneTable, IZoneInfo }

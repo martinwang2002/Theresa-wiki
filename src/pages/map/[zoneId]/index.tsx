@@ -21,6 +21,7 @@ import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 import { zoneIds, getZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
@@ -96,14 +97,6 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
       stages: pickedStages
     },
     revalidate: 3600
-  }
-}
-
-const getDisplayZoneName = (zoneInfo: Readonly<IZoneInfo>): string => {
-  if (zoneInfo.zoneNameFirst !== null) {
-    return `${zoneInfo.zoneNameFirst} - ${zoneInfo.zoneNameSecond}`
-  } else {
-    return zoneInfo.zoneNameSecond
   }
 }
 

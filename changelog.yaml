@@ -8,6 +8,7 @@ versions:
         - serverRuntimeConfig.NO_DYNAMIC_ROUTES
         - /map/[zoneId] page
         - / (index) page
+        - /map page
       changed:
         - Dockerfile build process
         - Use MapPreview with extra div and MapPreviewImage with pure image
