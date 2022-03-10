@@ -120,6 +120,22 @@ export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
   return stages[convertedStageId]
 }
 
+export const getStagesByZoneId = async (zoneId: string): Promise<IStageInfo[]> => {
+  const { stages } = await stageTable()
+
+  const _stages = Object.values(stages).filter((stageInfo) => {
+    // filter zoneId
+    return stageInfo.zoneId === zoneId
+  }).map((stageInfo) => {
+    // replace # with __
+    return {
+      ...stageInfo,
+      stageId: stageIdtoLodash(stageInfo.stageId)
+    }
+  })
+  return _stages
+}
+
 interface ICustomStageInfo extends IStageInfo {
   _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "name" | "stageId" | "zoneId">>
 }

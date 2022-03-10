@@ -6,10 +6,24 @@ import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface IZoneTable {
-  zones: unknown[]
+  zones: Record<string, IZoneInfo>
 }
 
-const zoneTable = cacheable(async (): Promise<IZoneTable> => {
+interface IZoneInfo {
+  zoneID: string
+  zoneIndex: number
+  type: string
+  zoneNameFirst: string | null
+  zoneNameSecond: string
+  zoneNameTitleCurrent: string | null
+  zoneNameTitleUnCurrent: string | null
+  zoneNameTitleEx: string | null
+  zoneNameThird: string | null
+  lockedText: string
+  canPreview: boolean
+}
+
+export const zoneTable = cacheable(async (): Promise<IZoneTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
     path: "/api/v0/AK_AB/CN/Android/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/zone_table.json"
@@ -30,4 +44,10 @@ export const zoneIds = cacheable(async (): Promise<string[]> => {
   return _zoneIds
 }, { cacheKey: "zoneIds", expiryMode: "EX", ttl: 86400 })
 
-export type { IZoneTable }
+export const getZoneInfo = async (zoneId: string): Promise<IZoneInfo> => {
+  const { zones } = await zoneTable()
+
+  return zones[zoneId]
+}
+
+export type { IZoneTable, IZoneInfo }
