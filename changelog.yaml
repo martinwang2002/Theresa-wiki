@@ -2,11 +2,12 @@
 versions:
 
   - version: [0, 0, 6, canary]
-    date: 2022-03-11T8:00:00+0800
+    date: 2022-03-14T8:00:00+0800
     contents:
       added:
         - serverRuntimeConfig.NO_DYNAMIC_ROUTES
         - /map/[zoneId] page
+        - / (index) page
       changed:
         - Dockerfile build process
         - Use MapPreview with extra div and MapPreviewImage with pure image
