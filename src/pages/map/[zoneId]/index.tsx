@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
 import CardMedia from "@mui/material/CardMedia"
 import Grid from "@mui/material/Grid"
+import Link from "next/link"
 
 // Components
 import Page from "@/components/page/page"
@@ -151,29 +152,32 @@ class Zone extends React.PureComponent<ZoneProps> {
                 xs={4}
               >
                 <Card>
-                  <CardActionArea
+                  <Link
                     href={`/map/${zoneId}/${stageInfo.stageId}`}
+                    passHref
                   >
-                    <CardMedia sx={{
-                      aspectRatio: "16/9",
-                      display: "block",
-                      position: "relative",
-                      margin: "auto",
-                      width: "100%"
-                    }}
-                    >
-                      <MapPreviewImage stageId={stageInfo.stageId} />
-                    </CardMedia>
+                    <CardActionArea >
+                      <CardMedia sx={{
+                        aspectRatio: "16/9",
+                        display: "block",
+                        position: "relative",
+                        margin: "auto",
+                        width: "100%"
+                      }}
+                      >
+                        <MapPreviewImage stageId={stageInfo.stageId} />
+                      </CardMedia>
 
-                    <CardContent sx={{ padding: "0.75em" }}>
-                      {stageInfo.difficulty === "FOUR_STAR" &&
+                      <CardContent sx={{ padding: "0.75em" }}>
+                        {stageInfo.difficulty === "FOUR_STAR" &&
                         <span className={style["h1-four-star-badge"]}>
                           突袭
                         </span>}
 
-                      {`${stageInfo.code} ${stageInfo.name}`}
-                    </CardContent>
-                  </CardActionArea>
+                        {`${stageInfo.code} ${stageInfo.name}`}
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
                 </Card>
               </Grid>
             )

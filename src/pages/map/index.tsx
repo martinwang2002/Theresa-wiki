@@ -7,6 +7,7 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
 import Grid from "@mui/material/Grid"
+import Link from "next/link"
 
 // Components
 import Page from "@/components/page/page"
@@ -78,14 +79,16 @@ class Zone extends React.PureComponent<ZoneProps> {
                 xs={4}
               >
                 <Card>
-                  <CardActionArea
+                  <Link
                     href={`/map/${zoneInfo.zoneID}`}
+                    passHref
                   >
-
-                    <CardContent sx={{ padding: "0.75em" }}>
-                      {getDisplayZoneName(zoneInfo)}
-                    </CardContent>
-                  </CardActionArea>
+                    <CardActionArea>
+                      <CardContent sx={{ padding: "0.75em" }}>
+                        {getDisplayZoneName(zoneInfo)}
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
                 </Card>
               </Grid>
             )
