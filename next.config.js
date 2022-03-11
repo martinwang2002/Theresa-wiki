@@ -54,6 +54,7 @@ module.exports = {
   publicRuntimeConfig: {
     THERESA_WIKI_VERSION: versionString,
     GIT_COMMIT: commitHash,
+    GTAG_ID: process.env.GTAG_ID,
     THERESA_STATIC: {
       scheme: process.env.THERESA_STATIC !== "static.theresa.localhost" ? "https" : "http",
       host: process.env.THERESA_STATIC ?? ""

@@ -9,6 +9,7 @@ versions:
         - /map/[zoneId] page
         - / (index) page
         - /map page
+        - Google Analytics
       changed:
         - Dockerfile build process
         - Use MapPreview with extra div and MapPreviewImage with pure image
