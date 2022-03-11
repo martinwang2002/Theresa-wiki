@@ -15,6 +15,7 @@ versions:
         - Use MapPreview with extra div and MapPreviewImage with pure image
       fixed:
         - _error page footer
+        - /map page build data error during yarn build
 
   - version: [0, 0, 5]
     date: 2022-03-07T8:00:00+0800
