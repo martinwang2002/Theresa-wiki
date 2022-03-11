@@ -63,6 +63,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
     this.setState({
       indeterminate: false,
       progress: progress100
+    }, () => {
+      this.handleTransitionEnd()
     })
   }
 
@@ -80,19 +82,23 @@ class Page extends React.PureComponent<PageProps, PageState> {
     const { indeterminate, progress } = this.state
     return (
       <>
-        <div className={style.placebo}>
-          <div
-            aria-valuemax={100}
-            aria-valuemin={0}
-            aria-valuenow={typeof window !== "undefined" ? progress : progress0}
-            className={style.placebo_bar}
-            onTransitionEnd={this.handleTransitionEnd}
-            role="progressbar"
-            style={{
-              width: String(progress) + "%",
-              opacity: progress === progress0 ? opacity0 : opacity1
-            }}
-          />
+        <div
+          className={style.placebo}
+          suppressHydrationWarning
+        >
+          {typeof window !== "undefined" &&
+            <div
+              aria-valuemax={100}
+              aria-valuemin={0}
+              aria-valuenow={progress}
+              className={style.placebo_bar}
+              onTransitionEnd={this.handleTransitionEnd}
+              role="progressbar"
+              style={{
+                width: String(progress) + "%",
+                opacity: progress === progress0 ? opacity0 : opacity1
+              }}
+            />}
         </div>
 
         <Head>

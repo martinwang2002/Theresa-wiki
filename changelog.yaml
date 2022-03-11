@@ -8,6 +8,7 @@ versions:
         - reduced imageSizes and deviceSizes in next.config.js > image
       changed:
         - Grid columns responsive
+        - force close placebo after route finished
       fixed:
         - /map page build not found during yarn build
         - /map page build with data
