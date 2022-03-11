@@ -1,7 +1,13 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
-  - version: [0, 0, 6, canary]
+  - version: [0, 1, 1, canary]
+    date: 2022-03-21T8:00:00+0800
+    contents:
+      fixed:
+        - /map page build not found during yarn build
+
+  - version: [0, 1, 0]
     date: 2022-03-14T8:00:00+0800
     contents:
       added:
