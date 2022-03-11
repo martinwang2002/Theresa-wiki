@@ -34,7 +34,6 @@ class MapPreviewImage extends React.PureComponent<MapPreviewImageProps> {
         loader={staticLoader}
         src={imageSrc}
       />
-
     )
   }
 }
