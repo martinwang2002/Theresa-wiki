@@ -26,14 +26,6 @@ interface ZoneProps{
 }
 
 export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
-  if (process.env.npm_lifecycle_event === "build") {
-    // return not found first time at build
-    return {
-      notFound: true,
-      revalidate: 1
-    }
-  }
-
   const zones = await getZones()
 
   return {

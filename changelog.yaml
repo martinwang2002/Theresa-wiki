@@ -6,6 +6,7 @@ versions:
     contents:
       fixed:
         - /map page build not found during yarn build
+        - /map page build with data
 
   - version: [0, 1, 0]
     date: 2022-03-14T8:00:00+0800
