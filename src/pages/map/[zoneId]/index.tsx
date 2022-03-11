@@ -139,6 +139,7 @@ class Zone extends React.PureComponent<ZoneProps> {
         </h1>
 
         <Grid
+          columns={{ xs: 4, sm: 8, md: 12 }}
           container
           spacing={2}
         >
@@ -149,9 +150,7 @@ class Zone extends React.PureComponent<ZoneProps> {
                 key={stageInfo.stageId}
                 xs={4}
               >
-                <Card
-                  sx={{ maxWidth: 375 }}
-                >
+                <Card>
                   <CardActionArea
                     href={`/map/${zoneId}/${stageInfo.stageId}`}
                   >
