@@ -103,14 +103,14 @@ export const stageIdtoHash = (stageId: string): string => {
   return stageId.replaceAll("__", "#")
 }
 
-export const stagesArray = async (): Promise<string[]> => {
+export const stageIds = async (): Promise<string[]> => {
   const { stages } = await stageTable()
 
   // replace # with __
-  const stagesArrayResult = Object.keys(stages).map((stageId) => {
+  const _stageIds = Object.keys(stages).map((stageId) => {
     return stageIdtoLodash(stageId)
   })
-  return stagesArrayResult
+  return _stageIds
 }
 
 export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
@@ -118,6 +118,22 @@ export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
 
   const { stages } = await stageTable()
   return stages[convertedStageId]
+}
+
+export const getStagesByZoneId = async (zoneId: string): Promise<IStageInfo[]> => {
+  const { stages } = await stageTable()
+
+  const _stages = Object.values(stages).filter((stageInfo) => {
+    // filter zoneId
+    return stageInfo.zoneId === zoneId
+  }).map((stageInfo) => {
+    // replace # with __
+    return {
+      ...stageInfo,
+      stageId: stageIdtoLodash(stageInfo.stageId)
+    }
+  })
+  return _stages
 }
 
 interface ICustomStageInfo extends IStageInfo {

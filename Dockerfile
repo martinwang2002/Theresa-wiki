@@ -19,22 +19,23 @@ FROM node:16-alpine AS builder
 ARG THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES=True
 ENV THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES $THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES
 
-RUN apk update && apk add --no-cache git
-
-WORKDIR /app
-
-# Copy node modules
-COPY --from=deps /app/node_modules ./node_modules
-# Copy source code
-COPY . .
-# Copy LICENSES.txt
-COPY --from=deps /app/public/LICENSES.txt ./public
-
 # Build next application
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
+
+WORKDIR /app
+
+RUN apk update && apk add --no-cache git
+
+# Copy node modules
+COPY --from=deps /app/node_modules ./node_modules
+# Copy LICENSES.txt
+COPY --from=deps /app/public/LICENSES.txt ./public
+# Copy source code
+COPY . .
+
 
 RUN yarn build
 
@@ -42,7 +43,6 @@ RUN yarn build
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
 WORKDIR /app
-RUN apk update && apk add --no-cache git
 
 ENV NODE_ENV production
 

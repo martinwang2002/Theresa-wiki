@@ -1,6 +1,22 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 0]
+    date: 2022-03-14T8:00:00+0800
+    contents:
+      added:
+        - serverRuntimeConfig.NO_DYNAMIC_ROUTES
+        - /map/[zoneId] page
+        - / (index) page
+        - /map page
+        - Google Analytics
+      changed:
+        - Dockerfile build process
+        - Use MapPreview with extra div and MapPreviewImage with pure image
+      fixed:
+        - _error page footer
+        - /map page build data error during yarn build
+
   - version: [0, 0, 5]
     date: 2022-03-07T8:00:00+0800
     contents:

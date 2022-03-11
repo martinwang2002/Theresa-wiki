@@ -13,10 +13,13 @@ import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 
+// configs
+import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
+
 // models
-import { stagesArray, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
+import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
-import { zonesArray } from "@/models/gamedata/excel/zoneTable"
+import { zoneIds } from "@/models/gamedata/excel/zoneTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
@@ -39,15 +42,15 @@ interface MapProps{
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // ignore SSR when developing and in build stage
-  if (process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true") {
+  if (serverRuntimeConfig.NO_DYNAMIC_ROUTES) {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
     return { paths: [], fallback: "blocking" }
   } else {
-    const stageIds = await stagesArray()
+    const _stageIds = await stageIds()
 
-    const paths = stageIds.map((stageId) => ({
+    const paths = _stageIds.map((stageId) => ({
       params: {
         server: "CN",
         stageId
@@ -64,15 +67,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // FIXME: eslint
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
-  const zoneIds = await zonesArray()
-  const stageIds = await stagesArray()
+  const _zoneIds = await zoneIds()
+  const _stageIds = await stageIds()
 
   const { params } = context
   const zoneIdFromParams = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
   try {
-    if (zoneIds.includes(zoneIdFromParams) && stageIds.includes(stageId)) {
+    if (_zoneIds.includes(zoneIdFromParams) && _stageIds.includes(stageId)) {
       // zoneId and stageId exists
       // render page
     } else {
@@ -145,7 +148,7 @@ class Map extends React.PureComponent<MapProps> {
 
         <h1 className={style["h1-title"]}>
           {stageInfo.difficulty === "FOUR_STAR" &&
-          <span className={style["h1-four-start-badge"]}>
+          <span className={style["h1-four-star-badge"]}>
             突袭
           </span>}
 
