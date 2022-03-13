@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - reduced imageSizes and deviceSizes in next.config.js > image
+        - changelog UI
       changed:
         - Grid columns responsive
         - force close placebo after route finished
