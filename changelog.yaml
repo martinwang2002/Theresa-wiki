@@ -13,7 +13,7 @@ versions:
         - use next/link for Card
       fixed:
         - /map page build not found during yarn build
-        - /map page build with data
+        - /map page build without data
         - LICENSES.txt not found error
 
   - version: [0, 1, 0]
