@@ -31,10 +31,10 @@ RUN apk update && apk add --no-cache git
 
 # Copy node modules
 COPY --from=deps /app/node_modules ./node_modules
-# Copy LICENSES.txt
-COPY --from=deps /app/public/LICENSES.txt ./public
 # Copy source code
 COPY . .
+# Copy LICENSES.txt
+COPY --from=deps /app/public/LICENSES.txt ./public
 
 
 RUN yarn build
