@@ -85,7 +85,13 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
   const zoneInfo = await getZoneInfo(zoneId)
 
   const stages = await getStagesByZoneId(zoneId)
-  const pickedStages = stages.map((stageInfo) => {
+
+  // filter isStoryOnly stages
+  const nonStoryOnlyStages = stages.filter((stageInfo) => {
+    return stageInfo.isStoryOnly !== true
+  })
+
+  const pickedStages = nonStoryOnlyStages.map((stageInfo) => {
     return lodashPick(stageInfo, ["stageId", "code", "name", "difficulty"])
   })
 
