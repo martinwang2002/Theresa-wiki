@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
 import CardMedia from "@mui/material/CardMedia"
 import Grid from "@mui/material/Grid"
+import Link from "next/link"
 
 // Components
 import Page from "@/components/page/page"
@@ -59,7 +60,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-// FIXME: eslint
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonly<GetStaticPropsContext>) => {
   const _zoneIds = await zoneIds()
@@ -85,7 +85,13 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
   const zoneInfo = await getZoneInfo(zoneId)
 
   const stages = await getStagesByZoneId(zoneId)
-  const pickedStages = stages.map((stageInfo) => {
+
+  // filter isStoryOnly stages
+  const nonStoryOnlyStages = stages.filter((stageInfo) => {
+    return stageInfo.isStoryOnly !== true
+  })
+
+  const pickedStages = nonStoryOnlyStages.map((stageInfo) => {
     return lodashPick(stageInfo, ["stageId", "code", "name", "difficulty"])
   })
 
@@ -139,6 +145,7 @@ class Zone extends React.PureComponent<ZoneProps> {
         </h1>
 
         <Grid
+          columns={{ xs: 4, sm: 8, md: 12 }}
           container
           spacing={2}
         >
@@ -149,32 +156,33 @@ class Zone extends React.PureComponent<ZoneProps> {
                 key={stageInfo.stageId}
                 xs={4}
               >
-                <Card
-                  sx={{ maxWidth: 375 }}
-                >
-                  <CardActionArea
+                <Card>
+                  <Link
                     href={`/map/${zoneId}/${stageInfo.stageId}`}
+                    passHref
                   >
-                    <CardMedia sx={{
-                      aspectRatio: "16/9",
-                      display: "block",
-                      position: "relative",
-                      margin: "auto",
-                      width: "100%"
-                    }}
-                    >
-                      <MapPreviewImage stageId={stageInfo.stageId} />
-                    </CardMedia>
+                    <CardActionArea >
+                      <CardMedia sx={{
+                        aspectRatio: "16/9",
+                        display: "block",
+                        position: "relative",
+                        margin: "auto",
+                        width: "100%"
+                      }}
+                      >
+                        <MapPreviewImage stageId={stageInfo.stageId} />
+                      </CardMedia>
 
-                    <CardContent sx={{ padding: "0.75em" }}>
-                      {stageInfo.difficulty === "FOUR_STAR" &&
+                      <CardContent sx={{ padding: "0.75em" }}>
+                        {stageInfo.difficulty === "FOUR_STAR" &&
                         <span className={style["h1-four-star-badge"]}>
                           突袭
                         </span>}
 
-                      {`${stageInfo.code} ${stageInfo.name}`}
-                    </CardContent>
-                  </CardActionArea>
+                        {`${stageInfo.code} ${stageInfo.name}`}
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
                 </Card>
               </Grid>
             )

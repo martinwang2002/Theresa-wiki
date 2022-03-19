@@ -24,7 +24,9 @@ try {
 
 module.exports = {
   images: {
+    deviceSizes: [640, 750, 828, 1080],
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
+    imageSizes: [128, 256, 384],
   },
   poweredByHeader: false,
   reactStrictMode: true,

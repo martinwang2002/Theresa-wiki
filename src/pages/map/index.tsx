@@ -7,6 +7,7 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
 import Grid from "@mui/material/Grid"
+import Link from "next/link"
 
 // Components
 import Page from "@/components/page/page"
@@ -27,7 +28,13 @@ interface ZoneProps{
 
 export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
   if (process.env.npm_lifecycle_event === "build") {
-    return { notFound: true }
+    return {
+      props: {
+        server: "CN",
+        zones: []
+      },
+      revalidate: 1
+    }
   }
 
   const zones = await getZones()
@@ -70,6 +77,7 @@ class Zone extends React.PureComponent<ZoneProps> {
         </h1>
 
         <Grid
+          columns={{ xs: 4, sm: 8, md: 12 }}
           container
           spacing={2}
         >
@@ -80,17 +88,17 @@ class Zone extends React.PureComponent<ZoneProps> {
                 key={zoneInfo.zoneID}
                 xs={4}
               >
-                <Card
-                  sx={{ maxWidth: 375 }}
-                >
-                  <CardActionArea
+                <Card>
+                  <Link
                     href={`/map/${zoneInfo.zoneID}`}
+                    passHref
                   >
-
-                    <CardContent sx={{ padding: "0.75em" }}>
-                      {getDisplayZoneName(zoneInfo)}
-                    </CardContent>
-                  </CardActionArea>
+                    <CardActionArea>
+                      <CardContent sx={{ padding: "0.75em" }}>
+                        {getDisplayZoneName(zoneInfo)}
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
                 </Card>
               </Grid>
             )

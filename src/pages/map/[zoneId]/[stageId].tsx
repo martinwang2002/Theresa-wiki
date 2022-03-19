@@ -64,7 +64,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-// FIXME: eslint
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
   const _zoneIds = await zoneIds()

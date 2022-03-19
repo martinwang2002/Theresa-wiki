@@ -1,6 +1,22 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 1]
+    date: 2022-03-21T8:00:00+0800
+    contents:
+      added:
+        - reduced imageSizes and deviceSizes in next.config.js > image
+        - changelog UI
+      changed:
+        - Grid columns responsive
+        - force close placebo after route finished
+        - use next/link for Card
+      fixed:
+        - /map page build not found during yarn build
+        - /map page build without data
+        - LICENSES.txt not found error
+        - filter isStoryOnly stages
+
   - version: [0, 1, 0]
     date: 2022-03-14T8:00:00+0800
     contents:
