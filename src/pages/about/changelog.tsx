@@ -46,6 +46,7 @@ export default class Changelog extends React.PureComponent<Record<string, never>
         <div style={{ whiteSpace: "break-spaces", overflow: "hidden" }}>
           {versions.map((version, index) => {
             const versionString = version.version.join(".")
+            const dateString = new Date(version.date).toLocaleString()
             return (
               <Accordion
                 expanded={expanded === versionString}
@@ -59,7 +60,7 @@ export default class Changelog extends React.PureComponent<Record<string, never>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
-                  <span style={{ width: "33%", flexShrink: 0 }}>
+                  <span style={{ width: "100%", display: "inline-flex", alignItems: "center" }}>
 
                     {/* Conditional (ternary) operator for bad eslint */}
 
@@ -83,33 +84,42 @@ export default class Changelog extends React.PureComponent<Record<string, never>
                         />
                     }
 
-                    <span style={{ fontWeight: 700, verticalAlign: "middle", marginLeft: "0.5em" }}>
+                    <span style={{ fontWeight: 700, marginLeft: "0.5em" }}>
                       {versionString}
                     </span>
                   </span>
                 </AccordionSummary>
 
-                <AccordionDetails sx={{ paddingLeft: "3em" }}>
-                  {Object.entries(version.contents).map((map: readonly[string, readonly string[]]) => {
-                    const [typeOfChanges, changes] = map
-                    return (
-                      <>
-                        <span style={{ textTransform: "capitalize" }}>
-                          {typeOfChanges}
-                        </span>
+                <AccordionDetails >
 
-                        <ul>
-                          {changes.map((change => {
-                            return (
-                              <li key={change}>
-                                {change}
-                              </li>
-                            )
-                          }))}
-                        </ul>
-                      </>
-                    )
-                  })}
+                  <span style={{ fontWeight: 700 }}>
+                    {dateString}
+                  </span>
+
+                  <div style={{ paddingLeft: "2.5em", paddingTop: "1em" }}>
+                    {Object.entries(version.contents).map((map: readonly[string, readonly string[]]) => {
+                      const [typeOfChanges, changes] = map
+                      return (
+                        <div
+                          key={typeOfChanges}
+                        >
+                          <span style={{ textTransform: "capitalize" }}>
+                            {typeOfChanges}
+                          </span>
+
+                          <ul>
+                            {changes.map((change => {
+                              return (
+                                <li key={change}>
+                                  {change}
+                                </li>
+                              )
+                            }))}
+                          </ul>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </AccordionDetails>
               </Accordion>
             )

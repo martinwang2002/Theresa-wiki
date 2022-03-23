@@ -1,8 +1,14 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 2, canary]
+    date: 2022-03-28T08:00:00+0800
+    contents:
+      fixed:
+        - changelog datetime string
+
   - version: [0, 1, 1, canary]
-    date: 2022-03-21T8:00:00+0800
+    date: 2022-03-21T08:00:00+0800
     contents:
       added:
         - reduced imageSizes and deviceSizes in next.config.js > image
@@ -18,7 +24,7 @@ versions:
         - filter isStoryOnly stages
 
   - version: [0, 1, 0]
-    date: 2022-03-14T8:00:00+0800
+    date: 2022-03-14T08:00:00+0800
     contents:
       added:
         - serverRuntimeConfig.NO_DYNAMIC_ROUTES
@@ -34,7 +40,7 @@ versions:
         - /map page build data error during yarn build
 
   - version: [0, 0, 5]
-    date: 2022-03-07T8:00:00+0800
+    date: 2022-03-07T08:00:00+0800
     contents:
       added:
         - Table of Contents
@@ -46,7 +52,7 @@ versions:
         - next no-document-import-in-page
 
   - version: [0, 0, 4]
-    date: 2022-02-28T8:00:00+0800
+    date: 2022-02-28T08:00:00+0800
     contents:
       added:
         - nextjs standalone mode
@@ -59,7 +65,7 @@ versions:
 
 
   - version: [0, 0, 3]
-    date: 2022-02-20T8:00:00+0800
+    date: 2022-02-20T08:00:00+0800
     contents:
       added:
         - eslint jsonc
@@ -73,7 +79,7 @@ versions:
 
 
   - version: [0, 0, 2]
-    date: 2022-02-14T0:00:00+0000
+    date: 2022-02-14T00:00:00+0000
     contents:
       added:
         - Minified favicon.svg
@@ -88,7 +94,7 @@ versions:
 
 
   - version: [0, 0, 1]
-    date: 2022-01-17T0:00:00+0000
+    date: 2022-01-17T00:00:00+0000
     contents:
       added:
         - Initial Release
