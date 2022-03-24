@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - GA debug mode
+        - credits English
       fixed:
         - changelog datetime string
 
