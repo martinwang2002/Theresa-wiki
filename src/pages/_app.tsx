@@ -58,6 +58,7 @@ function myApp (props: MyAppProps): React.ReactChild {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', '${GTAG_ID}', {
+                ${process.env.NODE_ENV === "development" ? "'debug_mode': true," : ""}
                 'page_path': window.location.pathname,
                 'cookie_prefix': 'theresaGa',
               });

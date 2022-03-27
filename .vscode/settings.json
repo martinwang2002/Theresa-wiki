@@ -6,6 +6,7 @@
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    "editor.tabSize": 2,
     "files.associations": {
         "*.eslintrc": "jsonc",
         "*.stylintrc": "jsonc"
