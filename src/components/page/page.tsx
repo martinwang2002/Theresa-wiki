@@ -88,6 +88,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
         >
           {typeof window !== "undefined" &&
             <div
+              aria-label="Placebo Progress Bar"
               aria-valuemax={100}
               aria-valuemin={0}
               aria-valuenow={progress}

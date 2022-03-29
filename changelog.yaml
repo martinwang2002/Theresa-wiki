@@ -6,6 +6,8 @@ versions:
     contents:
       added:
         - Grouped stages
+      fixed:
+        - aria-label for placebo progress bar
 
   - version: [0, 1, 2]
     date: 2022-03-28T08:00:00+0800
