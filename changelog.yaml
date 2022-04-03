@@ -1,6 +1,14 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 3, canary]
+    date: 2022-04-04T08:00:00+0800
+    contents:
+      added:
+        - Grouped stages
+      fixed:
+        - aria-label for placebo progress bar
+
   - version: [0, 1, 2]
     date: 2022-03-28T08:00:00+0800
     contents:

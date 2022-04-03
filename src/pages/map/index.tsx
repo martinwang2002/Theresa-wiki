@@ -8,6 +8,7 @@ import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
 import Grid from "@mui/material/Grid"
 import Link from "next/link"
+import { groupBy, sortBy } from "lodash"
 
 // Components
 import Page from "@/components/page/page"
@@ -48,9 +49,27 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
   }
 }
 
+const zoneOrder = ["MAINLINE", "BRANCHLINE", "SIDESTORY", "WEEKLY", "CAMPAIGN", "ROGUELIKE"]
+
 class Zone extends React.PureComponent<ZoneProps> {
   public render (): React.ReactNode {
     const { server, zones } = this.props
+
+    // const groupedZones = mapValues(groupBy(zones, "type"),
+    //   clist => clist.map(car => omit(car, "make")))
+    const groupedZones = groupBy(zones, "type")
+
+    const notPresentIndex = -1
+    const lenGroupedZones = Object.keys(groupedZones).length
+
+    const sortedZones = sortBy(Object.entries(groupedZones), [(entry): number => {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const key = entry[0]
+
+      const order = zoneOrder.indexOf(key)
+      return order !== notPresentIndex ? order : lenGroupedZones
+    }])
+    console.log(sortedZones)
 
     return (
       <Page>
@@ -76,34 +95,48 @@ class Zone extends React.PureComponent<ZoneProps> {
           </span>
         </h1>
 
-        <Grid
-          columns={{ xs: 4, sm: 8, md: 12 }}
-          container
-          spacing={2}
-        >
-          {zones.map((zoneInfo) => {
+        {
+          sortedZones.map((groupedZone) => {
+            const [zoneType, zonesInSpecificZoneType] = groupedZone
             return (
-              <Grid
-                item
-                key={zoneInfo.zoneID}
-                xs={4}
-              >
-                <Card>
-                  <Link
-                    href={`/map/${zoneInfo.zoneID}`}
-                    passHref
-                  >
-                    <CardActionArea>
-                      <CardContent sx={{ padding: "0.75em" }}>
-                        {getDisplayZoneName(zoneInfo)}
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                </Card>
-              </Grid>
+              <div key={zoneType}>
+                <p>
+                  {zoneType}
+                </p>
+
+                <Grid
+                  columns={{ xs: 4, sm: 8, md: 12 }}
+                  container
+                  spacing={2}
+                >
+                  {zonesInSpecificZoneType.map((zoneInfo) => {
+                    return (
+                      <Grid
+                        item
+                        key={zoneInfo.zoneID}
+                        xs={4}
+                      >
+                        <Card>
+                          <Link
+                            href={`/map/${zoneInfo.zoneID}`}
+                            passHref
+                          >
+                            <CardActionArea>
+                              <CardContent sx={{ padding: "0.75em" }}>
+                                {getDisplayZoneName(zoneInfo)}
+                              </CardContent>
+                            </CardActionArea>
+                          </Link>
+                        </Card>
+                      </Grid>
+                    )
+                  })}
+                </Grid>
+              </div>
             )
-          })}
-        </Grid>
+          })
+        }
+
       </Page>
     )
   }
