@@ -12,6 +12,8 @@ import { groupBy, sortBy } from "lodash"
 
 // Components
 import Page from "@/components/page/page"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 
 // models
 import { getZones } from "@/models/gamedata/excel/zoneTable"
@@ -69,7 +71,6 @@ class Zone extends React.PureComponent<ZoneProps> {
       const order = zoneOrder.indexOf(key)
       return order !== notPresentIndex ? order : lenGroupedZones
     }])
-    console.log(sortedZones)
 
     return (
       <Page>
@@ -95,47 +96,51 @@ class Zone extends React.PureComponent<ZoneProps> {
           </span>
         </h1>
 
-        {
-          sortedZones.map((groupedZone) => {
-            const [zoneType, zonesInSpecificZoneType] = groupedZone
-            return (
-              <div key={zoneType}>
-                <p>
-                  {zoneType}
-                </p>
+        <WithTableOfContents>
+          {
+            sortedZones.map((groupedZone) => {
+              const [zoneType, zonesInSpecificZoneType] = groupedZone
+              return (
+                <React.Fragment key={zoneType}>
+                  <HeadingAnchor
+                    id={zoneType}
+                    sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
+                    text={zoneType}
+                  />
 
-                <Grid
-                  columns={{ xs: 4, sm: 8, md: 12 }}
-                  container
-                  spacing={2}
-                >
-                  {zonesInSpecificZoneType.map((zoneInfo) => {
-                    return (
-                      <Grid
-                        item
-                        key={zoneInfo.zoneID}
-                        xs={4}
-                      >
-                        <Card>
-                          <Link
-                            href={`/map/${zoneInfo.zoneID}`}
-                            passHref
-                          >
-                            <CardActionArea>
-                              <CardContent sx={{ padding: "0.75em" }}>
-                                {getDisplayZoneName(zoneInfo)}
-                              </CardContent>
-                            </CardActionArea>
-                          </Link>
-                        </Card>
-                      </Grid>
-                    )
-                  })}
-                </Grid>
-              </div>
-            )
-          })
-        }
+                  <Grid
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                    container
+                    spacing={2}
+                  >
+                    {zonesInSpecificZoneType.map((zoneInfo) => {
+                      return (
+                        <Grid
+                          item
+                          key={zoneInfo.zoneID}
+                          xs={4}
+                        >
+                          <Card>
+                            <Link
+                              href={`/map/${zoneInfo.zoneID}`}
+                              passHref
+                            >
+                              <CardActionArea>
+                                <CardContent sx={{ padding: "0.75em" }}>
+                                  {getDisplayZoneName(zoneInfo)}
+                                </CardContent>
+                              </CardActionArea>
+                            </Link>
+                          </Card>
+                        </Grid>
+                      )
+                    })}
+                  </Grid>
+                </React.Fragment>
+              )
+            })
+          }
+        </WithTableOfContents>
 
       </Page>
     )
