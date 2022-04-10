@@ -1,18 +1,26 @@
 // libs
 import React from "react"
+import Typography from "@mui/material/Typography"
+import type { SxProps } from "@mui/system"
 
 interface HeadingAnchorProps{
   id: string
   text: string
+  sx?: SxProps
+  // variant: string
 }
 
 export default class HeadingAnchor extends React.PureComponent<HeadingAnchorProps> {
   public render (): React.ReactNode {
-    const { text, id } = this.props
+    const { text, id, sx } = this.props
     return (
-      <h2 id={id}>
+      <Typography
+        id={id}
+        sx={sx}
+        variant="h5"
+      >
         {text}
-      </h2>
+      </Typography>
     )
   }
 }
