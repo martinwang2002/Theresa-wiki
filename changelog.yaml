@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 5]
+    date: 2022-04-18T08:00:00+0800
+    contents:
+      changed:
+        - Improved zone name in /map
+
   - version: [0, 1, 4]
     date: 2022-04-11T08:00:00+0800
     contents:
