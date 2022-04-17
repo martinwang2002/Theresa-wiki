@@ -39,3 +39,5 @@ For merging `dev` into `master`
 1. `git tag x.x.x`
 1. `git checkout dev`
 1. change changelog to next version
+1. `git push --all`
+1. `git push --tags`
