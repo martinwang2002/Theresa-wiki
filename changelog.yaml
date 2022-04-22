@@ -1,7 +1,13 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
-  - version: [0, 1, 5, canary]
+  - version: [0, 1, 6, canary]
+    date: 2022-04-25T08:00:00+0800
+    contents:
+      changed:
+        - Use svg title (no need to load font files)
+
+  - version: [0, 1, 5]
     date: 2022-04-18T08:00:00+0800
     contents:
       changed:

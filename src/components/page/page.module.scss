@@ -9,9 +9,6 @@
 @import "bootstrap/scss/progress";
 @import "bootstrap/scss/utilities";
 
-// TODO: CDN support; glyphhanger
-@import url("https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=ZCOOL+QingKe+HuangYou&family=Roboto+Mono&display=swap");
-
 .navbar_theresa {
   @extend .navbar;
 
@@ -22,26 +19,6 @@
   z-index: 1030;
   background-image: linear-gradient(to right, #4da9f5, #afdbff);
   box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
-}
-
-.theresa_title_clickable {
-  height: 2rem;
-  cursor: pointer;
-}
-
-.theresa {
-  margin: 0;
-  margin-top: 0.33rem;
-  margin-left: 0.75rem;
-  font-size: 2rem;
-  font-family: "Corinthia", cursive;
-}
-
-.theresa_cn {
-  margin: 0;
-  margin-top: 0.33rem;
-  font-size: 1.5rem;
-  font-family: "ZCOOL QingKe HuangYou", cursive;
 }
 
 .main_container {
@@ -144,6 +121,7 @@
   margin-bottom: 1em;
   color: #d2dbd9;
   font-size: x-small;
+  // TODO: remove Roboto Mono font depends, use arknights font
   font-family: "Roboto Mono", monospace;
   text-transform: uppercase;
 }
