@@ -1,44 +1,149 @@
+/* eslint-disable react/jsx-max-depth */
 // libs
 import React from "react"
 import Paper from "@mui/material/Paper"
+import Dialog from "@mui/material/Dialog"
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import CloseIcon from "@mui/icons-material/Close"
+import Fab from "@mui/material/Fab"
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap"
 
 // components
 import MapPreviewImage from "./mapPreviewImage"
+import TransitionUpRef from "@/components/common/TransitionUp"
 
 interface MapPreviewProps{
   stageId: string
 }
 
-class MapPreview extends React.PureComponent<MapPreviewProps> {
+interface MapPreviewState{
+  imageDialogOpen: boolean
+}
+
+class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
+  public constructor (props: Readonly<MapPreviewProps>) {
+    super(props)
+
+    this.state = {
+      imageDialogOpen: false
+    }
+  }
+
+  private readonly handleImageDialogOpen = (): void => {
+    this.setState({
+      imageDialogOpen: true
+    })
+  }
+
+  private readonly handleImageDialogClose = (): void => {
+    this.setState({
+      imageDialogOpen: false
+    })
+  }
+
   public render (): React.ReactNode {
     const { stageId } = this.props
+    const { imageDialogOpen } = this.state
 
     return (
-      <div style={{
-        aspectRatio: "16/9",
-        display: "block",
-        width: "auto",
-        overflow: "hidden",
-        position: "relative",
-        margin: "auto",
-        maxHeight: "50vh",
-        maxWidth: "90%",
-        borderRadius: "1rem"
-      }}
-      >
-        {/* TODO:  */}
-
-        {/* mui model */}
-
-        <Paper
-          elevation={10}
-          sx={{ height: "100%" }}
+      <>
+        <div style={{
+          aspectRatio: "16/9",
+          display: "block",
+          width: "auto",
+          overflow: "hidden",
+          position: "relative",
+          margin: "auto",
+          maxHeight: "50vh",
+          maxWidth: "90%",
+          borderRadius: "1rem"
+        }}
         >
-          <MapPreviewImage
-            stageId={stageId}
-          />
-        </Paper>
-      </div>
+          <Paper
+            elevation={10}
+            onClick={this.handleImageDialogOpen}
+            sx={{
+              height: "100%",
+              "&:hover": {
+                cursor: "pointer",
+                "& .MuiFab-root": {
+                  opacity: 1
+                }
+              }
+            }}
+          >
+            <MapPreviewImage
+              stageId={stageId}
+            />
+
+            <Fab
+              aria-label="zoom"
+              color="primary"
+              size="small"
+              sx={{
+                top: 16,
+                right: 16,
+                position: "absolute",
+                transition: "opacity 0.5s linear",
+                opacity: 0
+              }}
+            >
+              <ZoomOutMapIcon />
+            </Fab>
+          </Paper>
+        </div>
+
+        <Dialog
+          TransitionComponent={TransitionUpRef}
+          fullScreen
+          onClose={this.handleImageDialogClose}
+          open={imageDialogOpen}
+          sx={{
+            "& .MuiPaper-root": {
+              backgroundColor: "#9e9e9e"
+            }
+          }}
+        >
+          <AppBar sx={{ position: "relative", backgroundColor: "#4da9f5 !important" }}>
+            <Toolbar>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                edge="start"
+                onClick={this.handleImageDialogClose}
+              >
+                <CloseIcon />
+              </IconButton>
+
+              <Typography
+                component="div"
+                sx={{ ml: 2, flex: 1 }}
+                variant="h6"
+              >
+                {`Stage Preview Picture ${stageId}`}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          <div style={{
+            aspectRatio: "16/9",
+            display: "block",
+            width: "100%",
+            overflow: "hidden",
+            position: "relative",
+            margin: "auto",
+            maxWidth: "100%"
+          }}
+          >
+            <MapPreviewImage
+              stageId={stageId}
+            />
+          </div>
+        </Dialog>
+      </>
     )
   }
 }

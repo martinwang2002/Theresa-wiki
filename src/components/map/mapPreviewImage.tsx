@@ -24,7 +24,7 @@ class MapPreviewImage extends React.PureComponent<MapPreviewImageProps> {
     const normalStageId = stageId.replace("__f__", "")
     const imageSrc = serialize({
       ...publicRuntimeConfig.THERESA_STATIC,
-      path: `/api/v0/AK_AB/CN/Android/latest/mappreview/${normalStageId}/width/quality`
+      path: `/api/v0/AK/CN/Android/mappreview/${normalStageId}/width/quality`
     })
 
     return (

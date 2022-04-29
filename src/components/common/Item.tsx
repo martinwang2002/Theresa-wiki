@@ -19,7 +19,7 @@ class Item extends React.PureComponent<ItemProps> {
     const { itemId, count, sx } = this.props
     const imageSrc = serializeUri({
       ...publicRuntimeConfig.THERESA_STATIC,
-      path: `/api/v0/AK_AB/CN/Android/latest/item/${itemId}`
+      path: `/api/v0/AK/CN/Android/item/${itemId}`
     })
 
     return (
