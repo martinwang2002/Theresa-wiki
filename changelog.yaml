@@ -1,6 +1,15 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 8]
+    date: 2022-05-09T08:00:00+0800
+    contents:
+      added:
+        - Theresa avg at /
+        - Arkwaifu credits
+      fixed:
+        - No stages for permanent zone
+
   - version: [0, 1, 7]
     date: 2022-05-02T08:00:00+0800
     contents:

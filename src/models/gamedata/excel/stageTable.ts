@@ -5,6 +5,9 @@ import { serialize as serializeUri } from "uri-js"
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
+// models
+import { retroTable } from "./retroTable"
+
 interface IStageTable {
   [key: string]: unknown
   stages: Record<string, IStageInfo>
@@ -123,7 +126,11 @@ export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
 export const getStagesByZoneId = async (zoneId: string): Promise<IStageInfo[]> => {
   const { stages } = await stageTable()
 
-  const _stages = Object.values(stages).filter((stageInfo) => {
+  const { stageList: stagesFromRetro } = await retroTable()
+
+  const allStages = [...Object.values(stages), ...Object.values(stagesFromRetro)]
+
+  const _stages = allStages.filter((stageInfo) => {
     // filter zoneId
     return stageInfo.zoneId === zoneId
   }).map((stageInfo) => {
