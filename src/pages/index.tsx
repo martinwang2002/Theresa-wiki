@@ -2,6 +2,7 @@
 import Head from "next/head"
 import React from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 // Components
 import Page from "@/components/page/page"
@@ -29,9 +30,14 @@ export default function home (): React.ReactNode {
         可以使用
       </p>
 
-      <span>
-        注意：该项目由于站长立下了不上线就女装的Flag, 所以就上线了x
-      </span>
+      <div style={{ textAlign: "center" }}>
+        <Image
+          alt="Theresa"
+          height={512}
+          src="/theresa.webp"
+          width={512}
+        />
+      </div>
 
     </Page>
   )
