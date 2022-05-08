@@ -24,6 +24,10 @@ Some of the resources used in the Theresa.wiki website are from PRTS.wiki (http:
 
 Some resources used in the Theresa.wiki website are derived from ArknightsGameData (https://github.com/Kengxxiao/ArknightsGameData) and some non-ambiguous changes have been made to some resources.
 
+特蕾西娅 Theresa.wiki 网站内所使用的部分资源来源于 Arkwaifu (https://arkwaifu.cc/, https://github.com/FlandiaYingman/arkwaifu) 并同时对部分资源进行了非歧义性的更改。
+
+Some resources used in the Theresa.wiki website are derived from Arkwaifu (https://arkwaifu.cc/, https://github.com/FlandiaYingman/arkwaifu) and some non-ambiguous changes have been made to some resources.
+
 特蕾西娅 Theresa.wiki 网站内所使用的关卡掉落数据来源于 企鹅物流数据 (https://penguin-stats.io/) (CC BY-NC 4.0)，对企鹅物流的贡献者（包括团队成员以及上传数据的刀客塔）在此表示感谢
 
 The level drop data used in the Theresa.wiki website is from Penguin Logistics Data (https://penguin-stats.io/) (CC BY-NC 4.0), contributors to Penguin Logistics (including the team members and the Doctors who uploaded the data). Special thanks to them.
