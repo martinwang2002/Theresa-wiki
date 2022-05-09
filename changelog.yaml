@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 9, canary]
+    date: 2022-05-09T08:00:00+0800
+    contents:
+      fixed:
+        - Theresa image loading issue
+
   - version: [0, 1, 8, canary]
     date: 2022-05-09T08:00:00+0800
     contents:

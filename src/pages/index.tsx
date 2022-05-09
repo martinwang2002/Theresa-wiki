@@ -35,10 +35,10 @@ export default function home (): React.ReactNode {
           alt="Theresa"
           height={512}
           src="/theresa.webp"
+          unoptimized
           width={512}
         />
       </div>
-
     </Page>
   )
 }
