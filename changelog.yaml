@@ -4,6 +4,8 @@ versions:
   - version: [0, 1, 9, canary]
     date: 2022-05-09T08:00:00+0800
     contents:
+      changed:
+        - use next/image for Item component
       fixed:
         - Theresa image loading issue
 

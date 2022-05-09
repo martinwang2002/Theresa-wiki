@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 // libs
 import React from "react"
 import Badge from "@mui/material/Badge"
 import type { SxProps } from "@mui/system"
 import { serialize as serializeUri } from "uri-js"
+import Image from "next/image"
 
 // models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -23,34 +23,32 @@ class Item extends React.PureComponent<ItemProps> {
     })
 
     return (
-      <div style={{
-        aspectRatio: "1/1",
-        display: "flex",
-        width: "4rem",
-        height: "4rem"
-      }}
+      <Badge
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right"
+        }}
+        badgeContent={count}
+        color="info"
+        overlap="circular"
+        sx={sx}
       >
-        <Badge
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right"
-          }}
-          badgeContent={count}
-          color="info"
-          overlap="circular"
-          sx={sx}
+        <div style={{
+          aspectRatio: "1/1",
+          display: "flex",
+          width: "4rem",
+          height: "4rem",
+          position: "relative"
+        }}
         >
-          <img
+          <Image
             alt={`Item ${itemId}`}
+            layout="fill"
             src={imageSrc}
-            style={{
-              aspectRatio: "1",
-              width: "100%",
-              height: "100%"
-            }}
+            unoptimized
           />
-        </Badge>
-      </div>
+        </div>
+      </Badge>
     )
   }
 }
