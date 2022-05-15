@@ -1,8 +1,14 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 10]
+    date: 2022-05-15T09:00:00+0800
+    contents:
+      fixed:
+        - env url (internal)
+
   - version: [0, 1, 9]
-    date: 2022-05-09T08:00:00+0800
+    date: 2022-05-15T08:00:00+0800
     contents:
       changed:
         - use next/image for Item component
