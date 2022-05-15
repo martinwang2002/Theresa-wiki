@@ -1,6 +1,14 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 9]
+    date: 2022-05-09T08:00:00+0800
+    contents:
+      changed:
+        - use next/image for Item component
+      fixed:
+        - Theresa image loading issue
+
   - version: [0, 1, 8]
     date: 2022-05-09T08:00:00+0800
     contents:
