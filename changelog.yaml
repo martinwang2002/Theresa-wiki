@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 1, 11]
+    date: 2022-05-22T08:00:00+0800
+    contents:
+      added:
+        - semantic versioning with `+branch_name` for non-master branch
+
   - version: [0, 1, 10]
     date: 2022-05-15T09:00:00+0800
     contents:
