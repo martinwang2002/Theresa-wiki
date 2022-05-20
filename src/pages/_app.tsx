@@ -16,9 +16,6 @@ import createEmotionCache from "@/models/createEmotionCache"
 import theme from "@/models/theme"
 import { pageview } from "@/models/utils/gtag"
 
-// styles
-import "./styles.scss"
-
 const { GTAG_ID } = publicRuntimeConfig
 
 // Client-side cache, shared for the whole session of the user in the browser.
