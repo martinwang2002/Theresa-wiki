@@ -3,12 +3,15 @@ import React from "react"
 import Head from "next/head"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import { pick as lodashPick } from "lodash"
+import Alert from "@mui/material/Alert"
+import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
 
 // Components
 import Page from "@/components/page/page"
 import StageInfo from "@/components/map/stageInfo/index"
 import MapScene from "@/components/map/scene/index"
 import MapPreview from "@/components/map/mapPreview"
+import Map3DIndex from "@/components/map/3d/index"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
@@ -122,6 +125,7 @@ class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId } = this.props
     const { mapData } = stageJson
+
     return (
       <Page>
         <Head>
@@ -169,6 +173,7 @@ class Map extends React.PureComponent<MapProps> {
         <WithTableOfContents>
           <HeadingAnchor
             id="stageInfo"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="作战信息"
           />
 
@@ -181,6 +186,7 @@ class Map extends React.PureComponent<MapProps> {
 
           <HeadingAnchor
             id="mapPreview"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="地图预览"
           />
 
@@ -191,6 +197,30 @@ class Map extends React.PureComponent<MapProps> {
               mapData={mapData}
             />
           </TileInfoContext.Provider>
+
+          <HeadingAnchor
+            id="map3D"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
+            text="3D地图"
+          />
+
+          <Alert
+            iconMapping={{
+              info: <ScienceRoundedIcon fontSize="inherit" />
+            }}
+            severity="info"
+            sx={{
+              marginY: "1em"
+            }}
+          >
+            目前3D场景地图暂未支持贴图、光源、精确相机位置等。
+
+            您可以向站长提交反馈，（开真银斩杀源石虫啦~~~
+          </Alert>
+
+          <Map3DIndex
+            stageId={stageId}
+          />
         </WithTableOfContents>
 
       </Page>
