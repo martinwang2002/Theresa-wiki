@@ -1,4 +1,3 @@
-// libs
 import getConfig from "next/config"
 import type { URIComponents } from "uri-js"
 

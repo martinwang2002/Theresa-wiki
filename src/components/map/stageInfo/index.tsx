@@ -1,11 +1,8 @@
-// libs
 import React from "react"
 
-// Components
-import StageInfoTable from "./stageInfoTable/index"
-
-// models
 import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
+
+import StageInfoTable from "./stageInfoTable/index"
 
 interface StageInfoProps{
   stageInfo: ICustomStageInfo

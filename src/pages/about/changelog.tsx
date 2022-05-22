@@ -1,17 +1,15 @@
-// libs
 import React from "react"
-import Head from "next/head"
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import FlightLandIcon from "@mui/icons-material/FlightLand"
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff"
-import FlightLandIcon from "@mui/icons-material/FlightLand"
+import Head from "next/head"
 
-// components
 import Page from "@/components/page/page"
 
-// models
 import changelog from "@/models/changelog"
 
 interface ChangelogState {

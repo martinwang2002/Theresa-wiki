@@ -1,6 +1,7 @@
 import React from "react"
-import Link from "next/link"
+
 import Image from "next/image"
+import Link from "next/link"
 
 class Title extends React.PureComponent {
   public render (): React.ReactNode {

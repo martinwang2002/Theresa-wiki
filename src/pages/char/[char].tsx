@@ -1,9 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-import { useRouter } from "next/router"
+import React from "react"
 
 import Head from "next/head"
-import React from "react"
+import { useRouter } from "next/router"
 
 export default function home (): React.ReactNode {
   const router = useRouter()

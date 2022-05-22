@@ -1,34 +1,31 @@
-// libs
 import React from "react"
-import Head from "next/head"
-import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+
+import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
+import Alert from "@mui/material/Alert"
 import { pick as lodashPick } from "lodash"
+import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+import Head from "next/head"
 
-// Components
-import Page from "@/components/page/page"
-import StageInfo from "@/components/map/stageInfo/index"
-import MapScene from "@/components/map/scene/index"
-import MapPreview from "@/components/map/mapPreview"
-import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import Map3DIndex from "@/components/map/3d/index"
+import MapPreview from "@/components/map/mapPreview"
+import MapScene from "@/components/map/scene/index"
+import StageInfo from "@/components/map/stageInfo/index"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
+import Page from "@/components/page/page"
 
-// configs
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// models
+import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
 import { zoneIds } from "@/models/gamedata/excel/zoneTable"
-import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import { GamedataContext } from "@/models/reactContext/gamedataContext"
+import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
-// reactContext
-import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
-import { GamedataContext } from "@/models/reactContext/gamedataContext"
-
-// styles
 import style from "./[stageId].module.scss"
 
 interface MapProps{
@@ -122,6 +119,7 @@ class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId } = this.props
     const { mapData } = stageJson
+
     return (
       <Page>
         <Head>
@@ -169,6 +167,7 @@ class Map extends React.PureComponent<MapProps> {
         <WithTableOfContents>
           <HeadingAnchor
             id="stageInfo"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="作战信息"
           />
 
@@ -181,6 +180,7 @@ class Map extends React.PureComponent<MapProps> {
 
           <HeadingAnchor
             id="mapPreview"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="地图预览"
           />
 
@@ -191,6 +191,30 @@ class Map extends React.PureComponent<MapProps> {
               mapData={mapData}
             />
           </TileInfoContext.Provider>
+
+          <HeadingAnchor
+            id="map3D"
+            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
+            text="3D地图"
+          />
+
+          <Alert
+            iconMapping={{
+              info: <ScienceRoundedIcon fontSize="inherit" />
+            }}
+            severity="info"
+            sx={{
+              marginY: "1em"
+            }}
+          >
+            目前3D场景地图暂未支持贴图、光源、精确相机位置等。
+
+            您可以向站长提交反馈，（开真银斩杀源石虫啦~~~
+          </Alert>
+
+          <Map3DIndex
+            stageId={stageId}
+          />
         </WithTableOfContents>
 
       </Page>

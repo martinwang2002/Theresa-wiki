@@ -1,8 +1,7 @@
-// libs
 import React from "react"
+
 import Link from "@mui/material/Link"
 
-// components
 import HeadingAnchor from "./headingAnchor"
 import type { HeadingAnchorProps } from "./headingAnchor"
 

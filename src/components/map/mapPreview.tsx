@@ -1,19 +1,19 @@
 /* eslint-disable react/jsx-max-depth */
-// libs
 import React from "react"
-import Paper from "@mui/material/Paper"
-import Dialog from "@mui/material/Dialog"
-import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import IconButton from "@mui/material/IconButton"
-import Typography from "@mui/material/Typography"
-import CloseIcon from "@mui/icons-material/Close"
-import Fab from "@mui/material/Fab"
-import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap"
 
-// components
-import MapPreviewImage from "./mapPreviewImage"
+import CloseIcon from "@mui/icons-material/Close"
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap"
+import AppBar from "@mui/material/AppBar"
+import Dialog from "@mui/material/Dialog"
+import Fab from "@mui/material/Fab"
+import IconButton from "@mui/material/IconButton"
+import Paper from "@mui/material/Paper"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+
 import TransitionUpRef from "@/components/common/TransitionUp"
+
+import MapPreviewImage from "./mapPreviewImage"
 
 interface MapPreviewProps{
   stageId: string

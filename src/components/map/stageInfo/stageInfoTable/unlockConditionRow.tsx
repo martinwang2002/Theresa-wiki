@@ -1,15 +1,13 @@
-// libs
 import React from "react"
+
 import Divider from "@mui/material/Divider"
 /* eslint-disable import/no-named-default */
-import { default as NextLink } from "next/link"
 import { default as MuiLink } from "@mui/material/Link"
+import { default as NextLink } from "next/link"
 /* eslint-enable import/no-named-default */
 
-// models
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
 
-// styles
 import style from "./stageInfoTable.module.scss"
 
 interface StageInfoTableProps {

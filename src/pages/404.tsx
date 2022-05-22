@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-max-depth */
 import React from "react"
+
 import Head from "next/head"
 import Link from "next/link"
 
 import Page from "@/components/page/page"
+
 import style from "./_error.module.scss"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

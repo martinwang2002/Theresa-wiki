@@ -1,11 +1,9 @@
-// libs
 import React from "react"
+
 import Divider from "@mui/material/Divider"
 
-// Components
 import Item from "@/components/common/Item"
 
-// models
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {

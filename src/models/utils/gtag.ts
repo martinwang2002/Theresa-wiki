@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
-// configs
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const { GTAG_ID } = publicRuntimeConfig

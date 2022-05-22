@@ -1,5 +1,5 @@
-// libs
 import React from "react"
+
 import Typography from "@mui/material/Typography"
 import type { SxProps } from "@mui/system"
 

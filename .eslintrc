@@ -13,7 +13,8 @@
                 "plugin:@typescript-eslint/all",
                 "plugin:react/all",
                 "plugin:@next/next/recommended",
-                "standard"
+                "standard",
+                "plugin:import/typescript"
             ],
             "files": [
                 "*.ts",
@@ -76,7 +77,50 @@
                         "allowNullableBoolean": true
                     }
                 ],
-                "@typescript-eslint/unbound-method": "off",  
+                "@typescript-eslint/unbound-method": "off",
+                "import/order": [
+                    "error",
+                    {
+                        "alphabetize": {
+                            "caseInsensitive": true,
+                            "order": "asc"
+                        },
+                        "groups": [
+                            "builtin",
+                            "external",
+                            "internal",
+                            "parent",
+                            "sibling",
+                            "index"
+                        ],
+                        "newlines-between": "always",
+                        "pathGroups": [
+                            {
+                                "group": "external",
+                                "pattern": "react",
+                                "position": "before"
+                            },
+                            {
+                                "group": "internal",
+                                "pattern": "@/components/**",
+                                "position": "before"
+                            },
+                            {
+                                "group": "internal",
+                                "pattern": "@/configurations/**",
+                                "position": "before"
+                            },
+                            {
+                                "group": "internal",
+                                "pattern": "@/models/**",
+                                "position": "before"
+                            }
+                        ],
+                        "pathGroupsExcludedImportTypes": [
+                            "react"
+                        ]
+                    }
+                ],  
                 "no-extra-parens": "off",
                 "no-use-before-define": "off",
                 "quotes": [

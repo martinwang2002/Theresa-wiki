@@ -1,13 +1,8 @@
-// libs
 import React from "react"
 
-// models
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-
-// reactContext
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 
-// styles
 import style from "./stageInfo.module.scss"
 
 const getColorFromAkFormatString = (akFormatString: string): string => {

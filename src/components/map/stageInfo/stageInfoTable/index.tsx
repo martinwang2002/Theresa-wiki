@@ -1,19 +1,15 @@
-// libs
 import React from "react"
-import Paper from "@mui/material/Paper"
+
 import Divider from "@mui/material/Divider"
+import Paper from "@mui/material/Paper"
 
-// Components
-import SanityRow from "./sanityRow"
-import UnlockConditionRow from "./unlockConditionRow"
-import CanPracticeAndCanBattleReplayRow from "./canPracticeAndCanBattleReplayRow"
-import StageDropInfoRow from "./stageDropInfoRow"
-
-// models
 import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 
-// styles
+import CanPracticeAndCanBattleReplayRow from "./canPracticeAndCanBattleReplayRow"
+import SanityRow from "./sanityRow"
+import StageDropInfoRow from "./stageDropInfoRow"
 import style from "./stageInfoTable.module.scss"
+import UnlockConditionRow from "./unlockConditionRow"
 
 interface StageInfoTableProps {
   stageInfo: ICustomStageInfo

@@ -1,10 +1,9 @@
-// libs
 import React from "react"
-import Divider from "@mui/material/Divider"
+
 import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
+import Divider from "@mui/material/Divider"
 
-// models
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {

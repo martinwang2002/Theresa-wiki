@@ -1,12 +1,10 @@
-// libs
 import React from "react"
 
-// Components
-import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
-
-// models
-import type { IStageInfo, IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
 import { isEmpty } from "lodash"
+
+import type { IStageInfo, IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
+
+import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo

@@ -1,8 +1,10 @@
 import React from "react"
-import Head from "next/head"
+
 import Skeleton from "@mui/material/Skeleton"
+import Head from "next/head"
 
 import Page from "@/components/page/page"
+
 import style from "./credits.module.scss"
 
 interface ICreditsState {

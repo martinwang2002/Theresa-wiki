@@ -1,6 +1,5 @@
 import Redis from "ioredis"
 
-// models
 import { serverRuntimeConfig } from "./runtimeConfig"
 
 interface ICacheable {

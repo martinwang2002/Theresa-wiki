@@ -1,16 +1,14 @@
-// libs
 import React from "react"
-import SecurityIcon from "@mui/icons-material/Security"
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
+import CodeIcon from "@mui/icons-material/Code"
+import SecurityIcon from "@mui/icons-material/Security"
+import SupportIcon from "@mui/icons-material/Support"
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
 
-// components
-import FooterLink from "./footerLink"
-
-// models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// styles
+import FooterLink from "./footerLink"
 import style from "./page.module.scss"
 
 const iconSx = {
@@ -41,6 +39,18 @@ class Footer extends React.PureComponent {
             href="/about/changelog"
             icon={<ChangeHistoryIcon sx={iconSx} />}
             text="更新记录"
+          />
+
+          <FooterLink
+            href="/about/source-code"
+            icon={<CodeIcon sx={iconSx} />}
+            text="源代码"
+          />
+
+          <FooterLink
+            href="/about/contact"
+            icon={<SupportIcon sx={iconSx} />}
+            text="联系站长"
           />
 
         </div>

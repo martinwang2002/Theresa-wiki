@@ -1,32 +1,28 @@
 /* eslint-disable react/jsx-max-depth */
-// libs
 import React from "react"
-import Head from "next/head"
-import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
-import { pick as lodashPick } from "lodash"
+
 import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
+import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Grid from "@mui/material/Grid"
+import { pick as lodashPick } from "lodash"
+import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+import Head from "next/head"
 import Link from "next/link"
 
-// Components
-import Page from "@/components/page/page"
 import MapPreviewImage from "@/components/map/mapPreviewImage"
+import Page from "@/components/page/page"
 
-// configs
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// models
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 import { zoneIds, getZoneInfo } from "@/models/gamedata/excel/zoneTable"
-import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
+import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
-// styles
 import style from "./[stageId].module.scss"
 
 interface ZoneProps{
@@ -136,7 +132,7 @@ class Zone extends React.PureComponent<ZoneProps> {
 
         <h1 className={style["h1-title"]}>
           <span>
-            {zoneInfo.zoneNameSecond}
+            {displayZoneName}
           </span>
 
           <span className={style["h1-title-badge"]}>
