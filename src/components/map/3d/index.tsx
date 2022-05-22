@@ -1,14 +1,13 @@
-// libs
 import React from "react"
-import dynamic from "next/dynamic"
-import Paper from "@mui/material/Paper"
 
-// components
-import type { Map3DProps } from "./map3D"
-import MapPreviewImage from "@/components/map/mapPreviewImage"
 import { Button } from "@mui/material"
+import Paper from "@mui/material/Paper"
+import dynamic from "next/dynamic"
 
-// components
+import MapPreviewImage from "@/components/map/mapPreviewImage"
+
+import type { Map3DProps } from "./map3D"
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Map3D = dynamic(async () => import("./map3D"))
 

@@ -1,6 +1,5 @@
-// libs
 import React from "react"
-import type { Group } from "three"
+
 import {
   MeshPhongMaterial,
   Scene,
@@ -11,8 +10,9 @@ import {
   WebGLRenderer,
   HemisphereLight
 } from "three"
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
+import type { Group } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { serialize as serializeUri } from "uri-js"
 
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"

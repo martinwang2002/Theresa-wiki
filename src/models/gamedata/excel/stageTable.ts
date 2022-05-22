@@ -1,11 +1,8 @@
-// libs
 import { serialize as serializeUri } from "uri-js"
 
-// configs
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// models
 import { retroTable } from "./retroTable"
 
 interface IStageTable {

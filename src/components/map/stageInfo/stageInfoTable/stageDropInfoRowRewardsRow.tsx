@@ -1,13 +1,9 @@
-// libs
 import React from "react"
 
-// Components
 import Item from "@/components/common/Item"
 
-// models
 import type { IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
 
-// styles
 import style from "./stageInfoTable.module.scss"
 
 interface StageInfoTableProps {

@@ -1,8 +1,7 @@
 import React from "react"
 
-import Title from "./title"
-
 import style from "./page.module.scss"
+import Title from "./title"
 
 class Header extends React.PureComponent {
   public render (): React.ReactNode {

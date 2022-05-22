@@ -1,10 +1,9 @@
-// libs
 import React from "react"
-import Image from "next/image"
-import { serialize } from "uri-js"
-import type { ImageLoaderProps } from "next/image"
 
-// models
+import Image from "next/image"
+import type { ImageLoaderProps } from "next/image"
+import { serialize } from "uri-js"
+
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface MapPreviewImageProps{

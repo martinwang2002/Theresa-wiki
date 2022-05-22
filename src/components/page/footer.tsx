@@ -1,18 +1,14 @@
-// libs
 import React from "react"
-import SecurityIcon from "@mui/icons-material/Security"
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
 import CodeIcon from "@mui/icons-material/Code"
+import SecurityIcon from "@mui/icons-material/Security"
 import SupportIcon from "@mui/icons-material/Support"
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
 
-// components
-import FooterLink from "./footerLink"
-
-// models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// styles
+import FooterLink from "./footerLink"
 import style from "./page.module.scss"
 
 const iconSx = {

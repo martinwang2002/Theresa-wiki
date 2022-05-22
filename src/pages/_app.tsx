@@ -1,17 +1,15 @@
-// libs
 import React, { useEffect } from "react"
-import type { AppProps } from "next/app"
-import Script from "next/script"
-import { useRouter } from "next/router"
-import { CacheProvider } from "@emotion/react"
-import type { EmotionCache } from "@emotion/cache"
-import { ThemeProvider } from "@mui/material/styles"
-import CssBaseline from "@mui/material/CssBaseline"
 
-// configs
+import type { EmotionCache } from "@emotion/cache"
+import { CacheProvider } from "@emotion/react"
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
+import type { AppProps } from "next/app"
+import { useRouter } from "next/router"
+import Script from "next/script"
+
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// models
 import createEmotionCache from "@/models/createEmotionCache"
 import theme from "@/models/theme"
 import { pageview } from "@/models/utils/gtag"

@@ -1,11 +1,10 @@
-// libs
 import React from "react"
+
 import Badge from "@mui/material/Badge"
 import type { SxProps } from "@mui/system"
-import { serialize as serializeUri } from "uri-js"
 import Image from "next/image"
+import { serialize as serializeUri } from "uri-js"
 
-// models
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ItemProps{

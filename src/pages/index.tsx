@@ -1,10 +1,9 @@
-// libs
-import Head from "next/head"
 import React from "react"
-import Link from "next/link"
-import Image from "next/image"
 
-// Components
+import Head from "next/head"
+import Image from "next/image"
+import Link from "next/link"
+
 import Page from "@/components/page/page"
 
 export default function home (): React.ReactNode {

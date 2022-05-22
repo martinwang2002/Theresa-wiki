@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-max-depth */
 import React from "react"
+
+import type { NextPageContext } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import type { NextPageContext } from "next"
 
 import Page from "@/components/page/page"
+
 import style from "./_error.module.scss"
 
 interface ErrorComponentProps {

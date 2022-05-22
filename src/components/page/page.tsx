@@ -1,10 +1,11 @@
 import React from "react"
+
+import Head from "next/head"
 import type { NextRouter } from "next/router"
 import { withRouter } from "next/router"
-import Head from "next/head"
 
-import Header from "./header"
 import Footer from "./footer"
+import Header from "./header"
 import style from "./page.module.scss"
 
 interface PageProps{

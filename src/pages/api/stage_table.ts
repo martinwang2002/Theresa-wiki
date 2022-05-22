@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
+
 import { stageIds } from "@/models/gamedata/excel/stageTable"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types

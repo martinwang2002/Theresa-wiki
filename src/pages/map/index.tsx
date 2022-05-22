@@ -1,27 +1,24 @@
 /* eslint-disable react/jsx-max-depth */
-// libs
 import React from "react"
-import Head from "next/head"
-import type { GetStaticProps } from "next"
+
 import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
 import CardActionArea from "@mui/material/CardActionArea"
+import CardContent from "@mui/material/CardContent"
 import Grid from "@mui/material/Grid"
-import Link from "next/link"
 import { groupBy, sortBy } from "lodash"
+import type { GetStaticProps } from "next"
+import Head from "next/head"
+import Link from "next/link"
 
-// Components
-import Page from "@/components/page/page"
-import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import Page from "@/components/page/page"
 
-// models
 import { getZones } from "@/models/gamedata/excel/zoneTable"
-import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
+import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
-// styles
 import style from "./[zoneId]/[stageId].module.scss"
 
 interface ZoneProps{

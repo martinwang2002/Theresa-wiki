@@ -1,37 +1,31 @@
-// libs
 import React from "react"
-import Head from "next/head"
-import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
-import { pick as lodashPick } from "lodash"
-import Alert from "@mui/material/Alert"
+
 import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
+import Alert from "@mui/material/Alert"
+import { pick as lodashPick } from "lodash"
+import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+import Head from "next/head"
 
-// Components
-import Page from "@/components/page/page"
-import StageInfo from "@/components/map/stageInfo/index"
-import MapScene from "@/components/map/scene/index"
-import MapPreview from "@/components/map/mapPreview"
-import Map3DIndex from "@/components/map/3d/index"
-import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
+import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
+import Map3DIndex from "@/components/map/3d/index"
+import MapPreview from "@/components/map/mapPreview"
+import MapScene from "@/components/map/scene/index"
+import StageInfo from "@/components/map/stageInfo/index"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
+import Page from "@/components/page/page"
 
-// configs
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-// models
+import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
 import { zoneIds } from "@/models/gamedata/excel/zoneTable"
-import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import { GamedataContext } from "@/models/reactContext/gamedataContext"
+import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
-// reactContext
-import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
-import { GamedataContext } from "@/models/reactContext/gamedataContext"
-
-// styles
 import style from "./[stageId].module.scss"
 
 interface MapProps{
