@@ -136,7 +136,7 @@ class Zone extends React.PureComponent<ZoneProps> {
 
         <h1 className={style["h1-title"]}>
           <span>
-            {zoneInfo.zoneNameSecond}
+            {displayZoneName}
           </span>
 
           <span className={style["h1-title-badge"]}>

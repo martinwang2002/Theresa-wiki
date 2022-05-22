@@ -2,13 +2,15 @@
 versions:
 
   - version: [0, 1, 11]
-    date: 2022-05-22T08:00:00+0800
+    date: 2022-05-23T08:00:00+0800
     contents:
       added:
         - semantic versioning with `+branch_name` for non-master branch
         - Experimental 3D map scene
         - about page source-code
         - about page contact
+      changed:
+        - map/zone use display zone name
 
   - version: [0, 1, 10]
     date: 2022-05-15T09:00:00+0800
