@@ -11,7 +11,7 @@ import {
   TextureLoader,
   HemisphereLight
 } from "three"
-import type { Group, MeshPhongMaterialParameters } from "three"
+import type { Group, MeshPhongMaterialParameters, Texture } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { serialize as serializeUri } from "uri-js"
@@ -29,9 +29,19 @@ interface Map3DProps{
 //   w: number
 // }
 
+interface ConfigColor {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
 interface Map3DConfigApiMaterial {
   // texture link
   texture: string
+  emissionMap: string | null
+  color: ConfigColor | null
+  emissionColor: ConfigColor | null
 }
 
 interface Map3DConfigApiMeshConfig {
@@ -71,8 +81,20 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
 
   const result = Object.entries(configJson.rootScene.materials).map(async ([key, value]) => {
     const texture = await textureLoader.loadAsync(value.texture)
+
+    // load emissionMap or emissiveMap
+    let emissionMap: Texture | null
+    emissionMap = null
+    if (value.emissionMap !== null) {
+      emissionMap = await textureLoader.loadAsync(value.emissionMap)
+    }
+
     const meshMaterial = {
-      map: texture
+      map: texture,
+      color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
+      emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
+      emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,
+      emissiveMap: emissionMap ?? null
     } as MeshPhongMaterialParameters
     materials[key] = meshMaterial
   })
