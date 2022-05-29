@@ -29,6 +29,7 @@ try {
   versionString = "unknown"
 }
 
+const uriJs = require("uri-js")
 
 module.exports = {
   images: {
@@ -65,17 +66,11 @@ module.exports = {
     THERESA_WIKI_VERSION: versionString,
     GIT_COMMIT: commitHash,
     GTAG_ID: process.env.GTAG_ID,
-    THERESA_STATIC: {
-      scheme: process.env.THERESA_STATIC !== "static.theresa.localhost" ? "https" : "http",
-      host: process.env.THERESA_STATIC ?? ""
-    }
+    THERESA_STATIC: uriJs.parse(process.env.THERESA_STATIC ?? "https://static.theresa.wiki")
   },
   serverRuntimeConfig: {
     NO_DYNAMIC_ROUTES: process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true",
     REDIS_URL: process.env.REDIS_URL ?? "",
-    THERESA_S3: {
-      scheme: "http",
-      host: process.env.THERESA_S3 ?? ""
-    }
+    THERESA_S3: uriJs.parse(process.env.THERESA_S3 ?? "http://s3.theresa.wiki"),
   },
 }
