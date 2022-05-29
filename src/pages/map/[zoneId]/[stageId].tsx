@@ -2,6 +2,7 @@ import React from "react"
 
 import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
 import Alert from "@mui/material/Alert"
+import AlertTitle from "@mui/material/AlertTitle"
 import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
@@ -193,9 +194,9 @@ class Map extends React.PureComponent<MapProps> {
           </TileInfoContext.Provider>
 
           <HeadingAnchor
-            id="map3D"
+            id="map3d"
             sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
-            text="3D地图"
+            text="3D场景地图"
           />
 
           <Alert
@@ -207,7 +208,16 @@ class Map extends React.PureComponent<MapProps> {
               marginY: "1em"
             }}
           >
-            目前3D场景地图暂未支持贴图、光源、精确相机位置等。
+            <AlertTitle>
+              目前3D场景地图已经支持贴图；暂未支持光源、精确相机位置等。
+            </AlertTitle>
+            部分地图暂时无法查看（包括但不限于突袭、剧情体验环境、磨难险地环境）
+
+            <br />
+
+            并且暂时没有错误提示信息，敬请谅解。
+
+            <br />
 
             您可以向站长提交反馈，（开真银斩杀源石虫啦~~~
           </Alert>
