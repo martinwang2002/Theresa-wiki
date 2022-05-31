@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 1]
+    date: 2022-06-06T08:00:00+0800
+    contents:
+      fixed:
+        - map preview use relative position for image's parent element
+
   - version: [0, 2, 0]
     date: 2022-05-30T08:00:00+0800
     contents:
