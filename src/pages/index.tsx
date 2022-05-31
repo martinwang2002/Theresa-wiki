@@ -26,7 +26,7 @@ export default function home (): React.ReactNode {
         >
           地图
         </Link>
-        可以使用
+        可以使用。PS：可以查看3D场景。
       </p>
 
       <div style={{ textAlign: "center" }}>

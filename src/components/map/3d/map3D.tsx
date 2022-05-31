@@ -1,7 +1,7 @@
 import React from "react"
 
 import {
-  MeshPhongMaterial,
+  MeshStandardMaterial,
   Scene,
   Color,
   PerspectiveCamera,
@@ -11,7 +11,7 @@ import {
   TextureLoader,
   HemisphereLight
 } from "three"
-import type { Group, MeshPhongMaterialParameters, Texture } from "three"
+import type { Group, MeshStandardMaterialParameters, Texture } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { serialize as serializeUri } from "uri-js"
@@ -37,9 +37,12 @@ interface ConfigColor {
 }
 
 interface Map3DConfigApiMaterial {
-  // texture link
-  texture: string
+  map: string
   emissionMap: string | null
+  bumpMap: string | null
+  metallicGlossMap: string | null
+  bumpScale: number
+  glossiness: number
   color: ConfigColor | null
   emissionColor: ConfigColor | null
 }
@@ -60,7 +63,7 @@ interface Map3DConfigApi {
 interface Map3DConfig {
   rootScene: {
     obj: Group
-    materials: Record<string, MeshPhongMaterialParameters>
+    materials: Record<string, MeshStandardMaterialParameters>
     meshConfigs: Map3DConfigApiMeshConfig[]
   }
 }
@@ -73,29 +76,46 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
 
   const objLoader = new OBJLoader()
 
-  const rootSceneObj = await objLoader.loadAsync(configJson.rootScene.obj)
+  const rootSceneObj = objLoader.loadAsync(configJson.rootScene.obj)
 
   const textureLoader = new TextureLoader()
 
-  const materials = {} as Record<string, MeshPhongMaterialParameters>
+  const materials = {} as Record<string, MeshStandardMaterialParameters>
 
   const result = Object.entries(configJson.rootScene.materials).map(async ([key, value]) => {
-    const texture = await textureLoader.loadAsync(value.texture)
+    const map = textureLoader.loadAsync(value.map)
 
     // load emissionMap or emissiveMap
-    let emissionMap: Texture | null
+    let emissionMap: Promise<Texture> | null
     emissionMap = null
     if (value.emissionMap !== null) {
-      emissionMap = await textureLoader.loadAsync(value.emissionMap)
+      emissionMap = textureLoader.loadAsync(value.emissionMap)
+    }
+
+    // load bumpMap
+    let bumpMap: Promise<Texture> | null
+    bumpMap = null
+    if (value.bumpMap !== null) {
+      bumpMap = textureLoader.loadAsync(value.bumpMap)
+    }
+
+    // load metallicGlossMap
+    let metallicGlossMap: Promise<Texture> | null
+    metallicGlossMap = null
+    if (value.metallicGlossMap !== null) {
+      metallicGlossMap = textureLoader.loadAsync(value.metallicGlossMap)
     }
 
     const meshMaterial = {
-      map: texture,
+      map: await map,
       color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
       emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
       emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,
-      emissiveMap: emissionMap ?? null
-    } as MeshPhongMaterialParameters
+      emissiveMap: await emissionMap ?? null,
+      normalMap: await bumpMap ?? null,
+      metalnessMap: await metallicGlossMap ?? null,
+      metalness: value.glossiness
+    } as MeshStandardMaterialParameters
     materials[key] = meshMaterial
   })
 
@@ -106,7 +126,7 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
 
   const map3DConfig: Map3DConfig = {
     rootScene: {
-      obj: rootSceneObj,
+      obj: await rootSceneObj,
       materials: materials,
       meshConfigs: configJson.rootScene.meshConfigs
     }
@@ -163,7 +183,7 @@ class Map3D extends React.PureComponent<Map3DProps> {
     _index = zero
     rootSceneObj.traverse((child) => {
       if (child instanceof Mesh) {
-        child.material = new MeshPhongMaterial(
+        child.material = new MeshStandardMaterial(
           map3DConfig.rootScene.materials[map3DConfig.rootScene.meshConfigs[_index].material]
         )
         _index++
