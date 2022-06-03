@@ -83,7 +83,12 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
   const materials = {} as Record<string, MeshStandardMaterialParameters>
 
   const result = Object.entries(configJson.rootScene.materials).map(async ([key, value]) => {
-    const map = textureLoader.loadAsync(value.map)
+    // load texture or map
+    let map: Promise<Texture> | null
+    map = null
+    if (value.map) {
+      map = textureLoader.loadAsync(value.map)
+    }
 
     // load emissionMap or emissiveMap
     let emissionMap: Promise<Texture> | null
@@ -107,7 +112,7 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
     }
 
     const meshMaterial = {
-      map: await map,
+      map: await map ?? null,
       color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
       emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
       emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,

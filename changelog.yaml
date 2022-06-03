@@ -13,6 +13,7 @@ versions:
         - map 3d changed await order to reduce latency
       fixed:
         - map preview use relative position for image's parent element
+        - map 3d without texture (map)
 
   - version: [0, 2, 0]
     date: 2022-05-30T08:00:00+0800
