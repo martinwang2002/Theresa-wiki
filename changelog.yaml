@@ -8,6 +8,7 @@ versions:
         - map3d Material bumpMap and bumpScale
         - map3d Material metallicGlossMap (metalnessMap)
           and glossiness (metalness)
+        - map index display easy badge
       changed:
         - map 3d changed await order to reduce latency
       fixed:

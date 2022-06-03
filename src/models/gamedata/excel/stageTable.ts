@@ -42,6 +42,7 @@ interface IStageDropInfo {
 interface IStageInfo {
   stageType: string
   difficulty: string
+  diffGroup: string
   unlockCondition: IUnlockCondition[]
   stageId: string
   zoneId: string
@@ -185,11 +186,43 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   return { ..._tileInfo, ...tileEmptyExtra }
 }
 
+interface IWaveFragmentAction {
+  actionType: number
+  autoPreviewRoute: boolean
+  blockFragment: boolean
+  count: number
+  dontBlockWave: boolean
+  hiddenGroup: unknown
+  interval: number
+  isUnharmfulAndAlwaysCountAsKilled: boolean
+  key: string
+  managedByScheduler: boolean
+  preDelay: number
+  randomSpawnGroupKey: unknown
+  routeIndex: number
+  weight: number
+}
+
+interface IWaveFragment {
+  actions: IWaveFragmentAction[]
+  preDelay: number
+  name: string | null
+}
+
+interface IWave {
+  fragments: IWaveFragment[]
+  maxTimeWaitingForNextWave: number
+  name: string | null
+  postDelay: number
+  preDelay: number
+}
+
 interface IStageJson {
   options: Record<string, string>
   levelId: string
   loadingPicId: string
   mapData: IMapData
+  waves: IWave[]
   [key: string]: unknown
 }
 
@@ -204,4 +237,4 @@ export const stageJson = async (levelId: string): Promise<IStageJson> => {
   return stageJsonResult
 }
 
-export type { IStageInfo, ICustomStageInfo, IDisplayDetailReward, IUnlockCondition, IMapData, ITileInfo, IMapDataTiles, IStageJson }
+export type { IStageInfo, ICustomStageInfo, IDisplayDetailReward, IUnlockCondition, IMapData, ITileInfo, IMapDataTiles, IStageJson, IWave }
