@@ -6,6 +6,7 @@ import AlertTitle from "@mui/material/AlertTitle"
 import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
+import Link from "next/link"
 
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
@@ -86,7 +87,9 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
     }
   }
 
-  const stageInfo = await getCustomStageInfo(stageId)
+  const permanent = zoneIdFromParams.startsWith("permanent")
+
+  const stageInfo = await getCustomStageInfo(stageId, permanent)
 
   const { levelId, zoneId } = stageInfo
 
@@ -219,7 +222,13 @@ class Map extends React.PureComponent<MapProps> {
 
             <br />
 
-            您可以向站长提交反馈，（开真银斩杀源石虫啦~~~
+            您可以向
+            <Link
+              href="/about/contact"
+            >
+              站长提交反馈
+            </Link>
+            ，（开真银斩杀源石虫啦~~~
           </Alert>
 
           <Map3DIndex

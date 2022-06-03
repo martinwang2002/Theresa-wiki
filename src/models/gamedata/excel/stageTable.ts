@@ -145,12 +145,18 @@ interface ICustomStageInfo extends IStageInfo {
   _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "name" | "stageId" | "zoneId">>
 }
 
-export const getCustomStageInfo = async (stageId: string): Promise<ICustomStageInfo> => {
+export const getCustomStageInfo = async (stageId: string, permanent = false): Promise<ICustomStageInfo> => {
   const convertedStageId = stageIdtoHash(stageId)
 
-  const { stages } = await stageTable()
+  let result: ICustomStageInfo
 
-  const result = stages[convertedStageId] as ICustomStageInfo
+  if (permanent) {
+    const { stageList } = await retroTable()
+    result = stageList[convertedStageId] as ICustomStageInfo
+  } else {
+    const { stages } = await stageTable()
+    result = stages[convertedStageId] as ICustomStageInfo
+  }
 
   result._unlockConditionStageInfo = {}
 
