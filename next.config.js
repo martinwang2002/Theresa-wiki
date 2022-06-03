@@ -66,7 +66,8 @@ module.exports = {
     THERESA_WIKI_VERSION: versionString,
     GIT_COMMIT: commitHash,
     GTAG_ID: process.env.GTAG_ID,
-    THERESA_STATIC: uriJs.parse(process.env.THERESA_STATIC ?? "https://static.theresa.wiki")
+    THERESA_STATIC: uriJs.parse(process.env.THERESA_STATIC ?? "https://static.theresa.wiki"),
+    CRISP_WEBSITE_ID: process.env.CRISP_WEBSITE_ID,
   },
   serverRuntimeConfig: {
     NO_DYNAMIC_ROUTES: process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true",

@@ -9,6 +9,7 @@ versions:
         - map3d Material metallicGlossMap (metalnessMap)
           and glossiness (metalness)
         - map index display easy badge
+        - about contact support crisp
       changed:
         - map 3d changed await order to reduce latency
       fixed:

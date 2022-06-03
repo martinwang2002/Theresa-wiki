@@ -7,6 +7,7 @@ interface IPublicRuntimeConfig {
   GTAG_ID: string
   THERESA_STATIC: URIComponents
   THERESA_WIKI_VERSION: string
+  CRISP_WEBSITE_ID: string
   /* eslint-enable @typescript-eslint/naming-convention */
 }
 
