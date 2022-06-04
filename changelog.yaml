@@ -11,6 +11,7 @@ versions:
         - map index display easy badge
         - about contact support crisp
         - about index page
+        - map3d improve loading message
       changed:
         - map 3d changed await order to reduce latency
       fixed:

@@ -22,6 +22,10 @@ interface Map3DProps{
   stageId: string
 }
 
+interface Map3DPropsWithPhase extends Map3DProps {
+  onLoadPhaseChange: (phase: number) => void
+}
+
 // interface LightmapConfigs {
 //   x: number
 //   y: number
@@ -140,8 +144,16 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
   return map3DConfig
 }
 
-class Map3D extends React.PureComponent<Map3DProps> {
-  public constructor (props: Readonly<Map3DProps>) {
+enum Map3DLoadPhase {
+  /* eslint-disable @typescript-eslint/no-magic-numbers */
+  script = 0,
+  config = 1,
+  scene = 2
+  /* eslint-enable @typescript-eslint/no-magic-numbers */
+}
+
+class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
+  public constructor (props: Readonly<Map3DPropsWithPhase>) {
     super(props)
     this.sceneContainer = React.createRef()
   }
@@ -151,8 +163,12 @@ class Map3D extends React.PureComponent<Map3DProps> {
   }
 
   private async threejsRender (): Promise<void> {
-    const { stageId } = this.props
+    const { stageId, onLoadPhaseChange } = this.props
+    onLoadPhaseChange(Map3DLoadPhase.config)
+
     const map3DConfig = await loadSceneData(stageId)
+
+    onLoadPhaseChange(Map3DLoadPhase.scene)
 
     const container = this.sceneContainer.current ?? document.createElement("div")
 
