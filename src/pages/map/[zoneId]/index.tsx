@@ -29,7 +29,7 @@ interface ZoneProps{
   server: "CN" | "JP" | "KR" | "TW" | "US"
   zoneId: string
   zoneInfo: IZoneInfo
-  stages: Pick<IStageInfo, "code" | "difficulty" | "name" | "stageId">[]
+  stages: Pick<IStageInfo, "code" | "diffGroup" | "difficulty" | "name" | "stageId">[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
   })
 
   const pickedStages = nonStoryOnlyStages.map((stageInfo) => {
-    return lodashPick(stageInfo, ["stageId", "code", "name", "difficulty"])
+    return lodashPick(stageInfo, ["stageId", "code", "name", "diffGroup", "difficulty"])
   })
 
   return {
@@ -173,6 +173,16 @@ class Zone extends React.PureComponent<ZoneProps> {
                         {stageInfo.difficulty === "FOUR_STAR" &&
                         <span className={style["h1-four-star-badge"]}>
                           突袭
+                        </span>}
+
+                        {stageInfo.diffGroup === "EASY" &&
+                        <span className={style["h1-easy-badge"]}>
+                          剧情体验
+                        </span>}
+
+                        {stageInfo.diffGroup === "TOUGH" &&
+                        <span className={style["h1-four-star-badge"]}>
+                          磨难险境
                         </span>}
 
                         {`${stageInfo.code} ${stageInfo.name}`}

@@ -67,6 +67,7 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
             onClick={this.handleImageDialogOpen}
             sx={{
               height: "100%",
+              position: "relative",
               "&:hover": {
                 cursor: "pointer",
                 "& .MuiFab-root": {

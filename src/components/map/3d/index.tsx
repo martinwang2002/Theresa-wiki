@@ -13,6 +13,7 @@ const Map3D = dynamic(async () => import("./map3D"))
 
 interface Map3DIndexState {
   loadScene: boolean
+  loadScenePhase: number
 }
 
 class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
@@ -20,7 +21,8 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
     super(props)
 
     this.state = {
-      loadScene: false
+      loadScene: false,
+      loadScenePhase: 0
     }
   }
 
@@ -30,9 +32,18 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
     })
   }
 
+  private readonly handleLoadScenePhaseChange = (phase: number): void => {
+    this.setState({
+      loadScenePhase: phase
+    })
+  }
+
   public render (): React.ReactNode {
     const { stageId } = this.props
-    const { loadScene } = this.state
+    const { loadScene, loadScenePhase } = this.state
+
+    const phases = ["正在加载脚本.", "正在加载场景配置文件..", "正在加载场景美术资源..."]
+
     return (
       <div style={{
         aspectRatio: "16/9",
@@ -74,7 +85,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
             }}
             variant="contained"
           >
-            {!loadScene ? "加载场景" : "请稍后..."}
+            {!loadScene ? "加载场景" : phases[loadScenePhase]}
           </Button>
 
           {loadScene &&
@@ -85,6 +96,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               }}
             >
               <Map3D
+                onLoadPhaseChange={this.handleLoadScenePhaseChange}
                 stageId={stageId}
               />
             </div>}
