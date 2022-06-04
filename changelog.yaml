@@ -10,6 +10,7 @@ versions:
           and glossiness (metalness)
         - map index display easy badge
         - about contact support crisp
+        - about index page
       changed:
         - map 3d changed await order to reduce latency
       fixed:
