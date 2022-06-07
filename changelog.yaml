@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - styled components
+        - page footer with CC-BY-NC-SA license
       deprecated:
         - scss module
 
