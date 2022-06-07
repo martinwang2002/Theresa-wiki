@@ -13,9 +13,6 @@
     },
     "files.insertFinalNewline": true,
     // languages
-    "[scss]": {
-        "editor.defaultFormatter": "stylelint.vscode-stylelint"
-    },
     "[typescriptreact]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
@@ -28,17 +25,9 @@
     "[yaml]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
-    "css.validate": true,
-    "scss.validate": true,
     // extensions
     "npm.packageManager": "yarn",
     "eslint.packageManager": "yarn",
-    "stylelint.validate": [
-        "css",
-        "scss"
-    ],
-    "stylelint.packageManager": "yarn",
-    "stylelint.enable": true,
     "eslint.validate": [
         "json",
         "jsonc",

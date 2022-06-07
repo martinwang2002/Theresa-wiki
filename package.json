@@ -7,7 +7,6 @@
     "start": "next start",
     "lint": "npm-run-all lint:*",
     "lint:eslint": "next lint",
-    "lint:stylelint": "stylelint **/*.scss",
     "gen-license": "yarn licenses generate-disclaimer --silent > public/LICENSES.txt"
   },
   "dependencies": {
@@ -18,7 +17,6 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.4.1",
     "@mui/material": "^5.2.6",
-    "@popperjs/core": "^2.11.0",
     "bootstrap": "^5.1.3",
     "ioredis": "^4.27.9",
     "lodash": "^4.17.21",
@@ -28,6 +26,7 @@
     "raw-loader": "^4.0.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-is": "^18.1.0",
     "react-markdown": "^7.1.1",
     "remark-gfm": "^3.0.1",
     "sass": "^1.44.0",
@@ -47,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "3.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "^12.1.0",
     "eslint-config-standard": "^16.0.3",
@@ -62,10 +61,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-yml": "^0.14.0",
     "npm-run-all": "^4.1.5",
-    "stylelint": "^14.2.0",
-    "stylelint-config-hudochenkov": "^6.0.1",
-    "stylelint-config-recommended-scss": "^5.0.2",
-    "stylelint-order": "^5.0.0",
     "typescript": "^4.3.4"
   },
   "config": {

@@ -48,6 +48,18 @@
                     }
                 ],
                 "@typescript-eslint/member-ordering": "off",
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "format": [
+                            "camelCase",
+                            "PascalCase",
+                            "UPPER_CASE"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "selector": "variable"
+                    }
+                ],
                 "@typescript-eslint/no-extra-parens": "off",
                 "@typescript-eslint/no-magic-numbers": [
                     "error",
@@ -157,6 +169,15 @@
                 "semi": [
                     "error",
                     "never"
+                ],
+                "sort-keys": [
+                    "warn", // error
+                    "asc",
+                    {
+                        "caseSensitive": true,
+                        "minKeys": 2,
+                        "natural": false
+                    }
                 ]
             }
         },

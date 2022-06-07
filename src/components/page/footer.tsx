@@ -5,6 +5,7 @@ import CodeIcon from "@mui/icons-material/Code"
 import SecurityIcon from "@mui/icons-material/Security"
 import SupportIcon from "@mui/icons-material/Support"
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+import { styled } from "@mui/system"
 
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
@@ -12,15 +13,31 @@ import FooterLink from "./footerLink"
 import style from "./page.module.scss"
 
 const iconSx = {
-  verticalAlign: "bottom",
+  fontSize: "1.25em",
   marginRight: "0.25em",
-  fontSize: "1.25em"
+  verticalAlign: "bottom"
 }
+
+const FooterDiv = styled("div")({
+  backgroundColor: "#18191a",
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "13rem",
+  textAlign: "center"
+})
+
+const FooterVersion = styled("div")({
+  color: "#d2dbd9",
+  fontFamily: "\"Roboto Mono\", monospace",
+  fontSize: "x-small",
+  marginBottom: "1em",
+  textTransform: "uppercase"
+})
 
 class Footer extends React.PureComponent {
   public render (): React.ReactNode {
     return (
-      <div className={style.footer}>
+      <FooterDiv>
         <div className={style.footer_links}>
 
           <FooterLink
@@ -55,14 +72,14 @@ class Footer extends React.PureComponent {
 
         </div>
 
-        <div className={style.version}>
+        <FooterVersion>
           {publicRuntimeConfig.THERESA_WIKI_VERSION}
 
           {" "}
 
           {publicRuntimeConfig.GIT_COMMIT}
-        </div>
-      </div>
+        </FooterVersion>
+      </FooterDiv>
     )
   }
 }
