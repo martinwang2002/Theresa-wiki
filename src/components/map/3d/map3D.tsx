@@ -9,6 +9,7 @@ import {
   Mesh,
   WebGLRenderer,
   TextureLoader,
+  Quaternion,
   HemisphereLight
 } from "three"
 import type { Group, MeshStandardMaterialParameters, Texture } from "three"
@@ -177,13 +178,18 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     scene.background = new Color("skyblue")
 
     // camera
-    const fov = 35
-    const aspect = container.clientWidth / container.clientHeight
-    const near = 0.1
-    const far = 100
+    const fov = 40
+    // const aspect = container.clientWidth / container.clientHeight
+    // console.log(aspect)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const aspect = 16 / 9
+    const near = 0.3
+    const far = 1000
     const camera = new PerspectiveCamera(fov, aspect, near, far)
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    camera.position.set(0, -10, -20)
+    camera.position.set(0, -5, -8)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    camera.rotation.setFromQuaternion(new Quaternion(-2.5, 0, 0, 0.96))
 
     // light
     const mainLight = new DirectionalLight("#fff")
