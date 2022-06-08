@@ -3,6 +3,8 @@ import { serialize as serializeUri } from "uri-js"
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
+import { battleMiscTable } from "../battle/battleMiscTable"
+
 import { retroTable } from "./retroTable"
 
 interface IStageTable {
@@ -233,6 +235,12 @@ interface IStageJson {
 }
 
 export const stageJson = async (levelId: string): Promise<IStageJson> => {
+  // use hooked level id
+  const { levelScenePairs } = await battleMiscTable()
+  if (levelId in levelScenePairs) {
+    levelId = levelScenePairs[levelId].levelId
+  }
+
   const stageUrl = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
     path: `/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`

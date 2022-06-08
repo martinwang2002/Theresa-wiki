@@ -9,6 +9,8 @@ versions:
         - page footer with CC-BY-NC-SA license
       deprecated:
         - scss module
+      fixed:
+        - map use hooked level id from battle misc table
 
   - version: [0, 2, 1]
     date: 2022-06-06T08:00:00+0800
