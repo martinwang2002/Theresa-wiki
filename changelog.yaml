@@ -7,6 +7,7 @@ versions:
       added:
         - styled components
         - page footer with CC-BY-NC-SA license
+        - map 3d loading user experience
       deprecated:
         - scss module
       fixed:

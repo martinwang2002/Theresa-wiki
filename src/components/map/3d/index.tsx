@@ -1,12 +1,14 @@
 import React from "react"
 
 import { Button } from "@mui/material"
+import LinearProgress from "@mui/material/LinearProgress"
 import Paper from "@mui/material/Paper"
 import dynamic from "next/dynamic"
 
 import MapPreviewImage from "@/components/map/mapPreviewImage"
 
 import type { Map3DProps } from "./map3D"
+import WorldViewTip from "./worldViewTip"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Map3D = dynamic(async () => import("./map3D"))
@@ -14,6 +16,7 @@ const Map3D = dynamic(async () => import("./map3D"))
 interface Map3DIndexState {
   loadScene: boolean
   loadScenePhase: number
+  loadSceneDataProgress: number
 }
 
 class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
@@ -22,6 +25,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
 
     this.state = {
       loadScene: false,
+      loadSceneDataProgress: 0,
       loadScenePhase: 0
     }
   }
@@ -38,11 +42,25 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
     })
   }
 
+  private readonly handleLoadSceneDataProgressChange = (progress: number): void => {
+    console.log(progress)
+    this.setState({
+      loadSceneDataProgress: progress
+    })
+  }
+
   public render (): React.ReactNode {
     const { stageId } = this.props
-    const { loadScene, loadScenePhase } = this.state
+    const { loadScene, loadScenePhase, loadSceneDataProgress } = this.state
 
     const phases = ["正在加载脚本.", "正在加载场景配置文件..", "正在加载场景美术资源..."]
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const values = [0, 20, 40, 100]
+    const phaseThreePercentage = 60
+    const progressValue = values[loadScenePhase] + loadSceneDataProgress * phaseThreePercentage
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const progressValueBuffer = values[loadScenePhase + 1]
 
     return (
       <div style={{
@@ -74,29 +92,52 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
             />
           </div>
 
-          <Button
-            color="primary"
-            onClick={this.handleLoadScene}
-            sx={{
-              top: "-35%",
-              left: "50%",
-              transform: "translateX(-50%)",
-              position: "relative"
+          <div
+            style={{
+              aspectRatio: "16/9",
+              display: "block",
+              position: "relative",
+              top: "-100%"
             }}
-            variant="contained"
           >
-            {!loadScene ? "加载场景" : phases[loadScenePhase]}
-          </Button>
+            <Button
+              color="primary"
+              onClick={this.handleLoadScene}
+              sx={{
+                left: "50%",
+                top: "60%",
+                transform: "translateX(-50%)"
+              }}
+              variant="contained"
+            >
+              {!loadScene ? "加载场景" : phases[loadScenePhase]}
+            </Button>
+
+            {loadScene &&
+              <LinearProgress
+                color="warning"
+                sx={{
+                  top: "70%"
+                }}
+                value={progressValue}
+                valueBuffer={progressValueBuffer}
+                variant="determinate"
+              />}
+
+            {loadScene &&
+              <WorldViewTip />}
+          </div>
 
           {loadScene &&
             <div
               style={{
                 position: "relative",
-                top: "calc(-100% - 37.5px)"
+                top: "-200%"
               }}
             >
               <Map3D
-                onLoadPhaseChange={this.handleLoadScenePhaseChange}
+                onLoadSceneDataProgressChange={this.handleLoadSceneDataProgressChange}
+                onLoadScenePhaseChange={this.handleLoadScenePhaseChange}
                 stageId={stageId}
               />
             </div>}
