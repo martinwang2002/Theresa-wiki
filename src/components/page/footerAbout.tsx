@@ -43,13 +43,14 @@ class Footer extends React.PureComponent {
           sm={4}
           xs={12}
         >
-          <div style={{ fontSize: "small", paddingLeft: "1em", paddingRight: "1em" }}>
+          <div style={{ fontSize: "small", margin: "auto", maxWidth: "13em" }}>
             <CcByNcSaSvgLink />
 
             <br />
 
             本站采用
-            {" "}
+
+            <br />
 
             <CcByNcSaLink
               href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
@@ -58,14 +59,24 @@ class Footer extends React.PureComponent {
                 textDecorationColor: "#fff",
                 textDecorationLine: "underline",
                 textDecorationStyle: "dashed",
-                textUnderlinePosition: "under"
+                textUnderlinePosition: "under",
+                whiteSpace: "break-spaces"
               }}
               target="_blank"
             >
-              署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)
+              署名-非商业性使用-
+
+              {"\n"}
+
+              相同方式共享 4.0 国际
+
+              {"\n"}
+
+              (CC BY-NC-SA 4.0)
             </CcByNcSaLink>
 
-            {" "}
+            <br />
+
             协议进行许可。
           </div>
         </Grid>
@@ -122,7 +133,6 @@ class Footer extends React.PureComponent {
           />
         </Grid>
       </Grid>
-
     )
   }
 }
