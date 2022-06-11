@@ -24,7 +24,10 @@ const FooterVersion = styled("div")({
 class Footer extends React.PureComponent {
   public render (): React.ReactNode {
     return (
-      <FooterDiv>
+      <FooterDiv
+        data-elastic-exclude
+        data-nosnippet
+      >
         <FooterAbout />
 
         <FooterVersion>
