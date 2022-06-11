@@ -4,9 +4,9 @@ import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 
 import StageInfoTable from "./stageInfoTable/index"
 
-interface StageInfoProps{
+interface StageInfoProps {
   stageInfo: ICustomStageInfo
-  stageJsonOptions: Record<string, string> | null
+  // stageJsonOptions: Record<string, string> | null
 }
 
 class StageInfo extends React.PureComponent<StageInfoProps> {

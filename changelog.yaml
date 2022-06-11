@@ -8,6 +8,7 @@ versions:
         - styled components
         - page footer with CC-BY-NC-SA license
         - map 3d loading user experience
+        - bump deps
       deprecated:
         - scss module
       fixed:

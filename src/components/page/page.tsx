@@ -8,7 +8,7 @@ import Footer from "./footer"
 import Header from "./header"
 import style from "./page.module.scss"
 
-interface PageProps{
+interface PageProps {
   children: React.ReactNode
   router: NextRouter
 }

@@ -3,7 +3,7 @@ import React from "react"
 import { styled } from "@mui/system"
 import Link from "next/link"
 
-interface IFooterLinkProps{
+interface IFooterLinkProps {
   href: string
   icon: JSX.Element
   text: string

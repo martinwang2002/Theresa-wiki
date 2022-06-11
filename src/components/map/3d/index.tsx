@@ -113,7 +113,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               {!loadScene ? "加载场景" : phases[loadScenePhase]}
             </Button>
 
-            {loadScene &&
+            {!!loadScene &&
               <LinearProgress
                 color="warning"
                 sx={{
@@ -124,11 +124,11 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
                 variant="determinate"
               />}
 
-            {loadScene &&
+            {!!loadScene &&
               <WorldViewTip />}
           </div>
 
-          {loadScene &&
+          {!!loadScene &&
             <div
               style={{
                 position: "relative",

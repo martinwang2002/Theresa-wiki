@@ -4,7 +4,7 @@ import Image from "next/image"
 
 // import type { ImageLoaderProps } from "next/image"
 
-interface LoadingPicProps{
+interface LoadingPicProps {
   loadingPicId: string
 }
 

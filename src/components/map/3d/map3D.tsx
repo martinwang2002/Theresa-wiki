@@ -19,7 +19,7 @@ import { serialize as serializeUri } from "uri-js"
 
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-interface Map3DProps{
+interface Map3DProps {
   stageId: string
 }
 

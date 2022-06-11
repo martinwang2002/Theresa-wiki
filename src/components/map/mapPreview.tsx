@@ -15,11 +15,11 @@ import TransitionUpRef from "@/components/common/TransitionUp"
 
 import MapPreviewImage from "./mapPreviewImage"
 
-interface MapPreviewProps{
+interface MapPreviewProps {
   stageId: string
 }
 
-interface MapPreviewState{
+interface MapPreviewState {
   imageDialogOpen: boolean
 }
 

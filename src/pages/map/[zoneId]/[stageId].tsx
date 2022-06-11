@@ -30,7 +30,7 @@ import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 import style from "./[stageId].module.scss"
 
-interface MapProps{
+interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
   stageInfo: ICustomStageInfo
@@ -178,7 +178,7 @@ class Map extends React.PureComponent<MapProps> {
           <GamedataContext.Provider value={gamedataConst}>
             <StageInfo
               stageInfo={stageInfo}
-              stageJsonOptions={stageJson.options}
+              // stageJsonOptions={stageJson.options}
             />
           </GamedataContext.Provider>
 

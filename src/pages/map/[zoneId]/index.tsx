@@ -25,7 +25,7 @@ import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
 import style from "./[stageId].module.scss"
 
-interface ZoneProps{
+interface ZoneProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   zoneId: string
   zoneInfo: IZoneInfo
