@@ -1,12 +1,23 @@
 import React from "react"
 
+import { styled } from "@mui/system"
 import Link from "next/link"
 
-interface IFooterLinkProps{
+interface IFooterLinkProps {
   href: string
   icon: JSX.Element
   text: string
 }
+
+const LinkItem = styled("span")({
+  "&:hover": {
+    color: "#fff",
+    cursor: "pointer"
+  },
+  margin: "0.2em auto",
+  textDecoration: "none",
+  transition: "color 500ms ease"
+})
 
 class FooterLink extends React.PureComponent<IFooterLinkProps> {
   public render (): React.ReactNode {
@@ -17,13 +28,13 @@ class FooterLink extends React.PureComponent<IFooterLinkProps> {
         href={href}
         passHref
       >
-        <span>
+        <LinkItem>
           {icon}
 
           <span style={{ verticalAlign: "middle" }}>
             {text}
           </span>
-        </span>
+        </LinkItem>
       </Link>
     )
   }

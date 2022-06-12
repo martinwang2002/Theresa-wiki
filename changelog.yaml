@@ -1,6 +1,25 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 2]
+    date: 2022-06-13T08:00:00+0800
+    contents:
+      added:
+        - styled components
+        - page footer with CC-BY-NC-SA license
+        - map 3d loading user experience
+        - bump deps
+        - spider data-nosnippet and data-elastic-exclude
+        - breadcrumb navigation
+      changed:
+        - page footer CC license display
+      deprecated:
+        - scss module
+      fixed:
+        - map use hooked level id from battle misc table
+        - map 3d precise camera position
+        - ioredis typescript error
+
   - version: [0, 2, 1]
     date: 2022-06-06T08:00:00+0800
     contents:

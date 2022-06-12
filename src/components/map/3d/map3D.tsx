@@ -9,6 +9,7 @@ import {
   Mesh,
   WebGLRenderer,
   TextureLoader,
+  Quaternion,
   HemisphereLight
 } from "three"
 import type { Group, MeshStandardMaterialParameters, Texture } from "three"
@@ -18,12 +19,13 @@ import { serialize as serializeUri } from "uri-js"
 
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-interface Map3DProps{
+interface Map3DProps {
   stageId: string
 }
 
 interface Map3DPropsWithPhase extends Map3DProps {
-  onLoadPhaseChange: (phase: number) => void
+  onLoadScenePhaseChange: (phase: number) => void
+  onLoadSceneDataProgressChange: (progress: number) => void
 }
 
 // interface LightmapConfigs {
@@ -72,7 +74,29 @@ interface Map3DConfig {
   }
 }
 
-const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
+const loadSceneData = async (stageId: string, onLoadSceneDataProgressChange: (progress: number) => void): Promise<Map3DConfig> => {
+  let total: number
+  let loaded: number
+  const zero = 0
+  loaded = zero
+  total = zero
+  const step = 1
+
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  const handleProgressEvent = (event: ProgressEvent): void => {
+    if (event.lengthComputable) {
+      if (event.loaded === event.total) {
+        loaded += step
+        onLoadSceneDataProgressChange(loaded / total)
+      }
+    }
+  }
+
+  const handleProgressTextureLoader = (): void => {
+    loaded += step
+    onLoadSceneDataProgressChange(loaded / total)
+  }
+
   const configJson = await fetch(serializeUri({
     ...publicRuntimeConfig.THERESA_STATIC,
     path: `/api/v0/AK/CN/Android/map3d/stage/${stageId}/config`
@@ -80,7 +104,10 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
 
   const objLoader = new OBJLoader()
 
-  const rootSceneObj = objLoader.loadAsync(configJson.rootScene.obj)
+  total += step
+  const rootSceneObj = objLoader.loadAsync(configJson.rootScene.obj, (event) => {
+    handleProgressEvent(event)
+  })
 
   const textureLoader = new TextureLoader()
 
@@ -91,39 +118,55 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
     let map: Promise<Texture> | null
     map = null
     if (value.map) {
-      map = textureLoader.loadAsync(value.map)
+      total += step
+      map = textureLoader.loadAsync(value.map).then((texture) => {
+        handleProgressTextureLoader()
+        return texture
+      })
     }
 
     // load emissionMap or emissiveMap
     let emissionMap: Promise<Texture> | null
     emissionMap = null
     if (value.emissionMap !== null) {
-      emissionMap = textureLoader.loadAsync(value.emissionMap)
+      total += step
+      emissionMap = textureLoader.loadAsync(value.emissionMap).then((texture) => {
+        handleProgressTextureLoader()
+        return texture
+      })
     }
 
     // load bumpMap
     let bumpMap: Promise<Texture> | null
     bumpMap = null
     if (value.bumpMap !== null) {
-      bumpMap = textureLoader.loadAsync(value.bumpMap)
+      total += step
+      bumpMap = textureLoader.loadAsync(value.bumpMap).then((texture) => {
+        handleProgressTextureLoader()
+        return texture
+      })
     }
 
     // load metallicGlossMap
     let metallicGlossMap: Promise<Texture> | null
     metallicGlossMap = null
     if (value.metallicGlossMap !== null) {
-      metallicGlossMap = textureLoader.loadAsync(value.metallicGlossMap)
+      total += step
+      metallicGlossMap = textureLoader.loadAsync(value.metallicGlossMap).then((texture) => {
+        handleProgressTextureLoader()
+        return texture
+      })
     }
 
     const meshMaterial = {
-      map: await map ?? null,
       color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
       emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
       emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,
       emissiveMap: await emissionMap ?? null,
-      normalMap: await bumpMap ?? null,
+      map: await map ?? null,
+      metalness: value.glossiness,
       metalnessMap: await metallicGlossMap ?? null,
-      metalness: value.glossiness
+      normalMap: await bumpMap ?? null
     } as MeshStandardMaterialParameters
     materials[key] = meshMaterial
   })
@@ -135,9 +178,9 @@ const loadSceneData = async (stageId: string): Promise<Map3DConfig> => {
 
   const map3DConfig: Map3DConfig = {
     rootScene: {
-      obj: await rootSceneObj,
       materials: materials,
-      meshConfigs: configJson.rootScene.meshConfigs
+      meshConfigs: configJson.rootScene.meshConfigs,
+      obj: await rootSceneObj
     }
   }
 
@@ -163,12 +206,12 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
   }
 
   private async threejsRender (): Promise<void> {
-    const { stageId, onLoadPhaseChange } = this.props
-    onLoadPhaseChange(Map3DLoadPhase.config)
+    const { stageId, onLoadScenePhaseChange, onLoadSceneDataProgressChange } = this.props
+    onLoadScenePhaseChange(Map3DLoadPhase.config)
 
-    const map3DConfig = await loadSceneData(stageId)
+    const map3DConfig = await loadSceneData(stageId, onLoadSceneDataProgressChange)
 
-    onLoadPhaseChange(Map3DLoadPhase.scene)
+    onLoadScenePhaseChange(Map3DLoadPhase.scene)
 
     const container = this.sceneContainer.current ?? document.createElement("div")
 
@@ -177,13 +220,18 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     scene.background = new Color("skyblue")
 
     // camera
-    const fov = 35
-    const aspect = container.clientWidth / container.clientHeight
-    const near = 0.1
-    const far = 100
+    const fov = 40
+    // const aspect = container.clientWidth / container.clientHeight
+    // console.log(aspect)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const aspect = 16 / 9
+    const near = 0.3
+    const far = 1000
     const camera = new PerspectiveCamera(fov, aspect, near, far)
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    camera.position.set(0, -10, -20)
+    camera.position.set(0, -5, -8)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    camera.rotation.setFromQuaternion(new Quaternion(-2.5, 0, 0, 0.96))
 
     // light
     const mainLight = new DirectionalLight("#fff")

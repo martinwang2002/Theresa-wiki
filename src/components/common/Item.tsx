@@ -7,13 +7,18 @@ import { serialize as serializeUri } from "uri-js"
 
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
-interface ItemProps{
+interface ItemProps {
   itemId: number | string
   count?: number | string
   sx?: SxProps
 }
 
 class Item extends React.PureComponent<ItemProps> {
+  private static readonly defaultProps = {
+    count: null,
+    sx: null
+  }
+
   public render (): React.ReactNode {
     const { itemId, count, sx } = this.props
     const imageSrc = serializeUri({

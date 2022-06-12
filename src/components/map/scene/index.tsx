@@ -5,7 +5,7 @@ import type { IMapData, IMapDataTiles } from "@/models/gamedata/excel/stageTable
 import style from "./scene.module.scss"
 import Tile from "./tile/tile"
 
-interface IMapSceneProps{
+interface IMapSceneProps {
   mapData: IMapData
 }
 

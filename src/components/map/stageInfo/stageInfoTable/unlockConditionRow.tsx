@@ -1,10 +1,8 @@
 import React from "react"
 
 import Divider from "@mui/material/Divider"
-/* eslint-disable import/no-named-default */
-import { default as MuiLink } from "@mui/material/Link"
-import { default as NextLink } from "next/link"
-/* eslint-enable import/no-named-default */
+
+import StyledLink from "@/components/common/styledLink"
 
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
 
@@ -20,7 +18,7 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
 
     return (
       <>
-        <span style={{ width: "25%", textAlign: "center", minWidth: "6em", margin: "auto" }} >
+        <span style={{ margin: "auto", minWidth: "6em", textAlign: "center", width: "25%" }} >
           解锁条件
         </span>
 
@@ -59,23 +57,19 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                   })
                 }
 
-                <NextLink
+                <StyledLink
                   href={{
                     pathname: "/map/[zoneId]/[stageId]",
                     query: {
-                      zoneId: extraStageInfo.zoneId,
-                      stageId: extraStageInfo.stageId
+                      stageId: extraStageInfo.stageId,
+                      zoneId: extraStageInfo.zoneId
                     }
                   }}
-                  passHref
+                  sx={{ cursor: "pointer", marginLeft: "0.5em" }}
+                  underline="hover"
                 >
-                  <MuiLink
-                    sx={{ marginLeft: "0.5em", cursor: "pointer" }}
-                    underline="hover"
-                  >
-                    {`${extraStageInfo.code} ${extraStageInfo.name}`}
-                  </MuiLink>
-                </NextLink>
+                  {`${extraStageInfo.code} ${extraStageInfo.name}`}
+                </StyledLink>
               </div>
             )
           })}

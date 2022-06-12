@@ -14,6 +14,7 @@ import changelog from "@/models/changelog"
 
 interface ChangelogState {
   expanded: string | false
+  timeZone: string
 }
 
 export default class Changelog extends React.PureComponent<Record<string, never>, ChangelogState> {
@@ -22,13 +23,22 @@ export default class Changelog extends React.PureComponent<Record<string, never>
     this.state = {
       // Expand first version
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      expanded: changelog.versions[0].version.join(".")
+      expanded: changelog.versions[0].version.join("."),
+      timeZone: "GMT"
+    }
+  }
+
+  public componentDidMount (): void {
+    if (Intl.DateTimeFormat().resolvedOptions().timeZone) {
+      this.setState({
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      })
     }
   }
 
   public render (): React.ReactNode {
     const { versions } = changelog
-    const { expanded } = this.state
+    const { expanded, timeZone } = this.state
     return (
       <Page>
         <Head>
@@ -44,7 +54,7 @@ export default class Changelog extends React.PureComponent<Record<string, never>
         <div style={{ whiteSpace: "break-spaces", overflow: "hidden" }}>
           {versions.map((version, index) => {
             const versionString = version.version.join(".")
-            const dateString = new Date(version.date).toLocaleString()
+            const dateString = new Date(version.date).toLocaleString(undefined, { timeZone })
             return (
               <Accordion
                 expanded={expanded === versionString}

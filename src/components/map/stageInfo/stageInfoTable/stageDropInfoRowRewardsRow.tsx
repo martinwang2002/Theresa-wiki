@@ -26,6 +26,10 @@ const occPercentSpecial = {
 }
 
 export default class StageDropInfoRowRewardsRow extends React.PureComponent<StageInfoTableProps> {
+  private static readonly defaultProps = {
+    isSpecial: false
+  }
+
   public render (): React.ReactNode {
     const { displayDetailRewards, info, isSpecial } = this.props
 

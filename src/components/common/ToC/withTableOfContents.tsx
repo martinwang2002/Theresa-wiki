@@ -5,7 +5,7 @@ import Link from "@mui/material/Link"
 import HeadingAnchor from "./headingAnchor"
 import type { HeadingAnchorProps } from "./headingAnchor"
 
-interface WithTableOfContentsProps{
+interface WithTableOfContentsProps {
   children: React.ReactNode[]
 }
 
@@ -43,7 +43,7 @@ export default class WithTableOfContents extends React.PureComponent<WithTableOf
     return (
       <>
         <div style={{ marginTop: "1rem", marginBottom: "1rem", display: "flex" }}>
-          <div style={{ width: "0.5rem", backgroundColor: "#00B3FD" }} />
+          <div style={{ width: "0.5rem", backgroundColor: "#00b3fd" }} />
 
           <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
 

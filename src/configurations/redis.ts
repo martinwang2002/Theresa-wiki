@@ -1,24 +1,26 @@
 import Redis from "ioredis"
+import type { RedisOptions } from "ioredis"
 
 import { serverRuntimeConfig } from "./runtimeConfig"
 
 interface ICacheable {
   cacheKey: string
   hashKey?: string
-  expiryMode?: string | undefined
-  ttl?: number | undefined
+  expiryMode: "EX"
+  ttl: number
 }
 
-const redisConfig: Redis.RedisOptions = {
+const redisConfig: RedisOptions = {
   autoResubscribe: false,
-  lazyConnect: true,
-  keyPrefix: "FRONTEND_"
+  keyPrefix: "FRONTEND_",
+  lazyConnect: true
 }
 
 const redisClient = new Redis(serverRuntimeConfig.REDIS_URL, redisConfig)
 
 // ignore redis cache when developing and in build stage
 if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event === "build") {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   redisClient.on("error", (error: Readonly<Error>) => {
     if (error.message.includes("ECONNREFUSED")) {
       // empty
