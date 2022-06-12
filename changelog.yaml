@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 3]
+    date: 2022-06-20T08:00:00+0800
+    contents:
+      fixed:
+        - docker /map missing data when startup
+
   - version: [0, 2, 2]
     date: 2022-06-13T08:00:00+0800
     contents:
