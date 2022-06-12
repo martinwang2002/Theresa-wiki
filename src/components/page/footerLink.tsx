@@ -27,6 +27,7 @@ class FooterLink extends React.PureComponent<IFooterLinkProps> {
       <Link
         href={href}
         passHref
+        prefetch={false}
       >
         <LinkItem>
           {icon}

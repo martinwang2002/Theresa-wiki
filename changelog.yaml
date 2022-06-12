@@ -4,6 +4,8 @@ versions:
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
     contents:
+      added:
+        - disable prefetch on footer links
       changed:
         - /about/credits use styled component
       fixed:
