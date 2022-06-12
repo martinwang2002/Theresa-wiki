@@ -12,7 +12,7 @@ interface HeadingAnchorProps {
 
 export default class HeadingAnchor extends React.PureComponent<HeadingAnchorProps> {
   private static readonly defaultProps = {
-    sx: null
+    sx: { marginBottom: "0.5em", marginTop: "0.5em" }
   }
 
   public render (): React.ReactNode {

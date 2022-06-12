@@ -10,6 +10,7 @@ versions:
         - map 3d loading user experience
         - bump deps
         - spider data-nosnippet and data-elastic-exclude
+        - breadcrumb navigation
       changed:
         - page footer CC license display
       deprecated:

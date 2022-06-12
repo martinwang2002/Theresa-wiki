@@ -97,8 +97,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
               onTransitionEnd={this.handleTransitionEnd}
               role="progressbar"
               style={{
-                width: String(progress) + "%",
-                opacity: progress === progress0 ? opacity0 : opacity1
+                opacity: progress === progress0 ? opacity0 : opacity1,
+                width: String(progress) + "%"
               }}
             />}
         </div>
@@ -153,9 +153,10 @@ class Page extends React.PureComponent<PageProps, PageState> {
 
         <Header />
 
-        <div style={{
-          height: "3rem"
-        }}
+        <div
+          style={{
+            height: "3rem"
+          }}
         />
 
         <div className={style["page-content"]}>

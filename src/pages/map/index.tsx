@@ -5,11 +5,13 @@ import Card from "@mui/material/Card"
 import CardActionArea from "@mui/material/CardActionArea"
 import CardContent from "@mui/material/CardContent"
 import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
 import { groupBy, sortBy } from "lodash"
 import type { GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
+import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import Page from "@/components/page/page"
@@ -42,7 +44,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
   return {
     props: {
       server: "CN",
-      zones: zones
+      zones
     },
     revalidate: 3600
   }
@@ -83,6 +85,17 @@ class Zone extends React.PureComponent<ZoneProps> {
           />
         </Head>
 
+        <StyledBreadcrumbs>
+          <Typography
+            color="text.primary"
+            sx={{
+              fontWeight: "bold"
+            }}
+          >
+            地图
+          </Typography>
+        </StyledBreadcrumbs>
+
         <h1 className={style["h1-title"]}>
           <span>
             地图
@@ -101,12 +114,11 @@ class Zone extends React.PureComponent<ZoneProps> {
                 <React.Fragment key={zoneType}>
                   <HeadingAnchor
                     id={zoneType}
-                    sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
                     text={zoneType}
                   />
 
                   <Grid
-                    columns={{ xs: 4, sm: 8, md: 12 }}
+                    columns={{ md: 12, sm: 8, xs: 4 }}
                     container
                     spacing={2}
                   >

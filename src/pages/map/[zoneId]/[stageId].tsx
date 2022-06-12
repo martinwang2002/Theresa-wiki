@@ -3,11 +3,13 @@ import React from "react"
 import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
 import Alert from "@mui/material/Alert"
 import AlertTitle from "@mui/material/AlertTitle"
+import Typography from "@mui/material/Typography"
 import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
-import Link from "next/link"
 
+import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
+import StyledLink from "@/components/common/styledLink"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import Map3DIndex from "@/components/map/3d/index"
@@ -23,10 +25,12 @@ import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamed
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
-import { zoneIds } from "@/models/gamedata/excel/zoneTable"
+import { zoneIds, getZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
+import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
 import style from "./[stageId].module.scss"
 
@@ -37,6 +41,8 @@ interface MapProps {
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
+  zoneId: string
+  zoneInfo: IZoneInfo
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -45,7 +51,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
-    return { paths: [], fallback: "blocking" }
+    return { fallback: "blocking", paths: [] }
   } else {
     const _stageIds = await stageIds()
 
@@ -59,7 +65,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
-    return { paths, fallback: "blocking" }
+    return { fallback: "blocking", paths }
   }
 }
 
@@ -106,14 +112,18 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const gamedataConst = await getGamedataConst()
 
+  const zoneInfo = await getZoneInfo(zoneId)
+
   return {
     props: {
+      gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN",
-      stageId: stageId,
-      stageInfo: stageInfo,
-      stageJson: stageJson,
-      tileInfo: tileInfo,
-      gamedataConst: lodashPick(gamedataConst, "richTextStyles")
+      stageId,
+      stageInfo,
+      stageJson,
+      tileInfo,
+      zoneId,
+      zoneInfo
     },
     revalidate: 3600
   }
@@ -121,8 +131,10 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId } = this.props
+    const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
     const { mapData } = stageJson
+
+    const displayZoneName = getDisplayZoneName(zoneInfo)
 
     return (
       <Page>
@@ -146,6 +158,36 @@ class Map extends React.PureComponent<MapProps> {
           />
 
         </Head>
+
+        <StyledBreadcrumbs>
+          <StyledLink
+            color="inherit"
+            href="/map"
+          >
+            地图
+          </StyledLink>
+
+          <StyledLink
+            color="inherit"
+            href={{
+              pathname: "/map/[zoneId]",
+              query: {
+                zoneId
+              }
+            }}
+          >
+            {displayZoneName}
+          </StyledLink>
+
+          <Typography
+            color="text.primary"
+            sx={{
+              fontWeight: "bold"
+            }}
+          >
+            {`${stageInfo.code} ${stageInfo.name}`}
+          </Typography>
+        </StyledBreadcrumbs>
 
         <h1 className={style["h1-title"]}>
           {stageInfo.difficulty === "FOUR_STAR" &&
@@ -171,7 +213,6 @@ class Map extends React.PureComponent<MapProps> {
         <WithTableOfContents>
           <HeadingAnchor
             id="stageInfo"
-            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="作战信息"
           />
 
@@ -184,7 +225,6 @@ class Map extends React.PureComponent<MapProps> {
 
           <HeadingAnchor
             id="mapPreview"
-            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="地图预览"
           />
 
@@ -198,7 +238,6 @@ class Map extends React.PureComponent<MapProps> {
 
           <HeadingAnchor
             id="map3d"
-            sx={{ marginTop: "0.5em", marginBottom: "0.5em" }}
             text="3D场景地图"
           />
 
@@ -219,11 +258,11 @@ class Map extends React.PureComponent<MapProps> {
             <br />
 
             您可以向
-            <Link
+            <StyledLink
               href="/about/contact"
             >
               站长提交反馈
-            </Link>
+            </StyledLink>
             ，（开真银斩杀源石虫啦~~~
           </Alert>
 

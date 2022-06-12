@@ -6,11 +6,14 @@ import CardActionArea from "@mui/material/CardActionArea"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
 import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
+import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
+import StyledLink from "@/components/common/styledLink"
 import MapPreviewImage from "@/components/map/mapPreviewImage"
 import Page from "@/components/page/page"
 
@@ -38,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
-    return { paths: [], fallback: "blocking" }
+    return { fallback: "blocking", paths: [] }
   } else {
     const _zoneIds = await zoneIds()
 
@@ -52,7 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // We'll pre-render only these paths at build time.
     // { fallback: blocking } will server-render pages
     // on-demand if the path doesn't exist.
-    return { paths, fallback: "blocking" }
+    return { fallback: "blocking", paths }
   }
 }
 
@@ -94,9 +97,9 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
   return {
     props: {
       server: "CN",
-      zoneId: zoneId,
-      zoneInfo: zoneInfo,
-      stages: pickedStages
+      stages: pickedStages,
+      zoneId,
+      zoneInfo
     },
     revalidate: 3600
   }
@@ -130,6 +133,24 @@ class Zone extends React.PureComponent<ZoneProps> {
           />
         </Head>
 
+        <StyledBreadcrumbs>
+          <StyledLink
+            color="inherit"
+            href="/map"
+          >
+            地图
+          </StyledLink>
+
+          <Typography
+            color="text.primary"
+            sx={{
+              fontWeight: "bold"
+            }}
+          >
+            {displayZoneName}
+          </Typography>
+        </StyledBreadcrumbs>
+
         <h1 className={style["h1-title"]}>
           <span>
             {displayZoneName}
@@ -141,7 +162,7 @@ class Zone extends React.PureComponent<ZoneProps> {
         </h1>
 
         <Grid
-          columns={{ xs: 4, sm: 8, md: 12 }}
+          columns={{ md: 12, sm: 8, xs: 4 }}
           container
           spacing={2}
         >
@@ -161,8 +182,8 @@ class Zone extends React.PureComponent<ZoneProps> {
                       <CardMedia sx={{
                         aspectRatio: "16/9",
                         display: "block",
-                        position: "relative",
                         margin: "auto",
+                        position: "relative",
                         width: "100%"
                       }}
                       >
