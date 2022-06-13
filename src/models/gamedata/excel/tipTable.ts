@@ -4,7 +4,7 @@ interface ITip {
   category: string
 }
 
-interface IWorldViewTip{
+interface IWorldViewTip {
   title: string
   description: string
   backgroundPicId: string

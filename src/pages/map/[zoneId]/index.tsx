@@ -21,7 +21,7 @@ import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
-import { zoneIds, getZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
@@ -81,7 +81,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
     }
   }
 
-  const zoneInfo = await getZoneInfo(zoneId)
+  const zoneInfo = await getCustomZoneInfo(zoneId)
 
   const stages = await getStagesByZoneId(zoneId)
 

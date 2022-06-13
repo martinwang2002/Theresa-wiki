@@ -16,8 +16,8 @@ import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import Page from "@/components/page/page"
 
-import { getZones } from "@/models/gamedata/excel/zoneTable"
-import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { getCustomZones } from "@/models/gamedata/excel/zoneTable"
+import type { ICustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
@@ -25,7 +25,7 @@ import style from "./[zoneId]/[stageId].module.scss"
 
 interface ZoneProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
-  zones: IZoneInfo[]
+  zones: ICustomZoneInfo[]
 }
 
 export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
     }
   }
 
-  const zones = await getZones()
+  const zones = await getCustomZones()
 
   return {
     props: {

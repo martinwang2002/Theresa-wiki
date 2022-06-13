@@ -52,7 +52,7 @@ interface IStageInfo {
   name: string
   description: string
   levelId: string
-  hardStagedId: string
+  hardStagedId: string | null
   loadingPicId: string
   apCost: number
   apFailReturn: number
@@ -169,10 +169,10 @@ export const getCustomStageInfo = async (stageId: string, permanent = false): Pr
 
     result._unlockConditionStageInfo[_stageId] = {
       code: extraStageInfo.code,
+      difficulty: extraStageInfo.difficulty,
       name: extraStageInfo.name,
       stageId: stageIdtoLodash(extraStageInfo.stageId),
-      zoneId: extraStageInfo.zoneId,
-      difficulty: extraStageInfo.difficulty
+      zoneId: extraStageInfo.zoneId
     }
   }
 
@@ -184,10 +184,10 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   const tileEmptyExtra = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     tile_empty: {
-      tileKey: "tile_empty",
-      name: "空",
       description: "不可放置单位，不可通行",
-      isFunctional: false
+      isFunctional: false,
+      name: "空",
+      tileKey: "tile_empty"
     }
   }
 

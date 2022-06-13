@@ -25,7 +25,7 @@ import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamed
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
 import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
-import { zoneIds, getZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const gamedataConst = await getGamedataConst()
 
-  const zoneInfo = await getZoneInfo(zoneId)
+  const zoneInfo = await getCustomZoneInfo(zoneId)
 
   return {
     props: {

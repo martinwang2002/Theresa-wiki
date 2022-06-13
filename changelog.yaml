@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - disable prefetch on footer links
+        - improved zone name
       changed:
         - /about/credits use styled component
       fixed:
