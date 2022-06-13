@@ -34,7 +34,7 @@ export const retroTable = cacheable(async (): Promise<IRetroTable> => {
   const retroTableRes = await fetch(url)
   const retroTableJson = await retroTableRes.json() as IRetroTable
   return retroTableJson
-}, { cacheKey: "retroTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "retroTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getRetroByZoneId = async (zoneId: string): Promise<IRetroInfo> => {
   const { retroActList, zoneToRetro } = await retroTable()

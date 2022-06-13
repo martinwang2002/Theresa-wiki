@@ -23,6 +23,6 @@ const battleMiscTable = cacheable(async (): Promise<IBattleMiscTable> => {
   const battleMiscTableRes = await fetch(url)
   const battleMiscTableJson = await battleMiscTableRes.json() as IBattleMiscTable
   return battleMiscTableJson
-}, { cacheKey: "battleMiscTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "battleMiscTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export { battleMiscTable }

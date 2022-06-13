@@ -23,7 +23,7 @@ export const campaignTable = cacheable(async (): Promise<ICampaignTable> => {
   const campaignTableRes = await fetch(url)
   const campaignTableJson = await campaignTableRes.json() as ICampaignTable
   return campaignTableJson
-}, { cacheKey: "campaignTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "campaignTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getCampaignZoneInfoByZoneId = async (zoneId: string): Promise<ICampaignZoneInfo> => {
   const { campaignZones } = await campaignTable()

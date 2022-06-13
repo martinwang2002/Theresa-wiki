@@ -70,6 +70,7 @@ module.exports = {
   },
   serverRuntimeConfig: {
     NO_DYNAMIC_ROUTES: process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true",
+    REDIS_EX_TTL: parseInt(process.env.REDIS_EX_TTL ?? "") || 3600,
     REDIS_URL: process.env.REDIS_URL ?? "",
     THERESA_S3: uriJs.parse(process.env.THERESA_S3 ?? "http://s3.theresa.wiki"),
   },

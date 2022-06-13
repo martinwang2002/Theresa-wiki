@@ -9,6 +9,7 @@ versions:
         - improved zone name
       changed:
         - /about/credits use styled component
+        - use serverRuntimeConfig for redis ex ttl
       fixed:
         - docker /map missing data when startup
 

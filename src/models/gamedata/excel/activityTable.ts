@@ -34,7 +34,7 @@ export const activityTable = cacheable(async (): Promise<IActivityTable> => {
   const activityTableRes = await fetch(url)
   const activityTableJson = await activityTableRes.json() as IActivityTable
   return activityTableJson
-}, { cacheKey: "activityTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "activityTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getActivityByZoneId = async (zoneId: string): Promise<IActivityInfo> => {
   const { basicInfo, zoneToActivity } = await activityTable()

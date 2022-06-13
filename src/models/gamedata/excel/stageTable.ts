@@ -96,7 +96,7 @@ const stageTable = cacheable(async (): Promise<IStageTable> => {
   const stageTableRes = await fetch(url)
   const stageTableJson = await stageTableRes.json() as IStageTable
   return stageTableJson
-}, { cacheKey: "stageTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "stageTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const stageIdtoLodash = (stageId: string): string => {
   return stageId.replaceAll("#", "__")

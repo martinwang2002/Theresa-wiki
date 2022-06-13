@@ -50,7 +50,7 @@ export const zoneTable = cacheable(async (): Promise<IZoneTable> => {
   const zoneTableRes = await fetch(url)
   const zoneTableJson = await zoneTableRes.json() as IZoneTable
   return zoneTableJson
-}, { cacheKey: "zoneTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "zoneTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const zoneIds = cacheable(async (): Promise<string[]> => {
   const { zones } = await zoneTable()
@@ -60,7 +60,7 @@ export const zoneIds = cacheable(async (): Promise<string[]> => {
     return zoneId
   })
   return _zoneIds
-}, { cacheKey: "zoneIds", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "zoneIds", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getZoneInfo = async (zoneId: string): Promise<IZoneInfo> => {
   const { zones } = await zoneTable()

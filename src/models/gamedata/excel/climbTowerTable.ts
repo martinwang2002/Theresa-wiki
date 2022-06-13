@@ -31,7 +31,7 @@ export const climbTowerTable = cacheable(async (): Promise<IRoguelikeTopicTable>
   const climbTowerTableRes = await fetch(url)
   const climbTowerTableJson = await climbTowerTableRes.json() as IRoguelikeTopicTable
   return climbTowerTableJson
-}, { cacheKey: "climbTowerTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "climbTowerTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getTowerByZoneId = async (zoneId: string): Promise<ITowerInfo> => {
   const { towers } = await climbTowerTable()

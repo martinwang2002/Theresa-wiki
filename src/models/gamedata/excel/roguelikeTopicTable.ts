@@ -29,7 +29,7 @@ export const roguelikeTopicTable = cacheable(async (): Promise<IRoguelikeTopicTa
   const roguelikeTopicTableRes = await fetch(url)
   const roguelikeTopicTableJson = await roguelikeTopicTableRes.json() as IRoguelikeTopicTable
   return roguelikeTopicTableJson
-}, { cacheKey: "roguelikeTopicTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "roguelikeTopicTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const getRoguelikeTopicByZoneId = async (zoneId: string): Promise<IRoguelikeTopicInfo> => {
   const { topics } = await roguelikeTopicTable()
