@@ -11,6 +11,7 @@ versions:
         - /about/credits use styled component
         - use serverRuntimeConfig for redis ex ttl
         - use mui app bar instead of bootstrap navbar
+        - link textUnderlineOffset
       fixed:
         - docker /map missing data when startup
 
