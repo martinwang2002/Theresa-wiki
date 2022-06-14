@@ -188,7 +188,7 @@
             "files": [
                 "*.json",
                 ".eslintrc",
-                ".stylelintrc"
+                "site.webmanifest"
             ],
             "parser": "jsonc-eslint-parser",
             "rules": {

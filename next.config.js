@@ -74,4 +74,8 @@ module.exports = {
     REDIS_URL: process.env.REDIS_URL ?? "",
     THERESA_S3: uriJs.parse(process.env.THERESA_S3 ?? "http://s3.theresa.wiki"),
   },
+  i18n: {
+    locales: ["zh"],
+    defaultLocale: "zh",
+  },
 }
