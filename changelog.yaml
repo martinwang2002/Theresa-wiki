@@ -7,6 +7,7 @@ versions:
       added:
         - disable prefetch on footer links
         - improved zone name
+        - use noto sans font
       changed:
         - /about/credits use styled component
         - use serverRuntimeConfig for redis ex ttl

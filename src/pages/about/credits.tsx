@@ -33,9 +33,13 @@ Some resources used in the Theresa.wiki website are derived from Arkwaifu (https
 
 The level drop data used in the Theresa.wiki website is from Penguin Logistics Data (https://penguin-stats.io/) (CC BY-NC 4.0), contributors to Penguin Logistics (including the team members and the Doctors who uploaded the data). Special thanks to them.
 
-特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL)，包括 Roboto Mono, Corinthia, ZCOOL QingKe HuangYou.
+特蕾西娅 Theresa.wiki 网站内所使用的 Bender 字体文件来源于 MyFonts (https://www.myfonts.com/viewlicense.php?lid=1630)。
 
-Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including Roboto Mono, Corinthia, ZCOOL QingKe HuangYou.\
+Bender used in Theresa.wiki website is from MyFonts (https://www.myfonts.com/viewlicense.php?lid=1630)
+
+特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL 许可)，包括但不限于 Noto Serif, ZCOOL QingKe HuangYou。
+
+Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including but not limited to Noto Serif, ZCOOL QingKe HuangYou.
 `
 
 const StyledLicenseDiv = styled("div")({

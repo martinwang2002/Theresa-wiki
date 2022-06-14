@@ -22,6 +22,9 @@ const theme = createTheme({
       main: "#ff5205"
     },
     tonalOffset: 0.05
+  },
+  typography: {
+    fontFamily: "\"Noto Serif SC\", sans-serif"
   }
 })
 

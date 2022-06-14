@@ -1,5 +1,6 @@
 import React from "react"
 
+import { Global } from "@emotion/react"
 import Container from "@mui/material/Container"
 import LinearProgress from "@mui/material/LinearProgress"
 import { styled } from "@mui/system"
@@ -162,21 +163,47 @@ class Page extends React.PureComponent<PageProps, PageState> {
             href="/site.webmanifest"
             rel="manifest"
           />
+
+          <Global
+            styles={{
+              "@font-face": {
+                fontDisplay: "swap",
+                fontFamily: "Noto Serif SC",
+                fontStyle: "normal",
+                fontWeight: "400",
+                src: "local('Noto Serif SC'), url('/fonts/noto-sans-sc-v26-latin_chinese-simplified-regular.woff2') format('woff2')"
+              }
+            }}
+          />
+
+          <Global
+            styles={{
+              "@font-face": {
+                fontDisplay: "swap",
+                fontFamily: "Roboto Mono",
+                fontStyle: "normal",
+                fontWeight: "400",
+                src: "local('Roboto Mono'), url('/fonts/roboto-mono-v21-latin-regular.woff2') format('woff2')"
+              }
+            }}
+          />
         </Head>
 
-        <PlaceboDiv>
+        <PlaceboDiv
+          suppressHydrationWarning
+        >
           {typeof window !== "undefined" &&
-          <LinearProgress
-            aria-label="Placebo Progress Bar"
-            color="secondary"
-            onTransitionEnd={this.handleTransitionEnd}
-            sx={{
-              opacity: progress > progress0 ? opacity1 : opacity0,
-              zIndex: 1150
-            }}
-            value={progress}
-            variant="determinate"
-          />}
+            <LinearProgress
+              aria-label="Placebo Progress Bar"
+              color="secondary"
+              onTransitionEnd={this.handleTransitionEnd}
+              sx={{
+                opacity: progress > progress0 ? opacity1 : opacity0,
+                zIndex: 1150
+              }}
+              value={progress}
+              variant="determinate"
+            />}
         </PlaceboDiv>
 
         <Header />
