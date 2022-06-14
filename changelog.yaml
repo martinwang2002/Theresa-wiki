@@ -14,6 +14,7 @@ versions:
         - link textUnderlineOffset
       fixed:
         - docker /map missing data when startup
+        - map3d load phase
 
   - version: [0, 2, 2]
     date: 2022-06-13T08:00:00+0800

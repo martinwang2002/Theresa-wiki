@@ -74,7 +74,11 @@ interface Map3DConfig {
   }
 }
 
-const loadSceneData = async (stageId: string, onLoadSceneDataProgressChange: (progress: number) => void): Promise<Map3DConfig> => {
+const loadSceneData = async (
+  stageId: string,
+  onLoadScenePhaseChange: (phase: number) => void,
+  onLoadSceneDataProgressChange: (progress: number) => void
+): Promise<Map3DConfig> => {
   let total: number
   let loaded: number
   const zero = 0
@@ -97,10 +101,14 @@ const loadSceneData = async (stageId: string, onLoadSceneDataProgressChange: (pr
     onLoadSceneDataProgressChange(loaded / total)
   }
 
+  onLoadScenePhaseChange(Map3DLoadPhase.config)
+
   const configJson = await fetch(serializeUri({
     ...publicRuntimeConfig.THERESA_STATIC,
     path: `/api/v0/AK/CN/Android/map3d/stage/${stageId}/config`
   }), { method: "GET" }).then(async res => res.json()) as Map3DConfigApi
+
+  onLoadScenePhaseChange(Map3DLoadPhase.scene)
 
   const objLoader = new OBJLoader()
 
@@ -178,7 +186,7 @@ const loadSceneData = async (stageId: string, onLoadSceneDataProgressChange: (pr
 
   const map3DConfig: Map3DConfig = {
     rootScene: {
-      materials: materials,
+      materials,
       meshConfigs: configJson.rootScene.meshConfigs,
       obj: await rootSceneObj
     }
@@ -207,11 +215,8 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
 
   private async threejsRender (): Promise<void> {
     const { stageId, onLoadScenePhaseChange, onLoadSceneDataProgressChange } = this.props
-    onLoadScenePhaseChange(Map3DLoadPhase.config)
 
-    const map3DConfig = await loadSceneData(stageId, onLoadSceneDataProgressChange)
-
-    onLoadScenePhaseChange(Map3DLoadPhase.scene)
+    const map3DConfig = await loadSceneData(stageId, onLoadScenePhaseChange, onLoadSceneDataProgressChange)
 
     const container = this.sceneContainer.current ?? document.createElement("div")
 
