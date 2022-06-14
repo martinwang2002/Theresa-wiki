@@ -3,18 +3,15 @@ import React from "react"
 
 import type { NextPageContext } from "next"
 import Head from "next/head"
-import Link from "next/link"
 
+import Error from "@/components/page/error"
 import Page from "@/components/page/page"
-
-import style from "./_error.module.scss"
 
 interface ErrorComponentProps {
   statusCode?: number
   statusMessage?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 function ErrorComponent ({ statusCode, statusMessage }: Readonly<ErrorComponentProps>): JSX.Element {
   return (
     <Page>
@@ -29,22 +26,11 @@ function ErrorComponent ({ statusCode, statusMessage }: Readonly<ErrorComponentP
         </title>
       </Head>
 
-      <Link
-        href="/"
-        passHref
-      >
-        <div className={style["breathe-mission-star-container"]}>
-          <div className={style["breathe-mission-star"]} />
-
-          {(statusCode != null)
-            ? `An error ${statusCode} ${statusMessage ?? ""} occurred on server`
-            : "An error occurred on client"}
-
-          <p className={style["back-to-home"]}>
-            单击以回到首页
-          </p>
-        </div>
-      </Link>
+      <Error
+        errorMessage={(statusCode != null)
+          ? `An error ${statusCode} ${statusMessage ?? ""} occurred on server`
+          : "An error occurred on client"}
+      />
 
     </Page>
   )

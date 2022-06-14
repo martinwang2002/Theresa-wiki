@@ -13,6 +13,7 @@ versions:
         - use serverRuntimeConfig for redis ex ttl
         - use mui app bar instead of bootstrap navbar
         - link textUnderlineOffset
+        - used styled component in error component
       fixed:
         - docker /map missing data when startup
         - map3d load phase

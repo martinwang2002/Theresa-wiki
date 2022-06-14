@@ -1,14 +1,10 @@
-/* eslint-disable react/jsx-max-depth */
 import React from "react"
 
 import Head from "next/head"
-import Link from "next/link"
 
+import Error from "@/components/page/error"
 import Page from "@/components/page/page"
 
-import style from "./_error.module.scss"
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
 function ErrorComponent (): JSX.Element {
   return (
     <Page>
@@ -18,20 +14,7 @@ function ErrorComponent (): JSX.Element {
         </title>
       </Head>
 
-      <Link
-        href="/"
-        passHref
-      >
-        <div className={style["breathe-mission-star-container"]}>
-          <div className={style["breathe-mission-star"]} />
-
-          博士，您的作战记录找不到了呜呜呜
-
-          <p className={style["back-to-home"]}>
-            单击以回到首页
-          </p>
-        </div>
-      </Link>
+      <Error errorMessage="博士，您的作战记录找不到了呜呜呜" />
 
     </Page>
   )

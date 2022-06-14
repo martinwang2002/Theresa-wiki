@@ -64,6 +64,8 @@
                 "@typescript-eslint/no-magic-numbers": [
                     "error",
                     {
+                        "ignoreArrayIndexes": true,
+                        "ignoreEnums": true,
                         "ignoreNumericLiteralTypes": true
                     }
                 ],
