@@ -227,7 +227,6 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     // camera
     const fov = 40
     // const aspect = container.clientWidth / container.clientHeight
-    // console.log(aspect)
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const aspect = 16 / 9
     const near = 0.3
