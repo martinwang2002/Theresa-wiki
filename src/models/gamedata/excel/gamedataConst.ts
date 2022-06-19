@@ -17,7 +17,7 @@ const gamedataConst = cacheable(async (): Promise<IGamedataConst> => {
   const gamedataConstRes = await fetch(url)
   const gamedataConstJson = await gamedataConstRes.json() as IGamedataConst
   return gamedataConstJson
-}, { cacheKey: "gamedataConst", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "gamedataConst", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export { gamedataConst }
 export type { IGamedataConst }

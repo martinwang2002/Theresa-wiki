@@ -52,7 +52,7 @@ interface IStageInfo {
   name: string
   description: string
   levelId: string
-  hardStagedId: string
+  hardStagedId: string | null
   loadingPicId: string
   apCost: number
   apFailReturn: number
@@ -96,7 +96,7 @@ const stageTable = cacheable(async (): Promise<IStageTable> => {
   const stageTableRes = await fetch(url)
   const stageTableJson = await stageTableRes.json() as IStageTable
   return stageTableJson
-}, { cacheKey: "stageTable", expiryMode: "EX", ttl: 86400 })
+}, { cacheKey: "stageTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
 export const stageIdtoLodash = (stageId: string): string => {
   return stageId.replaceAll("#", "__")
@@ -169,10 +169,10 @@ export const getCustomStageInfo = async (stageId: string, permanent = false): Pr
 
     result._unlockConditionStageInfo[_stageId] = {
       code: extraStageInfo.code,
+      difficulty: extraStageInfo.difficulty,
       name: extraStageInfo.name,
       stageId: stageIdtoLodash(extraStageInfo.stageId),
-      zoneId: extraStageInfo.zoneId,
-      difficulty: extraStageInfo.difficulty
+      zoneId: extraStageInfo.zoneId
     }
   }
 
@@ -184,10 +184,10 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   const tileEmptyExtra = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     tile_empty: {
-      tileKey: "tile_empty",
-      name: "空",
       description: "不可放置单位，不可通行",
-      isFunctional: false
+      isFunctional: false,
+      name: "空",
+      tileKey: "tile_empty"
     }
   }
 
@@ -226,11 +226,25 @@ interface IWave {
 }
 
 interface IStageJson {
-  options: Record<string, string>
+  options: IStageJsonOptions
   levelId: string
   loadingPicId: string
   mapData: IMapData
   waves: IWave[]
+  [key: string]: unknown
+}
+
+interface IStageJsonOptions {
+  characterLimit: number
+  maxLifePoint: number
+  initialCost: number
+  maxCost: number
+  costIncreaseTime: number
+  moveMultiplier: number
+  steeringEnabled: boolean
+  isTrainingLevel: boolean
+  isHardTrainingLevel: boolean
+  functionDisableMask: number
   [key: string]: unknown
 }
 
@@ -251,4 +265,15 @@ export const stageJson = async (levelId: string): Promise<IStageJson> => {
   return stageJsonResult
 }
 
-export type { IStageInfo, ICustomStageInfo, IDisplayDetailReward, IUnlockCondition, IMapData, ITileInfo, IMapDataTiles, IStageJson, IWave }
+export type {
+  IStageInfo,
+  ICustomStageInfo,
+  IDisplayDetailReward,
+  IUnlockCondition,
+  IMapData,
+  ITileInfo,
+  IMapDataTiles,
+  IStageJson,
+  IStageJsonOptions,
+  IWave
+}

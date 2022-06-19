@@ -52,7 +52,7 @@ export default class WithTableOfContents extends React.PureComponent<WithTableOf
                 <Link
                   href={"#" + headingAnchorProps.id}
                   key={headingAnchorProps.text}
-                  sx={{ marginLeft: "0.5em", marginTop: "0.25em", marginBottom: "0.25em", cursor: "pointer", display: "block" }}
+                  sx={{ marginLeft: "0.5em", textUnderlineOffset: 2, marginTop: "0.25em", marginBottom: "0.25em", cursor: "pointer", display: "block" }}
                   underline="hover"
                 >
                   {headingAnchorProps.text}

@@ -14,6 +14,7 @@ interface IPublicRuntimeConfig {
 interface IServerRuntimeConfig {
   /* eslint-disable @typescript-eslint/naming-convention */
   NO_DYNAMIC_ROUTES: boolean
+  REDIS_EX_TTL: number
   REDIS_URL: string
   THERESA_S3: URIComponents
   /* eslint-enable @typescript-eslint/naming-convention */

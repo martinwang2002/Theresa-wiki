@@ -1,20 +1,18 @@
 import React from "react"
 
-import style from "./page.module.scss"
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+
 import Title from "./title"
 
 class Header extends React.PureComponent {
   public render (): React.ReactNode {
     return (
-      <nav
-        className={style.navbar_theresa}
-        data-elastic-exclude
-        data-nosnippet
-      >
-        <div className={style["container-fluid"]}>
+      <AppBar position="sticky">
+        <Toolbar>
           <Title />
-        </div>
-      </nav>
+        </Toolbar>
+      </AppBar>
     )
   }
 }

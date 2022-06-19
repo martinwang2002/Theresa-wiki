@@ -43,7 +43,6 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
   }
 
   private readonly handleLoadSceneDataProgressChange = (progress: number): void => {
-    console.log(progress)
     this.setState({
       loadSceneDataProgress: progress
     })

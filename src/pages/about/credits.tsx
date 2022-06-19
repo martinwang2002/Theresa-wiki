@@ -1,11 +1,10 @@
 import React from "react"
 
 import Skeleton from "@mui/material/Skeleton"
+import { styled } from "@mui/system"
 import Head from "next/head"
 
 import Page from "@/components/page/page"
-
-import style from "./credits.module.scss"
 
 interface ICreditsState {
   openSourceLicenses: string
@@ -34,10 +33,24 @@ Some resources used in the Theresa.wiki website are derived from Arkwaifu (https
 
 The level drop data used in the Theresa.wiki website is from Penguin Logistics Data (https://penguin-stats.io/) (CC BY-NC 4.0), contributors to Penguin Logistics (including the team members and the Doctors who uploaded the data). Special thanks to them.
 
-特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL)，包括 Roboto Mono, Corinthia, ZCOOL QingKe HuangYou.
+特蕾西娅 Theresa.wiki 网站内所使用的 Bender 字体文件来源于 MyFonts (https://www.myfonts.com/viewlicense.php?lid=1630)。
 
-Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including Roboto Mono, Corinthia, ZCOOL QingKe HuangYou.\
+Bender used in Theresa.wiki website is from MyFonts (https://www.myfonts.com/viewlicense.php?lid=1630)
+
+特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL 许可)，包括但不限于 Noto Serif, ZCOOL QingKe HuangYou。
+
+Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including but not limited to Noto Serif, ZCOOL QingKe HuangYou.
 `
+
+const StyledLicenseDiv = styled("div")({
+  border: "2px solid #ccc",
+  borderRadius: "0.75em",
+  maxHeight: "50vh",
+  overflowX: "hidden",
+  overflowY: "auto",
+  padding: "0.75em",
+  whiteSpace: "pre-line"
+})
 
 export default class Credits extends React.PureComponent<null, ICreditsState> {
   public constructor (props: null) {
@@ -55,9 +68,9 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
     const openSourceLicenses = await response.text()
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
+      openSourceLicenses,
       openSourceLicensesLoaded: true,
-      openSourceLicensesLoadingError: !response.ok,
-      openSourceLicenses: openSourceLicenses
+      openSourceLicensesLoadingError: !response.ok
     })
   }
 
@@ -76,9 +89,9 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
           开源许可列表
         </h3>
 
-        <div className={style.license}>
+        <StyledLicenseDiv>
           {openSourceLicenses}
-        </div>
+        </StyledLicenseDiv>
       </>
     )
 
@@ -112,9 +125,9 @@ export default class Credits extends React.PureComponent<null, ICreditsState> {
             网站内容声明
           </h3>
 
-          <div className={style.license}>
+          <StyledLicenseDiv>
             {contentsLicenses}
-          </div>
+          </StyledLicenseDiv>
 
           {openSourceLicensesLoaded
             ? (openSourceLicensesLoadingError ? openSourceLicensesErrorPrompt : openSourceLicensesTextField)

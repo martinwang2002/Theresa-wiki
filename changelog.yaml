@@ -1,6 +1,28 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 3]
+    date: 2022-06-20T08:00:00+0800
+    contents:
+      added:
+        - disable prefetch on footer links
+        - improved zone name
+        - use noto sans font
+        - stage options table
+      changed:
+        - /about/credits use styled component
+        - use serverRuntimeConfig for redis ex ttl
+        - use mui app bar instead of bootstrap navbar
+        - link textUnderlineOffset
+        - used styled component in error component
+      fixed:
+        - docker /map missing data when startup
+        - map3d load phase
+        - site accessibility
+        - docker build with i18n
+        - scrollbar padding for app bar
+        - emotion/react Global component causing css errors
+
   - version: [0, 2, 2]
     date: 2022-06-13T08:00:00+0800
     contents:

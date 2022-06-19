@@ -59,7 +59,7 @@ class Footer extends React.PureComponent {
                 textDecorationColor: "#fff",
                 textDecorationLine: "underline",
                 textDecorationStyle: "dashed",
-                textUnderlinePosition: "under",
+                textUnderlineOffset: 2,
                 whiteSpace: "break-spaces"
               }}
               target="_blank"

@@ -39,6 +39,8 @@ COPY --from=deps /app/public/LICENSES.txt ./public
 
 RUN yarn build
 
+# purge cache for builder
+RUN rm .next/standalone/.next/server/pages/zh/map.json
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner

@@ -1,12 +1,14 @@
 import React from "react"
 
+import Container from "@mui/material/Container"
+import LinearProgress from "@mui/material/LinearProgress"
+import { styled } from "@mui/system"
 import Head from "next/head"
 import type { NextRouter } from "next/router"
 import { withRouter } from "next/router"
 
 import Footer from "./footer"
 import Header from "./header"
-import style from "./page.module.scss"
 
 interface PageProps {
   children: React.ReactNode
@@ -23,7 +25,65 @@ const progress80 = 80
 const progress100 = 100
 
 const opacity0 = 0
+const opacity025 = 0.25
 const opacity1 = 1
+
+const PlaceboDiv = styled("div")({
+  backgroundColor: "transparent",
+  height: "0.25rem",
+  left: 0,
+  position: "fixed",
+  right: 0,
+  top: 0,
+  width: "100%",
+  zIndex: 1150
+})
+
+const appBarHeight = 56
+const appBarHeightSm = 64
+
+const PageDiv = styled("div")(({ theme }) => ({
+  "&::-webkit-scrollbar": {
+    width: 8
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundClip: "content-box",
+    backgroundColor: "#12354264",
+    borderRadius: "8px"
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#12354296"
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "#12354216"
+  },
+  height: "100vh",
+  overflow: "auto",
+  ...{
+    scrollPaddingTop: appBarHeight,
+    [theme.breakpoints.up("sm")]: {
+      scrollPaddingTop: appBarHeightSm
+    }
+  }
+}))
+
+const fontFaces = `
+@font-face {
+  font-display: swap;
+  font-family: "Noto Serif SC";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Noto Serif SC"), url("/fonts/noto-sans-sc-v26-latin_chinese-simplified-regular.woff2") format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto Mono"), url("/fonts/roboto-mono-v21-latin-regular.woff2") format("woff2")
+}
+`
 
 class Page extends React.PureComponent<PageProps, PageState> {
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -82,27 +142,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
     const { children } = this.props
     const { indeterminate, progress } = this.state
     return (
-      <>
-        <div
-          className={style.placebo}
-          suppressHydrationWarning
-        >
-          {typeof window !== "undefined" &&
-            <div
-              aria-label="Placebo Progress Bar"
-              aria-valuemax={100}
-              aria-valuemin={0}
-              aria-valuenow={progress}
-              className={style.placebo_bar}
-              onTransitionEnd={this.handleTransitionEnd}
-              role="progressbar"
-              style={{
-                opacity: progress === progress0 ? opacity0 : opacity1,
-                width: String(progress) + "%"
-              }}
-            />}
-        </div>
-
+      <PageDiv>
         <Head>
           <meta charSet="utf-8" />
 
@@ -149,24 +189,55 @@ class Page extends React.PureComponent<PageProps, PageState> {
             href="/site.webmanifest"
             rel="manifest"
           />
+
+          <style
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: fontFaces
+            }}
+            id="fontFaces"
+          />
         </Head>
+
+        <PlaceboDiv
+          suppressHydrationWarning
+        >
+          {typeof window !== "undefined" &&
+            <LinearProgress
+              aria-label="Placebo Progress Bar"
+              color="secondary"
+              onTransitionEnd={this.handleTransitionEnd}
+              sx={{
+                opacity: progress > progress0 ? opacity1 : opacity0,
+                zIndex: 1150
+              }}
+              value={progress}
+              variant="determinate"
+            />}
+        </PlaceboDiv>
 
         <Header />
 
-        <div
-          style={{
-            height: "3rem"
+        <Container
+          maxWidth="lg"
+          sx={{
+            "& a": {
+              cursor: indeterminate ? "wait" : ""
+            },
+            cursor: indeterminate ? "wait" : "",
+            marginBottom: "1rem",
+            marginTop: "1rem",
+            minHeight: "calc(100vh - 2rem - 16px - 9rem - 1rem)",
+            opacity: indeterminate ? opacity025 : opacity1,
+            transition: indeterminate ? "opacity 2s linear" : "",
+            userSelect: indeterminate ? "none" : "auto"
           }}
-        />
+        >
+          {children}
+        </Container>
 
-        <div className={style["page-content"]}>
-          <main className={!indeterminate ? style.main_container : style.main_container_fadeout}>
-            {children}
-          </main>
-
-          <Footer />
-        </div>
-      </>
+        <Footer />
+      </PageDiv>
     )
   }
 }

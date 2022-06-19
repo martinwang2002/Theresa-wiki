@@ -22,6 +22,7 @@ class CcByNcSaSvgLink extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <LinkItem
+        aria-label="CC BY-NC-SA License"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
         rel="noreferrer"
         sx={{
