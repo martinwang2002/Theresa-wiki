@@ -226,11 +226,25 @@ interface IWave {
 }
 
 interface IStageJson {
-  options: Record<string, string>
+  options: IStageJsonOptions
   levelId: string
   loadingPicId: string
   mapData: IMapData
   waves: IWave[]
+  [key: string]: unknown
+}
+
+interface IStageJsonOptions {
+  characterLimit: number
+  maxLifePoint: number
+  initialCost: number
+  maxCost: number
+  costIncreaseTime: number
+  moveMultiplier: number
+  steeringEnabled: boolean
+  isTrainingLevel: boolean
+  isHardTrainingLevel: boolean
+  functionDisableMask: number
   [key: string]: unknown
 }
 
@@ -251,4 +265,15 @@ export const stageJson = async (levelId: string): Promise<IStageJson> => {
   return stageJsonResult
 }
 
-export type { IStageInfo, ICustomStageInfo, IDisplayDetailReward, IUnlockCondition, IMapData, ITileInfo, IMapDataTiles, IStageJson, IWave }
+export type {
+  IStageInfo,
+  ICustomStageInfo,
+  IDisplayDetailReward,
+  IUnlockCondition,
+  IMapData,
+  ITileInfo,
+  IMapDataTiles,
+  IStageJson,
+  IStageJsonOptions,
+  IWave
+}

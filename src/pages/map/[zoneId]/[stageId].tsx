@@ -17,6 +17,7 @@ import MapPreview from "@/components/map/mapPreview"
 import MapScene from "@/components/map/scene/index"
 import StageInfo from "@/components/map/stageInfo/index"
 import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
+import StageOptions from "@/components/map/stageOptions/index"
 import Page from "@/components/page/page"
 
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
@@ -132,7 +133,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
-    const { mapData } = stageJson
+    const { mapData, options } = stageJson
 
     const displayZoneName = getDisplayZoneName(zoneInfo)
 
@@ -222,6 +223,26 @@ class Map extends React.PureComponent<MapProps> {
               // stageJsonOptions={stageJson.options}
             />
           </GamedataContext.Provider>
+
+          <HeadingAnchor
+            id="stageOptions"
+            text="作战配置"
+          />
+
+          <Alert
+            severity="warning"
+            sx={{
+              marginY: "1em"
+            }}
+          >
+            <AlertTitle>
+              目前困难关卡数据尚不正确，请等待更新。或前往PRTS查看。
+            </AlertTitle>
+          </Alert>
+
+          <StageOptions
+            stageOptions={options}
+          />
 
           <HeadingAnchor
             id="mapPreview"

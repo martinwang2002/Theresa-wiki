@@ -8,6 +8,7 @@ versions:
         - disable prefetch on footer links
         - improved zone name
         - use noto sans font
+        - stage options table
       changed:
         - /about/credits use styled component
         - use serverRuntimeConfig for redis ex ttl
