@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 4]
+    date: 2022-06-27T08:00:00+0800
+    contents:
+      added:
+        - color mode (light, dark and system)
+
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
     contents:

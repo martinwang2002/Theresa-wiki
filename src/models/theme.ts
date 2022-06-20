@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles"
+import type { ThemeOptions } from "@mui/material/styles"
 
 // Create a theme instance.
-const theme = createTheme({
+const themeOptions = {
   components: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     MuiCssBaseline: {
@@ -26,6 +26,6 @@ const theme = createTheme({
   typography: {
     fontFamily: "\"Noto Serif SC\", sans-serif"
   }
-})
+} as ThemeOptions
 
-export default theme
+export default themeOptions
