@@ -11,7 +11,7 @@ interface IGamedataConst {
 const gamedataConst = cacheable(async (): Promise<IGamedataConst> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/gamedata_const.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/gamedata_const.json`
   })
 
   const gamedataConstRes = await fetch(url)

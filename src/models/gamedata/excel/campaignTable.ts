@@ -17,7 +17,7 @@ interface ICampaignTable {
 export const campaignTable = cacheable(async (): Promise<ICampaignTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/campaign_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/campaign_table.json`
   })
 
   const campaignTableRes = await fetch(url)

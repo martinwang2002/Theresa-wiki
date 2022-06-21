@@ -72,7 +72,7 @@ interface ITileInfo {
 const stageTable = cacheable(async (): Promise<IStageTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/stage_table.json`
   })
 
   const stageTableRes = await fetch(url)

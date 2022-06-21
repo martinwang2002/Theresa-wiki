@@ -99,7 +99,7 @@ export const stageJson = cacheable(async (levelId: string): Promise<IStageJson> 
 
   const stageUrl = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: `/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/levels/${String(levelId).toLowerCase()}.json`
   })
 
   const stageRes = await fetch(stageUrl)

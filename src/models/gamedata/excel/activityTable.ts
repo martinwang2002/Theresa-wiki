@@ -28,7 +28,7 @@ interface IActivityTable {
 export const activityTable = cacheable(async (): Promise<IActivityTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/activity_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/activity_table.json`
   })
 
   const activityTableRes = await fetch(url)
