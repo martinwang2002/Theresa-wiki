@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react"
 
-import type { IWave } from "@/models/gamedata/excel/stageTable"
+import type { IWave } from "@/models/gamedata/levels/index"
 
 interface IMapTimelineWaveProps {
   wave: IWave
