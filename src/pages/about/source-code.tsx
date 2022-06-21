@@ -17,14 +17,18 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
+        <p style={{ marginTop: "1rem", overflow: "hidden" }}>
           本项目开源。请查看
           <Link
-            href="/about/contact"
+            href="https://github.com/martinwang2002/Theresa-wiki"
           >
-            联系站长
+            https://github.com/martinwang2002/Theresa-wiki
           </Link>
-        </div>
+        </p>
+
+        <p>
+          欢迎PR
+        </p>
 
       </Page>
     )

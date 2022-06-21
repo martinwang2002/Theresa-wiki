@@ -7,6 +7,8 @@ versions:
       added:
         - color mode (light, dark and system)
         - patched number
+      changed:
+        - open-source
 
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
