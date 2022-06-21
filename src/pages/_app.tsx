@@ -41,15 +41,25 @@ function myApp (props: MyAppProps): React.ReactChild {
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
 
-  const [mode, setMode] = useState<"dark" | "light" | "system">("system")
+  const [paletteMode, setPaletteMode] = useState<"dark" | "light" | "system">("system")
+  const [patchedNumberMode, setPatchedNumberMode] = useState<"difference" | "result">("difference")
 
   // initial setup based on local storage
   useEffect(() => {
-    const initialMode = getLocalStorage("paletteMode") ?? "system"
-    if (initialMode === "dark" || initialMode === "light" || initialMode === "system") {
-      setMode(initialMode)
+    // paletteMode
+    const initialPaletteMode = getLocalStorage("paletteMode") ?? "system"
+    if (initialPaletteMode === "dark" || initialPaletteMode === "light" || initialPaletteMode === "system") {
+      setPaletteMode(initialPaletteMode)
     } else {
-      setMode("system")
+      setPaletteMode("system")
+    }
+
+    // patchedNumberMode
+    const initialPatchedNumberMode = getLocalStorage("patchedNumberMode") ?? "difference"
+    if (initialPatchedNumberMode === "difference" || initialPatchedNumberMode === "result") {
+      setPatchedNumberMode(initialPatchedNumberMode)
+    } else {
+      setPatchedNumberMode("difference")
     }
   }, [prefersDarkMode])
 
@@ -57,17 +67,19 @@ function myApp (props: MyAppProps): React.ReactChild {
     () => {
       const _theme = themeOptions
       if (_theme.palette) {
-        _theme.palette.mode = mode === "system" ? (prefersDarkMode ? "dark" : "light") : mode
+        _theme.palette.mode = paletteMode === "system" ? (prefersDarkMode ? "dark" : "light") : paletteMode
       }
       return createTheme(_theme)
     },
-    [mode, prefersDarkMode]
+    [paletteMode, prefersDarkMode]
   )
 
   const settingsValue = useMemo(() => ({
-    mode,
-    setMode
-  }), [mode])
+    paletteMode,
+    patchedNumberMode,
+    setPaletteMode,
+    setPatchedNumberMode
+  }), [paletteMode, patchedNumberMode])
 
   // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unsafe-assignment
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props

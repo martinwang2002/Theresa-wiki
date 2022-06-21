@@ -1,13 +1,19 @@
 import React from "react"
 
 interface ISettingsContext {
-  mode: "dark" | "light" | "system"
-  setMode: (mode: "dark" | "light" | "system") => void
+  paletteMode: "dark" | "light" | "system"
+  patchedNumberMode: "difference" | "result"
+  setPaletteMode: (mode: "dark" | "light" | "system") => void
+  setPatchedNumberMode: (mode: "difference" | "result") => void
 }
 
 export const SettingsContext = React.createContext<ISettingsContext>({
-  mode: "system",
-  setMode: () => {
-    throw new Error("setMode is not implemented")
+  paletteMode: "system",
+  patchedNumberMode: "difference",
+  setPaletteMode: () => {
+    throw new Error("setPaletteMode is not implemented")
+  },
+  setPatchedNumberMode: () => {
+    throw new Error("setPatchedNumberMode is not implemented")
   }
 })

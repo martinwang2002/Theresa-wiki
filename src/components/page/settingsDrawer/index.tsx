@@ -6,7 +6,8 @@ import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 
-import ColorModeSettings from "./colorMode"
+import PaletteModeSettings from "./paletteModeSettings"
+import PatchedNumberModeSettings from "./patchedNumberModeSettings"
 
 interface ISettingsDrawerProps {
   open: boolean
@@ -44,8 +45,9 @@ export default class SettingsDrawer extends React.PureComponent<ISettingsDrawerP
           </IconButton>
         </Box>
 
-        <ColorModeSettings />
+        <PaletteModeSettings />
 
+        <PatchedNumberModeSettings />
       </Drawer>
     )
   }

@@ -24,10 +24,12 @@ import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
-import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
+import { stageIds, getCustomStageInfo, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
+import type { ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
+import type { IStageJson } from "@/models/gamedata/levels/index"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
@@ -133,7 +135,8 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
-    const { mapData, options } = stageJson
+    const { difficulty, diffGroup } = stageInfo
+    const { mapData, options, runes } = stageJson
 
     const displayZoneName = getDisplayZoneName(zoneInfo)
 
@@ -229,18 +232,10 @@ class Map extends React.PureComponent<MapProps> {
             text="作战配置"
           />
 
-          <Alert
-            severity="warning"
-            sx={{
-              marginY: "1em"
-            }}
-          >
-            <AlertTitle>
-              目前困难关卡数据尚不正确，请等待更新。或前往PRTS查看。
-            </AlertTitle>
-          </Alert>
-
           <StageOptions
+            diffGroup={diffGroup}
+            difficulty={difficulty}
+            runes={runes}
             stageOptions={options}
           />
 

@@ -12,7 +12,7 @@ import { setLocalStorage } from "@/models/utils/localStorage"
 import Heading from "./heading"
 import StyledToggleButton from "./styledToggleButton"
 
-export default class ColorModeSettings extends React.PureComponent {
+export default class PaletteModeSettings extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "space-between", pl: 2, pr: 2 }}>
@@ -21,21 +21,21 @@ export default class ColorModeSettings extends React.PureComponent {
         </Heading>
 
         <SettingsContext.Consumer>
-          {({ mode, setMode }): React.ReactNode => {
+          {({ paletteMode, setPaletteMode }): React.ReactNode => {
             return (
               <ToggleButtonGroup
                 color="primary"
                 exclusive
                 onChange={(event, value: string): void => {
                   if (value === "light" || value === "dark" || value === "system") {
-                    setMode(value)
+                    setPaletteMode(value)
                     setLocalStorage("paletteMode", value)
                   }
                 }}
                 sx={{
                   width: "100%"
                 }}
-                value={mode}
+                value={paletteMode}
               >
                 <StyledToggleButton value="system">
                   <BrightnessAutoIcon fontSize="small" />
