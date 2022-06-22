@@ -14,6 +14,9 @@ const themeOptions = {
     }
   },
   palette: {
+    error: {
+      main: "#c4001d"
+    },
     primary: {
       contrastText: "#fff",
       main: "#00b3fd"

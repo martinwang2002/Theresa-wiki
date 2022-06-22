@@ -8,6 +8,7 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
 
+import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
@@ -34,8 +35,6 @@ import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
-
-import style from "./[stageId].module.scss"
 
 interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
@@ -193,20 +192,53 @@ class Map extends React.PureComponent<MapProps> {
           </Typography>
         </StyledBreadcrumbs>
 
-        <h1 className={style["h1-title"]}>
-          {stageInfo.difficulty === "FOUR_STAR" &&
-          <span className={style["h1-four-star-badge"]}>
-            突袭
-          </span>}
-
+        <Typography
+          sx={{
+            fontFamily: "\"Dream Han Serif CN W27\"",
+            my: 2
+          }}
+          variant="h3"
+        >
           <span>
             {`${stageInfo.code} ${stageInfo.name}`}
           </span>
 
-          <span className={style["h1-title-badge"]}>
+          {stageInfo.difficulty === "FOUR_STAR" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "error.main"
+            }}
+          >
+            突袭
+          </TopBadge>}
+
+          {stageInfo.diffGroup === "EASY" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "primary.main"
+            }}
+          >
+            剧情体验
+          </TopBadge>}
+
+          {stageInfo.diffGroup === "TOUGH" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "error.main"
+            }}
+          >
+            磨难险境
+          </TopBadge>}
+
+          <TopBadge
+            sx={{
+              backgroundColor: "warning.main",
+              ml: 1
+            }}
+          >
             {server}
-          </span>
-        </h1>
+          </TopBadge>
+        </Typography>
 
         <GamedataContext.Provider value={gamedataConst}>
           <StageInfoDescription

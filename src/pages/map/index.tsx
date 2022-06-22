@@ -11,6 +11,7 @@ import type { GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
+import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
@@ -20,8 +21,6 @@ import { getCustomZones } from "@/models/gamedata/excel/zoneTable"
 import type { ICustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
-
-import style from "./[zoneId]/[stageId].module.scss"
 
 interface ZoneProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
@@ -96,15 +95,25 @@ class Zone extends React.PureComponent<ZoneProps> {
           </Typography>
         </StyledBreadcrumbs>
 
-        <h1 className={style["h1-title"]}>
+        <Typography
+          sx={{
+            fontFamily: "\"Dream Han Serif CN W27\"",
+            my: 2
+          }}
+          variant="h3"
+        >
           <span>
             地图
           </span>
 
-          <span className={style["h1-title-badge"]}>
+          <TopBadge
+            sx={{
+              backgroundColor: "warning.main"
+            }}
+          >
             {server}
-          </span>
-        </h1>
+          </TopBadge>
+        </Typography>
 
         <WithTableOfContents>
           {

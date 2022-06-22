@@ -37,9 +37,13 @@ The level drop data used in the Theresa.wiki website is from Penguin Logistics D
 
 Bender used in Theresa.wiki website is from MyFonts (https://www.myfonts.com/viewlicense.php?lid=1630)
 
-特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL 许可)，包括但不限于 Noto Serif, ZCOOL QingKe HuangYou。
+特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 Google Fonts (https://fonts.google.com/) (OFL 许可)，包括但不限于 Noto Serif, Roboto Mono, ZCOOL QingKe HuangYou。
 
-Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including but not limited to Noto Serif, ZCOOL QingKe HuangYou.
+Some font files used in Theresa.wiki website are from Google Fonts (https://fonts.google.com/) (OFL), including but not limited to Noto Serif, Roboto Mono, ZCOOL QingKe HuangYou.
+
+特蕾西娅 Theresa.wiki 网站内所使用的部分字体文件来源于 https://github.com/Pal3love/dream-han-cjk (SIL Open Font License 1.1 许可)，包括但不限于 梦源宋体（大陆简中子集，字重27）。
+
+Some font files used in Theresa.wiki website are from https://github.com/Pal3love/dream-han-cjk (SIL Open Font License 1.1), including but not limited to Dream Han Serif CN W27.
 `
 
 const StyledLicenseDiv = styled("div")({

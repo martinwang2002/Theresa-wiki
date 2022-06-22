@@ -83,6 +83,14 @@ const fontFaces = `
   font-weight: 400;
   src: local("Roboto Mono"), url("/fonts/roboto-mono-v21-latin-regular.woff2") format("woff2")
 }
+
+@font-face {
+  font-display: swap;
+  font-family: "Dream Han Serif CN W27";
+  font-style: normal;
+  font-weight: 900;
+  src: local("Dream Han Serif CN W27"), url("/fonts/DreamHanSerifCN-W27.woff2") format("woff2")
+}
 `
 
 class Page extends React.PureComponent<PageProps, PageState> {

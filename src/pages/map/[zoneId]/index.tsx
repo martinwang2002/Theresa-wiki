@@ -12,6 +12,8 @@ import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next
 import Head from "next/head"
 import Link from "next/link"
 
+import InlineBadge from "@/components/common/badge/inlineBadge"
+import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
 import MapPreviewImage from "@/components/map/mapPreviewImage"
@@ -25,8 +27,6 @@ import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
-
-import style from "./[stageId].module.scss"
 
 interface ZoneProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
@@ -151,15 +151,25 @@ class Zone extends React.PureComponent<ZoneProps> {
           </Typography>
         </StyledBreadcrumbs>
 
-        <h1 className={style["h1-title"]}>
+        <Typography
+          sx={{
+            fontFamily: "\"Dream Han Serif CN W27\"",
+            my: 2
+          }}
+          variant="h3"
+        >
           <span>
             {displayZoneName}
           </span>
 
-          <span className={style["h1-title-badge"]}>
+          <TopBadge
+            sx={{
+              backgroundColor: "warning.main"
+            }}
+          >
             {server}
-          </span>
-        </h1>
+          </TopBadge>
+        </Typography>
 
         <Grid
           columns={{ md: 12, sm: 8, xs: 4 }}
@@ -192,19 +202,31 @@ class Zone extends React.PureComponent<ZoneProps> {
 
                       <CardContent sx={{ padding: "0.75em" }}>
                         {stageInfo.difficulty === "FOUR_STAR" &&
-                        <span className={style["h1-four-star-badge"]}>
+                        <InlineBadge
+                          sx={{
+                            backgroundColor: "error.main"
+                          }}
+                        >
                           突袭
-                        </span>}
+                        </InlineBadge>}
 
                         {stageInfo.diffGroup === "EASY" &&
-                        <span className={style["h1-easy-badge"]}>
+                        <InlineBadge
+                          sx={{
+                            backgroundColor: "primary.main"
+                          }}
+                        >
                           剧情体验
-                        </span>}
+                        </InlineBadge>}
 
                         {stageInfo.diffGroup === "TOUGH" &&
-                        <span className={style["h1-four-star-badge"]}>
+                        <InlineBadge
+                          sx={{
+                            backgroundColor: "error.main"
+                          }}
+                        >
                           磨难险境
-                        </span>}
+                        </InlineBadge>}
 
                         {`${stageInfo.code} ${stageInfo.name}`}
                       </CardContent>

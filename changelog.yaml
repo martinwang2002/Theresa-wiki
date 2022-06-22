@@ -7,8 +7,10 @@ versions:
       added:
         - color mode (light, dark and system)
         - patched number
+        - use Dream Han Serif CN font for title
       changed:
         - open-source
+        - use styled span for badges
 
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
