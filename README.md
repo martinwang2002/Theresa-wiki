@@ -1,14 +1,17 @@
 # Theresa.wiki
 
 This repo is the frontend of https://theresa.wiki. An arknights wiki.
-这是一个Theresa.wiki的前端。一个明日方舟的维基。
+
+这是 Theresa.wiki 的前端。一个明日方舟的维基。目前，最重要的功能是查看明日方舟**地图场景**（大声）
+
+> 这个 wiki 的定位不是完整（完整维基请去prts），更重要的是通过 *杂技* 获得 *快乐* 。
 
 ## License
 1. MIT License
     * For all codes (not including `./src/arts/**`), the license is MIT License, see [LICENSE](./LICENSE)
 2. CC-BY-SA 4.0 License
-    * For arts (including `./src/arts/**`) and SVGs used in codes, the license is CC-BY-SA-4.0, see [src/arts/LICENSE](./src/arts/LICENSE)
-    * All web contents served on [Theresa.wiki](https://theresa.wiki) are under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+    * For arts (including `./src/arts/**`) and SVGs used in codes, the license is CC BY-NC-SA 4.0, see [src/arts/LICENSE](./src/arts/LICENSE)
+    * All web contents served on [Theresa.wiki](https://theresa.wiki) are under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 ## Development and Contributing
 PR is always welcome on `dev` branch.
