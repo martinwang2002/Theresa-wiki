@@ -12,6 +12,8 @@ versions:
       changed:
         - open-source
         - use styled span for badges
+      fixed:
+        - /about/changelog in dark mode
 
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800

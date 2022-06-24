@@ -39,7 +39,7 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
+        <div style={{ marginTop: "1rem", overflow: "hidden" }}>
           呼哈。您可以使用crisp对话框。
 
           <br />

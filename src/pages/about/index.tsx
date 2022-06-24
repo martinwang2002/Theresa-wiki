@@ -16,7 +16,7 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
+        <div style={{ marginTop: "1rem", overflow: "hidden" }}>
           在页面底部，有很多连接哦~
 
           <br />
