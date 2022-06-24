@@ -13,7 +13,8 @@ interface ICacheable {
 const redisConfig: RedisOptions = {
   autoResubscribe: false,
   keyPrefix: "FRONTEND_",
-  lazyConnect: true
+  lazyConnect: true,
+  maxRetriesPerRequest: 1
 }
 
 const redisClient = new Redis(serverRuntimeConfig.REDIS_URL, redisConfig)
