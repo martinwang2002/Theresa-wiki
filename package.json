@@ -20,6 +20,7 @@
     "ioredis": "^5.0.6",
     "lodash": "^4.17.21",
     "next": "^12.1.6",
+    "next-pwa": "^5.5.4",
     "postcss": "^8.4.14",
     "postcss-scss": "^4.0.4",
     "raw-loader": "^4.0.2",

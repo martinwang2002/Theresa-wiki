@@ -1,14 +1,24 @@
 import React from "react"
 
+import Alert from "@mui/material/Alert"
+import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import LinearProgress from "@mui/material/LinearProgress"
+import Snackbar from "@mui/material/Snackbar"
 import { styled } from "@mui/system"
 import Head from "next/head"
 import type { NextRouter } from "next/router"
 import { withRouter } from "next/router"
+import type { Workbox } from "workbox-window"
 
 import Footer from "./footer"
 import Header from "./header"
+
+declare global {
+  interface Window {
+    workbox?: Workbox
+  }
+}
 
 interface PageProps {
   children: React.ReactNode
@@ -18,6 +28,7 @@ interface PageProps {
 interface PageState {
   indeterminate: boolean
   progress: number
+  showServiceWorkerSnackbar: boolean
 }
 
 const progress0 = 0
@@ -99,7 +110,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
     super(props)
     this.state = {
       indeterminate: false,
-      progress: 0
+      progress: 0,
+      showServiceWorkerSnackbar: false
     }
     // prevent this.state undefined error
     this.handleTransitionEnd = this.handleTransitionEnd.bind(this)
@@ -111,6 +123,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
     router.events.on("routeChangeStart", this.handleStart)
     router.events.on("routeChangeComplete", this.handleStop)
     router.events.on("routeChangeError", this.handleStop)
+    this.registerServiceWorker()
   }
 
   public componentWillUnmount (): void {
@@ -137,7 +150,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
     })
   }
 
-  public handleTransitionEnd (): void {
+  public readonly handleTransitionEnd = (): void => {
     const { progress } = this.state
     if (progress === progress100) {
       this.setState({
@@ -146,9 +159,63 @@ class Page extends React.PureComponent<PageProps, PageState> {
     }
   }
 
+  private readonly registerServiceWorker = (): void => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator && window.workbox !== undefined) {
+      const wb = window.workbox
+
+      // A common UX pattern for progressive web apps is to show a banner when a service worker has updated and waiting to install.
+      // NOTE: MUST set skipWaiting to false in next.config.js pwa object
+      // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users
+      wb.addEventListener("waiting", () => {
+        this.setState({
+          showServiceWorkerSnackbar: true
+        })
+      })
+      wb.addEventListener("installed", event => {
+        console.log(`Event ${event.type} is triggered.`)
+        console.log(event)
+      })
+
+      wb.addEventListener("controlling", event => {
+        console.log(`Event ${event.type} is triggered.`)
+        console.log(event)
+      })
+
+      wb.addEventListener("activated", event => {
+        console.log(`Event ${event.type} is triggered.`)
+        console.log(event)
+      })
+
+      wb.addEventListener("message", event => {
+        console.log(`Event ${event.type} is triggered.`)
+        console.log(event)
+      })
+      wb.register().catch(error => {
+        console.error(error)
+      })
+    }
+  }
+
+  private readonly handleServiceWorkerSnackbarClose = (): void => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator && window.workbox !== undefined) {
+      const wb = window.workbox
+
+      console.log("OK-----~~~~~~")
+      // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
+      // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
+      // You may want to customize the UI prompt accordingly.
+      wb.addEventListener("controlling", () => {
+        window.location.reload()
+      })
+
+      // Send a message to the waiting service worker, instructing it to activate.
+      wb.messageSkipWaiting()
+    }
+  }
+
   public render (): React.ReactNode {
     const { children } = this.props
-    const { indeterminate, progress } = this.state
+    const { indeterminate, progress, showServiceWorkerSnackbar } = this.state
     return (
       <PageDiv>
         <Head>
@@ -245,6 +312,27 @@ class Page extends React.PureComponent<PageProps, PageState> {
         </Container>
 
         <Footer />
+
+        <Snackbar
+          autoHideDuration={6000}
+          open={showServiceWorkerSnackbar}
+        >
+          <Alert
+            action={
+              <Button
+                color="secondary"
+                onClick={this.handleServiceWorkerSnackbarClose}
+                size="small"
+              >
+                闪断
+              </Button>
+            }
+            severity="info"
+            sx={{ width: "100%" }}
+          >
+            闪断更新了，请刷新页面。
+          </Alert>
+        </Snackbar>
       </PageDiv>
     )
   }

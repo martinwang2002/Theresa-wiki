@@ -1,1 +1,4 @@
 LICENSES.txt
+sw.js*
+workbox-*.js*
+fallback-*.js*

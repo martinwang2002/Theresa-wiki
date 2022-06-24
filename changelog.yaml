@@ -8,6 +8,7 @@ versions:
         - color mode (light, dark and system)
         - patched number
         - use Dream Han Serif CN font for title
+        - service worker
       changed:
         - open-source
         - use styled span for badges
