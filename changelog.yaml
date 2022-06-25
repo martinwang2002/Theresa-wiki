@@ -12,6 +12,7 @@ versions:
       changed:
         - open-source
         - use styled span for badges
+        - index page ui (like arknights)
       fixed:
         - /about/changelog in dark mode
 
