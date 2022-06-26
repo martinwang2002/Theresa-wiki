@@ -9,7 +9,7 @@ import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const { CRISP_WEBSITE_ID } = publicRuntimeConfig
 
-export default class Privacy extends React.PureComponent {
+export default class Contact extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <Page>

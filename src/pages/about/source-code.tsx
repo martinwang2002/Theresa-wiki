@@ -1,11 +1,11 @@
 import React from "react"
 
 import Head from "next/head"
-import Link from "next/link"
 
+import StyledLink from "@/components/common/styledLink"
 import Page from "@/components/page/page"
 
-export default class Privacy extends React.PureComponent {
+export default class SourceCode extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <Page>
@@ -19,11 +19,11 @@ export default class Privacy extends React.PureComponent {
 
         <p style={{ marginTop: "1rem", overflow: "hidden" }}>
           本项目前端部分开源。请查看
-          <Link
+          <StyledLink
             href="https://github.com/martinwang2002/Theresa-wiki"
           >
             https://github.com/martinwang2002/Theresa-wiki
-          </Link>
+          </StyledLink>
         </p>
 
         <p>

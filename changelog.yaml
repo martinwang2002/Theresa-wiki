@@ -9,6 +9,7 @@ versions:
         - patched number
         - use Dream Han Serif CN font for title
         - service worker
+        - about/ svg share
       changed:
         - open-source
         - use styled span for badges
