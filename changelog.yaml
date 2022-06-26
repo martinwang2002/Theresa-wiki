@@ -15,6 +15,7 @@ versions:
         - index page ui (like arknights)
       fixed:
         - /about/changelog in dark mode
+        - mui tip overflow
 
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800

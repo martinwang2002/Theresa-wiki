@@ -8,7 +8,8 @@ const themeOptions = {
       styleOverrides: {
         body: {
           letterSpacing: "normal",
-          lineHeight: "normal"
+          lineHeight: "normal",
+          overflow: "hidden"
         }
       }
     }
