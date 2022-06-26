@@ -52,31 +52,36 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
     const { stageId } = this.props
     const { loadScene, loadScenePhase, loadSceneDataProgress } = this.state
 
-    const phases = ["正在加载脚本.", "正在加载场景配置文件..", "正在加载场景美术资源..."]
+    const phases = ["正在加载脚本.", "正在加载场景配置文件..", "正在加载场景美术资源...", "场景加载失败"]
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const values = [0, 20, 40, 100]
+    const values = [0, 20, 40, 100, 0]
     const phaseThreePercentage = 60
     const progressValue = values[loadScenePhase] + loadSceneDataProgress * phaseThreePercentage
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const progressValueBuffer = values[loadScenePhase + 1]
 
+    const loadScenePhaseError = 3
+
     return (
       <div style={{
         aspectRatio: "16/9",
+        borderRadius: "1rem",
         display: "block",
-        width: "auto",
-        overflow: "hidden",
-        position: "relative",
         margin: "auto",
         maxHeight: "50vh",
         maxWidth: "90%",
-        borderRadius: "1rem"
+        overflow: "hidden",
+        position: "relative",
+        width: "auto"
       }}
       >
         <Paper
           elevation={10}
-          sx={{ height: "100%" }}
+          sx={{
+            aspectRatio: "16/9",
+            height: "100%"
+          }}
         >
           <div
             style={{
@@ -100,7 +105,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
             }}
           >
             <Button
-              color="primary"
+              color={loadScenePhase !== loadScenePhaseError ? "primary" : "error"}
               onClick={this.handleLoadScene}
               sx={{
                 left: "50%",

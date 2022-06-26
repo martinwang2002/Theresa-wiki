@@ -16,6 +16,7 @@ versions:
       fixed:
         - /about/changelog in dark mode
         - mui tip overflow
+        - error message for loading map3d
 
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
