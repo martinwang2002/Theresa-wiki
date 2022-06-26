@@ -78,7 +78,7 @@ const loadSceneData = async (
   stageId: string,
   onLoadScenePhaseChange: (phase: number) => void,
   onLoadSceneDataProgressChange: (progress: number) => void
-): Promise<Map3DConfig> => {
+): Promise<Map3DConfig | undefined> => {
   let total: number
   let loaded: number
   const zero = 0
@@ -106,7 +106,16 @@ const loadSceneData = async (
   const configJson = await fetch(serializeUri({
     ...publicRuntimeConfig.THERESA_STATIC,
     path: `/api/v0/AK/CN/Android/map3d/stage/${stageId}/config`
-  }), { method: "GET" }).then(async res => res.json()) as Map3DConfigApi
+  }), { method: "GET" })
+    .then(async res => res.json())
+    .catch(() => {
+      onLoadScenePhaseChange(Map3DLoadPhase.error)
+    }) as Map3DConfigApi | undefined
+
+  if (!configJson) {
+    onLoadScenePhaseChange(Map3DLoadPhase.error)
+    return undefined
+  }
 
   onLoadScenePhaseChange(Map3DLoadPhase.scene)
 
@@ -179,7 +188,9 @@ const loadSceneData = async (
     materials[key] = meshMaterial
   })
 
-  await Promise.all(result)
+  await Promise.all(result).catch(() => {
+    onLoadScenePhaseChange(Map3DLoadPhase.error)
+  })
   // lightmap.encoding = sRGBEncoding
   // lightmap.anisotropy = 16
   // const lightmapConfigs = configJson.rootScene.lightmapConfigs
@@ -196,11 +207,10 @@ const loadSceneData = async (
 }
 
 enum Map3DLoadPhase {
-  /* eslint-disable @typescript-eslint/no-magic-numbers */
   script = 0,
   config = 1,
-  scene = 2
-  /* eslint-enable @typescript-eslint/no-magic-numbers */
+  scene = 2,
+  error = 3
 }
 
 class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
@@ -217,6 +227,10 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     const { stageId, onLoadScenePhaseChange, onLoadSceneDataProgressChange } = this.props
 
     const map3DConfig = await loadSceneData(stageId, onLoadScenePhaseChange, onLoadSceneDataProgressChange)
+
+    if (!map3DConfig) {
+      return
+    }
 
     const container = this.sceneContainer.current ?? document.createElement("div")
 

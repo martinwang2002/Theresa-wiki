@@ -1,6 +1,24 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 4]
+    date: 2022-06-27T08:00:00+0800
+    contents:
+      added:
+        - color mode (light, dark and system)
+        - patched number
+        - use Dream Han Serif CN font for title
+        - service worker
+        - about/ svg share
+      changed:
+        - open-source
+        - use styled span for badges
+        - index page ui (like arknights)
+      fixed:
+        - /about/changelog in dark mode
+        - mui tip overflow
+        - error message for loading map3d
+
   - version: [0, 2, 3]
     date: 2022-06-20T08:00:00+0800
     contents:

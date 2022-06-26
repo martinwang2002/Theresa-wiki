@@ -1,11 +1,11 @@
 import React from "react"
 
 import Head from "next/head"
-import Link from "next/link"
 
+import StyledLink from "@/components/common/styledLink"
 import Page from "@/components/page/page"
 
-export default class Privacy extends React.PureComponent {
+export default class SourceCode extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <Page>
@@ -17,14 +17,18 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
-          本项目开源。请查看
-          <Link
-            href="/about/contact"
+        <p style={{ marginTop: "1rem", overflow: "hidden" }}>
+          本项目前端部分开源。请查看
+          <StyledLink
+            href="https://github.com/martinwang2002/Theresa-wiki"
           >
-            联系站长
-          </Link>
-        </div>
+            https://github.com/martinwang2002/Theresa-wiki
+          </StyledLink>
+        </p>
+
+        <p>
+          欢迎PR，一起表演杂技。~@~!
+        </p>
 
       </Page>
     )

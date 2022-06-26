@@ -9,7 +9,7 @@ import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const { CRISP_WEBSITE_ID } = publicRuntimeConfig
 
-export default class Privacy extends React.PureComponent {
+export default class Contact extends React.PureComponent {
   public render (): React.ReactNode {
     return (
       <Page>
@@ -39,7 +39,7 @@ export default class Privacy extends React.PureComponent {
 
         </Head>
 
-        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
+        <div style={{ marginTop: "1rem", overflow: "hidden" }}>
           呼哈。您可以使用crisp对话框。
 
           <br />

@@ -28,7 +28,7 @@ interface IRetroInfo {
 export const retroTable = cacheable(async (): Promise<IRetroTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/retro_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/retro_table.json`
   })
 
   const retroTableRes = await fetch(url)

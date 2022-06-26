@@ -3,8 +3,6 @@ import { serialize as serializeUri } from "uri-js"
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-import { battleMiscTable } from "../battle/battleMiscTable"
-
 import { retroTable } from "./retroTable"
 
 interface IStageTable {
@@ -71,26 +69,10 @@ interface ITileInfo {
   isFunctional: boolean
 }
 
-interface IMapDataTiles {
-  blackboard: unknown
-  buildableType: unknown
-  effects: unknown
-  heightType: unknown
-  passableMask: unknown
-  tileKey: string
-}
-
-interface IMapData {
-  height: number
-  map: [number[]]
-  tiles: [IMapDataTiles]
-  width: number
-}
-
 const stageTable = cacheable(async (): Promise<IStageTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/stage_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/stage_table.json`
   })
 
   const stageTableRes = await fetch(url)
@@ -194,86 +176,10 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   return { ..._tileInfo, ...tileEmptyExtra }
 }
 
-interface IWaveFragmentAction {
-  actionType: number
-  autoPreviewRoute: boolean
-  blockFragment: boolean
-  count: number
-  dontBlockWave: boolean
-  hiddenGroup: unknown
-  interval: number
-  isUnharmfulAndAlwaysCountAsKilled: boolean
-  key: string
-  managedByScheduler: boolean
-  preDelay: number
-  randomSpawnGroupKey: unknown
-  routeIndex: number
-  weight: number
-}
-
-interface IWaveFragment {
-  actions: IWaveFragmentAction[]
-  preDelay: number
-  name: string | null
-}
-
-interface IWave {
-  fragments: IWaveFragment[]
-  maxTimeWaitingForNextWave: number
-  name: string | null
-  postDelay: number
-  preDelay: number
-}
-
-interface IStageJson {
-  options: IStageJsonOptions
-  levelId: string
-  loadingPicId: string
-  mapData: IMapData
-  waves: IWave[]
-  [key: string]: unknown
-}
-
-interface IStageJsonOptions {
-  characterLimit: number
-  maxLifePoint: number
-  initialCost: number
-  maxCost: number
-  costIncreaseTime: number
-  moveMultiplier: number
-  steeringEnabled: boolean
-  isTrainingLevel: boolean
-  isHardTrainingLevel: boolean
-  functionDisableMask: number
-  [key: string]: unknown
-}
-
-export const stageJson = async (levelId: string): Promise<IStageJson> => {
-  // use hooked level id
-  const { levelScenePairs } = await battleMiscTable()
-  if (levelId in levelScenePairs) {
-    levelId = levelScenePairs[levelId].levelId
-  }
-
-  const stageUrl = serializeUri({
-    ...serverRuntimeConfig.THERESA_S3,
-    path: `/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/levels/${String(levelId).toLowerCase()}.json`
-  })
-
-  const stageRes = await fetch(stageUrl)
-  const stageJsonResult = await stageRes.json() as IStageJson
-  return stageJsonResult
-}
-
 export type {
   IStageInfo,
   ICustomStageInfo,
   IDisplayDetailReward,
   IUnlockCondition,
-  IMapData,
-  ITileInfo,
-  IMapDataTiles,
-  IStageJson,
-  IStageJsonOptions,
-  IWave
+  ITileInfo
 }

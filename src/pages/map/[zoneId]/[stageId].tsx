@@ -8,6 +8,7 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
 import Head from "next/head"
 
+import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
@@ -24,16 +25,16 @@ import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import { stageIds, getCustomStageInfo, tileInfo as getTileInfo, stageJson as getStageJson } from "@/models/gamedata/excel/stageTable"
-import type { ICustomStageInfo, ITileInfo, IStageJson } from "@/models/gamedata/excel/stageTable"
+import { stageIds, getCustomStageInfo, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
+import type { ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
+import type { IStageJson } from "@/models/gamedata/levels/index"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
-
-import style from "./[stageId].module.scss"
 
 interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
@@ -133,7 +134,8 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
-    const { mapData, options } = stageJson
+    const { difficulty, diffGroup } = stageInfo
+    const { mapData, options, runes } = stageJson
 
     const displayZoneName = getDisplayZoneName(zoneInfo)
 
@@ -190,20 +192,53 @@ class Map extends React.PureComponent<MapProps> {
           </Typography>
         </StyledBreadcrumbs>
 
-        <h1 className={style["h1-title"]}>
-          {stageInfo.difficulty === "FOUR_STAR" &&
-          <span className={style["h1-four-star-badge"]}>
-            突袭
-          </span>}
-
+        <Typography
+          sx={{
+            fontFamily: "\"Dream Han Serif CN W27\"",
+            my: 2
+          }}
+          variant="h3"
+        >
           <span>
             {`${stageInfo.code} ${stageInfo.name}`}
           </span>
 
-          <span className={style["h1-title-badge"]}>
+          {stageInfo.difficulty === "FOUR_STAR" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "error.main"
+            }}
+          >
+            突袭
+          </TopBadge>}
+
+          {stageInfo.diffGroup === "EASY" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "primary.main"
+            }}
+          >
+            剧情体验
+          </TopBadge>}
+
+          {stageInfo.diffGroup === "TOUGH" &&
+          <TopBadge
+            sx={{
+              backgroundColor: "error.main"
+            }}
+          >
+            磨难险境
+          </TopBadge>}
+
+          <TopBadge
+            sx={{
+              backgroundColor: "warning.main",
+              ml: 1
+            }}
+          >
             {server}
-          </span>
-        </h1>
+          </TopBadge>
+        </Typography>
 
         <GamedataContext.Provider value={gamedataConst}>
           <StageInfoDescription
@@ -229,18 +264,10 @@ class Map extends React.PureComponent<MapProps> {
             text="作战配置"
           />
 
-          <Alert
-            severity="warning"
-            sx={{
-              marginY: "1em"
-            }}
-          >
-            <AlertTitle>
-              目前困难关卡数据尚不正确，请等待更新。或前往PRTS查看。
-            </AlertTitle>
-          </Alert>
-
           <StageOptions
+            diffGroup={diffGroup}
+            difficulty={difficulty}
+            runes={runes}
             stageOptions={options}
           />
 

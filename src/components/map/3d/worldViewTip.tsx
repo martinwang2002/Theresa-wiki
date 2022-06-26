@@ -10,7 +10,8 @@ const WorldViewTipDiv = styled("div")({
   display: "inline-flex",
   height: "calc(30% - 4px - 36.5px)",
   position: "relative",
-  top: "70%"
+  top: "70%",
+  width: "100%"
 })
 
 const WorldViewTipTitle = styled("div")({

@@ -51,7 +51,7 @@ export default class Changelog extends React.PureComponent<Record<string, never>
           更新日志
         </h1>
 
-        <div style={{ whiteSpace: "break-spaces", overflow: "hidden" }}>
+        <div style={{ overflow: "hidden", whiteSpace: "break-spaces" }}>
           {versions.map((version, index) => {
             const versionString = version.version.join(".")
             const dateString = new Date(version.date).toLocaleString(undefined, { timeZone })
@@ -63,12 +63,12 @@ export default class Changelog extends React.PureComponent<Record<string, never>
                 onChange={(_event: Readonly<React.SyntheticEvent>, isExpanded: boolean): void => {
                   this.setState({ expanded: isExpanded ? versionString : false })
                 }}
-                sx={{ backgroundColor: "#fafafa" }}
+                sx={{ backgroundColor: "background.paper" }}
               >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                 >
-                  <span style={{ width: "100%", display: "inline-flex", alignItems: "center" }}>
+                  <span style={{ alignItems: "center", display: "inline-flex", width: "100%" }}>
 
                     {/* Conditional (ternary) operator for bad eslint */}
 

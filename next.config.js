@@ -1,3 +1,6 @@
+const withPWA = require("next-pwa")
+const runtimeCache = require("./src/configurations/serviceWorkerRuntimeCache")
+
 let commitHash, gitBranch
 
 try {
@@ -31,7 +34,7 @@ try {
 
 const uriJs = require("uri-js")
 
-module.exports = {
+const nextConfig = {
   images: {
     deviceSizes: [640, 750, 828, 1080],
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
@@ -78,4 +81,13 @@ module.exports = {
     locales: ["zh"],
     defaultLocale: "zh",
   },
+  pwa: {
+    dest: "public",
+    disable: process.env.NODE_ENV === "development",
+    register: false,
+    skipWaiting: true,
+    runtimeCaching: runtimeCache
+  }
 }
+
+module.exports = withPWA(nextConfig)

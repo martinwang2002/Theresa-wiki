@@ -23,7 +23,7 @@ interface IRoguelikeTopicTable {
 export const roguelikeTopicTable = cacheable(async (): Promise<IRoguelikeTopicTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/excel/roguelike_topic_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/excel/roguelike_topic_table.json`
   })
 
   const roguelikeTopicTableRes = await fetch(url)

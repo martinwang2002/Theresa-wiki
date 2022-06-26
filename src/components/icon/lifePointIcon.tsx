@@ -30,9 +30,6 @@ export default class LifePointIcon extends React.PureComponent<IconProps> {
 
           <path d="M109,14H99V25a17.59,17.59,0,0,1-4,10,17.35,17.35,0,0,1-7,5q1,15,2,30h9L97,40a20.58,20.58,0,0,0,7-5,20.87,20.87,0,0,0,5-10Z" />
         </g>
-
-        {" "}
-
       </SvgIcon>
     )
   }

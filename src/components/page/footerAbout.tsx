@@ -8,6 +8,8 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
 import Grid from "@mui/material/Grid"
 import { styled } from "@mui/system"
 
+import MissionIcon from "@/components/icon/missionIcon"
+
 import CcByNcSaSvgLink from "./creativecommons/CcByNcSaSvgLink"
 import FooterLink from "./footerLink"
 
@@ -101,6 +103,12 @@ class Footer extends React.PureComponent {
             href="/about/credits"
             icon={<VerifiedOutlinedIcon sx={iconSx} />}
             text="内容来源"
+          />
+
+          <FooterLink
+            href="/about/svg-share"
+            icon={<MissionIcon sx={{ ...iconSx, color: "primary.main", verticalAlign: "middle" }} />}
+            text="SVG 图标共享"
           />
         </Grid>
 

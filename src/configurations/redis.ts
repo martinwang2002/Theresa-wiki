@@ -13,7 +13,8 @@ interface ICacheable {
 const redisConfig: RedisOptions = {
   autoResubscribe: false,
   keyPrefix: "FRONTEND_",
-  lazyConnect: true
+  lazyConnect: true,
+  maxRetriesPerRequest: 1
 }
 
 const redisClient = new Redis(serverRuntimeConfig.REDIS_URL, redisConfig)
@@ -24,7 +25,8 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   redisClient.on("error", (error: Readonly<Error>) => {
     if (error.message.includes("ECONNREFUSED")) {
       // empty
-    } else {
+    } else if (serverRuntimeConfig.REDIS_URL !== "") {
+      // log error if REDIS_URL is provided
       console.error(error)
     }
   })

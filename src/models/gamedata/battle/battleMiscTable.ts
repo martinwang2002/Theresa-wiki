@@ -17,7 +17,7 @@ interface IBattleMiscTable {
 const battleMiscTable = cacheable(async (): Promise<IBattleMiscTable> => {
   const url = serializeUri({
     ...serverRuntimeConfig.THERESA_S3,
-    path: "/api/v0/AK/CN/Android/assets/latest/unpacked_assetbundle/assets/torappu/dynamicassets/gamedata/battle/battle_misc_table.json"
+    path: `${serverRuntimeConfig.THERESA_S3.path ?? ""}/battle/battle_misc_table.json`
   })
 
   const battleMiscTableRes = await fetch(url)
