@@ -48,6 +48,7 @@ class Header extends React.PureComponent<Record<string, never>, HeaderState> {
           <GrowingDiv />
 
           <IconButton
+            aria-label="settings"
             onClick={this.handleSettingsDrawerOpen}
             sx={{ color: "text.primary" }}
           >
