@@ -14,6 +14,7 @@ import StyledLink from "@/components/common/styledLink"
 import HeadingAnchor from "@/components/common/ToC/headingAnchor"
 import WithTableOfContents from "@/components/common/ToC/withTableOfContents"
 import Map3DIndex from "@/components/map/3d/index"
+import BgmBank from "@/components/map/bgmBank/index"
 import MapPreview from "@/components/map/mapPreview"
 import MapScene from "@/components/map/scene/index"
 import StageInfo from "@/components/map/stageInfo/index"
@@ -23,6 +24,8 @@ import Page from "@/components/page/page"
 
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
+import { getBattleOnGameReadyBgmBankByBgmEventKey } from "@/models/gamedata/excel/audioData"
+import type { IBgmBank } from "@/models/gamedata/excel/audioData"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { stageIds, getCustomStageInfo, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
@@ -45,6 +48,7 @@ interface MapProps {
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
   zoneId: string
   zoneInfo: IZoneInfo
+  bgmBank: IBgmBank
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -116,8 +120,13 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const zoneInfo = await getCustomZoneInfo(zoneId)
 
+  const { bgmEvent: bgmEventKey } = stageJson
+
+  const bgmBank = await getBattleOnGameReadyBgmBankByBgmEventKey(bgmEventKey)
+
   return {
     props: {
+      bgmBank,
       gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN",
       stageId,
@@ -133,7 +142,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
+    const { bgmBank, server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
     const { difficulty, diffGroup } = stageInfo
     const { mapData, options, runes } = stageJson
 
@@ -269,6 +278,15 @@ class Map extends React.PureComponent<MapProps> {
             difficulty={difficulty}
             runes={runes}
             stageOptions={options}
+          />
+
+          <HeadingAnchor
+            id="bgmBank"
+            text="背景音乐"
+          />
+
+          <BgmBank
+            bgmBank={bgmBank}
           />
 
           <HeadingAnchor
