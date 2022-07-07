@@ -7,6 +7,7 @@ import SyncDisabledIcon from "@mui/icons-material/SyncDisabled"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import IconButton from "@mui/material/IconButton"
+import Slider from "@mui/material/Slider"
 import Typography from "@mui/material/Typography"
 
 interface AudioControllerProps {
@@ -19,6 +20,7 @@ interface AudioControllerState {
   paused: boolean
   loop: boolean
   duration: number
+  srcObjectUrl: string | undefined
 }
 
 const getFormattedTime = (time: number): string => {
@@ -44,7 +46,8 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
       currentTime: 0,
       duration: 0,
       loop: props.loop ?? false,
-      paused: true
+      paused: true,
+      srcObjectUrl: undefined
     }
 
     this.audioElement = React.createRef()
@@ -57,6 +60,15 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
       current.addEventListener("loadeddata", this.handleLoadedData)
       current.addEventListener("timeupdate", this.handleTimeUpdate)
     }
+    const { src } = this.props
+    fetch(src).then(async (response) => {
+      this.setState({ srcObjectUrl: URL.createObjectURL(new Blob([await response.arrayBuffer()], { type: "audio/wav" })) })
+      if (current) {
+        current.load()
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
   }
 
   public componentWillUnmount (): void {
@@ -64,6 +76,10 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
     if (current) {
       current.removeEventListener("loadeddata", this.handleLoadedData)
       current.removeEventListener("timeupdate", this.handleTimeUpdate)
+    }
+    const { srcObjectUrl } = this.state
+    if (srcObjectUrl !== undefined) {
+      URL.revokeObjectURL(srcObjectUrl)
     }
   }
 
@@ -122,9 +138,22 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
     }
   }
 
+  private readonly handleProgressChange = (_event: unknown, progress: Readonly<number[]> | number): void => {
+    const { current } = this.audioElement
+
+    if (current) {
+      if (isFinite(current.duration)) {
+        current.currentTime = (progress as number) * current.duration
+        this.setState({
+          currentTime: current.currentTime
+        })
+      }
+    }
+  }
+
   public render (): React.ReactNode {
-    const { src } = this.props
-    const { paused, loop, duration, currentTime } = this.state
+    const { paused, loop, duration, currentTime, srcObjectUrl } = this.state
+    const zero = 0
 
     return (
       <Card
@@ -133,7 +162,9 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
         <audio
           ref={this.audioElement}
         >
-          <source src={src} />
+          <source
+            src={srcObjectUrl}
+          />
         </audio>
 
         <Box
@@ -161,9 +192,23 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
 
           </IconButton>
 
+          <Slider
+            max={1}
+            min={0}
+            onChange={this.handleProgressChange}
+            step={0.01}
+            sx={{
+              minWidth: "6em",
+              mx: 2,
+              my: "auto"
+            }}
+            value={currentTime / duration || zero}
+          />
+
           <Typography
             sx={{
-              margin: "auto"
+              margin: "auto",
+              minWidth: "6em"
             }}
           >
             {`${getFormattedTime(currentTime)} / ${getFormattedTime(duration)}`}

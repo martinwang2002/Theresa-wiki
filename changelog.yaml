@@ -1,8 +1,14 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 6]
+    date: 2022-07-11T08:00:00+0800
+    contents:
+      added:
+        - audio player with slider
+
   - version: [0, 2, 5]
-    date: 2022-06-27T08:00:00+0800
+    date: 2022-07-04T08:00:00+0800
     contents:
       added:
         - audio player for map bgm event
