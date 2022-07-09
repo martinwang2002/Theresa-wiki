@@ -6,6 +6,8 @@ versions:
     contents:
       added:
         - audio player with slider
+      fixed:
+        - stageInfoDescription regex use reluctant match instead of greedy match
 
   - version: [0, 2, 5]
     date: 2022-07-04T08:00:00+0800
