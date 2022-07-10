@@ -1,16 +1,16 @@
 import React from "react"
 
+import Box from "@mui/material/Box"
+
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
 
-import style from "./stageInfo.module.scss"
+const zero = 0
 
 const getColorFromAkFormatString = (akFormatString: string): string => {
   // extract color from <color=#FFFFFF>{0}</color>
-  /* eslint-disable @typescript-eslint/no-magic-numbers */
   const regexMatch = [...akFormatString.matchAll(/<color=([^>]*)>\{0\}<\/color>/g)][0]
   return regexMatch[1]
-  /* eslint-enable @typescript-eslint/no-magic-numbers */
 }
 
 const stageInfoDescriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
@@ -18,13 +18,15 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
   // recursively replace <@{akFormatStringKey}>{text}</> to <span style={{color: color}}>{text}<span>
-  /* eslint-disable @typescript-eslint/no-magic-numbers */
   let colorFormattedDescription: (JSX.Element | string)[]
   colorFormattedDescription = []
   let stringSliceIndex
-  stringSliceIndex = 0
+  stringSliceIndex = zero
 
-  for (const regexMatch of replacedBackSlashDescription.matchAll(/<@([^>]*)>(.*)<\/>/g)) {
+  for (const regexMatch of replacedBackSlashDescription.matchAll(/<@([^>]*)>(.*?)<\/>/g)) {
+    // see https://stackoverflow.com/a/3075532
+    // use reluctant string mode instead of greedy
+
     const akFormatStringKey: string = regexMatch[1]
     const akFormatString = richTextStyles[akFormatStringKey]
     const color = getColorFromAkFormatString(akFormatString)
@@ -33,23 +35,31 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
       replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),
       <span
         key={regexMatch.index}
-        style={{ color: color }}
+        style={{ color }}
       >
         { regexMatch[2] }
       </span>
     ]
-    stringSliceIndex = (regexMatch.index ?? 0) + regexMatch[0].length
+    stringSliceIndex = (regexMatch.index ?? zero) + regexMatch[0].length
   }
   colorFormattedDescription = [
     ...colorFormattedDescription,
     replacedBackSlashDescription.slice(stringSliceIndex)
   ]
-  /* eslint-enable @typescript-eslint/no-magic-numbers */
 
   return (
-    <span className={style["description-content"]}>
+    <Box
+      sx={{
+        backgroundColor: "#2f2f2f",
+        borderRadius: "0.75em",
+        color: "#a9a9a9",
+        ml: 5,
+        px: 1.5,
+        py: 1
+      }}
+    >
       {colorFormattedDescription}
-    </span>
+    </Box>
   )
 }
 
@@ -58,11 +68,10 @@ export const stageInfoDescriptionToPlainTextParser = (description: string): stri
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
   // recursively replace <@{akFormatStringKey}>{text}</> to <span style={{color: color}}>{text}<span>
-  /* eslint-disable @typescript-eslint/no-magic-numbers */
   let plainTextDescriptionArray: string[]
   plainTextDescriptionArray = []
   let stringSliceIndex
-  stringSliceIndex = 0
+  stringSliceIndex = zero
 
   for (const regexMatch of replacedBackSlashDescription.matchAll(/<@([^>]*)>(.*)<\/>/g)) {
     plainTextDescriptionArray = [
@@ -70,13 +79,12 @@ export const stageInfoDescriptionToPlainTextParser = (description: string): stri
       replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),
       regexMatch[2]
     ]
-    stringSliceIndex = (regexMatch.index ?? 0) + regexMatch[0].length
+    stringSliceIndex = (regexMatch.index ?? zero) + regexMatch[0].length
   }
   plainTextDescriptionArray = [
     ...plainTextDescriptionArray,
     replacedBackSlashDescription.slice(stringSliceIndex)
   ]
-  /* eslint-enable @typescript-eslint/no-magic-numbers */
 
   return plainTextDescriptionArray.join("")
 }
@@ -90,16 +98,20 @@ class StageInfoDescription extends React.PureComponent<StageInfoDescriptionProps
     const { description } = this.props
 
     return (
-      <span className={style.description}>
-        <span className={style["description-placeholder"]} />
-
+      <Box
+        sx={{
+          display: "flex",
+          fontSize: "body2.fontSize",
+          whiteSpace: "pre-line"
+        }}
+      >
         <GamedataContext.Consumer>
           {(gamedataConst: Readonly<IGamedataConst>): JSX.Element => {
             const { richTextStyles } = gamedataConst
             return stageInfoDescriptionParser(description, richTextStyles)
           }}
         </GamedataContext.Consumer>
-      </span>
+      </Box>
     )
   }
 }
