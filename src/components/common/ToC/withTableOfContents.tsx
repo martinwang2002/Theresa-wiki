@@ -1,5 +1,6 @@
 import React from "react"
 
+import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
 
 import HeadingAnchor from "./headingAnchor"
@@ -40,27 +41,28 @@ export default class WithTableOfContents extends React.PureComponent<WithTableOf
       return undefined
     }).filter((headingAnchorProps): headingAnchorProps is HeadingAnchorProps => headingAnchorProps !== undefined)
 
+    const barWidth = 1
     return (
       <>
-        <div style={{ marginTop: "1rem", marginBottom: "1rem", display: "flex" }}>
-          <div style={{ width: "0.5rem", backgroundColor: "#00b3fd" }} />
+        <Box sx={{ display: "flex", my: 1 }}>
+          <Box sx={{ bgcolor: "primary.light", width: theme => theme.spacing(barWidth) }} />
 
-          <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
+          <Box sx={{ ml: 1, py: 0.25 }}>
 
             {headingAnchorsProps.map((headingAnchorProps) => {
               return (
                 <Link
                   href={"#" + headingAnchorProps.id}
                   key={headingAnchorProps.text}
-                  sx={{ marginLeft: "0.5em", textUnderlineOffset: 2, marginTop: "0.25em", marginBottom: "0.25em", cursor: "pointer", display: "block" }}
+                  sx={{ cursor: "pointer", display: "block", my: 0.35 }}
                   underline="hover"
                 >
                   {headingAnchorProps.text}
                 </Link>
               )
             })}
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {children}
       </>
