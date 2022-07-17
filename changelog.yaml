@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 7]
+    date: 2022-07-18T08:00:00+0800
+    contents:
+      fixed:
+        - story only stages in unlock condition
+
   - version: [0, 2, 6]
     date: 2022-07-11T08:00:00+0800
     contents:

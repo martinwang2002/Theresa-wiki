@@ -1,7 +1,9 @@
 import React from "react"
 
+import { green } from "@mui/material/colors"
 import Divider from "@mui/material/Divider"
 
+import InlineBadge from "@/components/common/badge/inlineBadge"
 import StyledLink from "@/components/common/styledLink"
 
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
@@ -57,19 +59,35 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                   })
                 }
 
-                <StyledLink
-                  href={{
-                    pathname: "/map/[zoneId]/[stageId]",
-                    query: {
-                      stageId: extraStageInfo.stageId,
-                      zoneId: extraStageInfo.zoneId
-                    }
-                  }}
-                  sx={{ cursor: "pointer", marginLeft: "0.5em" }}
-                  underline="hover"
-                >
-                  {`${extraStageInfo.code} ${extraStageInfo.name}`}
-                </StyledLink>
+                {!!extraStageInfo.isStoryOnly &&
+                <>
+                  <InlineBadge
+                    sx={{
+                      backgroundColor: green[500],
+                      verticalAlign: "baseline"
+                    }}
+                  >
+                    剧情
+                  </InlineBadge>
+
+                  { `${extraStageInfo.code} ${extraStageInfo.name}`}
+                </>}
+
+                {!extraStageInfo.isStoryOnly &&
+                  <StyledLink
+                    href={{
+                      pathname: "/map/[zoneId]/[stageId]",
+                      query: {
+                        stageId: extraStageInfo.stageId,
+                        zoneId: extraStageInfo.zoneId
+                      }
+                    }}
+                    sx={{ cursor: "pointer", ml: 1 }}
+                    underline="hover"
+                  >
+                    {`${extraStageInfo.code} ${extraStageInfo.name}`}
+                  </StyledLink>}
+
               </div>
             )
           })}
