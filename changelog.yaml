@@ -6,6 +6,7 @@ versions:
     contents:
       fixed:
         - story only stages in unlock condition
+        - audio player missing unmount of event handler
 
   - version: [0, 2, 6]
     date: 2022-07-11T08:00:00+0800
