@@ -87,7 +87,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
 
   // filter isStoryOnly stages
   const nonStoryOnlyStages = stages.filter((stageInfo) => {
-    return stageInfo.isStoryOnly !== true
+    return !stageInfo.isStoryOnly
   })
 
   const pickedStages = nonStoryOnlyStages.map((stageInfo) => {

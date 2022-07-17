@@ -42,24 +42,49 @@ interface IStageDropInfo {
 interface IStageInfo {
   stageType: string
   difficulty: string
+  performanceStageFlag: string
   diffGroup: string
   unlockCondition: IUnlockCondition[]
   stageId: string
+  levelId: string
   zoneId: string
   code: string
   name: string
   description: string
-  levelId: string
   hardStagedId: string | null
-  loadingPicId: string
-  apCost: number
-  apFailReturn: number
   dangerLevel: string
-  practiceTicketCost: number
+  dangerPoint: number
+  loadingPicId: string
   canPractice: boolean
   canBattleReplay: boolean
+  apCost: number
+  apFailReturn: number
+  etItemId: string | null
+  etCost: number
+  etFailReturn: number
+  apProtectTimes: number
+  diamondOnceDrop: number
+  practiceTicketCost: number
+  dailyStageDifficulty: number
+  expGain: number
+  goldGain: number
+  lossExpGain: number
+  lossGoldGain: number
+  passFavor: number
+  completeFavor: number
+  slProgress: number
+  displayMainItem: string | null
+  hilightMark: boolean
+  bossMark: boolean
+  isPredefined: boolean
+  isHardPredefined: boolean
+  isSkillSelectablePredefined: boolean
+  isStoryOnly: boolean
+  appearanceStyle: number
   stageDropInfo: IStageDropInfo
-  [key: string]: unknown
+  startButtonOverrideId: string | null
+  isStagePatch: boolean
+  mainStageId: string
 }
 
 interface ITileInfo {
@@ -126,7 +151,7 @@ export const getStagesByZoneId = async (zoneId: string): Promise<IStageInfo[]> =
 }
 
 interface ICustomStageInfo extends IStageInfo {
-  _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "name" | "stageId" | "zoneId">>
+  _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "isStoryOnly" | "name" | "stageId" | "zoneId">>
 }
 
 export const getCustomStageInfo = async (stageId: string, permanent = false): Promise<ICustomStageInfo> => {
@@ -152,6 +177,7 @@ export const getCustomStageInfo = async (stageId: string, permanent = false): Pr
     result._unlockConditionStageInfo[_stageId] = {
       code: extraStageInfo.code,
       difficulty: extraStageInfo.difficulty,
+      isStoryOnly: extraStageInfo.isStoryOnly,
       name: extraStageInfo.name,
       stageId: stageIdtoLodash(extraStageInfo.stageId),
       zoneId: extraStageInfo.zoneId

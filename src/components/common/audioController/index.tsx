@@ -74,6 +74,7 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   public componentWillUnmount (): void {
     const { current } = this.audioElement
     if (current) {
+      current.removeEventListener("ended", this.handleEnded)
       current.removeEventListener("loadeddata", this.handleLoadedData)
       current.removeEventListener("timeupdate", this.handleTimeUpdate)
     }
