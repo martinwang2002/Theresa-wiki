@@ -2,6 +2,7 @@ import React from "react"
 
 import { green } from "@mui/material/colors"
 import Divider from "@mui/material/Divider"
+import Typography from "@mui/material/Typography"
 
 import InlineBadge from "@/components/common/badge/inlineBadge"
 import StyledLink from "@/components/common/styledLink"
@@ -64,13 +65,20 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                   <InlineBadge
                     sx={{
                       backgroundColor: green[500],
-                      verticalAlign: "baseline"
+                      verticalAlign: "middle"
                     }}
                   >
                     剧情
                   </InlineBadge>
 
-                  { `${extraStageInfo.code} ${extraStageInfo.name}`}
+                  <Typography
+                    component="span"
+                    sx={{
+                      verticalAlign: "middle"
+                    }}
+                  >
+                    {`${extraStageInfo.code} ${extraStageInfo.name}`}
+                  </Typography>
                 </>}
 
                 {!extraStageInfo.isStoryOnly &&
