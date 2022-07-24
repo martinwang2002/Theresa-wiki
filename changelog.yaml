@@ -4,6 +4,8 @@ versions:
   - version: [0, 2, 8]
     date: 2022-07-25T08:00:00+0800
     contents:
+      added:
+        - use audio/ogg format
       fixed:
         - error message for audio controller
 
