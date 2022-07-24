@@ -37,10 +37,13 @@ function ErrorComponent ({ statusCode, statusMessage }: Readonly<ErrorComponentP
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-ErrorComponent.getInitialProps = ({ res, err }: Readonly<NextPageContext>): ErrorComponentProps => {
+ErrorComponent.getInitialProps = ({ asPath, err, res }: Readonly<NextPageContext>): ErrorComponentProps => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   const statusMessage = res ? res.statusMessage : ""
+
+  console.error("Error for path: ", asPath, " statusCode: ", statusCode, " statusMessage: ", statusMessage)
+
   return { statusCode, statusMessage }
 }
 

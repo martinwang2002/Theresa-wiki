@@ -25,13 +25,13 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
     const introSrc = intro !== null
       ? serializeUri({
         ...publicRuntimeConfig.THERESA_STATIC,
-        path: `/api/v0/AK/CN/Android/${intro.toLowerCase()}.wav`
+        path: `/api/v0/AK/CN/Android/${intro.toLowerCase()}.ogg`
       })
       : null
     const loopSrc = loop !== null
       ? serializeUri({
         ...publicRuntimeConfig.THERESA_STATIC,
-        path: `/api/v0/AK/CN/Android/${loop.toLowerCase()}.wav`
+        path: `/api/v0/AK/CN/Android/${loop.toLowerCase()}.ogg`
       })
       : null
 
