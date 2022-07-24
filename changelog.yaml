@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 8]
+    date: 2022-07-25T08:00:00+0800
+    contents:
+      fixed:
+        - error message for audio controller
+
   - version: [0, 2, 7]
     date: 2022-07-18T08:00:00+0800
     contents:

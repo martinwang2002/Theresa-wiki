@@ -17,6 +17,7 @@ interface AudioControllerProps {
 
 interface AudioControllerState {
   currentTime: number
+  error: boolean
   paused: boolean
   loop: boolean
   duration: number
@@ -45,6 +46,7 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
     this.state = {
       currentTime: 0,
       duration: 0,
+      error: false,
       loop: props.loop ?? false,
       paused: true,
       srcObjectUrl: undefined
@@ -55,14 +57,14 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
 
   public componentDidMount (): void {
     const { current } = this.audioElement
-    if (current) {
-      current.addEventListener("ended", this.handleEnded)
-      current.addEventListener("loadeddata", this.handleLoadedData)
-      current.addEventListener("timeupdate", this.handleTimeUpdate)
-    }
     const { src } = this.props
+
     fetch(src).then(async (response) => {
-      this.setState({ srcObjectUrl: URL.createObjectURL(new Blob([await response.arrayBuffer()], { type: "audio/wav" })) })
+      const type = response.headers.get("Content-Type") ?? "audio/wav"
+      this.setState({
+        error: false,
+        srcObjectUrl: URL.createObjectURL(new Blob([await response.arrayBuffer()], { type }))
+      })
       if (current) {
         current.load()
       }
@@ -72,12 +74,6 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   }
 
   public componentWillUnmount (): void {
-    const { current } = this.audioElement
-    if (current) {
-      current.removeEventListener("ended", this.handleEnded)
-      current.removeEventListener("loadeddata", this.handleLoadedData)
-      current.removeEventListener("timeupdate", this.handleTimeUpdate)
-    }
     const { srcObjectUrl } = this.state
     if (srcObjectUrl !== undefined) {
       URL.revokeObjectURL(srcObjectUrl)
@@ -89,6 +85,12 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   private readonly handleEnded = (): void => {
     this.setState({
       paused: true
+    })
+  }
+
+  private readonly handleError = (): void => {
+    this.setState({
+      error: true
     })
   }
 
@@ -153,7 +155,7 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   }
 
   public render (): React.ReactNode {
-    const { paused, loop, duration, currentTime, srcObjectUrl } = this.state
+    const { error, paused, loop, duration, currentTime, srcObjectUrl } = this.state
     const zero = 0
 
     return (
@@ -161,12 +163,34 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
         elevation={6}
       >
         <audio
+          onEnded={this.handleEnded}
+          onError={this.handleError}
+          onLoadedData={this.handleLoadedData}
+          onTimeUpdate={this.handleTimeUpdate}
           ref={this.audioElement}
         >
           <source
             src={srcObjectUrl}
           />
         </audio>
+
+        {
+          !!error &&
+            <Box
+              sx={{
+                display: "flex",
+                padding: 1
+              }}
+            >
+              <Typography
+                sx={{
+                  margin: "auto"
+                }}
+              >
+                您的浏览器可能不支持该音频的播放，比如 Safari on IOS
+              </Typography>
+            </Box>
+        }
 
         <Box
           sx={{
