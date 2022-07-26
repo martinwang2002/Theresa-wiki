@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 versions:
 
+  - version: [0, 2, 9]
+    date: 2022-08-01T08:00:00+0800
+    contents:
+      fixed:
+        - tileInfo undefined error
+
   - version: [0, 2, 8]
     date: 2022-07-25T08:00:00+0800
     contents:
