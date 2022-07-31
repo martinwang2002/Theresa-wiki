@@ -200,7 +200,6 @@ class Page extends React.PureComponent<PageProps, PageState> {
     if (typeof window !== "undefined" && "serviceWorker" in navigator && window.workbox !== undefined) {
       const wb = window.workbox
 
-      console.log("OK-----~~~~~~")
       // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
       // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
       // You may want to customize the UI prompt accordingly.
@@ -210,6 +209,10 @@ class Page extends React.PureComponent<PageProps, PageState> {
 
       // Send a message to the waiting service worker, instructing it to activate.
       wb.messageSkipWaiting()
+
+      this.setState({
+        showServiceWorkerSnackbar: false
+      })
     }
   }
 

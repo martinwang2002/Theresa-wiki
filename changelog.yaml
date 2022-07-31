@@ -1,4 +1,5 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
+# eslint-disable max-lines
 versions:
 
   - version: [0, 2, 9]
@@ -7,6 +8,7 @@ versions:
       fixed:
         - tileInfo undefined error
         - notFound for isStoryOnly stages
+        - service worker reload, snackbar not closed properly
 
   - version: [0, 2, 8]
     date: 2022-07-25T08:00:00+0800
