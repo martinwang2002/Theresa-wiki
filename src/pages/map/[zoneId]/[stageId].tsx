@@ -112,6 +112,13 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
     }
   }
 
+  // return notFound when stage isStoryOnly
+  if (stageInfo.isStoryOnly) {
+    return {
+      notFound: true
+    }
+  }
+
   const stageJson = await getStageJson(levelId)
 
   const tileInfo = await getTileInfo()
