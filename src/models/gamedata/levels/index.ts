@@ -87,7 +87,7 @@ interface IStageJson {
   mapData: IMapData
   waves: IWave[]
   runes: IRunes[] | null
-  bgmEvent: string
+  bgmEvent: string | null
   [key: string]: unknown
 }
 
