@@ -7,6 +7,7 @@ import SyncDisabledIcon from "@mui/icons-material/SyncDisabled"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import IconButton from "@mui/material/IconButton"
+import LinearProgress from "@mui/material/LinearProgress"
 import Slider from "@mui/material/Slider"
 import Typography from "@mui/material/Typography"
 
@@ -19,14 +20,22 @@ interface AudioControllerState {
   currentTime: number
   error: boolean
   paused: boolean
+  loading: boolean
   loop: boolean
   duration: number
   srcObjectUrl: string | undefined
 }
 
-const getFormattedTime = (time: number): string => {
+const getFormattedTime = (time: number, smallDuration = false): string => {
   const zero = 0
   const date = new Date(zero)
+
+  // handle super small duration
+  if (smallDuration) {
+    const threeDigits = 3
+    return time.toFixed(threeDigits)
+  }
+
   date.setSeconds(time) // specify value for SECONDS here
 
   const minutesIndex = 14
@@ -47,30 +56,13 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
       currentTime: 0,
       duration: 0,
       error: false,
+      loading: false,
       loop: props.loop ?? false,
       paused: true,
       srcObjectUrl: undefined
     }
 
     this.audioElement = React.createRef()
-  }
-
-  public componentDidMount (): void {
-    const { current } = this.audioElement
-    const { src } = this.props
-
-    fetch(src).then(async (response) => {
-      const type = response.headers.get("Content-Type") ?? "audio/wav"
-      this.setState({
-        error: false,
-        srcObjectUrl: URL.createObjectURL(new Blob([await response.arrayBuffer()], { type }))
-      })
-      if (current) {
-        current.load()
-      }
-    }).catch((error) => {
-      console.error(error)
-    })
   }
 
   public componentWillUnmount (): void {
@@ -81,6 +73,29 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   }
 
   private readonly audioElement: React.RefObject<HTMLAudioElement>
+
+  public loadMedia = async (): Promise<void> => {
+    const { current } = this.audioElement
+    const { src } = this.props
+
+    this.setState({
+      loading: true
+    })
+
+    await fetch(src).then(async (response) => {
+      const type = response.headers.get("Content-Type") ?? "audio/wav"
+      this.setState({
+        error: false,
+        loading: false,
+        srcObjectUrl: URL.createObjectURL(new Blob([await response.arrayBuffer()], { type }))
+      })
+      if (current) {
+        current.load()
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
 
   private readonly handleEnded = (): void => {
     this.setState({
@@ -114,7 +129,9 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
 
   private readonly handlePlayAndPause = (): void => {
     const { current } = this.audioElement
-    if (current) {
+    const { srcObjectUrl } = this.state
+
+    if (current && srcObjectUrl !== undefined) {
       if (current.paused) {
         current.play().catch((error) => {
           console.error(error)
@@ -128,6 +145,14 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
           paused: true
         })
       }
+    } else if (current) {
+      this.loadMedia().then(() => {
+        current.play().catch((error) => {
+          console.error(error)
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 
@@ -155,8 +180,10 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   }
 
   public render (): React.ReactNode {
-    const { error, paused, loop, duration, currentTime, srcObjectUrl } = this.state
+    const { error, paused, loading, loop, duration, currentTime, srcObjectUrl } = this.state
     const zero = 0
+    const smallDurationThreshold = 1
+    const useSmallDurationDisplay = !!(duration < smallDurationThreshold && duration !== zero)
 
     return (
       <Card
@@ -200,6 +227,7 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
         >
           <IconButton
             aria-label="play and pause"
+            disabled={error}
             onClick={this.handlePlayAndPause}
           >
             {paused
@@ -209,26 +237,43 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
 
           <IconButton
             aria-label="loop"
+            disabled={error}
             onClick={this.handleLoop}
           >
             {loop
               ? <SyncIcon />
               : <SyncDisabledIcon />}
-
           </IconButton>
 
-          <Slider
-            max={1}
-            min={0}
-            onChange={this.handleProgressChange}
-            step={0.01}
-            sx={{
-              minWidth: "6em",
-              mx: 2,
-              my: "auto"
-            }}
-            value={currentTime / duration || zero}
-          />
+          {
+            !!(srcObjectUrl === undefined || loading) &&
+            <LinearProgress
+              sx={{
+                minWidth: "6em",
+                mx: 2,
+                my: "auto"
+              }}
+              value={0}
+              variant={loading ? "indeterminate" : "determinate"}
+            />
+          }
+
+          {
+            srcObjectUrl !== undefined &&
+            <Slider
+              disabled={error}
+              max={1}
+              min={0}
+              onChange={this.handleProgressChange}
+              step={0.01}
+              sx={{
+                minWidth: "6em",
+                mx: 2,
+                my: "auto"
+              }}
+              value={currentTime / duration || zero}
+            />
+          }
 
           <Typography
             sx={{
@@ -236,7 +281,11 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
               minWidth: "6em"
             }}
           >
-            {`${getFormattedTime(currentTime)} / ${getFormattedTime(duration)}`}
+            {getFormattedTime(currentTime, useSmallDurationDisplay)}
+
+            {" / "}
+
+            {getFormattedTime(duration, useSmallDurationDisplay)}
           </Typography>
 
         </Box>
