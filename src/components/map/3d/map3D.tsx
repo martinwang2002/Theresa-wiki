@@ -175,7 +175,10 @@ const loadSceneData = async (
       })
     }
 
+    const alphaTestMagicNumber = 0.5
+
     const meshMaterial = {
+      alphaTest: alphaTestMagicNumber,
       color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
       emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
       emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,
@@ -183,7 +186,9 @@ const loadSceneData = async (
       map: await map ?? null,
       metalness: value.glossiness,
       metalnessMap: await metallicGlossMap ?? null,
-      normalMap: await bumpMap ?? null
+      normalMap: await bumpMap ?? null,
+      // threejs need to handle transparent image separately
+      transparent: true
     } as MeshStandardMaterialParameters
     materials[key] = meshMaterial
   })

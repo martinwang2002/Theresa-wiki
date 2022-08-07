@@ -2,6 +2,15 @@
 # eslint-disable max-lines
 versions:
 
+  - version: [0, 2, 10]
+    date: 2022-08-08T08:00:00+0800
+    contents:
+      added:
+        - (audio controller) lazy load audio
+      fixed:
+        - bgmBank might be null, fallback to default
+        - 3d scene alphaTest for all transparent images
+
   - version: [0, 2, 9]
     date: 2022-08-01T08:00:00+0800
     contents:

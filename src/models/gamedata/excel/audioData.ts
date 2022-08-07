@@ -28,11 +28,15 @@ export const audioData = cacheable(async (): Promise<IAudioData> => {
   return audioDataJson
 }, { cacheKey: "audioData", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
-export const getBattleOnGameReadyBgmBankByBgmEventKey = async (key: string): Promise<IBgmBank> => {
+export const getBattleOnGameReadyBgmBankByBgmEventKey = async (key: string | null): Promise<IBgmBank> => {
   const { bgmBanks, bankAlias } = await audioData()
 
   let searchKey: string
-  searchKey = "battle.ON_GAME_READY." + key
+  if (key != null) {
+    searchKey = "battle.ON_GAME_READY." + key
+  } else {
+    searchKey = "battle.ON_GAME_READY"
+  }
 
   if (searchKey in bankAlias) {
     searchKey = bankAlias[searchKey]
