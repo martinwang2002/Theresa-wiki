@@ -5,7 +5,7 @@ import LinearProgress from "@mui/material/LinearProgress"
 import Paper from "@mui/material/Paper"
 import dynamic from "next/dynamic"
 
-import MapPreviewImage from "@/components/map/mapPreviewImage"
+import MapPreviewImage from "@/components/map/mapPreview/mapPreviewImage"
 
 import type { Map3DProps } from "./map3D"
 import WorldViewTip from "./worldViewTip"
