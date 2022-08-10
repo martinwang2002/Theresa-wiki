@@ -147,9 +147,16 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
       }
     } else if (current) {
       this.loadMedia().then(() => {
-        current.play().catch((error) => {
-          console.error(error)
-        })
+        current
+          .play()
+          .then(() => {
+            this.setState({
+              paused: false
+            })
+          })
+          .catch((error) => {
+            console.error(error)
+          })
       }).catch((error) => {
         console.log(error)
       })
