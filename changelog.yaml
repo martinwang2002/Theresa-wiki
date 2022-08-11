@@ -8,6 +8,7 @@ versions:
       fixed:
         - mapPreview Dialog AppBar theme color
         - audioController play and pause icon not switched on load and play
+        - audioController error when src is undefined
 
   - version: [0, 2, 10]
     date: 2022-08-08T08:00:00+0800

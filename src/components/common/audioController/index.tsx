@@ -104,9 +104,9 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
   }
 
   private readonly handleError = (): void => {
-    this.setState({
-      error: true
-    })
+    this.setState((prevState) => ({
+      error: prevState.srcObjectUrl !== undefined
+    }))
   }
 
   private readonly handleLoadedData = (): void => {
