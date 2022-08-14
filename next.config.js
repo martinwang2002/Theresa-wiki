@@ -42,9 +42,7 @@ const nextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
-  experimental: {
-    outputStandalone: true,
-  },
+  output: "standalone",
   async rewrites() {
     return [
       {

@@ -16,7 +16,7 @@ import InlineBadge from "@/components/common/badge/inlineBadge"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
-import MapPreviewImage from "@/components/map/mapPreviewImage"
+import MapPreviewImage from "@/components/map/mapPreview/mapPreviewImage"
 import Page from "@/components/page/page"
 
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"

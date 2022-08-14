@@ -50,30 +50,31 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
 
     return (
       <>
-        <div style={{
-          aspectRatio: "16/9",
-          display: "block",
-          width: "auto",
-          overflow: "hidden",
-          position: "relative",
-          margin: "auto",
-          maxHeight: "50vh",
-          maxWidth: "90%",
-          borderRadius: "1rem"
-        }}
+        <div
+          style={{
+            aspectRatio: "16/9",
+            borderRadius: "1rem",
+            display: "block",
+            margin: "auto",
+            maxHeight: "50vh",
+            maxWidth: "90%",
+            overflow: "hidden",
+            position: "relative",
+            width: "auto"
+          }}
         >
           <Paper
             elevation={10}
             onClick={this.handleImageDialogOpen}
             sx={{
-              height: "100%",
-              position: "relative",
               "&:hover": {
-                cursor: "pointer",
                 "& .MuiFab-root": {
                   opacity: 1
-                }
-              }
+                },
+                cursor: "pointer"
+              },
+              height: "100%",
+              position: "relative"
             }}
           >
             <MapPreviewImage
@@ -85,11 +86,11 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
               color="primary"
               size="small"
               sx={{
-                top: 16,
-                right: 16,
+                opacity: 0,
                 position: "absolute",
-                transition: "opacity 0.5s linear",
-                opacity: 0
+                right: 16,
+                top: 16,
+                transition: "opacity 0.5s linear"
               }}
             >
               <ZoomOutMapIcon />
@@ -102,13 +103,11 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
           fullScreen
           onClose={this.handleImageDialogClose}
           open={imageDialogOpen}
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "#9e9e9e"
-            }
-          }}
         >
-          <AppBar sx={{ position: "relative", backgroundColor: "#4da9f5 !important" }}>
+          <AppBar
+            color="primary"
+            sx={{ position: "relative" }}
+          >
             <Toolbar>
               <IconButton
                 aria-label="close"
@@ -121,7 +120,7 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
 
               <Typography
                 component="div"
-                sx={{ ml: 2, flex: 1 }}
+                sx={{ flex: 1, ml: 2 }}
                 variant="h6"
               >
                 {`Stage Preview Picture ${stageId}`}
@@ -132,11 +131,11 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
           <div style={{
             aspectRatio: "16/9",
             display: "block",
-            width: "100%",
+            margin: "auto",
+            maxWidth: "100%",
             overflow: "hidden",
             position: "relative",
-            margin: "auto",
-            maxWidth: "100%"
+            width: "100%"
           }}
           >
             <MapPreviewImage
