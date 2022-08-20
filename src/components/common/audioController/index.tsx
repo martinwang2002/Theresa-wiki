@@ -12,7 +12,7 @@ import Slider from "@mui/material/Slider"
 import Typography from "@mui/material/Typography"
 
 interface AudioControllerProps {
-  src: string
+  src: readonly string[]
   loop?: boolean
 }
 
@@ -82,7 +82,17 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
       loading: true
     })
 
-    await fetch(src).then(async (response) => {
+    const playableAudioSources: string[] = []
+    for (const source of src) {
+      const extension = source.split(".").pop() ?? "" // get the extension of the file
+      const result = current?.canPlayType(`audio/${extension}`)
+      if (result === "probably" || result === "maybe") {
+        playableAudioSources.push(source)
+        break
+      }
+    }
+
+    await fetch(playableAudioSources[0] ?? src[0]).then(async (response) => {
       const type = response.headers.get("Content-Type") ?? "audio/wav"
       this.setState({
         error: false,
