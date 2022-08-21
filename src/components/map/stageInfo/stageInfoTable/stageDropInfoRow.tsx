@@ -4,18 +4,19 @@ import { isEmpty } from "lodash"
 
 import type { IStageInfo, IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
 
+import { StageInfoTableRowCell } from "./common"
 import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo
 }
 
-const dropType = {
-  firstPass: 1,
-  normal: 2,
-  special: 3,
-  extra: 4,
-  diamond: 8
+enum DropType {
+  firstPass = 1,
+  normal = 2,
+  special = 3,
+  extra = 4,
+  diamond = 8
 }
 
 // const numberReg = /^[0-9]+$/
@@ -31,27 +32,27 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
     const { displayDetailRewards } = stageInfo.stageDropInfo
 
     const diamondRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === dropType.diamond
+      return displayDetailReward.dropType === DropType.diamond
     })
 
     const firstPassRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === dropType.firstPass
+      return displayDetailReward.dropType === DropType.firstPass
     })
 
     const normalRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === dropType.normal
+      return displayDetailReward.dropType === DropType.normal
     })
 
     const specialRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === dropType.special
+      return displayDetailReward.dropType === DropType.special
     })
 
     const extraRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === dropType.extra
+      return displayDetailReward.dropType === DropType.extra
     })
 
     return (
-      <span style={{ width: "100%" }} >
+      <StageInfoTableRowCell sx={{ width: "100%" }}>
         {!isEmpty([...diamondRewards, ...firstPassRewards]) &&
           <StageDropInfoRowRewardsRow
             displayDetailRewards={[...diamondRewards, ...firstPassRewards]}
@@ -76,7 +77,7 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
             displayDetailRewards={extraRewards}
             info="额外物资"
           />}
-      </span>
+      </StageInfoTableRowCell>
     )
   }
 }

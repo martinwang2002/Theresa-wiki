@@ -6,6 +6,8 @@ import Divider from "@mui/material/Divider"
 
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
+import { StageInfoTableRowCell } from "./common"
+
 interface StageInfoTableProps {
   stageInfo: IStageInfo
 }
@@ -54,11 +56,11 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
 
     return (
       <>
-        <span style={{ width: "50%", textAlign: "center" }} >
+        <StageInfoTableRowCell sx={{ width: "50%" }}>
           {stageInfo.canPractice
             ? canElement("演习")
             : notCanElement("演习")}
-        </span>
+        </StageInfoTableRowCell>
 
         <Divider
           flexItem
@@ -66,11 +68,11 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
           variant="middle"
         />
 
-        <span style={{ width: "50%", textAlign: "center" }} >
+        <StageInfoTableRowCell sx={{ width: "50%" }}>
           {stageInfo.canBattleReplay
             ? canElement("代理指挥")
             : notCanElement("代理指挥")}
-        </span>
+        </StageInfoTableRowCell>
       </>
     )
   }

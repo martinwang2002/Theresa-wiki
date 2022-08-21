@@ -6,9 +6,9 @@ import Paper from "@mui/material/Paper"
 import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 
 import CanPracticeAndCanBattleReplayRow from "./canPracticeAndCanBattleReplayRow"
+import { StageInfoTableRow, StageInfoTableRowCell } from "./common"
 import SanityRow from "./sanityRow"
 import StageDropInfoRow from "./stageDropInfoRow"
-import style from "./stageInfoTable.module.scss"
 import UnlockConditionRow from "./unlockConditionRow"
 
 interface StageInfoTableProps {
@@ -20,11 +20,11 @@ class StageInfoTable extends React.PureComponent<StageInfoTableProps> {
     const { stageInfo } = this.props
 
     return (
-      <Paper sx={{ width: "max-content", margin: "auto", maxWidth: "100%" }}>
-        <div className={style.stageInfoRow}>
-          <span style={{ width: "25%", textAlign: "center", minWidth: "6em" }} >
+      <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
+        <StageInfoTableRow>
+          <StageInfoTableRowCell sx={{ width: "25%" }}>
             推荐平均等级
-          </span>
+          </StageInfoTableRowCell>
 
           <Divider
             flexItem
@@ -32,35 +32,35 @@ class StageInfoTable extends React.PureComponent<StageInfoTableProps> {
             variant="middle"
           />
 
-          <span style={{ width: "75%" }} >
+          <StageInfoTableRowCell sx={{ width: "75%" }}>
             {stageInfo.dangerLevel}
-          </span>
+          </StageInfoTableRowCell>
 
-        </div>
+        </StageInfoTableRow>
 
         <Divider />
 
-        <div className={style.stageInfoRow}>
+        <StageInfoTableRow>
           <UnlockConditionRow stageInfo={stageInfo} />
-        </div>
+        </StageInfoTableRow>
 
         <Divider />
 
-        <div className={style.stageInfoRow}>
+        <StageInfoTableRow>
           <SanityRow stageInfo={stageInfo} />
-        </div>
+        </StageInfoTableRow>
 
         <Divider />
 
-        <div className={style.stageInfoRow}>
+        <StageInfoTableRow>
           <CanPracticeAndCanBattleReplayRow stageInfo={stageInfo} />
-        </div>
+        </StageInfoTableRow>
 
         <Divider />
 
-        <div className={style.stageInfoRow}>
+        <StageInfoTableRow>
           <StageDropInfoRow stageInfo={stageInfo} />
-        </div>
+        </StageInfoTableRow>
       </Paper>
     )
   }
