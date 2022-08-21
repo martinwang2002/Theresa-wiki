@@ -1,10 +1,12 @@
 import React from "react"
 
+import Box from "@mui/material/Box"
+import { grey } from "@mui/material/colors"
+import { styled } from "@mui/system"
+
 import Item from "@/components/common/Item"
 
 import type { IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
-
-import style from "./stageInfoTable.module.scss"
 
 interface StageInfoTableProps {
   displayDetailRewards: IDisplayDetailReward[]
@@ -25,6 +27,25 @@ const occPercentSpecial = {
   4: "罕见"
 }
 
+const DropInfoRewardsRowInfo = styled("span")({
+  backgroundColor: grey[800],
+  borderRadius: "0.5em",
+  color: "white",
+  lineHeight: 1,
+  marginBottom: "auto",
+  marginLeft: "0.5em",
+  marginRight: "1em",
+  marginTop: "1em",
+  minWidth: "4em",
+  padding: "0.35em"
+})
+
+const DropInfoRewardsRowInfoItem = styled("span")({
+  display: "flex",
+  flexWrap: "wrap",
+  maxWidth: "23rem" // five times per row at maximum
+})
+
 export default class StageDropInfoRowRewardsRow extends React.PureComponent<StageInfoTableProps> {
   private static readonly defaultProps = {
     isSpecial: false
@@ -34,12 +55,17 @@ export default class StageDropInfoRowRewardsRow extends React.PureComponent<Stag
     const { displayDetailRewards, info, isSpecial } = this.props
 
     return (
-      <div className={style["stage-dropInfo-row-rewards-row"]}>
-        <span className={style["stage-dropInfo-row-rewards-row-info"]}>
+      <Box
+        sx={{
+          display: "flex",
+          width: "fit-content"
+        }}
+      >
+        <DropInfoRewardsRowInfo>
           {info}
-        </span>
+        </DropInfoRewardsRowInfo>
 
-        <div className={style["stage-dropInfo-row-rewards-row-item"]}>
+        <DropInfoRewardsRowInfoItem>
           {
             displayDetailRewards.map((displayDetailReward: Readonly<IDisplayDetailReward>) => {
               let count
@@ -54,21 +80,23 @@ export default class StageDropInfoRowRewardsRow extends React.PureComponent<Stag
                   itemId={displayDetailReward.id}
                   key={displayDetailReward.id}
                   sx={{
-                    whiteSpace: "pre",
                     "& .MuiBadge-badge": {
-                      right: "50%",
+                      borderRadius: "8px",
                       bottom: "0%",
                       fontSize: "0.5em",
-                      borderRadius: "8px",
-                      height: "16px"
-                    }
+                      height: "16px",
+                      right: "50%"
+                    },
+                    mb: 2,
+                    mx: 0.5,
+                    whiteSpace: "pre"
                   }}
                 />
               )
             })
           }
-        </div>
-      </div>
+        </DropInfoRewardsRowInfoItem>
+      </Box>
     )
   }
 }

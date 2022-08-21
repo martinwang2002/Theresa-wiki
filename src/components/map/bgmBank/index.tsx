@@ -22,19 +22,6 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
     const { bgmBank } = this.props
     const { name, intro, loop } = bgmBank
 
-    const introSrc = intro !== null
-      ? serializeUri({
-        ...publicRuntimeConfig.THERESA_STATIC,
-        path: `/api/v0/AK/CN/Android/${intro.toLowerCase()}.ogg`
-      })
-      : null
-    const loopSrc = loop !== null
-      ? serializeUri({
-        ...publicRuntimeConfig.THERESA_STATIC,
-        path: `/api/v0/AK/CN/Android/${loop.toLowerCase()}.ogg`
-      })
-      : null
-
     return (
       <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
 
@@ -50,7 +37,7 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
 
         <Box>
           {
-            introSrc != null &&
+            intro != null &&
               <>
                 <Box sx={{
                   padding: 2
@@ -65,7 +52,12 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
                     入场
                   </InlineBadge>
 
-                  <AudioController src={introSrc} />
+                  <AudioController
+                    src={["ogg", "mp3"].map((extension) => serializeUri({
+                      ...publicRuntimeConfig.THERESA_STATIC,
+                      path: `/api/v0/AK/CN/Android/${intro.toLowerCase()}.${extension}`
+                    }))}
+                  />
                 </Box>
 
                 <Divider />
@@ -73,7 +65,7 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
           }
 
           {
-            loopSrc != null &&
+            loop != null &&
             <Box sx={{
               padding: 2
             }}
@@ -89,7 +81,10 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
 
               <AudioController
                 loop
-                src={loopSrc}
+                src={["ogg", "mp3"].map((extension) => serializeUri({
+                  ...publicRuntimeConfig.THERESA_STATIC,
+                  path: `/api/v0/AK/CN/Android/${loop.toLowerCase()}.${extension}`
+                }))}
               />
             </Box>
           }

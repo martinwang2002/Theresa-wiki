@@ -1,15 +1,17 @@
 import React from "react"
 
+import { Box } from "@mui/material"
 import { green } from "@mui/material/colors"
 import Divider from "@mui/material/Divider"
 import Typography from "@mui/material/Typography"
 
 import InlineBadge from "@/components/common/badge/inlineBadge"
 import StyledLink from "@/components/common/styledLink"
+import MissionIcon from "@/components/icon/missionIcon"
 
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
 
-import style from "./stageInfoTable.module.scss"
+import { StageInfoTableRowCell } from "./common"
 
 interface StageInfoTableProps {
   stageInfo: ICustomStageInfo
@@ -21,9 +23,9 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
 
     return (
       <>
-        <span style={{ margin: "auto", minWidth: "6em", textAlign: "center", width: "25%" }} >
+        <StageInfoTableRowCell sx={{ width: "25%" }} >
           解锁条件
-        </span>
+        </StageInfoTableRowCell>
 
         <Divider
           flexItem
@@ -31,29 +33,36 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
           variant="middle"
         />
 
-        <span style={{ width: "75%" }} >
+        <StageInfoTableRowCell sx={{ width: "75%" }} >
           {stageInfo.unlockCondition.map((unlockCondition: Readonly<IUnlockCondition>) => {
             const extraStageInfo = stageInfo._unlockConditionStageInfo[unlockCondition.stageId]
             const noStars = 3
             return (
-              <div
-                className={style["unlock-condition-row"]}
+              <Box
                 key={unlockCondition.stageId}
               >
                 {
                   [...Array(noStars).keys()].map((value, index) => {
                     if (index < unlockCondition.completeState) {
                       return (
-                        <span
-                          className={style["mission-star"]}
+                        <MissionIcon
                           key={value}
+                          sx={{
+                            color: "primary.main",
+                            fontSize: "2rem",
+                            verticalAlign: "middle"
+                          }}
                         />
                       )
                     } else {
                       return (
-                        <span
-                          className={style["mission-star-grey"]}
+                        <MissionIcon
                           key={value}
+                          sx={{
+                            color: "grey",
+                            fontSize: "2rem",
+                            verticalAlign: "middle"
+                          }}
                         />
                       )
                     }
@@ -90,16 +99,19 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
                         zoneId: extraStageInfo.zoneId
                       }
                     }}
-                    sx={{ cursor: "pointer", ml: 1 }}
+                    sx={{
+                      cursor: "pointer",
+                      ml: 1,
+                      verticalAlign: "middle"
+                    }}
                     underline="hover"
                   >
                     {`${extraStageInfo.code} ${extraStageInfo.name}`}
                   </StyledLink>}
-
-              </div>
+              </Box>
             )
           })}
-        </span>
+        </StageInfoTableRowCell>
       </>
     )
   }

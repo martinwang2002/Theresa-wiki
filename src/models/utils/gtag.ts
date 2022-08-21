@@ -32,6 +32,6 @@ export const event = ({ action, category, label, value }: Readonly<IGtagEvent>):
   window.gtag("event", action, {
     event_category: category,
     event_label: label,
-    value: value
+    value
   })
 }
