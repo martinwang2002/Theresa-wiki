@@ -29,6 +29,7 @@ interface PageState {
   indeterminate: boolean
   progress: number
   showServiceWorkerSnackbar: boolean
+  showProgressBar: boolean
 }
 
 const progress0 = 0
@@ -111,6 +112,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
     this.state = {
       indeterminate: false,
       progress: 0,
+      showProgressBar: false,
       showServiceWorkerSnackbar: false
     }
     // prevent this.state undefined error
@@ -118,6 +120,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
   }
 
   public componentDidMount (): void {
+    // this should be called on client side
+    this.setState({ showProgressBar: true })
     // register router event listeners
     const { router } = this.props
     router.events.on("routeChangeStart", this.handleStart)
@@ -218,7 +222,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
 
   public render (): React.ReactNode {
     const { children } = this.props
-    const { indeterminate, progress, showServiceWorkerSnackbar } = this.state
+    const { indeterminate, progress, showServiceWorkerSnackbar, showProgressBar } = this.state
     return (
       <PageDiv>
         <Head>
@@ -277,21 +281,19 @@ class Page extends React.PureComponent<PageProps, PageState> {
           />
         </Head>
 
-        <PlaceboDiv
-          suppressHydrationWarning
-        >
-          {typeof window !== "undefined" &&
-            <LinearProgress
-              aria-label="Placebo Progress Bar"
-              color="secondary"
-              onTransitionEnd={this.handleTransitionEnd}
-              sx={{
-                opacity: progress > progress0 ? opacity1 : opacity0,
-                zIndex: 1150
-              }}
-              value={progress}
-              variant="determinate"
-            />}
+        <PlaceboDiv >
+          {!!showProgressBar &&
+          <LinearProgress
+            aria-label="Placebo Progress Bar"
+            color="secondary"
+            onTransitionEnd={this.handleTransitionEnd}
+            sx={{
+              opacity: progress > progress0 ? opacity1 : opacity0,
+              zIndex: 1150
+            }}
+            value={progress}
+            variant="determinate"
+          />}
         </PlaceboDiv>
 
         <Header />

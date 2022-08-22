@@ -116,10 +116,7 @@ class Zone extends React.PureComponent<ZoneProps> {
         <Head>
 
           <title>
-            {`${displayZoneName} ${server}`}
-
-            {" "}
-            | Theresa.wiki
+            {`${displayZoneName} ${server} | Theresa.wiki`}
           </title>
 
           <meta

@@ -2,6 +2,12 @@
 # eslint-disable max-lines
 versions:
 
+  - version: [0, 2, 13]
+    date: 2022-08-29T08:00:00+0800
+    contents:
+      added:
+        - use react 18
+
   - version: [0, 2, 12]
     date: 2022-08-22T08:00:00+0800
     contents:
