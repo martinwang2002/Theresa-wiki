@@ -1,4 +1,5 @@
-const withPWA = require("next-pwa")
+const nextPwa = require("next-pwa")
+const uriJs = require("uri-js")
 const runtimeCache = require("./src/configurations/serviceWorkerRuntimeCache")
 
 let commitHash, gitBranch
@@ -32,7 +33,13 @@ try {
   versionString = "unknown"
 }
 
-const uriJs = require("uri-js")
+const withPWA = nextPwa({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: false,
+  skipWaiting: true,
+  runtimeCaching: runtimeCache
+})
 
 const nextConfig = {
   images: {
@@ -78,13 +85,6 @@ const nextConfig = {
   i18n: {
     locales: ["zh"],
     defaultLocale: "zh",
-  },
-  pwa: {
-    dest: "public",
-    disable: process.env.NODE_ENV === "development",
-    register: false,
-    skipWaiting: true,
-    runtimeCaching: runtimeCache
   }
 }
 
