@@ -5,7 +5,7 @@ import React from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 
-export default function home (): React.ReactNode {
+export default function Home (): React.FunctionComponentElement<Record<string, never>> {
   const router = useRouter()
   const { server } = router.query
 

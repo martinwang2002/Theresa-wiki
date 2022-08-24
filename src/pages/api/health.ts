@@ -6,7 +6,7 @@ import { redisClient } from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     const getRedisHealth = redisClient.get("_get_health")
     const timeout = 1
@@ -29,3 +29,5 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     })
   }
 }
+
+export default health

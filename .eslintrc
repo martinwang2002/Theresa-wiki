@@ -4,6 +4,9 @@
         "es2021": true,
         "node": true
     },
+    "extends": [
+        "next"
+    ],
     "globals": {
         "JSX": "readonly"
     },
@@ -13,6 +16,7 @@
                 "plugin:@typescript-eslint/all",
                 "plugin:react/all",
                 "plugin:@next/next/recommended",
+                "next/core-web-vitals",
                 "standard",
                 "plugin:import/typescript"
             ],
