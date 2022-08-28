@@ -160,10 +160,7 @@ class Map extends React.PureComponent<MapProps> {
         <Head>
 
           <title>
-            {`${stageInfo.code} ${stageInfo.name} ${server}`}
-
-            {" "}
-            | Theresa.wiki
+            {`${stageInfo.code} ${stageInfo.name} ${server} | Theresa.wiki`}
           </title>
 
           <meta

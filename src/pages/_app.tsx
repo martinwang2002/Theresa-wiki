@@ -27,7 +27,7 @@ interface MyAppProps extends AppProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-function myApp (props: MyAppProps): React.ReactChild {
+function MyApp (props: MyAppProps): React.FunctionComponentElement<MyAppProps> {
   const router = useRouter()
   useEffect(() => {
     const handleRouteChange = (url: string): void => {
@@ -128,4 +128,8 @@ function myApp (props: MyAppProps): React.ReactChild {
   )
 }
 
-export default myApp
+MyApp.defaultProps = {
+  emotionCache: clientSideEmotionCache
+}
+
+export default MyApp
