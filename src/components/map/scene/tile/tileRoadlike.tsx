@@ -18,6 +18,12 @@ export const TileRoad = styled(TileRoadlike)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? orange[100] : orange[300]
 }))
 
+export const TileFence = styled(TileRoad)({
+  borderColor: grey[500],
+  borderRadius: "5%",
+  borderStyle: "solid"
+})
+
 export const TileWall = styled(TileRoadlike)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? orange[200] : orange[600]
 }))

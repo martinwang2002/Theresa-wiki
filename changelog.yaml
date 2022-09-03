@@ -5,6 +5,8 @@ versions:
   - version: [0, 2, 14]
     date: 2022-09-05T08:00:00+0800
     contents:
+      added:
+        - tileHole and tileFence
       changed:
         - improve map tile display
       fixed:
