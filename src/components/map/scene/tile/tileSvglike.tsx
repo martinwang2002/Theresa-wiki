@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-multi-comp */
 import React from "react"
 
@@ -15,7 +16,10 @@ const tileSxProps = {
 } as SxProps<Theme>
 
 const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
-  <TileBase ref={ref}>
+  <TileBase
+    ref={ref}
+    {...props}
+  >
     <TileFlystartIcon
       sx={{ ...tileSxProps, color: "#FF3333" } as SxProps<Theme>}
     />
@@ -27,6 +31,7 @@ TileFlystart.displayName = "TileFlystart"
 const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
+    {...props}
   >
     <TileStartEndIcon
       sx={{ ...tileSxProps, color: "#FF3333" } as SxProps<Theme>}
@@ -37,7 +42,10 @@ const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
 TileStart.displayName = "TileStart"
 
 const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
-  <TileBase ref={ref}>
+  <TileBase
+    ref={ref}
+    {...props}
+  >
     <TileStartEndIcon
       sx={{ ...tileSxProps, color: "#34A1FF" } as SxProps<Theme>}
     />
