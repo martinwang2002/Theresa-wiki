@@ -11,6 +11,7 @@ versions:
         - improve map tile display
       fixed:
         - tile svg like tooltip ref error
+        - (map 3d) random generatation of world view tip on render
 
   - version: [0, 2, 13]
     date: 2022-08-29T08:00:00+0800

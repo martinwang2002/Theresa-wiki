@@ -25,14 +25,15 @@ const WorldViewTipDescription = styled("div")({
   color: "#fff",
   fontSize: "x-small",
   margin: "auto 1em",
+  overflow: "hidden",
   textAlign: "center",
   width: "80%"
 })
 
-const worldViewTipSample = sample(tipTable.worldViewTips)
-
 class WorldViewTip extends React.PureComponent {
   public render (): React.ReactNode {
+    const worldViewTipSample = sample(tipTable.worldViewTips)
+
     return (
       <WorldViewTipDiv>
         <WorldViewTipTitle>
