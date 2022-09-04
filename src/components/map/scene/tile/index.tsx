@@ -1,23 +1,47 @@
 import React from "react"
 
+import { grey } from "@mui/material/colors"
 import Tooltip from "@mui/material/Tooltip"
+import Typography from "@mui/material/Typography"
 
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IMapDataTiles } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
-import style from "./tile.module.scss"
+import { TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
+import { TileFloor, TileFence, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileRoad, TileWall } from "./tileRoadlike"
+import { TileFlystart, TileStart, TileEnd } from "./tileSvglike"
+import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
   tile: IMapDataTiles
 }
 
+const tileElements = {
+  tile_empty: <TileEmpty />,
+  tile_end: <TileEnd />,
+  tile_fence: <TileFence />,
+  tile_floor: <TileFloor />,
+  tile_flystart: <TileFlystart />,
+  tile_forbidden: <TileForbidden />,
+  tile_hole: <TileHole />,
+  tile_icestr: <TileIcestr />,
+  tile_icetur_lb: <TileIceturLb />,
+  tile_icetur_lt: <TileIceturLt />,
+  tile_icetur_rb: <TileIceturRb />,
+  tile_icetur_rt: <TileIceturRt />,
+  tile_road: <TileRoad />,
+  tile_start: <TileStart />,
+  tile_wall: <TileWall />
+} as Record<string, JSX.Element | undefined>
+
 class Tile extends React.PureComponent<ITileProps> {
   public render (): React.ReactNode {
     const { tile } = this.props
 
-    return (
+    const tileElement = tileElements[tile.tileKey] ?? <TileUndefined />
 
+    return (
       <TileInfoContext.Consumer>
         {(tileInfo: Readonly<Record<string, Readonly<ITileInfo> | undefined>>): JSX.Element => {
           // for certain tiles, hypergryph do not provide tileInfo.
@@ -26,40 +50,46 @@ class Tile extends React.PureComponent<ITileProps> {
             <div>
               {tileInfo[tile.tileKey] !== undefined &&
               <>
-                <h3 style={{ margin: 0 }}>
+                <Typography
+                  variant="body1"
+                >
                   {tileInfo[tile.tileKey]?.name}
-                </h3>
+                </Typography>
 
-                <h5 style={{ margin: 0, marginLeft: "1em" }}>
+                <Typography
+                  sx={{
+                    marginLeft: "1em"
+                  }}
+                  variant="caption"
+                >
                   {tileInfo[tile.tileKey]?.description}
-                </h5>
+                </Typography>
               </>}
 
-              {!style[tile.tileKey] &&
-                <h5 style={{ margin: 0, marginLeft: "1em", color: "grey" }}>
-                  {tile.tileKey}
-                </h5>}
-
+              {tileElement.type === TileUndefined &&
+              <Typography
+                sx={{
+                  color: grey[400],
+                  fontSize: "0.8em",
+                  marginLeft: "1em"
+                }}
+              >
+                {tile.tileKey}
+              </Typography>}
             </div>
           )
-          return (
 
+          return (
             <Tooltip
               arrow
               placement="top"
               title={tooltipContent}
             >
-
-              <span className={style[tile.tileKey] ? style[tile.tileKey] : style.tile___undefined__} >
-                <span />
-              </span>
-
+              {tileElement}
             </Tooltip>
-
           )
         }}
       </TileInfoContext.Consumer>
-
     )
   }
 }

@@ -1,4 +1,3 @@
-
 import type { SxProps, Theme } from "@mui/system"
 
 interface IconProps {

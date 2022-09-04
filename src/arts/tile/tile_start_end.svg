@@ -1,18 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-    <defs>
-        <style>
-        .a {
-            fill: #34A1FF;
-            <!-- fill: #FF3333; -->
-        }
-        </style>
-    </defs>
-    <rect class="a" x="20.5" y="5" width="3" height="30" transform="translate(-7.7 21.41) rotate(-45)"/>
-    <path class="a" d="M128,128H0V0H128ZM2.93,125.07H125.07V2.93H2.93Z"/>
-    <rect class="a" x="7" y="104.5" width="30" height="3" transform="translate(-68.51 46.6) rotate(-45)"/>
-    <rect class="a" x="91" y="20.5" width="30" height="3" transform="translate(15.49 81.4) rotate(-45)"/>
-    <rect class="a" x="104.5" y="91" width="3" height="30" transform="translate(-43.91 106) rotate(-45)"/>
-    <path class="a" d="M94.31,89.5H33.69L64,37Zm-55.42-3H89.12L64,43Z"/>
-    <rect class="a" x="61.5" y="51" width="5" height="26"/>
-    <rect class="a" x="61.5" y="78.5" width="5" height="5"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      .a {
+        fill: #ed1c24;
+      }
+    </style>
+  </defs>
+  <path class="a" d="M31.55,31.67,10.33,10.45l2.12-2.12L33.67,29.55ZM128,0H0V128H128ZM2.93,2.93H125.07V125.07H2.93Zm28.62,91.4L10.33,115.55l2.12,2.12L33.67,96.45Zm84-84L94.33,31.55l2.12,2.12,21.22-21.22Zm2.12,105.22L96.45,94.33l-2.12,2.12,21.22,21.22ZM64,37,33.69,89.5H94.31Zm0,6L89.12,86.5H38.89Zm2.5,8h-5V77h5Zm0,27.5h-5v5h5Z"/>
 </svg>
