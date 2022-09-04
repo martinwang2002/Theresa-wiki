@@ -2,6 +2,12 @@
 # eslint-disable max-lines
 versions:
 
+  - version: [0, 2, 15]
+    date: 2022-09-05T09:00:00+0800
+    contents:
+      fixed:
+        - eslint react/no-unknown-property rule
+
   - version: [0, 2, 14]
     date: 2022-09-05T08:00:00+0800
     contents:
