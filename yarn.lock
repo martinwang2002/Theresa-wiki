@@ -2196,9 +2196,9 @@ callsites@^3.0.0:
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
 caniuse-lite@^1.0.30001332, caniuse-lite@^1.0.30001370:
-  version "1.0.30001388"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001388.tgz#88e01f4591cbd81f9f665f3f078c66b509fbe55d"
-  integrity sha512-znVbq4OUjqgLxMxoNX2ZeeLR0d7lcDiE5uJ4eUiWdml1J1EkxbnQq6opT9jb9SMfJxB0XA16/ziHwni4u1I3GQ==
+  version "1.0.30001389"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001389.tgz#e4138095d646420e1b6ccf80000bbc94176deabe"
+  integrity sha512-dXCB1Ufi5VekkH5vygd46PGp0HMW4rxorX7Xl1R51FWLcB21DRPOIgrpxvuM1VHXIs4bu/QQQdQaBneMzq9C2g==
 
 ccount@^2.0.0:
   version "2.0.1"
@@ -2847,9 +2847,9 @@ eslint-plugin-react-hooks@^4.5.0, eslint-plugin-react-hooks@^4.6.0:
   integrity sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==
 
 eslint-plugin-react@^7.29.4, eslint-plugin-react@^7.30.1:
-  version "7.31.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.31.4.tgz#df79aa4343490cbc438d72b864cd92487de3e4d9"
-  integrity sha512-2ry4HTT+c+hSgpnV2DXj3d5oAmH11KH8HHQwtcfRdq6/+R3nEimvMbwAqK79eb4ZW1/hp8yC5elBusZM6li/Gg==
+  version "7.31.6"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.31.6.tgz#55ec176be94917ecde3f3ca0e1363073193e241a"
+  integrity sha512-CXu4eu28sb8Sd2+cyUYsJVyDvpTlaXPG+bOzzpS9IzZKtye96AYX3ZmHQ6ayn/OAIQ/ufDJP8ElPWd63Pepn9w==
   dependencies:
     array-includes "^3.1.5"
     array.prototype.flatmap "^1.3.0"
