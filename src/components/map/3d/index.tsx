@@ -1,17 +1,15 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import { Button } from "@mui/material"
 import LinearProgress from "@mui/material/LinearProgress"
 import Paper from "@mui/material/Paper"
-import dynamic from "next/dynamic"
 
 import MapPreviewImage from "@/components/map/mapPreview/mapPreviewImage"
 
 import type { Map3DProps } from "./map3D"
 import WorldViewTip from "./worldViewTip"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const Map3D = dynamic(async () => import("./map3D"))
+const Map3D = React.lazy(async () => import("./map3D"))
 
 interface Map3DIndexState {
   loadScene: boolean
@@ -139,11 +137,13 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
                 top: "-200%"
               }}
             >
-              <Map3D
-                onLoadSceneDataProgressChange={this.handleLoadSceneDataProgressChange}
-                onLoadScenePhaseChange={this.handleLoadScenePhaseChange}
-                stageId={stageId}
-              />
+              <Suspense>
+                <Map3D
+                  onLoadSceneDataProgressChange={this.handleLoadSceneDataProgressChange}
+                  onLoadScenePhaseChange={this.handleLoadScenePhaseChange}
+                  stageId={stageId}
+                />
+              </Suspense>
             </div>}
         </Paper>
       </div>

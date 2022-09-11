@@ -42,15 +42,49 @@ interface ConfigColor {
   a: number
 }
 
+interface XY {
+  x: number
+  y: number
+}
+
+interface TexEnv {
+  texture: string | null
+  scale: XY
+  offset: XY
+}
 interface Map3DConfigApiMaterial {
-  map: string
-  emissionMap: string | null
-  bumpMap: string | null
-  metallicGlossMap: string | null
-  bumpScale: number
-  glossiness: number
-  color: ConfigColor | null
-  emissionColor: ConfigColor | null
+  texEnvs: {
+    bumpMap?: TexEnv
+    emissionMap?: TexEnv
+    mainTex?: TexEnv
+    metallicGlossMap?: TexEnv
+    occlusionMap?: TexEnv
+    [key: string]: TexEnv | undefined
+  }
+  floats: {
+    bumpScale?: number
+    cutoff?: number
+    detailNormalMapScale?: number
+    dstBlend?: number
+    glossMapScale?: number
+    glossiness?: number
+    glossyReflections?: number
+    metallic?: number
+    mode?: number
+    occlusionStrength?: number
+    parallax?: number
+    smoothnessTextureChannel?: number
+    specularHighlights?: number
+    srcBlend?: number
+    uvSec?: number
+    zWrite?: number
+    [key: string]: number | undefined
+  }
+  colors: {
+    color?: ConfigColor
+    emissionColor?: ConfigColor
+    [key: string]: ConfigColor | undefined
+  }
 }
 
 interface Map3DConfigApiMeshConfig {
@@ -132,44 +166,44 @@ const loadSceneData = async (
 
   const result = Object.entries(configJson.rootScene.materials).map(async ([key, value]) => {
     // load texture or map
-    let map: Promise<Texture> | null
-    map = null
-    if (value.map) {
+    let map: Promise<Texture> | undefined
+    map = undefined
+    if (value.texEnvs.mainTex?.texture !== undefined && value.texEnvs.mainTex.texture !== null) {
       total += step
-      map = textureLoader.loadAsync(value.map).then((texture) => {
+      map = textureLoader.loadAsync(value.texEnvs.mainTex.texture).then((texture) => {
         handleProgressTextureLoader()
         return texture
       })
     }
 
     // load emissionMap or emissiveMap
-    let emissionMap: Promise<Texture> | null
-    emissionMap = null
-    if (value.emissionMap !== null) {
+    let emissionMap: Promise<Texture> | undefined
+    emissionMap = undefined
+    if (value.texEnvs.emissionMap?.texture !== undefined && value.texEnvs.emissionMap.texture !== null) {
       total += step
-      emissionMap = textureLoader.loadAsync(value.emissionMap).then((texture) => {
+      emissionMap = textureLoader.loadAsync(value.texEnvs.emissionMap.texture).then((texture) => {
         handleProgressTextureLoader()
         return texture
       })
     }
 
     // load bumpMap
-    let bumpMap: Promise<Texture> | null
-    bumpMap = null
-    if (value.bumpMap !== null) {
+    let bumpMap: Promise<Texture> | undefined
+    bumpMap = undefined
+    if (value.texEnvs.bumpMap?.texture !== undefined && value.texEnvs.bumpMap.texture !== null) {
       total += step
-      bumpMap = textureLoader.loadAsync(value.bumpMap).then((texture) => {
+      bumpMap = textureLoader.loadAsync(value.texEnvs.bumpMap.texture).then((texture) => {
         handleProgressTextureLoader()
         return texture
       })
     }
 
     // load metallicGlossMap
-    let metallicGlossMap: Promise<Texture> | null
-    metallicGlossMap = null
-    if (value.metallicGlossMap !== null) {
+    let metallicGlossMap: Promise<Texture> | undefined
+    metallicGlossMap = undefined
+    if (value.texEnvs.metallicGlossMap?.texture !== undefined && value.texEnvs.metallicGlossMap.texture !== null) {
       total += step
-      metallicGlossMap = textureLoader.loadAsync(value.metallicGlossMap).then((texture) => {
+      metallicGlossMap = textureLoader.loadAsync(value.texEnvs.metallicGlossMap.texture).then((texture) => {
         handleProgressTextureLoader()
         return texture
       })
@@ -179,12 +213,12 @@ const loadSceneData = async (
 
     const meshMaterial = {
       alphaTest: alphaTestMagicNumber,
-      color: value.color ? new Color(value.color.r, value.color.g, value.color.b) : null,
-      emissive: value.emissionColor ? new Color(value.emissionColor.r, value.emissionColor.g, value.emissionColor.b) : null,
-      emissiveIntensity: value.emissionColor ? value.emissionColor.a : null,
+      color: value.colors.color ? new Color(value.colors.color.r, value.colors.color.g, value.colors.color.b) : null,
+      emissive: value.colors.emissionColor ? new Color(value.colors.emissionColor.r, value.colors.emissionColor.g, value.colors.emissionColor.b) : null,
+      emissiveIntensity: value.colors.emissionColor !== undefined ? value.colors.emissionColor.a : null,
       emissiveMap: await emissionMap ?? null,
       map: await map ?? null,
-      metalness: value.glossiness,
+      metalness: value.floats.glossiness,
       metalnessMap: await metallicGlossMap ?? null,
       normalMap: await bumpMap ?? null,
       // threejs need to handle transparent image separately
@@ -294,12 +328,8 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     container.appendChild(renderer.domElement)
 
     renderer.setAnimationLoop(() => {
-      render()
-    })
-
-    function render (): void {
       renderer.render(scene, camera)
-    }
+    })
   }
 
   private readonly sceneContainer: React.RefObject<HTMLDivElement>
