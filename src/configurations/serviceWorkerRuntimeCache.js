@@ -4,7 +4,7 @@
 module.exports = [
   {
     urlPattern: /^https:\/\/static\.(?:theresa)\.wiki\/.*/i,
-    handler: "StaleWhileRevalidate",
+    handler: "CacheFirst",
     options: {
       cacheName: "static-theresa-wiki-assets",
       expiration: {
