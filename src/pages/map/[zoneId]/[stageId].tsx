@@ -1,8 +1,5 @@
 import React from "react"
 
-import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
-import Alert from "@mui/material/Alert"
-import AlertTitle from "@mui/material/AlertTitle"
 import Typography from "@mui/material/Typography"
 import { pick as lodashPick } from "lodash"
 import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
@@ -310,31 +307,6 @@ class Map extends React.PureComponent<MapProps> {
             id="map3d"
             text="3D场景地图"
           />
-
-          <Alert
-            iconMapping={{
-              info: <ScienceRoundedIcon fontSize="inherit" />
-            }}
-            severity="info"
-            sx={{
-              marginY: "1em"
-            }}
-          >
-            <AlertTitle>
-              目前3D场景地图已经支持贴图；暂未支持光源等。
-            </AlertTitle>
-            部分地图内容暂时无法查看（包括但不限于草丛，发光材质等。）渲染引擎会将其渲染成黑色，敬请谅解。
-
-            <br />
-
-            您可以向
-            <StyledLink
-              href="/about/contact"
-            >
-              站长提交反馈
-            </StyledLink>
-            ，（开真银斩杀源石虫啦~~~
-          </Alert>
 
           <Map3DIndex
             stageId={stageId}
