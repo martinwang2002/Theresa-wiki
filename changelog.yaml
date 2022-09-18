@@ -7,6 +7,7 @@ versions:
     contents:
       changed:
         - audioController circular process when loading
+        - use emotion Global to inject font-face
 
   - version: [0, 2, 16]
     date: 2022-09-12T09:00:00+0800

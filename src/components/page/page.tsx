@@ -1,5 +1,6 @@
 import React from "react"
 
+import { Global } from "@emotion/react"
 import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
@@ -78,32 +79,6 @@ const PageDiv = styled("div")(({ theme }) => ({
     }
   }
 }))
-
-const fontFaces = `
-@font-face {
-  font-display: swap;
-  font-family: "Noto Serif SC";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Noto Serif SC"), url("/fonts/noto-sans-sc-v26-latin_chinese-simplified-regular.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Roboto Mono"), url("/fonts/roboto-mono-v21-latin-regular.woff2") format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: "Dream Han Serif CN W27";
-  font-style: normal;
-  font-weight: 900;
-  src: local("Dream Han Serif CN W27"), url("/fonts/DreamHanSerifCN-W27.woff2") format("woff2")
-}
-`
 
 class Page extends React.PureComponent<PageProps, PageState> {
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -272,12 +247,40 @@ class Page extends React.PureComponent<PageProps, PageState> {
             rel="manifest"
           />
 
-          <style
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: fontFaces
+          <Global
+            styles={{
+              "@font-face": {
+                fontDisplay: "swap",
+                fontFamily: "Noto Serif SC",
+                fontStyle: "normal",
+                fontWeight: 400,
+                src: "local(\"Noto Serif SC\"), url(\"/fonts/noto-sans-sc-v26-latin_chinese-simplified-regular.woff2\") format(\"woff2\")"
+              }
             }}
-            id="fontFaces"
+          />
+
+          <Global
+            styles={{
+              "@font-face": {
+                fontDisplay: "swap",
+                fontFamily: "Roboto Mono",
+                fontStyle: "normal",
+                fontWeight: 400,
+                src: "local(\"Roboto Mono\"), url(\"/fonts/roboto-mono-v21-latin-regular.woff2\") format(\"woff2\")"
+              }
+            }}
+          />
+
+          <Global
+            styles={{
+              "@font-face": {
+                fontDisplay: "swap",
+                fontFamily: "Dream Han Serif CN W27",
+                fontStyle: "normal",
+                fontWeight: 900,
+                src: "local(\"Dream Han Serif CN W27\"), url(\"/fonts/DreamHanSerifCN-W27.woff2\") format(\"woff2\")"
+              }
+            }}
           />
         </Head>
 
