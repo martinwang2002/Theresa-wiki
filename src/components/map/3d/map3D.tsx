@@ -52,6 +52,7 @@ interface TexEnv {
   scale: XY
   offset: XY
 }
+
 interface Map3DConfigApiMaterial {
   texEnvs: {
     bumpMap?: TexEnv
@@ -87,9 +88,19 @@ interface Map3DConfigApiMaterial {
   }
 }
 
+enum CastShadow {
+  // see https://docs.unity3d.com/Manual/class-MeshRenderer.html
+  Off = 0,
+  On = 1,
+  TwoSided = 2,
+  ShadowsOnly = 3
+}
+
 interface Map3DConfigApiMeshConfig {
   // material id
   material: string
+  castShadow: CastShadow
+  receiveShadow: boolean
 }
 
 interface Map3DConfigApi {
@@ -309,9 +320,28 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     _index = zero
     rootSceneObj.traverse((child) => {
       if (child instanceof Mesh) {
+        const meshConfig = map3DConfig.rootScene.meshConfigs[_index]
         child.material = new MeshStandardMaterial(
-          map3DConfig.rootScene.materials[map3DConfig.rootScene.meshConfigs[_index].material]
+          map3DConfig.rootScene.materials[meshConfig.material]
         )
+        // castShadows
+        if (meshConfig.castShadow === CastShadow.ShadowsOnly) {
+          child.castShadow = true
+          child.visible = false
+        } else if (meshConfig.castShadow === CastShadow.TwoSided) {
+          console.warn("TwoSided is not implemented", {
+            _index,
+            child,
+            meshConfig
+          })
+        } else {
+          console.log(Boolean(meshConfig.castShadow))
+          child.castShadow = Boolean(meshConfig.castShadow)
+        }
+
+        // receiveShadows
+        child.receiveShadow = meshConfig.receiveShadow
+
         _index++
       }
     })

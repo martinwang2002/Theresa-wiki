@@ -2,6 +2,15 @@
 # eslint-disable max-lines
 versions:
 
+  - version: [0, 3, 0]
+    date: 2022-09-19T08:00:00+0800
+    contents:
+      added:
+        - map3d shadow (castShadow, receiveShadow)
+      changed:
+        - audioController circular process when loading
+        - use emotion Global to inject font-face
+
   - version: [0, 2, 16]
     date: 2022-09-12T09:00:00+0800
     contents:

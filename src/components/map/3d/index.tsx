@@ -1,9 +1,13 @@
 import React, { Suspense } from "react"
 
+import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
 import { Button } from "@mui/material"
+import Alert from "@mui/material/Alert"
+import AlertTitle from "@mui/material/AlertTitle"
 import LinearProgress from "@mui/material/LinearProgress"
 import Paper from "@mui/material/Paper"
 
+import StyledLink from "@/components/common/styledLink"
 import MapPreviewImage from "@/components/map/mapPreview/mapPreviewImage"
 
 import type { Map3DProps } from "./map3D"
@@ -62,23 +66,48 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
     const loadScenePhaseError = 3
 
     return (
-      <div style={{
-        aspectRatio: "16/9",
-        borderRadius: "1rem",
-        display: "block",
-        margin: "auto",
-        maxHeight: "50vh",
-        maxWidth: "90%",
-        overflow: "hidden",
-        position: "relative",
-        width: "auto"
-      }}
-      >
+      <>
+        <Alert
+          iconMapping={{
+            info: <ScienceRoundedIcon fontSize="inherit" />
+          }}
+          severity="info"
+          sx={{
+            marginY: "1em"
+          }}
+        >
+          <AlertTitle>
+            目前3D场景地图已经支持贴图；暂未支持光源等。
+          </AlertTitle>
+          部分地图内容暂时无法查看（包括但不限于发光材质等。）渲染引擎会将其渲染成黑色，敬请谅解。
+
+          <br />
+
+          部分地图物体仅用于影子的渲染，其贴图可能会出现异常，敬请谅解。
+
+          <br />
+
+          您可以向
+          <StyledLink
+            href="/about/contact"
+          >
+            站长提交反馈
+          </StyledLink>
+          ，（开真银斩杀源石虫啦~~~
+        </Alert>
+
         <Paper
           elevation={10}
           sx={{
             aspectRatio: "16/9",
-            height: "100%"
+            borderRadius: "1rem",
+            display: "block",
+            margin: "auto",
+            maxHeight: "50vh",
+            maxWidth: "90%",
+            overflow: "hidden",
+            position: "relative",
+            width: "auto"
           }}
         >
           <div
@@ -146,7 +175,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               </Suspense>
             </div>}
         </Paper>
-      </div>
+      </>
     )
   }
 }

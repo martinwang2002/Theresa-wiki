@@ -6,6 +6,7 @@ import SyncIcon from "@mui/icons-material/Sync"
 import SyncDisabledIcon from "@mui/icons-material/SyncDisabled"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
+import CircularProgress from "@mui/material/CircularProgress"
 import IconButton from "@mui/material/IconButton"
 import LinearProgress from "@mui/material/LinearProgress"
 import Slider from "@mui/material/Slider"
@@ -248,7 +249,9 @@ class AudioController extends React.PureComponent<AudioControllerProps, AudioCon
             onClick={this.handlePlayAndPause}
           >
             {paused
-              ? <PlayArrowIcon />
+              ? loading
+                ? <CircularProgress size={20} />
+                : <PlayArrowIcon />
               : <PauseIcon />}
           </IconButton>
 
