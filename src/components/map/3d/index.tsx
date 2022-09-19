@@ -1,9 +1,9 @@
 import React, { Suspense } from "react"
 
 import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded"
-import { Button } from "@mui/material"
 import Alert from "@mui/material/Alert"
 import AlertTitle from "@mui/material/AlertTitle"
+import Button from "@mui/material/Button"
 import LinearProgress from "@mui/material/LinearProgress"
 import Paper from "@mui/material/Paper"
 
@@ -77,15 +77,15 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
           }}
         >
           <AlertTitle>
-            目前3D场景地图已经支持贴图；暂未支持光源等。
+            3D场景地图 Beta 测试版
           </AlertTitle>
-          部分地图内容暂时无法查看（包括但不限于发光材质等。）渲染引擎会将其渲染成黑色，敬请谅解。
 
-          <br />
-
-          部分地图物体仅用于影子的渲染，其贴图可能会出现异常，敬请谅解。
-
-          <br />
+          已知问题：
+          <ul>
+            <li>
+              部分阴影缺失或不正确。这是由于Three.js不支持面光源所产生的阴影。
+            </li>
+          </ul>
 
           您可以向
           <StyledLink

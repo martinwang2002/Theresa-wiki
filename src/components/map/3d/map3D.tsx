@@ -5,14 +5,17 @@ import {
   Scene,
   Color,
   PerspectiveCamera,
+  SpotLight,
   DirectionalLight,
+  RectAreaLight,
   Mesh,
   WebGLRenderer,
   TextureLoader,
   Quaternion,
-  HemisphereLight
+  Group,
+  MathUtils
 } from "three"
-import type { Group, MeshStandardMaterialParameters, Texture } from "three"
+import type { MeshStandardMaterialParameters, Texture } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
 import { serialize as serializeUri } from "uri-js"
@@ -45,6 +48,14 @@ interface ConfigColor {
 interface XY {
   x: number
   y: number
+}
+
+interface XYZ extends XY {
+  z: number
+}
+
+interface XYZW extends XYZ {
+  w: number
 }
 
 interface TexEnv {
@@ -90,10 +101,21 @@ interface Map3DConfigApiMaterial {
 
 enum CastShadow {
   // see https://docs.unity3d.com/Manual/class-MeshRenderer.html
+  // https://github.com/Unity-Technologies/UnityCsReference/blob/73c12b5a403abad9a300f01a81e7aaf30a0d30b5/Runtime/Export/Graphics/GraphicsEnums.cs
   Off = 0,
   On = 1,
   TwoSided = 2,
   ShadowsOnly = 3
+}
+
+enum LightType {
+  // https://github.com/Unity-Technologies/UnityCsReference/blob/73c12b5a403abad9a300f01a81e7aaf30a0d30b5/Runtime/Export/Graphics/GraphicsEnums.cs
+  Spot = 0,
+  Directional = 1,
+  Point = 2,
+  // Area = 3, This is deprecated in unity
+  Rectangle = 3,
+  Disc = 4
 }
 
 interface Map3DConfigApiMeshConfig {
@@ -103,11 +125,27 @@ interface Map3DConfigApiMeshConfig {
   receiveShadow: boolean
 }
 
+interface Transform {
+  localPosition: XYZ
+  localRotation: XYZW
+  localScale: XYZ
+}
+
+interface Map3DConfigApiLightConfig {
+  color: ConfigColor
+  transforms: Transform[]
+  intensity: number
+  range: number
+  spotAngle: number
+  type: LightType
+}
+
 interface Map3DConfigApi {
   rootScene: {
     obj: string
     materials: Record<string, Map3DConfigApiMaterial>
     meshConfigs: Map3DConfigApiMeshConfig[]
+    lightConfigs: Map3DConfigApiLightConfig[]
   }
 }
 
@@ -116,6 +154,7 @@ interface Map3DConfig {
     obj: Group
     materials: Record<string, MeshStandardMaterialParameters>
     meshConfigs: Map3DConfigApiMeshConfig[]
+    lightConfigs: Map3DConfigApiLightConfig[]
   }
 }
 
@@ -247,6 +286,7 @@ const loadSceneData = async (
 
   const map3DConfig: Map3DConfig = {
     rootScene: {
+      lightConfigs: configJson.rootScene.lightConfigs,
       materials,
       meshConfigs: configJson.rootScene.meshConfigs,
       obj: await rootSceneObj
@@ -302,15 +342,15 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     camera.rotation.setFromQuaternion(new Quaternion(-2.5, 0, 0, 0.96))
 
     // light
-    const mainLight = new DirectionalLight("#fff")
+    // const mainLight = new DirectionalLight("#fff")
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    mainLight.position.set(0, 100, -80)
-    scene.add(mainLight)
+    // mainLight.position.set(0, 100, -80)
+    // scene.add(mainLight)
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const hemisphereLight = new HemisphereLight("#ffffff", "#b0bec5", 1)
+    // const hemisphereLight = new HemisphereLight("#ffffff", "#b0bec5", 1)
     // const hemisphereLight = new HemisphereLight("#ffffff", "#90a4ae", 1)
-    scene.add(hemisphereLight)
+    // scene.add(hemisphereLight)
 
     // obj
     const rootSceneObj = map3DConfig.rootScene.obj
@@ -335,7 +375,6 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
             meshConfig
           })
         } else {
-          console.log(Boolean(meshConfig.castShadow))
           child.castShadow = Boolean(meshConfig.castShadow)
         }
 
@@ -346,6 +385,63 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
       }
     })
     scene.add(rootSceneObj)
+
+    for (const lightConfig of map3DConfig.rootScene.lightConfigs) {
+      // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+      const loadGroup = (transform: Readonly<Transform>): Group => {
+        const group = new Group()
+
+        group.position.set(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z)
+        group.rotation.setFromQuaternion(new Quaternion(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z, transform.localRotation.w))
+        group.scale.set(transform.localScale.x, transform.localScale.y, transform.localScale.z)
+
+        return group
+      }
+
+      let group: Group
+      group = new Group()
+
+      let light: DirectionalLight | RectAreaLight | SpotLight
+
+      if (lightConfig.type === LightType.Spot) {
+        light = new SpotLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.range, MathUtils.degToRad(lightConfig.spotAngle))
+        light.castShadow = true
+      } else if (lightConfig.type === LightType.Directional) {
+        light = new DirectionalLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
+        light.castShadow = true
+      } else if (lightConfig.type === LightType.Rectangle) {
+        // to do rectangle light width and height
+        light = new RectAreaLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
+        light.castShadow = true
+      } else {
+        console.warn("LightType is not implemented, fallback to directional light", lightConfig.type)
+        light = new DirectionalLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b))
+      }
+      // for debug
+      // const geometry = new SphereGeometry(0.5)
+
+      // const colorMap = {
+      //   0: "#ffff00",
+      //   1: "#ff00ff",
+      //   2: "#fff",
+      //   3: "#ff0000",
+      //   4: "#fff"
+      // }
+      // const material = new MeshStandardMaterial({ color: colorMap[lightConfig.type] ?? "#fff" })
+      // const sphere = new Mesh(geometry, material)
+      // group.add(sphere)
+
+      group.add(light)
+
+      for (const transform of lightConfig.transforms.reverse()) {
+        const child = group
+        group = loadGroup(transform)
+        group.add(child)
+      }
+
+      console.log(lightConfig, group)
+      scene.add(group)
+    }
 
     // controls
     const orbitalControls = new OrbitControls(camera, container)
