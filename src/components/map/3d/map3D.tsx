@@ -1,19 +1,19 @@
 import React from "react"
 
 import {
-  MeshStandardMaterial,
-  Scene,
   Color,
-  PerspectiveCamera,
-  SpotLight,
   DirectionalLight,
-  RectAreaLight,
-  Mesh,
-  WebGLRenderer,
-  TextureLoader,
-  Quaternion,
   Group,
-  MathUtils
+  MathUtils,
+  Mesh,
+  MeshStandardMaterial,
+  PerspectiveCamera,
+  Quaternion,
+  RectAreaLight,
+  Scene,
+  SpotLight,
+  TextureLoader,
+  WebGLRenderer
 } from "three"
 import type { MeshStandardMaterialParameters, Texture } from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"

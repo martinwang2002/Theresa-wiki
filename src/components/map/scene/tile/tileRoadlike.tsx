@@ -1,4 +1,4 @@
-import { orange, grey, lightBlue } from "@mui/material/colors"
+import { grey, lightBlue, orange } from "@mui/material/colors"
 import { styled } from "@mui/system"
 
 import { TileBase } from "./tileBase"

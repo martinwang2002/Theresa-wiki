@@ -8,7 +8,7 @@ import CardMedia from "@mui/material/CardMedia"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
 import { pick as lodashPick } from "lodash"
-import type { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from "next"
+import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
@@ -23,7 +23,7 @@ import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
-import { zoneIds, getCustomZoneInfo } from "@/models/gamedata/excel/zoneTable"
+import { getCustomZoneInfo, zoneIds } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
@@ -186,13 +186,14 @@ class Zone extends React.PureComponent<ZoneProps> {
                     passHref
                   >
                     <CardActionArea >
-                      <CardMedia sx={{
-                        aspectRatio: "16/9",
-                        display: "block",
-                        margin: "auto",
-                        position: "relative",
-                        width: "100%"
-                      }}
+                      <CardMedia
+                        sx={{
+                          aspectRatio: "16/9",
+                          display: "block",
+                          margin: "auto",
+                          position: "relative",
+                          width: "100%"
+                        }}
                       >
                         <MapPreviewImage stageId={stageInfo.stageId} />
                       </CardMedia>
