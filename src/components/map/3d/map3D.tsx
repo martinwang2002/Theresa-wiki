@@ -138,6 +138,7 @@ interface Map3DConfigApiLightConfig {
   range: number
   spotAngle: number
   type: LightType
+  areaSize: XY
 }
 
 interface Map3DConfigApi {
@@ -410,8 +411,7 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
         light = new DirectionalLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
         light.castShadow = true
       } else if (lightConfig.type === LightType.Rectangle) {
-        // to do rectangle light width and height
-        light = new RectAreaLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
+        light = new RectAreaLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.areaSize.x, lightConfig.areaSize.y)
         light.castShadow = true
       } else {
         console.warn("LightType is not implemented, fallback to directional light", lightConfig.type)
@@ -439,7 +439,6 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
         group.add(child)
       }
 
-      console.log(lightConfig, group)
       scene.add(group)
     }
 

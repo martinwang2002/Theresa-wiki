@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - map3d lights
+        - map 3d rect light width and height
 
   - version: [0, 3, 0]
     date: 2022-09-19T08:00:00+0800
