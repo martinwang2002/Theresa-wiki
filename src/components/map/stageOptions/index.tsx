@@ -9,7 +9,7 @@ import type { IPatchedNumber } from "@/components/common/patchedNumber"
 import CostIcon from "@/components/icon/costIcon"
 import LifePointIcon from "@/components/icon/lifePointIcon"
 
-import type { IStageJsonOptions, IRunes } from "@/models/gamedata/levels/index"
+import type { IRunes, IStageJsonOptions } from "@/models/gamedata/levels/index"
 
 interface StageInfoTableProps {
   difficulty: string

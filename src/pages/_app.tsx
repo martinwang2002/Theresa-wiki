@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-max-depth */
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import type { EmotionCache } from "@emotion/cache"
 import { CacheProvider } from "@emotion/react"
 import CssBaseline from "@mui/material/CssBaseline"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import type { AppProps } from "next/app"
 import { useRouter } from "next/router"
@@ -17,6 +17,7 @@ import { SettingsContext } from "@/models/reactContext/settingsContext"
 import themeOptions from "@/models/theme"
 import { pageview } from "@/models/utils/gtag"
 import { getLocalStorage } from "@/models/utils/localStorage"
+
 const { GTAG_ID } = publicRuntimeConfig
 
 // Client-side cache, shared for the whole session of the user in the browser.

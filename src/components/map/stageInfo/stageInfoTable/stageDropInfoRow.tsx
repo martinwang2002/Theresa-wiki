@@ -2,7 +2,7 @@ import React from "react"
 
 import { isEmpty } from "lodash"
 
-import type { IStageInfo, IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
+import type { IDisplayDetailReward, IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 import { StageInfoTableRowCell } from "./common"
 import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"

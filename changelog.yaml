@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 3, 1]
+    date: 2022-09-26T08:00:00+0800
+    contents:
+      added:
+        - map3d lights
+        - map 3d rect light width and height
 
   - version: [0, 3, 0]
     date: 2022-09-19T08:00:00+0800
