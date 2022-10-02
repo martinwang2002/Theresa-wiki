@@ -10,7 +10,7 @@ import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import { TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
 import { TileFence, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileRoad, TileWall } from "./tileRoadlike"
-import { TileEnd, TileFlystart, TileStart } from "./tileSvglike"
+import { TileEnd, TileFlystart, TileStart, TileTelin, TileTelout } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
@@ -32,6 +32,8 @@ const tileElements = {
   tile_icetur_rt: <TileIceturRt />,
   tile_road: <TileRoad />,
   tile_start: <TileStart />,
+  tile_telin: <TileTelin />,
+  tile_telout: <TileTelout />,
   tile_wall: <TileWall />
 } as Record<string, JSX.Element | undefined>
 

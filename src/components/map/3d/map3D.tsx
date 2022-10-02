@@ -8,6 +8,7 @@ import {
   Mesh,
   MeshStandardMaterial,
   PerspectiveCamera,
+  PointLight,
   Quaternion,
   RectAreaLight,
   Scene,
@@ -402,13 +403,16 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
       let group: Group
       group = new Group()
 
-      let light: DirectionalLight | RectAreaLight | SpotLight
+      let light: DirectionalLight | PointLight | RectAreaLight | SpotLight
 
       if (lightConfig.type === LightType.Spot) {
         light = new SpotLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.range, MathUtils.degToRad(lightConfig.spotAngle))
         light.castShadow = true
       } else if (lightConfig.type === LightType.Directional) {
         light = new DirectionalLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
+        light.castShadow = true
+      } else if (lightConfig.type === LightType.Point) {
+        light = new PointLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.range)
         light.castShadow = true
       } else if (lightConfig.type === LightType.Rectangle) {
         light = new RectAreaLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.areaSize.x, lightConfig.areaSize.y)
