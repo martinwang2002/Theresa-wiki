@@ -22,7 +22,7 @@ import Page from "@/components/page/page"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
-import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
+import type { ICustomRoguelikeTopicDetailStageInfo, IStageInfo } from "@/models/gamedata/excel/stageTable"
 import { getCustomZoneInfo, zoneIds } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
@@ -32,7 +32,7 @@ interface ZoneProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   zoneId: string
   zoneInfo: IZoneInfo
-  stages: Pick<IStageInfo, "code" | "diffGroup" | "difficulty" | "name" | "stageId">[]
+  stages: Pick<ICustomRoguelikeTopicDetailStageInfo, "code" | "difficulty" | "name" | "stageId">[] | Pick<IStageInfo, "code" | "diffGroup" | "difficulty" | "name" | "stageId">[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -87,11 +87,15 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
 
   // filter isStoryOnly stages
   const nonStoryOnlyStages = stages.filter((stageInfo) => {
-    return !stageInfo.isStoryOnly
+    return "isStoryOnly" in stageInfo ? !stageInfo.isStoryOnly : true
   })
 
   const pickedStages = nonStoryOnlyStages.map((stageInfo) => {
-    return lodashPick(stageInfo, ["stageId", "code", "name", "diffGroup", "difficulty"])
+    if ("diffGroup" in stageInfo) {
+      return lodashPick(stageInfo, ["code", "difficulty", "diffGroup", "name", "stageId"])
+    } else {
+      return lodashPick(stageInfo, ["stageId", "code", "name", "difficulty"])
+    }
   })
 
   return {
@@ -208,7 +212,7 @@ class Zone extends React.PureComponent<ZoneProps> {
                           突袭
                         </InlineBadge>}
 
-                        {stageInfo.diffGroup === "EASY" &&
+                        {"diffGroup" in stageInfo && stageInfo.diffGroup === "EASY" &&
                         <InlineBadge
                           sx={{
                             backgroundColor: "primary.main"
@@ -217,7 +221,7 @@ class Zone extends React.PureComponent<ZoneProps> {
                           剧情体验
                         </InlineBadge>}
 
-                        {stageInfo.diffGroup === "TOUGH" &&
+                        {"diffGroup" in stageInfo && stageInfo.diffGroup === "TOUGH" &&
                         <InlineBadge
                           sx={{
                             backgroundColor: "error.main"
