@@ -16,8 +16,31 @@ interface IRoguelikeTopicInfo {
   homeEntryDisplayData: unknown
 }
 
+interface IRoguelikeTopicDetailStageInfo {
+  id: string
+  linkedStageId: string
+  levelId: string
+  code: string
+  name: string
+  loadingPicId: string
+  description: string
+  eliteDesc: unknown
+  isBoss: unknown
+  isElite: unknown
+  difficulty: string
+  capsulePool: string
+  capsuleProb: number
+  vutresProb: unknown
+  boxProb: unknown
+}
+
+interface IRoguelikeTopicDetail {
+  stages: Record<string, IRoguelikeTopicDetailStageInfo>
+}
+
 interface IRoguelikeTopicTable {
   topics: Record<string, IRoguelikeTopicInfo>
+  details: Record<string, IRoguelikeTopicDetail>
 }
 
 export const roguelikeTopicTable = cacheable(async (): Promise<IRoguelikeTopicTable> => {
@@ -37,4 +60,4 @@ export const getRoguelikeTopicByZoneId = async (zoneId: string): Promise<IRoguel
   return topics[zoneId]
 }
 
-export type { IRoguelikeTopicInfo }
+export type { IRoguelikeTopicInfo, IRoguelikeTopicDetailStageInfo }

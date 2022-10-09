@@ -19,14 +19,12 @@ import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/c
 import StageOptions from "@/components/map/stageOptions/index"
 import Page from "@/components/page/page"
 
-import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
-
 import { getBattleOnGameReadyBgmBankByBgmEventKey } from "@/models/gamedata/excel/audioData"
 import type { IBgmBank } from "@/models/gamedata/excel/audioData"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import { getCustomStageInfo, tileInfo as getTileInfo, stageIds } from "@/models/gamedata/excel/stageTable"
-import type { ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
+import { getCustomStageInfo, getStageIdsByZoneId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
+import type { ICustomRoguelikeTopicDetailStageInfo, ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { getCustomZoneInfo, zoneIds } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
@@ -39,7 +37,7 @@ import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
-  stageInfo: ICustomStageInfo
+  stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
@@ -48,41 +46,22 @@ interface MapProps {
   bgmBank: IBgmBank
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  // ignore SSR when developing and in build stage
-  if (serverRuntimeConfig.NO_DYNAMIC_ROUTES) {
-    // We'll pre-render only these paths at build time.
-    // { fallback: blocking } will server-render pages
-    // on-demand if the path doesn't exist.
-    return { fallback: "blocking", paths: [] }
-  } else {
-    const _stageIds = await stageIds()
-
-    const paths = _stageIds.map((stageId) => ({
-      params: {
-        server: "CN",
-        stageId
-      }
-    }))
-
-    // We'll pre-render only these paths at build time.
-    // { fallback: blocking } will server-render pages
-    // on-demand if the path doesn't exist.
-    return { fallback: "blocking", paths }
-  }
+export const getStaticPaths: GetStaticPaths = () => {
+  return { fallback: "blocking", paths: [] }
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly<GetStaticPropsContext>) => {
   const _zoneIds = await zoneIds()
-  const _stageIds = await stageIds()
 
   const { params } = context
   const zoneIdFromParams = String(params?.zoneId)
   const stageId = String(params?.stageId)
 
-  try {
-    if (_zoneIds.includes(zoneIdFromParams) && _stageIds.includes(stageId)) {
+  if (_zoneIds.includes(zoneIdFromParams)) {
+    const _stageIds = await getStageIdsByZoneId(zoneIdFromParams)
+
+    if (_stageIds.includes(stageId)) {
       // zoneId and stageId exists
       // render page
     } else {
@@ -90,7 +69,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
         notFound: true
       }
     }
-  } catch {
+  } else {
     return {
       notFound: true
     }
@@ -98,7 +77,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
   const permanent = zoneIdFromParams.startsWith("permanent")
 
-  const stageInfo = await getCustomStageInfo(stageId, permanent)
+  const stageInfo = await getCustomStageInfo(zoneIdFromParams, stageId, permanent)
 
   const { levelId, zoneId } = stageInfo
 
@@ -110,7 +89,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
   }
 
   // return notFound when stage isStoryOnly
-  if (stageInfo.isStoryOnly) {
+  if ("isStoryOnly" in stageInfo && stageInfo.isStoryOnly) {
     return {
       notFound: true
     }
@@ -147,7 +126,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { bgmBank, server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
-    const { difficulty, diffGroup } = stageInfo
+    const { difficulty } = stageInfo
     const { mapData, options, runes } = stageJson
 
     const displayZoneName = getDisplayZoneName(zoneInfo)
@@ -222,7 +201,7 @@ class Map extends React.PureComponent<MapProps> {
             突袭
           </TopBadge>}
 
-          {stageInfo.diffGroup === "EASY" &&
+          {"diffGroup" in stageInfo && stageInfo.diffGroup === "EASY" &&
           <TopBadge
             sx={{
               backgroundColor: "primary.main"
@@ -231,7 +210,7 @@ class Map extends React.PureComponent<MapProps> {
             剧情体验
           </TopBadge>}
 
-          {stageInfo.diffGroup === "TOUGH" &&
+          {"diffGroup" in stageInfo && stageInfo.diffGroup === "TOUGH" &&
           <TopBadge
             sx={{
               backgroundColor: "error.main"
@@ -257,29 +236,34 @@ class Map extends React.PureComponent<MapProps> {
         </GamedataContext.Provider>
 
         <WithTableOfContents>
-          <HeadingAnchor
-            id="stageInfo"
-            text="作战信息"
-          />
+          {
+            "diffGroup" in stageInfo &&
+            <>
+              <HeadingAnchor
+                id="stageInfo"
+                text="作战信息"
+              />
 
-          <GamedataContext.Provider value={gamedataConst}>
-            <StageInfo
-              stageInfo={stageInfo}
-              // stageJsonOptions={stageJson.options}
-            />
-          </GamedataContext.Provider>
+              <GamedataContext.Provider value={gamedataConst}>
+                <StageInfo
+                  stageInfo={stageInfo}
+                  // stageJsonOptions={stageJson.options}
+                />
+              </GamedataContext.Provider>
 
-          <HeadingAnchor
-            id="stageOptions"
-            text="作战配置"
-          />
+              <HeadingAnchor
+                id="stageOptions"
+                text="作战配置"
+              />
 
-          <StageOptions
-            diffGroup={diffGroup}
-            difficulty={difficulty}
-            runes={runes}
-            stageOptions={options}
-          />
+              <StageOptions
+                diffGroup={stageInfo.diffGroup}
+                difficulty={difficulty}
+                runes={runes}
+                stageOptions={options}
+              />
+            </>
+          }
 
           <HeadingAnchor
             id="bgmBank"
