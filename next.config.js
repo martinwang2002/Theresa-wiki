@@ -50,6 +50,7 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   output: "standalone",
+  swcMinify: true,
   async rewrites() {
     return [
       {
