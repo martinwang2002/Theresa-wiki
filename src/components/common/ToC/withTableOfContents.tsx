@@ -1,4 +1,5 @@
 import React from "react"
+import { isFragment } from "react-is"
 
 import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
@@ -11,14 +12,14 @@ interface WithTableOfContentsProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-function flattenChildren (children: React.ReactNode): (React.ReactChild | React.ReactFragment | React.ReactPortal)[] {
+function flattenChildren (children: React.ReactNode): React.ReactNode[] {
   const childrenArray = React.Children.toArray(children)
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-  return childrenArray.reduce((flatChildren: (React.ReactChild | React.ReactFragment | React.ReactPortal)[], child) => {
-    if ((child as React.ReactElement).type === React.Fragment) {
+  return childrenArray.reduce((flatChildren: React.ReactNode[], child) => {
+    if (isFragment(child)) {
       return flatChildren.concat(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-        flattenChildren((child as React.ReactElement).props.children)
+        flattenChildren(child.props.children)
       )
     }
     flatChildren.push(child)
@@ -33,7 +34,7 @@ export default class WithTableOfContents extends React.PureComponent<WithTableOf
     // obtain HeadingAnchor components props
     const headingAnchorsProps = flattenChildren(children).map((child): HeadingAnchorProps | undefined => {
       if (React.isValidElement(child) && typeof child.type !== "string") {
-        if (child.type.name === HeadingAnchor.name) {
+        if (child.type === HeadingAnchor) {
           const headingAnchorProps = child.props as HeadingAnchorProps
           return headingAnchorProps
         }
