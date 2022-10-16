@@ -115,7 +115,7 @@
                         "pathGroups": [
                             {
                                 "group": "external",
-                                "pattern": "react",
+                                "pattern": "{react,react-is}",
                                 "position": "before"
                             },
                             {

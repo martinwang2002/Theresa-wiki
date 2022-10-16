@@ -189,7 +189,7 @@ export const getCustomStageInfo = async (zoneId: string, stageId: string, perman
   } else {
     const { stages } = await stageTable()
 
-    if (convertedStageId in Object.keys(stages)) {
+    if (Object.keys(stages).includes(convertedStageId)) {
       result = stages[convertedStageId] as ICustomStageInfo
     } else {
       const { details } = await roguelikeTopicTable()

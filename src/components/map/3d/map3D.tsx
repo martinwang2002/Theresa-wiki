@@ -451,7 +451,7 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
     orbitalControls.enabled = true
 
     // renderer
-    const renderer = new WebGLRenderer({ antialias: true })
+    const renderer = new WebGLRenderer({ antialias: false, powerPreference: "high-performance" })
     renderer.setSize(container.clientWidth, container.clientHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
     container.appendChild(renderer.domElement)
