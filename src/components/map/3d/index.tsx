@@ -96,6 +96,15 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
           ，（开真银斩杀源石虫啦~~~
         </Alert>
 
+        <Alert
+          severity="warning"
+          sx={{
+            marginY: "1em"
+          }}
+        >
+          3D场景地图非常考验浏览器性能，有可能导致您的浏览器卡顿或崩溃。
+        </Alert>
+
         <Paper
           elevation={10}
           sx={{
