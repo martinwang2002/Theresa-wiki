@@ -4,6 +4,7 @@ import React from "react"
 import CloseIcon from "@mui/icons-material/Close"
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap"
 import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
 import Dialog from "@mui/material/Dialog"
 import Fab from "@mui/material/Fab"
 import IconButton from "@mui/material/IconButton"
@@ -50,11 +51,20 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
 
     return (
       <>
-        <div
-          style={{
+        <Paper
+          elevation={10}
+          onClick={this.handleImageDialogOpen}
+          sx={{
+            "&:hover": {
+              "& .MuiFab-root": {
+                opacity: 1
+              },
+              cursor: "pointer"
+            },
             aspectRatio: "16/9",
             borderRadius: "1rem",
             display: "block",
+            height: "100%",
             margin: "auto",
             maxHeight: "50vh",
             maxWidth: "90%",
@@ -63,40 +73,25 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
             width: "auto"
           }}
         >
-          <Paper
-            elevation={10}
-            onClick={this.handleImageDialogOpen}
+          <MapPreviewImage
+            stageId={stageId}
+          />
+
+          <Fab
+            aria-label="zoom"
+            color="primary"
+            size="small"
             sx={{
-              "&:hover": {
-                "& .MuiFab-root": {
-                  opacity: 1
-                },
-                cursor: "pointer"
-              },
-              height: "100%",
-              position: "relative"
+              opacity: 0,
+              position: "absolute",
+              right: 16,
+              top: 16,
+              transition: "opacity 0.5s linear"
             }}
           >
-            <MapPreviewImage
-              stageId={stageId}
-            />
-
-            <Fab
-              aria-label="zoom"
-              color="primary"
-              size="small"
-              sx={{
-                opacity: 0,
-                position: "absolute",
-                right: 16,
-                top: 16,
-                transition: "opacity 0.5s linear"
-              }}
-            >
-              <ZoomOutMapIcon />
-            </Fab>
-          </Paper>
-        </div>
+            <ZoomOutMapIcon />
+          </Fab>
+        </Paper>
 
         <Dialog
           TransitionComponent={TransitionUpRef}
@@ -128,20 +123,21 @@ class MapPreview extends React.PureComponent<MapPreviewProps, MapPreviewState> {
             </Toolbar>
           </AppBar>
 
-          <div style={{
-            aspectRatio: "16/9",
-            display: "block",
-            margin: "auto",
-            maxWidth: "100%",
-            overflow: "hidden",
-            position: "relative",
-            width: "100%"
-          }}
+          <Box
+            sx={{
+              aspectRatio: "16/9",
+              display: "block",
+              margin: "auto",
+              maxWidth: "100%",
+              overflow: "hidden",
+              position: "relative",
+              width: "100%"
+            }}
           >
             <MapPreviewImage
               stageId={stageId}
             />
-          </div>
+          </Box>
         </Dialog>
       </>
     )
