@@ -8,6 +8,7 @@ versions:
         - show client error on error page
         - mapPreview image container
         - bgmBank title
+        - tile fence bound
 
   - version: [0, 3, 4]
     date: 2022-10-17T08:00:00+0800
