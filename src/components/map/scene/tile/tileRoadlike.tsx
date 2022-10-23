@@ -24,6 +24,8 @@ export const TileFence = styled(TileRoad)({
   borderStyle: "solid"
 })
 
+export const TileFenceBound = TileFence
+
 export const TileWall = styled(TileRoadlike)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? orange[200] : orange[600]
 }))

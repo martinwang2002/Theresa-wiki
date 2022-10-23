@@ -3,7 +3,6 @@ import React from "react"
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
 import Paper from "@mui/material/Paper"
-import Typography from "@mui/material/Typography"
 import { serialize as serializeUri } from "uri-js"
 
 import AudioController from "@/components/common/audioController"
@@ -25,13 +24,16 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
     return (
       <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
 
-        <Typography
+        <InlineBadge
           sx={{
+            backgroundColor: "secondary.main",
+            marginX: 2,
+            marginY: 1,
             padding: 1
           }}
         >
-          {name}
-        </Typography>
+          {name.split(".").pop()}
+        </InlineBadge>
 
         <Divider />
 
@@ -66,9 +68,10 @@ class BgmBank extends React.PureComponent<BgmBankProps> {
 
           {
             loop != null &&
-            <Box sx={{
-              padding: 2
-            }}
+            <Box
+              sx={{
+                padding: 2
+              }}
             >
               <InlineBadge
                 sx={{

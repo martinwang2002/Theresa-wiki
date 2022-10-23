@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-max-depth */
 import React from "react"
 
 import type { NextPageContext } from "next"
@@ -8,11 +7,12 @@ import Error from "@/components/page/error"
 import Page from "@/components/page/page"
 
 interface ErrorComponentProps {
+  err: string | undefined
   statusCode?: number
   statusMessage?: string
 }
 
-function ErrorComponent ({ statusCode, statusMessage }: Readonly<ErrorComponentProps>): JSX.Element {
+function ErrorComponent ({ statusCode, statusMessage, err }: Readonly<ErrorComponentProps>): JSX.Element {
   return (
     <Page>
       <Head>
@@ -29,7 +29,7 @@ function ErrorComponent ({ statusCode, statusMessage }: Readonly<ErrorComponentP
       <Error
         errorMessage={(statusCode != null)
           ? `An error ${statusCode} ${statusMessage ?? ""} occurred on server`
-          : "An error occurred on client"}
+          : err !== undefined ? err : "An error occurred on client"}
       />
 
     </Page>
@@ -42,9 +42,9 @@ ErrorComponent.getInitialProps = ({ asPath, err, res }: Readonly<NextPageContext
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   const statusMessage = res ? res.statusMessage : ""
 
-  console.error("Error for path: ", asPath, " statusCode: ", statusCode, " statusMessage: ", statusMessage)
+  console.error("Error for path: ", asPath, " statusCode: ", statusCode, " statusMessage: ", statusMessage, " err: ", err)
 
-  return { statusCode, statusMessage }
+  return { err: err?.name, statusCode, statusMessage }
 }
 
 export default ErrorComponent
