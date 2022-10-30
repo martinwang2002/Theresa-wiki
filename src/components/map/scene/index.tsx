@@ -10,6 +10,14 @@ import Tile from "./tile"
 
 interface IMapSceneProps {
   mapData: IMapData
+  onTileClick?: (
+    // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+    event: Readonly<React.MouseEvent<HTMLDivElement>>,
+    tile: Readonly<IMapDataTiles>,
+    index: number,
+    width: number,
+    height: number
+  ) => void
 }
 
 const MapSceneContainer = styled("div")({
@@ -23,8 +31,12 @@ const MapSceneContainer = styled("div")({
 })
 
 class MapScene extends React.PureComponent<IMapSceneProps> {
+  private static readonly defaultProps = {
+    onTileClick: undefined
+  }
+
   public render (): React.ReactNode {
-    const { mapData } = this.props
+    const { mapData, onTileClick } = this.props
     const { tiles, width, height } = mapData
 
     return (
@@ -45,6 +57,11 @@ class MapScene extends React.PureComponent<IMapSceneProps> {
               <Grid
                 item
                 key={`${tile.tileKey}-${index % width}-${Math.floor(index / width)}`}
+                onClick={(event): void => {
+                  if (onTileClick) {
+                    onTileClick(event, tile, index, width, height)
+                  }
+                }}
                 xs={1}
               >
                 <Tile

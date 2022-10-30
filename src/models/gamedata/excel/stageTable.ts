@@ -107,16 +107,16 @@ const stageTable = cacheable(async (): Promise<IStageTable> => {
   return stageTableJson
 }, { cacheKey: "stageTable", expiryMode: "EX", ttl: serverRuntimeConfig.REDIS_EX_TTL })
 
-export const stageIdtoLodash = (stageId: string): string => {
+export const stageIdToLodash = (stageId: string): string => {
   return stageId.replaceAll("#", "__")
 }
 
-export const stageIdtoHash = (stageId: string): string => {
+export const stageIdToHash = (stageId: string): string => {
   return stageId.replaceAll("__", "#")
 }
 
 export const getStageInfo = async (stageId: string): Promise<IStageInfo> => {
-  const convertedStageId = stageIdtoHash(stageId)
+  const convertedStageId = stageIdToHash(stageId)
 
   const { stages } = await stageTable()
   return stages[convertedStageId]
@@ -141,7 +141,7 @@ export const getStagesByZoneId = async (zoneId: string): Promise<(ICustomRogueli
     // replace # with __
     return {
       ...stageInfo,
-      stageId: stageIdtoLodash(stageInfo.stageId)
+      stageId: stageIdToLodash(stageInfo.stageId)
     }
   })
 
@@ -164,12 +164,44 @@ export const getStagesByZoneId = async (zoneId: string): Promise<(ICustomRogueli
   }
 }
 
+export const getStageByStageId = async (stageId: string): Promise<(ICustomRoguelikeTopicDetailStageInfo | IStageInfo | undefined)> => {
+  const stageIdToLodashed = stageIdToLodash(stageId)
+  const { stages } = await stageTable()
+
+  if (stageIdToLodashed in stages) {
+    return {
+      ...stages[stageIdToLodashed],
+      stageId: stageIdToLodash(stageId)
+    }
+  }
+
+  const { stageList: stagesFromRetro } = await retroTable()
+
+  if (stageIdToLodashed in stagesFromRetro) {
+    return {
+      ...stagesFromRetro[stageIdToLodashed],
+      stageId: stageIdToLodash(stageId)
+    }
+  }
+
+  const { details } = await roguelikeTopicTable()
+  for (const zoneId in details) {
+    if (stageId in details[zoneId].stages) {
+      return {
+        ...details[zoneId].stages[stageId],
+        stageId,
+        zoneId
+      }
+    }
+  }
+}
+
 export const getStageIdsByZoneId = async (zoneId: string): Promise<string[]> => {
   const stages = await getStagesByZoneId(zoneId)
 
   // replace # with __
   const _stageIds = stages.map((stage) => {
-    return stageIdtoLodash(stage.stageId)
+    return stageIdToLodash(stage.stageId)
   })
   return _stageIds
 }
@@ -179,7 +211,7 @@ interface ICustomStageInfo extends IStageInfo {
 }
 
 export const getCustomStageInfo = async (zoneId: string, stageId: string, permanent = false): Promise<ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo> => {
-  const convertedStageId = stageIdtoHash(stageId)
+  const convertedStageId = stageIdToHash(stageId)
 
   let result: ICustomStageInfo
 
@@ -216,7 +248,7 @@ export const getCustomStageInfo = async (zoneId: string, stageId: string, perman
       difficulty: extraStageInfo.difficulty,
       isStoryOnly: extraStageInfo.isStoryOnly,
       name: extraStageInfo.name,
-      stageId: stageIdtoLodash(extraStageInfo.stageId),
+      stageId: stageIdToLodash(extraStageInfo.stageId),
       zoneId: extraStageInfo.zoneId
     }
   }

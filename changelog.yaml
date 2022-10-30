@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 3, 6]
+    date: 2022-11-01T08:00:00+0800
+    contents:
+      added:
+        - widget map scene
+
   - version: [0, 3, 5]
     date: 2022-10-24T08:00:00+0800
     contents:

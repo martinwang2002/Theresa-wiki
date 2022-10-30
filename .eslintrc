@@ -82,7 +82,7 @@
                     "error",
                     {
                         "ignoreInferredTypes": true,
-                        "treatMethodsAsReadonly": false
+                        "treatMethodsAsReadonly": true
                     }
                 ],
                 "@typescript-eslint/semi": [
