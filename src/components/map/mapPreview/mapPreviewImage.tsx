@@ -29,7 +29,7 @@ class MapPreviewImage extends React.PureComponent<MapPreviewImageProps> {
     return (
       <Image
         alt={`Stage Preview Picture ${stageId}`}
-        layout="fill"
+        fill
         loader={staticLoader}
         src={imageSrc}
       />

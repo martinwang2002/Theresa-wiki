@@ -141,7 +141,9 @@ class Zone extends React.PureComponent<ZoneProps> {
                           <Card>
                             <Link
                               href={`/map/${zoneInfo.zoneID}`}
+                              legacyBehavior
                               passHref
+                              prefetch={false}
                             >
                               <CardActionArea>
                                 <CardContent sx={{ padding: "0.75em" }}>

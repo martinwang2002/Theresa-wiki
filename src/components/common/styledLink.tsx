@@ -24,6 +24,7 @@ export default class StyledLink extends React.PureComponent<IStyledLinkProps> {
     return (
       <NextLink
         href={href}
+        legacyBehavior
         passHref
       >
         <MuiLink
