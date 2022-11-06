@@ -187,6 +187,7 @@ class Zone extends React.PureComponent<ZoneProps> {
                 <Card>
                   <Link
                     href={`/map/${zoneId}/${stageInfo.stageId}`}
+                    legacyBehavior
                     passHref
                   >
                     <CardActionArea >

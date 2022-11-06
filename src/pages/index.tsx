@@ -74,6 +74,7 @@ export default function home (): React.ReactNode {
           >
             <Link
               href="/map"
+              legacyBehavior
               passHref
             >
               <CardActionArea>

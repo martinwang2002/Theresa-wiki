@@ -22,7 +22,7 @@ class Title extends React.PureComponent {
         href="/"
         passHref
       >
-        <TitleSpan >
+        <TitleSpan>
           <SvgIcon
             height={32}
             sx={{

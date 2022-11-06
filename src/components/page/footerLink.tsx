@@ -26,6 +26,7 @@ class FooterLink extends React.PureComponent<IFooterLinkProps> {
     return (
       <Link
         href={href}
+        legacyBehavior
         passHref
         prefetch={false}
       >
