@@ -16,6 +16,12 @@ import type { IRoguelikeTopicInfo } from "./roguelikeTopicTable"
 
 interface IZoneTable {
   zones: Record<string, IZoneInfo>
+  zoneValidInfo: Record<string, IZoneValidInfo>
+}
+
+interface IZoneValidInfo {
+  startTs: number
+  endTs: number
 }
 
 interface IZoneInfo {
@@ -102,6 +108,18 @@ export const getCustomZones = async (): Promise<ICustomZoneInfo[]> => {
   }))
 
   return customZoneInfos
+}
+
+export const isZoneValid = async (zoneId: string): Promise<boolean> => {
+  const { zoneValidInfo } = await zoneTable()
+  if (zoneId in zoneValidInfo) {
+    const { startTs, endTs } = zoneValidInfo[zoneId]
+    const msToS = 1000
+    const now = Math.floor(Date.now() / msToS)
+
+    return startTs <= now && now <= endTs
+  }
+  return false
 }
 
 export type { IZoneTable, IZoneInfo, ICustomZoneInfo }
