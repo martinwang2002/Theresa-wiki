@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 3, 8]
+    date: 2022-11-14T08:00:00+0800
+    contents:
+      changed:
+        - /api/health to purge data
+
   - version: [0, 3, 7]
     date: 2022-11-07T08:00:00+0800
     contents:
