@@ -1,5 +1,7 @@
 import React from "react"
 
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun"
+import PeopleIcon from "@mui/icons-material/People"
 import Divider from "@mui/material/Divider"
 import Paper from "@mui/material/Paper"
 import { styled } from "@mui/system"
@@ -311,6 +313,8 @@ class StageOptionsTable extends React.PureComponent<StageInfoTableProps> {
           />
 
           <StageOptionsTableRowValue>
+            <PeopleIcon sx={{ marginRight: "0.3em", verticalAlign: "bottom" }} />
+
             <PatchedNumber number={stageOptionsWithRunes.characterLimit} />
           </StageOptionsTableRowValue>
 
@@ -328,6 +332,8 @@ class StageOptionsTable extends React.PureComponent<StageInfoTableProps> {
           />
 
           <StageOptionsTableRowValue>
+            <DirectionsRunIcon sx={{ marginRight: "0.3em", verticalAlign: "bottom" }} />
+
             {stageOptions.moveMultiplier}
           </StageOptionsTableRowValue>
 
