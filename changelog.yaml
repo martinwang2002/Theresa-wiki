@@ -8,6 +8,8 @@ versions:
         - More icons for stageOptions
       changed:
         - use styledLink in /
+      fixed:
+        - map3d disable directional light shadow
 
   - version: [0, 3, 8]
     date: 2022-11-14T08:00:00+0800

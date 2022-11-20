@@ -410,7 +410,8 @@ class Map3D extends React.PureComponent<Map3DPropsWithPhase> {
         light.castShadow = true
       } else if (lightConfig.type === LightType.Directional) {
         light = new DirectionalLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity)
-        light.castShadow = true
+        // disable light shadow due to camera limits
+        // light.castShadow = true
       } else if (lightConfig.type === LightType.Point) {
         light = new PointLight(new Color(lightConfig.color.r, lightConfig.color.g, lightConfig.color.b), lightConfig.intensity, lightConfig.range)
         light.castShadow = true
