@@ -6,6 +6,8 @@ versions:
     contents:
       added:
         - More icons for stageOptions
+      changed:
+        - use styledLink in /
 
   - version: [0, 3, 8]
     date: 2022-11-14T08:00:00+0800
