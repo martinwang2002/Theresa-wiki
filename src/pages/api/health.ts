@@ -20,13 +20,13 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     const cachedVersion = redisClient.get("_s3Version")
 
-    await Promise.all([s3Version, cachedVersion]).then(([s3VersionString, cachedVersionString]) => {
+    await Promise.all([s3Version, cachedVersion]).then(async ([s3VersionString, cachedVersionString]) => {
       if (s3VersionString !== cachedVersionString) {
+        // purge data
+        await redisClient.flushdb()
+
         redisClient.set("_s3Version", s3VersionString, "EX", timeout)
           .then(async () => {
-            // purge data
-            await redisClient.flushdb()
-
             const zones = await getZones()
 
             const isZoneValids = await Promise.all(zones.map(async (zone) => {
@@ -45,13 +45,9 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
             const revalidatePaths = ["/map", ...zonesUrls]
 
-            await Promise.all(
-              revalidatePaths.map(async (path) => {
-                return res.revalidate(path)
-              })
-            ).catch((error) => {
-              console.warn("failed to purge page data", error)
-            })
+            for (const path of revalidatePaths) {
+              await res.revalidate(path)
+            }
           })
           .catch((reason) => {
             console.warn("failed to set s3Version in redis cache", reason)

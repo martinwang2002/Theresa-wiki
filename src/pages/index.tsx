@@ -10,6 +10,7 @@ import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 
+import StyledLink from "@/components/common/styledLink"
 import BattleIcon from "@/components/icon/ui_home/battleIcon"
 import Page from "@/components/page/page"
 
@@ -54,11 +55,11 @@ export default function home (): React.ReactNode {
 
       <p>
         目前应该只有
-        <Link
+        <StyledLink
           href="/map"
         >
           地图
-        </Link>
+        </StyledLink>
         可以使用。PS：可以查看3D场景。
       </p>
 

@@ -83,7 +83,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
           已知问题：
           <ul>
             <li>
-              部分阴影缺失或不正确。这是由于Three.js不支持面光源所产生的阴影。
+              部分阴影缺失或不正确。这是由于Three.js不支持面光源所产生的阴影，或摄像机不支持渲染。
             </li>
           </ul>
 

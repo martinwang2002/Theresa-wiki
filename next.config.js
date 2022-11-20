@@ -42,6 +42,9 @@ const withPWA = nextPwa({
 })
 
 const nextConfig = {
+  experimental:{
+    isrMemoryCacheSize: 0,
+  },
   images: {
     deviceSizes: [640, 750, 828, 1080],
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
