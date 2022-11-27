@@ -4,7 +4,8 @@ import { keyframes } from "@emotion/react"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 import { styled } from "@mui/system"
-import Link from "next/link"
+
+import Styledlink from "@/components/common/styledLink"
 
 const breatheKeyframes = keyframes`
   0% {
@@ -36,9 +37,8 @@ class Error extends React.PureComponent<IError> {
   public render (): React.ReactNode {
     const { errorMessage } = this.props
     return (
-      <Link
+      <Styledlink
         href="/"
-        passHref
       >
         <Container
           sx={{
@@ -54,7 +54,7 @@ class Error extends React.PureComponent<IError> {
             单击以回到首页
           </Typography>
         </Container>
-      </Link>
+      </Styledlink>
     )
   }
 }

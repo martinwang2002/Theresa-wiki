@@ -73,6 +73,12 @@
                         "ignoreNumericLiteralTypes": true
                     }
                 ],
+                "@typescript-eslint/no-type-alias": [
+                    "error",
+                    {
+                        "allowAliases": "in-unions-and-intersections"
+                    }
+                ],
                 "@typescript-eslint/no-use-before-define": "off",
                 "@typescript-eslint/object-curly-spacing": [
                     "error",

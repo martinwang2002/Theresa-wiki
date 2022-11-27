@@ -3,6 +3,7 @@ import React from "react"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 
 import MapScene from "@/components/map/scene/index"
+import PageWidget from "@/components/page/widget"
 
 import { getCustomStageInfo, getStageByStageId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
@@ -52,31 +53,33 @@ class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps> {
     const { mapData } = stageJson
 
     return (
-      <TileInfoContext.Provider value={tileInfo}>
-        <MapScene
-          mapData={mapData}
-          onTileClick={(_event, tile, index, width, height): void => {
-            const x = index % width
-            const y = height - Math.ceil(index / width)
-            console.log(`tileClick ${tile.tileKey}-maa-coordinate-${x}-${y}`)
+      <PageWidget>
+        <TileInfoContext.Provider value={tileInfo}>
+          <MapScene
+            mapData={mapData}
+            onTileClick={(_event, tile, index, width, height): void => {
+              const x = index % width
+              const y = height - Math.ceil(index / width)
+              console.log(`tileClick ${tile.tileKey}-maa-coordinate-${x}-${y}`)
 
-            const postMessage = {
-              data: {
-                height,
-                index,
-                maaLocation: [x, y],
-                tile,
-                width
-              },
-              type: "tileClick"
-            }
+              const postMessage = {
+                data: {
+                  height,
+                  index,
+                  maaLocation: [x, y],
+                  tile,
+                  width
+                },
+                type: "tileClick"
+              }
 
-            console.log("window.postMessage", postMessage)
+              console.log("window.postMessage", postMessage)
 
-            window.postMessage(postMessage)
-          }}
-        />
-      </TileInfoContext.Provider>
+              window.postMessage(postMessage)
+            }}
+          />
+        </TileInfoContext.Provider>
+      </PageWidget>
     )
   }
 }
