@@ -27,6 +27,12 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
 
+type TPaletteMode = "dark" | "light" | "system"
+
+function isTPaletteMode (value: unknown): value is TPaletteMode {
+  return ["dark", "light", "system"].includes(value as TPaletteMode)
+}
+
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 function MyApp (props: MyAppProps): React.FunctionComponentElement<MyAppProps> {
   const router = useRouter()
@@ -42,14 +48,17 @@ function MyApp (props: MyAppProps): React.FunctionComponentElement<MyAppProps> {
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
 
-  const [paletteMode, setPaletteMode] = useState<"dark" | "light" | "system">("system")
+  const [paletteMode, setPaletteMode] = useState<TPaletteMode>("system")
   const [patchedNumberMode, setPatchedNumberMode] = useState<"difference" | "result">("difference")
 
   // initial setup based on local storage
   useEffect(() => {
     // paletteMode
-    const initialPaletteMode = getLocalStorage("paletteMode") ?? "system"
-    if (initialPaletteMode === "dark" || initialPaletteMode === "light" || initialPaletteMode === "system") {
+    const queryPaletteMode = "theme" in router.query ? router.query.theme : null
+    const initialPaletteMode = getLocalStorage("paletteMode")
+    if (isTPaletteMode(queryPaletteMode)) {
+      setPaletteMode(queryPaletteMode)
+    } else if (isTPaletteMode(initialPaletteMode)) {
       setPaletteMode(initialPaletteMode)
     } else {
       setPaletteMode("system")
@@ -62,7 +71,7 @@ function MyApp (props: MyAppProps): React.FunctionComponentElement<MyAppProps> {
     } else {
       setPatchedNumberMode("difference")
     }
-  }, [prefersDarkMode])
+  }, [prefersDarkMode, router.query])
 
   const theme = useMemo(
     () => {
