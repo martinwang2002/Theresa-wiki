@@ -5,6 +5,7 @@ import CodeIcon from "@mui/icons-material/Code"
 import SecurityIcon from "@mui/icons-material/Security"
 import SupportIcon from "@mui/icons-material/Support"
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+import WidgetsIcon from "@mui/icons-material/Widgets"
 import Grid from "@mui/material/Grid"
 import { styled } from "@mui/system"
 
@@ -109,6 +110,12 @@ class Footer extends React.PureComponent {
             href="/about/svg-share"
             icon={<MissionIcon sx={{ ...iconSx, color: "primary.main", verticalAlign: "middle" }} />}
             text="SVG 图标共享"
+          />
+
+          <FooterLink
+            href="/about/widget"
+            icon={<WidgetsIcon sx={{ ...iconSx, color: "primary.main", verticalAlign: "middle" }} />}
+            text="小组件"
           />
         </Grid>
 
