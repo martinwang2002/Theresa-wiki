@@ -24,7 +24,6 @@ const MapSceneContainer = styled("div")({
   aspectRatio: "16 / 9",
   display: "flex",
   margin: "auto",
-  maxHeight: "65vh",
   overflow: "hidden",
   position: "relative",
   width: "auto"
