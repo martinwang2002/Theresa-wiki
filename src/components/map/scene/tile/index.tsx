@@ -61,9 +61,11 @@ class Tile extends React.PureComponent<ITileProps> {
 
                 <Typography
                   sx={{
-                    marginLeft: "1em"
+                    fontSize: "0.8em",
+                    marginLeft: "2em",
+                    whiteSpace: "pre-wrap"
                   }}
-                  variant="caption"
+                  variant="body1"
                 >
                   {tileInfo[tile.tileKey]?.description}
                 </Typography>

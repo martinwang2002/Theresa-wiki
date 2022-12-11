@@ -19,7 +19,7 @@ const occPercent = {
   1: "大概率",
   2: "概率掉落",
   3: "小概率",
-  4: "小概率(多物品)"
+  4: "罕见"
 }
 
 const occPercentSpecial = {
