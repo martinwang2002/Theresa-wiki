@@ -258,17 +258,36 @@ export const getCustomStageInfo = async (zoneId: string, stageId: string, perman
 
 export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
   const { tileInfo: _tileInfo } = await stageTable()
-  const tileEmptyExtra = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+  const tileInfoExtra = {
+    tile_creep: {
+      description: "可部署，可被溟痕影响",
+      isFunctional: false,
+      name: "溟痕",
+      tileKey: "tile_creep"
+    },
+    tile_creepf: {
+      description: "不可部署，可被溟痕影响",
+      isFunctional: false,
+      name: "溟痕（不可部署）",
+      tileKey: "tile_creepf"
+    },
     tile_empty: {
       description: "不可放置单位，不可通行",
       isFunctional: false,
       name: "空",
       tileKey: "tile_empty"
     }
+  } as Record<string, ITileInfo>
+
+  // add message to description
+  for (const tileKey in tileInfoExtra) {
+    tileInfoExtra[tileKey].description = `${tileInfoExtra[tileKey].description}\n\t(游戏本体未包含该内容，本描述可能不准确)`
   }
 
-  return { ..._tileInfo, ...tileEmptyExtra }
+  return {
+    ..._tileInfo,
+    ...tileInfoExtra
+  }
 }
 
 export type {
