@@ -136,6 +136,7 @@ class Item extends React.PureComponent<ItemProps, ItemState> {
           {itemBackend === ItemBackend.STATIC &&
           <Image
             alt={`Item ${itemId}`}
+            fill
             src={serializeUri({
               ...publicRuntimeConfig.THERESA_STATIC,
               path: `/api/v0/AK/CN/Android/item/id/${itemId}`

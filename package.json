@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen-license": "yarn licenses generate-disclaimer --silent > public/LICENSES.txt",
+    "gen-license": "yarn licenses generate-disclaimer > public/LICENSES.txt",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -69,5 +69,6 @@
   "pre-commit": [
     "lint",
     "type-check"
-  ]
+  ],
+  "packageManager": "yarn@3.3.0"
 }
