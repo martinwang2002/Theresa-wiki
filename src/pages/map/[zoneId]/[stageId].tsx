@@ -119,7 +119,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
       zoneId,
       zoneInfo
     },
-    revalidate: 3600
+    revalidate: 86400
   }
 }
 

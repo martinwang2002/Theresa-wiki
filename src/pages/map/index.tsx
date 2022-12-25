@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async () => {
       server: "CN",
       zones
     },
-    revalidate: 3600
+    revalidate: 86400
   }
 }
 

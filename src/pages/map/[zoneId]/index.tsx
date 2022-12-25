@@ -105,7 +105,7 @@ export const getStaticProps: GetStaticProps<ZoneProps> = async (context: Readonl
       zoneId,
       zoneInfo
     },
-    revalidate: 3600
+    revalidate: 86400
   }
 }
 
