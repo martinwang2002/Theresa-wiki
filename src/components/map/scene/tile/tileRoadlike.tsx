@@ -1,4 +1,4 @@
-import { grey, lightBlue, orange } from "@mui/material/colors"
+import { green, grey, lightBlue, orange } from "@mui/material/colors"
 import { styled } from "@mui/system"
 
 import { TileBase } from "./tileBase"
@@ -49,3 +49,7 @@ export const TileIceturLb = styled(TileIcestr)({
 export const TileIceturRb = styled(TileIcestr)({
   borderBottomRightRadius: "85%"
 })
+
+export const TileMire = styled(TileRoadlike)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "light" ? green[500] : green[900]
+}))

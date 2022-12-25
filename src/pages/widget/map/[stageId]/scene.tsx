@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
       stageJson,
       tileInfo
     },
-    revalidate: 3600
+    revalidate: 86400
   }
 }
 

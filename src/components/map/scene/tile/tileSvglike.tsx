@@ -8,9 +8,12 @@ import { lightBlue } from "@mui/material/colors"
 import type { SxProps, Theme } from "@mui/system"
 
 import TileFlystartIcon from "@/components/icon/tile/tileFlystart"
+import TileReedIcon from "@/components/icon/tile/tileReed"
 import TileStartEndIcon from "@/components/icon/tile/tileStartEnd"
 
 import { TileBase } from "./tileBase"
+import { TileForbidden } from "./tileNonRoadlike"
+import { TileRoad, TileWall } from "./tileRoadlike"
 
 const tileSxProps = {
   aspectRatio: "1",
@@ -18,7 +21,7 @@ const tileSxProps = {
   width: "100%"
 } as SxProps<Theme>
 
-const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
     {...props}
@@ -31,7 +34,7 @@ const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileFlystart.displayName = "TileFlystart"
 
-const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
     {...props}
@@ -44,7 +47,7 @@ const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileStart.displayName = "TileStart"
 
-const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
     {...props}
@@ -57,7 +60,7 @@ const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileEnd.displayName = "TileEnd"
 
-const TileTelin = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileTelin = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
     {...props}
@@ -74,7 +77,7 @@ const TileTelin = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileTelin.displayName = "TileTelout"
 
-const TileTelout = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileTelout = React.forwardRef<HTMLSpanElement>((props, ref) => (
   <TileBase
     ref={ref}
     {...props}
@@ -91,4 +94,41 @@ const TileTelout = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileTelout.displayName = "TileTelout"
 
-export { TileFlystart, TileStart, TileEnd, TileTelin, TileTelout }
+export const TileReed = React.forwardRef<HTMLSpanElement>((props, ref) => (
+  <TileRoad
+    ref={ref}
+    {...props}
+  >
+    <TileReedIcon
+      sx={tileSxProps}
+    />
+  </TileRoad>
+))
+
+TileReed.displayName = "TileReed"
+
+export const TileReedWall = React.forwardRef<HTMLSpanElement>((props, ref) => (
+  <TileWall
+    ref={ref}
+    {...props}
+  >
+    <TileReedIcon
+      sx={tileSxProps}
+    />
+  </TileWall>
+))
+
+TileReedWall.displayName = "TileReedWall"
+
+export const TileReedForbidden = React.forwardRef<HTMLSpanElement>((props, ref) => (
+  <TileForbidden
+    ref={ref}
+    {...props}
+  >
+    <TileReedIcon
+      sx={tileSxProps}
+    />
+  </TileForbidden>
+))
+
+TileReedForbidden.displayName = "TileReedForbidden"

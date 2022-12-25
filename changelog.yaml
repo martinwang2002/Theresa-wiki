@@ -1,6 +1,15 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 4, 0]
+    date: 2022-12-26T08:00:00+0800
+    contents:
+      added:
+        - use git hash as build id
+        - map scene tile (tile_reed, tile_reedf, tile_reedw, tile_mire)
+      fixed:
+        - map preview image size
+
   - version: [0, 3, 13]
     date: 2022-12-18T08:00:00+0800
     contents:
