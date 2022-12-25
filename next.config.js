@@ -49,11 +49,15 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080],
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],
     imageSizes: [128, 256, 384],
+    unoptimized: true,
   },
   poweredByHeader: false,
   reactStrictMode: true,
   output: "standalone",
   swcMinify: true,
+  generateBuildId: async () => {
+    return commitHash
+  },
   async rewrites() {
     return [
       {
@@ -79,10 +83,6 @@ const nextConfig = {
     GTAG_ID: process.env.GTAG_ID,
     THERESA_STATIC: uriJs.parse(process.env.THERESA_STATIC || "https://static.theresa.wiki"),
     CRISP_WEBSITE_ID: process.env.CRISP_WEBSITE_ID,
-  },
-  i18n: {
-    locales: ["zh"],
-    defaultLocale: "zh",
   }
 }
 
