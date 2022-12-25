@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - use git hash as build id
+        - map scene tile (tile_reed, tile_reedf, tile_reedw, tile_mire)
       fixed:
         - map preview image size
 

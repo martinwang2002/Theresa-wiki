@@ -9,8 +9,8 @@ import type { IMapDataTiles } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import { TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
-import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileRoad, TileWall } from "./tileRoadlike"
-import { TileEnd, TileFlystart, TileStart, TileTelin, TileTelout } from "./tileSvglike"
+import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
+import { TileEnd, TileFlystart, TileReed, TileReedForbidden, TileReedWall, TileStart, TileTelin, TileTelout } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
@@ -31,6 +31,10 @@ const tileElements = {
   tile_icetur_lt: <TileIceturLt />,
   tile_icetur_rb: <TileIceturRb />,
   tile_icetur_rt: <TileIceturRt />,
+  tile_mire: <TileMire />,
+  tile_reed: <TileReed />,
+  tile_reedf: <TileReedForbidden />,
+  tile_reedw: <TileReedWall />,
   tile_road: <TileRoad />,
   tile_start: <TileStart />,
   tile_telin: <TileTelin />,
