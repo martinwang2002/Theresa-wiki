@@ -5,15 +5,24 @@ import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next
 import MapScene from "@/components/map/scene/index"
 import PageWidget from "@/components/page/widget"
 
-import { getCustomStageInfo, getStageByStageId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
-import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
+import { getCustomStageInfo, getStageByStageId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IStageJson } from "@/models/gamedata/levels/index"
+import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
+
+import { sendMessage } from "../../../../models/utils/messenger"
+
+import { MapSceneWidgetAdapter } from "./adapter"
+import type { MapReadyMessage, TileClickMessage } from "./connection"
 
 interface MapSceneWidgetProps {
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
+}
+
+interface MapSceneWidgetState {
+  activeTiles: readonly number[]
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -47,22 +56,47 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
   }
 }
 
-class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps> {
+class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps, MapSceneWidgetState> {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  public constructor (props: Readonly<MapSceneWidgetProps>) {
+    super(props)
+
+    this.state = {
+      activeTiles: []
+    }
+  }
+
+  public componentDidMount (): void {
+    sendMessage<MapReadyMessage>(window.parent, "*", { type: "mapReady" }).catch(console.warn)
+  }
+
   public render (): React.ReactNode {
     const { stageJson, tileInfo } = this.props
+    const { activeTiles } = this.state
+
     const { mapData } = stageJson
 
     return (
       <PageWidget>
         <TileInfoContext.Provider value={tileInfo}>
+          <MapSceneWidgetAdapter
+            mapData={mapData}
+            setActiveTiles={(tiles): void => {
+              this.setState(
+                { activeTiles: tiles }
+              )
+            }}
+          />
+
           <MapScene
+            activeTiles={activeTiles}
             mapData={mapData}
             onTileClick={(_event, tile, index, width, height): void => {
               const x = index % width
               const y = height - Math.floor(index / width)
               console.log(`tileClick ${tile.tileKey}-maa-coordinate-${x}-${y}`)
 
-              const postMessage = {
+              const tileClickMessage: TileClickMessage = {
                 data: {
                   height,
                   index,
@@ -73,9 +107,7 @@ class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps> {
                 type: "tileClick"
               }
 
-              console.log("window.postMessage", postMessage)
-
-              window.postMessage(postMessage)
+              sendMessage(window.parent, "*", tileClickMessage).catch(console.warn)
             }}
           />
         </TileInfoContext.Provider>
