@@ -9,6 +9,7 @@ versions:
       fixed:
         - tile_reedf should be tileReedFloor instead of tileReedForbidden
         - activeTiles props error
+        - climb tower return default zoneInfo for some invalid zones
 
   - version: [0, 4, 0]
     date: 2022-12-26T08:00:00+0800
