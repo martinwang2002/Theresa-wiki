@@ -1,5 +1,5 @@
-import type { IMapData } from "../../../../models/gamedata/levels"
-import { useMessage } from "../../../../models/utils/messenger"
+import type { IMapData } from "@/models/gamedata/levels"
+import { useMessage } from "@/models/utils/messenger"
 
 import type { SetMapStateMessage } from "./connection"
 

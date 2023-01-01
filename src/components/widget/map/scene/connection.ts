@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
-import type { IMapDataTiles } from "../../../../models/gamedata/levels"
-import type { Message } from "../../../../models/utils/messenger"
+import type { IMapDataTiles } from "@/models/gamedata/levels"
+import type { Message } from "@/models/utils/messenger"
 
 export type MapReadyMessage = Message<"mapReady">
 

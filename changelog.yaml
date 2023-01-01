@@ -4,8 +4,11 @@ versions:
   - version: [0, 4, 1]
     date: 2023-01-02T08:00:00+0800
     contents:
+      added:
+        - maa map widget with messenger @guansss (github PR \#2)
       fixed:
         - tile_reedf should be tileReedFloor instead of tileReedForbidden
+        - activeTiles props error
 
   - version: [0, 4, 0]
     date: 2022-12-26T08:00:00+0800

@@ -4,17 +4,15 @@ import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next
 
 import MapScene from "@/components/map/scene/index"
 import PageWidget from "@/components/page/widget"
+import { MapSceneWidgetAdapter } from "@/components/widget/map/scene/adapter"
+import type { MapReadyMessage, TileClickMessage } from "@/components/widget/map/scene/connection"
 
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { getCustomStageInfo, getStageByStageId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IStageJson } from "@/models/gamedata/levels/index"
 import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
-
-import { sendMessage } from "../../../../models/utils/messenger"
-
-import { MapSceneWidgetAdapter } from "./adapter"
-import type { MapReadyMessage, TileClickMessage } from "./connection"
+import { sendMessage } from "@/models/utils/messenger"
 
 interface MapSceneWidgetProps {
   stageJson: IStageJson
