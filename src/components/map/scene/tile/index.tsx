@@ -1,5 +1,8 @@
 import React from "react"
 
+import PlaceIcon from "@mui/icons-material/Place"
+import type { SxProps, Theme } from "@mui/material"
+import { alpha } from "@mui/material"
 import { grey } from "@mui/material/colors"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
@@ -10,10 +13,11 @@ import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
 import { TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
 import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
-import { TileEnd, TileFlystart, TileReed, TileReedForbidden, TileReedWall, TileStart, TileTelin, TileTelout } from "./tileSvglike"
+import { TileEnd, TileFlystart, TileReed, TileReedFloor, TileReedWall, TileStart, TileTelin, TileTelout } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
+  active?: boolean
   tile: IMapDataTiles
 }
 
@@ -33,7 +37,7 @@ const tileElements = {
   tile_icetur_rt: <TileIceturRt />,
   tile_mire: <TileMire />,
   tile_reed: <TileReed />,
-  tile_reedf: <TileReedForbidden />,
+  tile_reedf: <TileReedFloor />,
   tile_reedw: <TileReedWall />,
   tile_road: <TileRoad />,
   tile_start: <TileStart />,
@@ -43,10 +47,27 @@ const tileElements = {
 } as Record<string, JSX.Element | undefined>
 
 class Tile extends React.PureComponent<ITileProps> {
+  private static readonly defaultProps = {
+    active: false
+  }
+
   public render (): React.ReactNode {
-    const { tile } = this.props
+    const { active, tile } = this.props
 
     const tileElement = tileElements[tile.tileKey] ?? <TileUndefined />
+
+    const activeIconStyles: SxProps<Theme> = theme => ({
+      backgroundColor: alpha(theme.palette.primary.light, +"0.5"),
+      bottom: 0,
+      color: "white",
+      height: "100%",
+      left: 0,
+      padding: "20%",
+      position: "absolute",
+      right: 0,
+      top: 0,
+      width: "100%"
+    })
 
     return (
       <TileInfoContext.Consumer>
@@ -90,11 +111,20 @@ class Tile extends React.PureComponent<ITileProps> {
 
           return (
             <Tooltip
+              PopperProps={{
+                sx: {
+                  pointerEvents: "none"
+                }
+              }}
               arrow
               placement="top"
               title={tooltipContent}
             >
-              {tileElement}
+              <div style={{ position: "relative" }}>
+                {tileElement}
+
+                {active ? <PlaceIcon sx={activeIconStyles} /> : null}
+              </div>
             </Tooltip>
           )
         }}

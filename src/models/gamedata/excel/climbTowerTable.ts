@@ -36,7 +36,24 @@ export const climbTowerTable = cacheable(async (): Promise<IRoguelikeTopicTable>
 export const getTowerByZoneId = async (zoneId: string): Promise<ITowerInfo> => {
   const { towers } = await climbTowerTable()
 
-  return towers[zoneId]
+  if (zoneId in towers) {
+    return towers[zoneId]
+  } else {
+    return {
+      bossId: null,
+      desc: "",
+      hiddenMedalId: null,
+      id: "",
+      levels: [],
+      medalId: null,
+      name: "",
+      preTowerId: null,
+      sortId: 0,
+      subName: "",
+      taskInfo: null,
+      towerType: ""
+    } as ITowerInfo
+  }
 }
 
 export type { ITowerInfo }

@@ -12,8 +12,7 @@ import TileReedIcon from "@/components/icon/tile/tileReed"
 import TileStartEndIcon from "@/components/icon/tile/tileStartEnd"
 
 import { TileBase } from "./tileBase"
-import { TileForbidden } from "./tileNonRoadlike"
-import { TileRoad, TileWall } from "./tileRoadlike"
+import { TileFloor, TileRoad, TileWall } from "./tileRoadlike"
 
 const tileSxProps = {
   aspectRatio: "1",
@@ -120,15 +119,15 @@ export const TileReedWall = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileReedWall.displayName = "TileReedWall"
 
-export const TileReedForbidden = React.forwardRef<HTMLSpanElement>((props, ref) => (
-  <TileForbidden
+export const TileReedFloor = React.forwardRef<HTMLSpanElement>((props, ref) => (
+  <TileFloor
     ref={ref}
     {...props}
   >
     <TileReedIcon
       sx={tileSxProps}
     />
-  </TileForbidden>
+  </TileFloor>
 ))
 
-TileReedForbidden.displayName = "TileReedForbidden"
+TileReedFloor.displayName = "TileReedFloor"
