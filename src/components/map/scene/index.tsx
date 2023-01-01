@@ -9,6 +9,7 @@ import type { IMapData, IMapDataTiles } from "@/models/gamedata/levels/index"
 import Tile from "./tile"
 
 interface IMapSceneProps {
+  activeTiles: readonly number[]
   mapData: IMapData
   onTileClick?: (
     // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -35,7 +36,7 @@ class MapScene extends React.PureComponent<IMapSceneProps> {
   }
 
   public render (): React.ReactNode {
-    const { mapData, onTileClick } = this.props
+    const { activeTiles, mapData, onTileClick } = this.props
     const { tiles, width, height } = mapData
 
     return (
@@ -64,6 +65,7 @@ class MapScene extends React.PureComponent<IMapSceneProps> {
                 xs={1}
               >
                 <Tile
+                  active={activeTiles.includes(index)}
                   tile={tile}
                 />
               </Grid>
