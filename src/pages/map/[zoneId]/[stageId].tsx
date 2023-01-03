@@ -23,6 +23,7 @@ import { getBattleOnGameReadyBgmBankByBgmEventKey } from "@/models/gamedata/exce
 import type { IBgmBank } from "@/models/gamedata/excel/audioData"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import type { IHandbookInfoTableStageInfo } from "@/models/gamedata/excel/handbookInfoTable"
 import { getCustomStageInfo, getStageIdsByZoneId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { ICustomRoguelikeTopicDetailStageInfo, ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
 import { getCustomZoneInfo, zoneIds } from "@/models/gamedata/excel/zoneTable"
@@ -37,7 +38,7 @@ import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
-  stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo
+  stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo
   stageJson: IStageJson
   tileInfo: Record<string, ITileInfo>
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
@@ -78,6 +79,12 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
   const permanent = zoneIdFromParams.startsWith("permanent")
 
   const stageInfo = await getCustomStageInfo(zoneIdFromParams, stageId, permanent)
+
+  if (stageInfo === undefined) {
+    return {
+      notFound: true
+    }
+  }
 
   const { levelId, zoneId } = stageInfo
 
@@ -126,7 +133,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
     const { bgmBank, server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
-    const { difficulty } = stageInfo
+    const difficulty = "difficulty" in stageInfo ? stageInfo.difficulty : undefined
     const { mapData, options, runes } = stageJson
 
     const displayZoneName = getDisplayZoneName(zoneInfo)
@@ -192,7 +199,7 @@ class Map extends React.PureComponent<MapProps> {
             {`${stageInfo.code} ${stageInfo.name}`}
           </span>
 
-          {stageInfo.difficulty === "FOUR_STAR" &&
+          {difficulty === "FOUR_STAR" &&
           <TopBadge
             sx={{
               backgroundColor: "error.main"
@@ -258,7 +265,7 @@ class Map extends React.PureComponent<MapProps> {
 
               <StageOptions
                 diffGroup={stageInfo.diffGroup}
-                difficulty={difficulty}
+                difficulty={difficulty ?? "NONE"}
                 runes={runes}
                 stageOptions={options}
               />
