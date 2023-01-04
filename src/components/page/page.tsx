@@ -52,10 +52,7 @@ const PlaceboDiv = styled("div")({
   zIndex: 1150
 })
 
-const appBarHeight = 56
-const appBarHeightSm = 64
-
-const PageDiv = styled("div")(({ theme }) => ({
+const PageDiv = styled("div")({
   "&::-webkit-scrollbar": {
     width: 8
   },
@@ -71,14 +68,8 @@ const PageDiv = styled("div")(({ theme }) => ({
     backgroundColor: "#12354216"
   },
   height: "100vh",
-  overflow: "auto",
-  ...{
-    scrollPaddingTop: appBarHeight,
-    [theme.breakpoints.up("sm")]: {
-      scrollPaddingTop: appBarHeightSm
-    }
-  }
-}))
+  overflow: "auto"
+})
 
 class Page extends React.PureComponent<PageProps, PageState> {
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types

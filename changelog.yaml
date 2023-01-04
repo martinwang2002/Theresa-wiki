@@ -6,6 +6,8 @@ versions:
     contents:
       added:
         - widget map scene add memory stages
+      fixed:
+        - opening settings drawer causes page scroll
 
   - version: [0, 4, 1]
     date: 2023-01-02T08:00:00+0800
