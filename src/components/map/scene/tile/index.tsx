@@ -11,7 +11,7 @@ import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IMapDataTiles } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 
-import { TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
+import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
 import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
 import { TileEnd, TileFlystart, TileReed, TileReedFloor, TileReedWall, TileStart, TileTelin, TileTelout } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
@@ -22,6 +22,8 @@ interface ITileProps {
 }
 
 const tileElements = {
+  tile_deepsea: <TileDeepSea />,
+  tile_deepwater: <TileDeepWater />,
   tile_empty: <TileEmpty />,
   tile_end: <TileEnd />,
   tile_fence: <TileFence />,

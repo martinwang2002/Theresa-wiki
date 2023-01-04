@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-multi-comp */
 import React from "react"
 
@@ -20,10 +19,9 @@ const tileSxProps = {
   width: "100%"
 } as SxProps<Theme>
 
-export const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileFlystart = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileBase
     ref={ref}
-    {...props}
   >
     <TileFlystartIcon
       sx={{ ...tileSxProps, color: "#FF3333" } as SxProps<Theme>}
@@ -33,10 +31,9 @@ export const TileFlystart = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileFlystart.displayName = "TileFlystart"
 
-export const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileStart = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileBase
     ref={ref}
-    {...props}
   >
     <TileStartEndIcon
       sx={{ ...tileSxProps, color: "#FF3333" } as SxProps<Theme>}
@@ -46,10 +43,9 @@ export const TileStart = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileStart.displayName = "TileStart"
 
-export const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileEnd = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileBase
     ref={ref}
-    {...props}
   >
     <TileStartEndIcon
       sx={{ ...tileSxProps, color: "#34A1FF" } as SxProps<Theme>}
@@ -59,10 +55,9 @@ export const TileEnd = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileEnd.displayName = "TileEnd"
 
-export const TileTelin = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileTelin = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileBase
     ref={ref}
-    {...props}
   >
     <LoginIcon
       sx={{
@@ -76,10 +71,9 @@ export const TileTelin = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileTelin.displayName = "TileTelout"
 
-export const TileTelout = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileTelout = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileBase
     ref={ref}
-    {...props}
   >
     <LogoutIcon
       sx={{
@@ -93,10 +87,9 @@ export const TileTelout = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileTelout.displayName = "TileTelout"
 
-export const TileReed = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileReed = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileRoad
     ref={ref}
-    {...props}
   >
     <TileReedIcon
       sx={tileSxProps}
@@ -106,10 +99,9 @@ export const TileReed = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileReed.displayName = "TileReed"
 
-export const TileReedWall = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileReedWall = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileWall
     ref={ref}
-    {...props}
   >
     <TileReedIcon
       sx={tileSxProps}
@@ -119,10 +111,9 @@ export const TileReedWall = React.forwardRef<HTMLSpanElement>((props, ref) => (
 
 TileReedWall.displayName = "TileReedWall"
 
-export const TileReedFloor = React.forwardRef<HTMLSpanElement>((props, ref) => (
+export const TileReedFloor = React.forwardRef<HTMLSpanElement>((_props, ref) => (
   <TileFloor
     ref={ref}
-    {...props}
   >
     <TileReedIcon
       sx={tileSxProps}

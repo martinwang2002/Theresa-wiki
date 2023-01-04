@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - widget map scene add memory stages
+        - tile deepwater and deepsea
       fixed:
         - opening settings drawer causes page scroll
 
