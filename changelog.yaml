@@ -7,6 +7,7 @@ versions:
       added:
         - widget map scene add memory stages
         - tile deepwater and deepsea
+        - send message to parent frame when there is error
       fixed:
         - opening settings drawer causes page scroll
         - service worker urlPattern with query parameters

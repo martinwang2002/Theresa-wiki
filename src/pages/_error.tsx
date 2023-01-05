@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import type { NextPageContext } from "next"
 import Head from "next/head"
 
 import Error from "@/components/page/error"
 import Page from "@/components/page/page"
+
+import { sendMessage } from "@/models/utils/messenger"
 
 interface ErrorComponentProps {
   err: string | undefined
@@ -13,6 +15,10 @@ interface ErrorComponentProps {
 }
 
 function ErrorComponent ({ statusCode, statusMessage, err }: Readonly<ErrorComponentProps>): JSX.Element {
+  useEffect(() => {
+    sendMessage(window.parent, "*", { reason: "internalServerError", type: "error" }).catch(console.warn)
+  }, [])
+
   return (
     <Page>
       <Head>
