@@ -9,6 +9,7 @@ versions:
         - tile deepwater and deepsea
       fixed:
         - opening settings drawer causes page scroll
+        - service worker urlPattern with query parameters
 
   - version: [0, 4, 1]
     date: 2023-01-02T08:00:00+0800
