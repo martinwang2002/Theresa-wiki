@@ -1,7 +1,7 @@
 import type { IMapData } from "@/models/gamedata/levels"
 import { useMessage } from "@/models/utils/messenger"
 
-import type { SetMapStateMessage } from "./connection"
+import type { CheckMapMessage, SetMapStateMessage } from "./connection"
 
 interface MapSceneWidgetAdapterProps {
   mapData: IMapData
@@ -11,6 +11,10 @@ interface MapSceneWidgetAdapterProps {
 /** The adapter component is for being able to use hooks. */
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export function MapSceneWidgetAdapter ({ mapData, setActiveTiles }: Readonly<MapSceneWidgetAdapterProps>): null {
+  useMessage<CheckMapMessage>("*", "checkMap", ({ reply }): void => {
+    reply({ type: "mapReady" }).catch(console.error)
+  })
+
   useMessage<SetMapStateMessage>("*", "setMapState", (e): void => {
     const { activeTiles } = e.message.data
 
