@@ -14,8 +14,8 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2)$/i,
-    handler: "StaleWhileRevalidate",
+    urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2)/i,
+    handler: "CacheFirst",
     options: {
       cacheName: "static-font-assets",
       expiration: {
@@ -25,7 +25,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
+    urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)/i,
     handler: "StaleWhileRevalidate",
     options: {
       cacheName: "static-image-assets",
@@ -47,7 +47,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:mp3|wav|ogg)$/i,
+    urlPattern: /\.(?:mp3|wav|ogg)/i,
     handler: "CacheFirst",
     options: {
       rangeRequests: true,
@@ -59,7 +59,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:mp4)$/i,
+    urlPattern: /\.(?:mp4)/i,
     handler: "CacheFirst",
     options: {
       rangeRequests: true,
@@ -71,7 +71,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:js)$/i,
+    urlPattern: /\.(?:js)/i,
     handler: "StaleWhileRevalidate",
     options: {
       cacheName: "static-js-assets",
@@ -82,7 +82,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:css|less)$/i,
+    urlPattern: /\.(?:css|less)/i,
     handler: "StaleWhileRevalidate",
     options: {
       cacheName: "static-style-assets",
@@ -93,7 +93,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\/_next\/data\/.+\/.+\.json$/i,
+    urlPattern: /\/_next\/data\/.+\/.+\.json/i,
     handler: "StaleWhileRevalidate",
     options: {
       cacheName: "next-data",
@@ -104,7 +104,7 @@ module.exports = [
     }
   },
   {
-    urlPattern: /\.(?:json|xml|csv)$/i,
+    urlPattern: /\.(?:json|xml|csv)/i,
     handler: "NetworkFirst",
     options: {
       cacheName: "static-data-assets",

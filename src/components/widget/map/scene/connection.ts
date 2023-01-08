@@ -2,7 +2,11 @@
 import type { IMapDataTiles } from "@/models/gamedata/levels"
 import type { Message } from "@/models/utils/messenger"
 
+/** Tells that the map is ready. */
 export type MapReadyMessage = Message<"mapReady">
+
+/** Checks if the map is ready. The map should reply with a MapReadyMessage. */
+export type CheckMapMessage = Message<"checkMap">
 
 export type TileClickMessage = Message<
 "tileClick",

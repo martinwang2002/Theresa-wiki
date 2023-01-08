@@ -4,11 +4,7 @@ import { useEffect } from "react"
 const DEBUG = true as boolean
 
 let messengerName: string
-messengerName = ""
-
-if (typeof window !== "undefined") {
-  messengerName = location.host
-}
+messengerName = "Theresa"
 
 // eslint-disable-next-line @typescript-eslint/no-type-alias
 export type Message<T extends string = string, D = undefined> = D extends undefined ? BaseMessage<T> : PayloadMessage<T, D>
@@ -61,6 +57,9 @@ export class MessengerEvent<M extends Message = Message> extends Event {
     this.source = params.source
     this.origin = params.origin
     this.message = params.message
+
+    // allow the method to be destructured etc.
+    this.reply = this.reply.bind(this)
   }
 
   /**
@@ -169,7 +168,7 @@ export async function sendMessage<M extends Message> (
       }, timeout)
     }
 
-    messenger.removeEventListener(eventType, handler)
+    messenger.addEventListener(eventType, handler)
   })
 }
 

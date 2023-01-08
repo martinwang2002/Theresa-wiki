@@ -3,6 +3,8 @@ import { serialize as serializeUri } from "uri-js"
 import cacheable from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
+import { handbookInfoTable } from "./handbookInfoTable"
+import type { IHandbookInfoTableStageInfo } from "./handbookInfoTable"
 import { retroTable } from "./retroTable"
 import type { IRoguelikeTopicDetailStageInfo } from "./roguelikeTopicTable"
 import { roguelikeTopicTable } from "./roguelikeTopicTable"
@@ -164,7 +166,7 @@ export const getStagesByZoneId = async (zoneId: string): Promise<(ICustomRogueli
   }
 }
 
-export const getStageByStageId = async (stageId: string): Promise<(ICustomRoguelikeTopicDetailStageInfo | IStageInfo | undefined)> => {
+export const getStageByStageId = async (stageId: string): Promise<(ICustomRoguelikeTopicDetailStageInfo | IHandbookInfoTableStageInfo | IStageInfo | undefined)> => {
   const stageIdToLodashed = stageIdToLodash(stageId)
   const { stages } = await stageTable()
 
@@ -194,6 +196,18 @@ export const getStageByStageId = async (stageId: string): Promise<(ICustomRoguel
       }
     }
   }
+
+  const { handbookStageData } = await handbookInfoTable()
+
+  const handbookStages = Object.values(handbookStageData).filter((stage) => {
+    return stage.stageId === stageId
+  })
+
+  if (handbookStages.length) {
+    return handbookStages[0]
+  }
+
+  return undefined
 }
 
 export const getStageIdsByZoneId = async (zoneId: string): Promise<string[]> => {
@@ -210,40 +224,16 @@ interface ICustomStageInfo extends IStageInfo {
   _unlockConditionStageInfo: Record<string, Pick<IStageInfo, "code" | "difficulty" | "isStoryOnly" | "name" | "stageId" | "zoneId">>
 }
 
-export const getCustomStageInfo = async (zoneId: string, stageId: string, permanent = false): Promise<ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo> => {
-  const convertedStageId = stageIdToHash(stageId)
-
-  let result: ICustomStageInfo
-
-  if (permanent) {
-    const { stageList } = await retroTable()
-    result = stageList[convertedStageId] as ICustomStageInfo
-  } else {
-    const { stages } = await stageTable()
-
-    if (Object.keys(stages).includes(convertedStageId)) {
-      result = stages[convertedStageId] as ICustomStageInfo
-    } else {
-      const { details } = await roguelikeTopicTable()
-      const { stages: rougelikeStages } = details[zoneId]
-      const rougelikeResult = {
-        ...rougelikeStages[convertedStageId],
-        stageId,
-        zoneId
-      } as ICustomRoguelikeTopicDetailStageInfo
-
-      return rougelikeResult
-    }
-  }
-
-  result._unlockConditionStageInfo = {}
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+const getUnlockConditionStageInfo = async (stageInfo: ICustomStageInfo): Promise<ICustomStageInfo> => {
+  stageInfo._unlockConditionStageInfo = {}
 
   // query for extra stage info data for rendering
-  for (const unlockCondition of result.unlockCondition) {
+  for (const unlockCondition of stageInfo.unlockCondition) {
     const _stageId = unlockCondition.stageId
     const extraStageInfo = await getStageInfo(_stageId)
 
-    result._unlockConditionStageInfo[_stageId] = {
+    stageInfo._unlockConditionStageInfo[_stageId] = {
       code: extraStageInfo.code,
       difficulty: extraStageInfo.difficulty,
       isStoryOnly: extraStageInfo.isStoryOnly,
@@ -253,7 +243,51 @@ export const getCustomStageInfo = async (zoneId: string, stageId: string, perman
     }
   }
 
-  return result
+  return stageInfo
+}
+
+export const getCustomStageInfo = async (zoneId: string, stageId: string, permanent = false): Promise<ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo | undefined> => {
+  const convertedStageId = stageIdToHash(stageId)
+
+  let result: ICustomStageInfo
+
+  if (permanent) {
+    const { stageList } = await retroTable()
+    result = stageList[convertedStageId] as ICustomStageInfo
+    return getUnlockConditionStageInfo(result)
+  }
+
+  const { stages } = await stageTable()
+  if (Object.keys(stages).includes(convertedStageId)) {
+    result = stages[convertedStageId] as ICustomStageInfo
+    return getUnlockConditionStageInfo(result)
+  }
+
+  const { details } = await roguelikeTopicTable()
+  if (zoneId in details) {
+    const { stages: rougelikeStages } = details[zoneId]
+    if (convertedStageId in rougelikeStages) {
+      const rougelikeResult = {
+        ...rougelikeStages[convertedStageId],
+        stageId,
+        zoneId
+      } as ICustomRoguelikeTopicDetailStageInfo
+
+      return rougelikeResult
+    } else {
+      return undefined
+    }
+  }
+
+  const { handbookStageData } = await handbookInfoTable()
+  const handbookStages = Object.values(handbookStageData).filter((stage) => {
+    return stage.stageId === convertedStageId
+  }
+  )
+
+  if (handbookStages.length) {
+    return handbookStages[0]
+  }
 }
 
 export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {

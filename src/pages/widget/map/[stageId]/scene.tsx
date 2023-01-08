@@ -39,6 +39,10 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
 
   const stageInfo = await getCustomStageInfo(stage.zoneId, stageId, false)
 
+  if (stageInfo === undefined) {
+    return { notFound: true }
+  }
+
   const { levelId } = stageInfo
 
   const stageJson = await getStageJson(levelId)
