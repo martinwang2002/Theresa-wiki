@@ -18,7 +18,8 @@ export function MapSceneWidgetAdapter ({ mapData, setActiveTiles }: Readonly<Map
   useMessage<SetMapStateMessage>("*", "setMapState", (e): void => {
     const { activeTiles } = e.message.data
 
-    const indices = activeTiles.map(({ x, y }) => (mapData.height - y) * mapData.width + x)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const indices = activeTiles.map(({ x, y }) => (mapData.height - (y + 1)) * mapData.width + x)
     const validIndices = indices.filter(tileIndex => tileIndex >= +"0" && tileIndex < mapData.tiles.length)
 
     setActiveTiles(validIndices)
