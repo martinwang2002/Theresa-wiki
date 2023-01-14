@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 4, 3]
+    date: 2023-01-16T08:00:00+0800
+    contents:
+      fixed:
+        - google analytics load order
+
   - version: [0, 4, 2]
     date: 2023-01-09T08:00:00+0800
     contents:

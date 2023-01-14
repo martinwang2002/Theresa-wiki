@@ -8,17 +8,12 @@ import { ThemeProvider, createTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import type { AppProps } from "next/app"
 import { useRouter } from "next/router"
-import Script from "next/script"
-
-import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import createEmotionCache from "@/models/createEmotionCache"
 import { SettingsContext } from "@/models/reactContext/settingsContext"
 import themeOptions from "@/models/theme"
 import { pageview } from "@/models/utils/gtag"
 import { getLocalStorage } from "@/models/utils/localStorage"
-
-const { GTAG_ID } = publicRuntimeConfig
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -95,46 +90,21 @@ function MyApp (props: MyAppProps): React.FunctionComponentElement<MyAppProps> {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}
-        strategy="afterInteractive"
-      />
+    <CacheProvider value={emotionCache}>
+      <SettingsContext.Provider value={settingsValue}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 
-      <Script
-        dangerouslySetInnerHTML={{
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GTAG_ID}', {
-                ${process.env.NODE_ENV === "development" ? "'debug_mode': true," : ""}
-                'page_path': window.location.pathname,
-                'cookie_prefix': 'theresaGa',
-              });
-            `
-        }}
-        id="gtag-init"
-        strategy="afterInteractive"
-      />
+          <CssBaseline />
 
-      <CacheProvider value={emotionCache}>
-        <SettingsContext.Provider value={settingsValue}>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <Component
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...pageProps}
+          />
 
-            <CssBaseline />
-
-            <Component
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...pageProps}
-            />
-
-          </ThemeProvider>
-        </SettingsContext.Provider>
-      </CacheProvider>
-    </>
+        </ThemeProvider>
+      </SettingsContext.Provider>
+    </CacheProvider>
   )
 }
 
