@@ -95,7 +95,8 @@ class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps, MapSceneWi
             mapData={mapData}
             onTileClick={(_event, tile, index, width, height): void => {
               const x = index % width
-              const y = height - Math.floor(index / width)
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              const y = height - (Math.floor(index / width) + 1)
               console.log(`tileClick ${tile.tileKey}-maa-coordinate-${x}-${y}`)
 
               const tileClickMessage: TileClickMessage = {
