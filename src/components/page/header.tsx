@@ -13,12 +13,21 @@ const GrowingDiv = styled("div")({
   flex: "1 1 auto"
 })
 
+interface HeaderProps {
+  forwardRef?: React.Ref<HTMLDivElement>
+}
+
 interface HeaderState {
   settingsOpen: boolean
 }
 
-class Header extends React.PureComponent<Record<string, never>, HeaderState> {
-  public constructor (props: Readonly<Record<string, never>>) {
+class Header extends React.PureComponent<HeaderProps, HeaderState> {
+  private static readonly defaultProps: HeaderProps = {
+    forwardRef: undefined
+  }
+
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  public constructor (props: Readonly<HeaderProps>) {
     super(props)
 
     this.state = {
@@ -39,10 +48,15 @@ class Header extends React.PureComponent<Record<string, never>, HeaderState> {
   }
 
   public render (): React.ReactNode {
+    const { forwardRef } = this.props
     const { settingsOpen } = this.state
     return (
-      <AppBar position="sticky">
-        <Toolbar>
+      <AppBar
+        position="sticky"
+      >
+        <Toolbar
+          ref={forwardRef}
+        >
           <Title />
 
           <GrowingDiv />
@@ -65,4 +79,5 @@ class Header extends React.PureComponent<Record<string, never>, HeaderState> {
   }
 }
 
-export default Header
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+export default React.forwardRef((props, ref: React.Ref<HTMLDivElement>) => <Header forwardRef={ref} />)

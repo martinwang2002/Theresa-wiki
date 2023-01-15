@@ -81,6 +81,10 @@ class Page extends React.PureComponent<PageProps, PageState> {
       showProgressBar: false,
       showServiceWorkerSnackbar: false
     }
+
+    // initialize ref
+    this.headerRef = React.createRef()
+
     // prevent this.state undefined error
     this.handleTransitionEnd = this.handleTransitionEnd.bind(this)
   }
@@ -128,6 +132,8 @@ class Page extends React.PureComponent<PageProps, PageState> {
       })
     }
   }
+
+  private readonly headerRef: React.RefObject<HTMLDivElement>
 
   private readonly registerServiceWorker = (): void => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator && window.workbox !== undefined) {
@@ -189,8 +195,15 @@ class Page extends React.PureComponent<PageProps, PageState> {
   public render (): React.ReactNode {
     const { children } = this.props
     const { indeterminate, progress, showServiceWorkerSnackbar, showProgressBar } = this.state
+    const { current: headerRefCurrent } = this.headerRef
+    const minimumAppBarHeight = 56
+
     return (
-      <PageDiv>
+      <PageDiv
+        sx={{
+          scrollPaddingTop: headerRefCurrent ? headerRefCurrent.clientHeight : minimumAppBarHeight
+        }}
+      >
         <Head>
           <meta charSet="utf-8" />
 
@@ -290,7 +303,7 @@ class Page extends React.PureComponent<PageProps, PageState> {
           />}
         </PlaceboDiv>
 
-        <Header />
+        <Header ref={this.headerRef} />
 
         <Container
           maxWidth="lg"
