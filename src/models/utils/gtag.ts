@@ -1,15 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const { GTAG_ID } = publicRuntimeConfig
 
 declare global {
   interface Window {
-    gtag: any
+    gtag: ((command: string, targetId: string, params: Readonly<Record<string, unknown>>) => void)
   }
 }
 
@@ -21,17 +16,17 @@ export const pageview = (url: string): void => {
 }
 
 interface IGtagEvent {
-  action: any
-  category: any
-  label: any
-  value: any
+  action: string
+  category: string | null
+  label: string | null
+  [key: string]: unknown
 }
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value }: Readonly<IGtagEvent>): void => {
+export const gtagEvent = ({ action, category, label, ...value }: Readonly<IGtagEvent>): void => {
   window.gtag("event", action, {
     event_category: category,
     event_label: label,
-    value
+    ...value
   })
 }

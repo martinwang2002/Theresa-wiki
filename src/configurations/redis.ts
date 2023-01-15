@@ -32,14 +32,17 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   })
 }
 
-const cacheable = <T extends unknown[], U>(fn: (...args: T) => Promise<U> | U, options: Readonly<ICacheable>) => {
-  return async (...args: T): Promise<U> => {
+const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
+  fn: (...args: FunctionArguments) => FunctionReturn | Promise<FunctionReturn>,
+  options: Readonly<ICacheable>
+) => {
+  return async (...args: FunctionArguments): Promise<FunctionReturn> => {
     try {
-      let result: U
+      let result: FunctionReturn
       const cacheKey = options.cacheKey + args.join("_")
       result = await redisClient.get(cacheKey).then(async (redisResult) => {
         if (redisResult !== null) {
-          return JSON.parse(redisResult) as U
+          return JSON.parse(redisResult) as FunctionReturn
         } else {
           result = await fn(...args)
           await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl)

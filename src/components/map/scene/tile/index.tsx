@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography"
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IMapDataTiles } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
+import { gtagEvent } from "@/models/utils/gtag"
 
 import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
 import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
@@ -119,6 +120,17 @@ class Tile extends React.PureComponent<ITileProps> {
                 }
               }}
               arrow
+              onOpen={(): void => {
+                // gtag analytics on opened undefined tile
+                if (tileElement.type === TileUndefined) {
+                  gtagEvent({
+                    action: "tileUndefined",
+                    category: "map",
+                    label: "onOpen",
+                    tileKey: tile.tileKey
+                  })
+                }
+              }}
               placement="top"
               title={tooltipContent}
             >

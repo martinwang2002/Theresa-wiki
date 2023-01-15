@@ -4,12 +4,13 @@ import Box from "@mui/material/Box"
 
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { GamedataContext } from "@/models/reactContext/gamedataContext"
+import { gtagEvent } from "@/models/utils/gtag"
 
 const zero = 0
 
 const getColorFromAkFormatString = (akFormatString: string): string => {
   // extract color from <color=#FFFFFF>{0}</color>
-  const regexMatch = [...akFormatString.matchAll(/<color=([^>]*)>\{0\}<\/color>/g)][0]
+  const regexMatch = [...akFormatString.matchAll(/<color=([^>]*)>(.*)<\/color>/g)][0]
   return regexMatch[1]
 }
 
@@ -23,13 +24,31 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
   let stringSliceIndex
   stringSliceIndex = zero
 
-  for (const regexMatch of replacedBackSlashDescription.matchAll(/<@([^>]*)>(.*?)<\/>/g)) {
+  for (const regexMatch of replacedBackSlashDescription.matchAll(/<([^>]*)>(.*?)<\/([^>]*)>/g)) {
     // see https://stackoverflow.com/a/3075532
     // use reluctant string mode instead of greedy
 
-    const akFormatStringKey: string = regexMatch[1]
-    const akFormatString = richTextStyles[akFormatStringKey]
-    const color = getColorFromAkFormatString(akFormatString)
+    let color: string
+    color = "#fff"
+    if (regexMatch[1].startsWith("@")) {
+      // use styles defined in richTextStyles
+      const akFormatStringKey: string = regexMatch[1]
+      const akFormatStringKeyIndexWithoutAt = 1
+      const akFormatString = richTextStyles[akFormatStringKey.slice(akFormatStringKeyIndexWithoutAt)]
+      color = getColorFromAkFormatString(akFormatString)
+    } else if (regexMatch[1].startsWith("color")) {
+      // use inline color
+      // regexMatch[0] gives the whole string
+      color = getColorFromAkFormatString(regexMatch[0])
+    } else {
+      gtagEvent({
+        action: "error",
+        akFormatStringKey: regexMatch[1],
+        category: "map.stageInfo.stageInfoDescription",
+        label: "unknown akFormatStringKey"
+      })
+    }
+
     colorFormattedDescription = [
       ...colorFormattedDescription,
       replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),

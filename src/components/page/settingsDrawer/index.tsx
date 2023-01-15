@@ -26,6 +26,7 @@ export default class SettingsDrawer extends React.PureComponent<ISettingsDrawerP
         anchor="right"
         onClose={onClose}
         open={open}
+        variant="persistent"
       >
         <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", p: 2 }}>
           <Typography

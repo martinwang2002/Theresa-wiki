@@ -3,8 +3,12 @@ import React from "react"
 import createEmotionServer from "@emotion/server/create-instance"
 import Document, { Head, Html, Main, NextScript } from "next/document"
 import type { DocumentContext } from "next/document"
+import Script from "next/script"
+
+import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import createEmotionCache from "@/models/createEmotionCache"
+const { GTAG_ID } = publicRuntimeConfig
 
 interface MyDocumentProps {
   emotionStyleTags: JSX.Element
@@ -19,6 +23,29 @@ export default class MyDocument extends Document<MyDocumentProps> {
     return (
       <Html>
         <Head>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}
+            strategy="afterInteractive"
+          />
+
+          <Script
+            dangerouslySetInnerHTML={{
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GTAG_ID}', {
+                ${process.env.NODE_ENV === "development" ? "'debug_mode': true," : ""}
+                'page_path': window.location.pathname,
+                'cookie_prefix': 'theresaGa',
+              });
+            `
+            }}
+            id="gtag-init"
+            strategy="beforeInteractive"
+          />
+
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
 
           {emotionStyleTags}
