@@ -9,6 +9,7 @@ versions:
       fixed:
         - google analytics load order
         - hashtag scroll
+        - stageInfoDescription <color=#ffffff> tag
 
   - version: [0, 4, 2]
     date: 2023-01-09T08:00:00+0800
