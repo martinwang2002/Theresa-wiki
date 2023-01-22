@@ -4,6 +4,8 @@ versions:
   - version: [0, 4, 4]
     date: 2023-01-23T08:00:00+0800
     contents:
+      added:
+        - tile_stairs and tile_passable_wall
       fixed:
         - map3d load scene button missing on safari
 

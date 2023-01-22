@@ -8,6 +8,7 @@ import type { SxProps, Theme } from "@mui/system"
 
 import TileFlystartIcon from "@/components/icon/tile/tileFlystart"
 import TileReedIcon from "@/components/icon/tile/tileReed"
+import TileStairsIcon from "@/components/icon/tile/tileStairs"
 import TileStartEndIcon from "@/components/icon/tile/tileStartEnd"
 
 import { TileBase } from "./tileBase"
@@ -122,3 +123,15 @@ export const TileReedFloor = React.forwardRef<HTMLSpanElement>((_props, ref) => 
 ))
 
 TileReedFloor.displayName = "TileReedFloor"
+
+export const TileStairs = React.forwardRef<HTMLSpanElement>((_props, ref) => (
+  <TileBase
+    ref={ref}
+  >
+    <TileStairsIcon
+      sx={{ ...tileSxProps, color: "#34A1FF" } as SxProps<Theme>}
+    />
+  </TileBase>
+))
+
+TileStairs.displayName = "TileStairs"
