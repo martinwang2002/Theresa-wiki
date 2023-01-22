@@ -124,7 +124,11 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               aspectRatio: "16/9",
               display: "block",
               filter: "brightness(0.5)",
-              position: "relative"
+              height: "100%",
+              left: 0,
+              position: "absolute",
+              top: 0,
+              width: "100%"
             }}
           >
             <MapPreviewImage
@@ -135,9 +139,13 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
           <div
             style={{
               aspectRatio: "16/9",
+              borderRadius: "inherit",
               display: "block",
-              position: "relative",
-              top: "-100%"
+              height: "100%",
+              left: 0,
+              position: "absolute",
+              top: 0,
+              width: "100%"
             }}
           >
             <Button
@@ -145,6 +153,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               onClick={this.handleLoadScene}
               sx={{
                 left: "50%",
+                position: "absolute",
                 top: "60%",
                 transform: "translateX(-50%)"
               }}
@@ -157,7 +166,7 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
               <LinearProgress
                 color="warning"
                 sx={{
-                  top: "70%"
+                  top: "calc(75% - 4px)"
                 }}
                 value={progressValue}
                 valueBuffer={progressValueBuffer}
@@ -171,8 +180,11 @@ class Map3DIndex extends React.PureComponent<Map3DProps, Map3DIndexState> {
           {!!loadScene &&
             <div
               style={{
-                position: "relative",
-                top: "-200%"
+                height: "100%",
+                left: 0,
+                position: "absolute",
+                top: 0,
+                width: "100%"
               }}
             >
               <Suspense>

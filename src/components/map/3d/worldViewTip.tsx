@@ -8,9 +8,9 @@ import { tipTable } from "@/models/gamedata/excel/tipTable"
 const WorldViewTipDiv = styled("div")({
   backgroundColor: "#424242",
   display: "inline-flex",
-  height: "calc(30% - 4px - 36.5px)",
-  position: "relative",
-  top: "70%",
+  height: "25%",
+  position: "absolute",
+  top: "75%",
   width: "100%"
 })
 
