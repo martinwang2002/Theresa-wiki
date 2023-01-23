@@ -42,6 +42,7 @@ const withPWA = nextPwa({
 })
 
 const nextConfig = {
+  compress: false,
   experimental:{
     isrMemoryCacheSize: 0,
   },
@@ -54,7 +55,6 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   output: "standalone",
-  swcMinify: true,
   generateBuildId: async () => {
     return commitHash
   },
