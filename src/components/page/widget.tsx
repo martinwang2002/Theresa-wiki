@@ -3,6 +3,7 @@ import React from "react"
 import { Global } from "@emotion/react"
 import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
+import Paper from "@mui/material/Paper"
 import Snackbar from "@mui/material/Snackbar"
 import { styled } from "@mui/system"
 import Head from "next/head"
@@ -10,6 +11,8 @@ import type { Workbox } from "workbox-window"
 
 import Styledlink from "@/components/common/styledLink"
 import MissionIcon from "@/components/icon/missionIcon"
+import TitleSvg from "@/components/page/titleSvg"
+
 declare global {
   interface Window {
     workbox?: Workbox
@@ -21,7 +24,6 @@ interface WidgetProps {
 }
 
 interface WidgetState {
-
   showServiceWorkerSnackbar: boolean
 }
 
@@ -206,17 +208,31 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
         <Styledlink
           href="/"
         >
-          <MissionIcon
+          <Paper
             sx={{
-              color: "primary.main",
-              fontSize: "2rem",
-              left: "1rem",
+              bottom: 0,
+              left: 0,
               position: "absolute",
-              top: "1rem",
-              verticalAlign: "middle",
               zIndex: 1000
             }}
-          />
+          >
+            <MissionIcon
+              sx={{
+                color: "primary.main",
+                fontSize: "3rem",
+                verticalAlign: "middle"
+              }}
+            />
+
+            <TitleSvg
+              sx={{
+                color: "text.primary",
+                height: "1.5rem",
+                verticalAlign: "middle",
+                width: "auto"
+              }}
+            />
+          </Paper>
         </Styledlink>
 
         { children }
