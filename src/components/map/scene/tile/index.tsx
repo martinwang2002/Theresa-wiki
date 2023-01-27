@@ -41,6 +41,8 @@ const tileElements = {
   tile_mire: <TileMire />,
   // alias in view
   tile_passable_wall: <TileWall />,
+  tile_passable_wall_forbidden: <TileForbidden />,
+  // alias in view
   tile_reed: <TileReed />,
   tile_reedf: <TileReedFloor />,
   tile_reedw: <TileReedWall />,

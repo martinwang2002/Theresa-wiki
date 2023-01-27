@@ -310,6 +310,12 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
       isFunctional: false,
       name: "空",
       tileKey: "tile_empty"
+    },
+    tile_passable_wall_forbidden: {
+      description: "不可放置单位。置于其中的单位对地面单位造成的伤害提升，受到来自地面单位的伤害降低",
+      isFunctional: false,
+      name: "玉门天灾工事（不可部署）",
+      tileKey: "tile_empty"
     }
   } as Record<string, ITileInfo>
 
