@@ -6,12 +6,11 @@ import Divider from "@mui/material/Divider"
 import Typography from "@mui/material/Typography"
 
 import InlineBadge from "@/components/common/badge/inlineBadge"
+import { DataTableRowCell } from "@/components/common/dataTable"
 import StyledLink from "@/components/common/styledLink"
 import MissionIcon from "@/components/icon/missionIcon"
 
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
-
-import { StageInfoTableRowCell } from "./common"
 
 interface StageInfoTableProps {
   stageInfo: ICustomStageInfo
@@ -23,9 +22,9 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
 
     return (
       <>
-        <StageInfoTableRowCell sx={{ width: "25%" }} >
+        <DataTableRowCell sx={{ width: "25%" }} >
           解锁条件
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
 
         <Divider
           flexItem
@@ -33,7 +32,7 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
           variant="middle"
         />
 
-        <StageInfoTableRowCell sx={{ width: "75%" }} >
+        <DataTableRowCell sx={{ width: "75%" }} >
           {stageInfo.unlockCondition.map((unlockCondition: Readonly<IUnlockCondition>) => {
             const extraStageInfo = stageInfo._unlockConditionStageInfo[unlockCondition.stageId]
             const noStars = 3
@@ -111,7 +110,7 @@ export default class UnlockConditionRow extends React.PureComponent<StageInfoTab
               </Box>
             )
           })}
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
       </>
     )
   }

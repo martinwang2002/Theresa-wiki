@@ -2,9 +2,10 @@ import React from "react"
 
 import { isEmpty } from "lodash"
 
+import { DataTableRowCell } from "@/components/common/dataTable"
+
 import type { IDisplayDetailReward, IStageInfo } from "@/models/gamedata/excel/stageTable"
 
-import { StageInfoTableRowCell } from "./common"
 import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
 
 interface StageInfoTableProps {
@@ -52,7 +53,7 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
     })
 
     return (
-      <StageInfoTableRowCell sx={{ width: "100%" }}>
+      <DataTableRowCell sx={{ width: "100%" }}>
         {!isEmpty([...diamondRewards, ...firstPassRewards]) &&
           <StageDropInfoRowRewardsRow
             displayDetailRewards={[...diamondRewards, ...firstPassRewards]}
@@ -77,7 +78,7 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
             displayDetailRewards={extraRewards}
             info="额外物资"
           />}
-      </StageInfoTableRowCell>
+      </DataTableRowCell>
     )
   }
 }

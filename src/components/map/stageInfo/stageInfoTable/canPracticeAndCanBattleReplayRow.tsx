@@ -4,9 +4,9 @@ import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 import Divider from "@mui/material/Divider"
 
-import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
+import { DataTableRowCell } from "@/components/common/dataTable"
 
-import { StageInfoTableRowCell } from "./common"
+import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo
@@ -56,11 +56,11 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
 
     return (
       <>
-        <StageInfoTableRowCell sx={{ width: "50%" }}>
+        <DataTableRowCell sx={{ width: "50%" }}>
           {stageInfo.canPractice
             ? canElement("演习")
             : notCanElement("演习")}
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
 
         <Divider
           flexItem
@@ -68,11 +68,11 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
           variant="middle"
         />
 
-        <StageInfoTableRowCell sx={{ width: "50%" }}>
+        <DataTableRowCell sx={{ width: "50%" }}>
           {stageInfo.canBattleReplay
             ? canElement("代理指挥")
             : notCanElement("代理指挥")}
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
       </>
     )
   }

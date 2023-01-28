@@ -3,10 +3,11 @@ import React from "react"
 import Divider from "@mui/material/Divider"
 import Paper from "@mui/material/Paper"
 
+import { DataTableRow, DataTableRowCell } from "@/components/common/dataTable"
+
 import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 
 import CanPracticeAndCanBattleReplayRow from "./canPracticeAndCanBattleReplayRow"
-import { StageInfoTableRow, StageInfoTableRowCell } from "./common"
 import SanityRow from "./sanityRow"
 import StageDropInfoRow from "./stageDropInfoRow"
 import UnlockConditionRow from "./unlockConditionRow"
@@ -21,10 +22,10 @@ class StageInfoTable extends React.PureComponent<StageInfoTableProps> {
 
     return (
       <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
-        <StageInfoTableRow>
-          <StageInfoTableRowCell sx={{ width: "25%" }}>
+        <DataTableRow>
+          <DataTableRowCell sx={{ width: "25%" }}>
             推荐平均等级
-          </StageInfoTableRowCell>
+          </DataTableRowCell>
 
           <Divider
             flexItem
@@ -32,35 +33,35 @@ class StageInfoTable extends React.PureComponent<StageInfoTableProps> {
             variant="middle"
           />
 
-          <StageInfoTableRowCell sx={{ width: "75%" }}>
+          <DataTableRowCell sx={{ width: "75%" }}>
             {stageInfo.dangerLevel}
-          </StageInfoTableRowCell>
+          </DataTableRowCell>
 
-        </StageInfoTableRow>
+        </DataTableRow>
 
         <Divider />
 
-        <StageInfoTableRow>
+        <DataTableRow>
           <UnlockConditionRow stageInfo={stageInfo} />
-        </StageInfoTableRow>
+        </DataTableRow>
 
         <Divider />
 
-        <StageInfoTableRow>
+        <DataTableRow>
           <SanityRow stageInfo={stageInfo} />
-        </StageInfoTableRow>
+        </DataTableRow>
 
         <Divider />
 
-        <StageInfoTableRow>
+        <DataTableRow>
           <CanPracticeAndCanBattleReplayRow stageInfo={stageInfo} />
-        </StageInfoTableRow>
+        </DataTableRow>
 
         <Divider />
 
-        <StageInfoTableRow>
+        <DataTableRow>
           <StageDropInfoRow stageInfo={stageInfo} />
-        </StageInfoTableRow>
+        </DataTableRow>
       </Paper>
     )
   }

@@ -3,11 +3,10 @@ import React from "react"
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
 
+import { DataTableRowCell } from "@/components/common/dataTable"
 import Item from "@/components/common/Item"
 
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
-
-import { StageInfoTableRowCell } from "./common"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo
@@ -19,7 +18,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
 
     return (
       <>
-        <StageInfoTableRowCell sx={{ width: "33%" }} >
+        <DataTableRowCell sx={{ width: "33%" }} >
           <span>
             理智消耗
           </span>
@@ -30,7 +29,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
               itemId="AP_GAMEPLAY"
             />
           </Box>
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
 
         <Divider
           flexItem
@@ -38,7 +37,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
           variant="middle"
         />
 
-        <StageInfoTableRowCell sx={{ width: "33%" }} >
+        <DataTableRowCell sx={{ width: "33%" }} >
           <span>
             理智返还
           </span>
@@ -49,7 +48,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
               itemId="AP_GAMEPLAY"
             />
           </Box>
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
 
         <Divider
           flexItem
@@ -57,7 +56,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
           variant="middle"
         />
 
-        <StageInfoTableRowCell sx={{ width: "33%" }} >
+        <DataTableRowCell sx={{ width: "33%" }} >
           <span>
             演习消耗
           </span>
@@ -68,7 +67,7 @@ export default class SanityRow extends React.PureComponent<StageInfoTableProps> 
               itemId={6001}
             />
           </Box>
-        </StageInfoTableRowCell>
+        </DataTableRowCell>
       </>
     )
   }
