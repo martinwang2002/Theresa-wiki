@@ -1,7 +1,7 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
-  - version: [0, 4, 4]
+  - version: [0, 4, 5]
     date: 2023-01-30T08:00:00+0800
     contents:
       added:
@@ -10,6 +10,8 @@ versions:
         - widget site icon update
         - api health and startup scripts
         - ranaming arknights descrption
+      fixed:
+        - offline title
 
   - version: [0, 4, 4]
     date: 2023-01-23T08:00:00+0800
