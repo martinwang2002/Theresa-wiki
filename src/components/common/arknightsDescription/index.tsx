@@ -14,7 +14,7 @@ const getColorFromAkFormatString = (akFormatString: string): string => {
   return regexMatch[1]
 }
 
-const stageInfoDescriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
+const descriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
   // replace \\n with \n
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
@@ -44,7 +44,7 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
       gtagEvent({
         action: "error",
         akFormatStringKey: regexMatch[1],
-        category: "map.stageInfo.stageInfoDescription",
+        category: "arknightsDescription",
         label: "unknown akFormatStringKey"
       })
     }
@@ -82,7 +82,7 @@ const stageInfoDescriptionParser = (description: string, richTextStyles: Readonl
   )
 }
 
-export const stageInfoDescriptionToPlainTextParser = (description: string): string => {
+export const arknightsDescriptionToPlainTextParser = (description: string): string => {
   // replace \\n with \n
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
@@ -108,11 +108,11 @@ export const stageInfoDescriptionToPlainTextParser = (description: string): stri
   return plainTextDescriptionArray.join("")
 }
 
-interface StageInfoDescriptionProps {
+interface DescriptionProps {
   description: string
 }
 
-class StageInfoDescription extends React.PureComponent<StageInfoDescriptionProps> {
+class ArknightsDescription extends React.PureComponent<DescriptionProps> {
   public render (): React.ReactNode {
     const { description } = this.props
 
@@ -121,13 +121,14 @@ class StageInfoDescription extends React.PureComponent<StageInfoDescriptionProps
         sx={{
           display: "flex",
           fontSize: "body2.fontSize",
+          margin: "0.5rem",
           whiteSpace: "pre-line"
         }}
       >
         <GamedataContext.Consumer>
           {(gamedataConst: Readonly<IGamedataConst>): JSX.Element => {
             const { richTextStyles } = gamedataConst
-            return stageInfoDescriptionParser(description, richTextStyles)
+            return descriptionParser(description, richTextStyles)
           }}
         </GamedataContext.Consumer>
       </Box>
@@ -135,4 +136,4 @@ class StageInfoDescription extends React.PureComponent<StageInfoDescriptionProps
   }
 }
 
-export default StageInfoDescription
+export default ArknightsDescription

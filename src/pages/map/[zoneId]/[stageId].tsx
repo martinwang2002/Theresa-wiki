@@ -5,6 +5,7 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import Head from "next/head"
 
+import ArknightsDescription, { arknightsDescriptionToPlainTextParser } from "@/components/common/arknightsDescription/index"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
@@ -15,7 +16,6 @@ import BgmBank from "@/components/map/bgmBank/index"
 import MapPreview from "@/components/map/mapPreview"
 import MapScene from "@/components/map/scene/index"
 import StageInfo from "@/components/map/stageInfo/index"
-import StageInfoDescription, { stageInfoDescriptionToPlainTextParser } from "@/components/map/stageInfo/stageInfoDescription"
 import StageOptions from "@/components/map/stageOptions/index"
 import Page from "@/components/page/page"
 
@@ -147,7 +147,7 @@ class Map extends React.PureComponent<MapProps> {
           </title>
 
           <meta
-            content={stageInfoDescriptionToPlainTextParser(stageInfo.description)}
+            content={arknightsDescriptionToPlainTextParser(stageInfo.description)}
             name="descirption"
           />
 
@@ -237,7 +237,7 @@ class Map extends React.PureComponent<MapProps> {
         </Typography>
 
         <GamedataContext.Provider value={gamedataConst}>
-          <StageInfoDescription
+          <ArknightsDescription
             description={stageInfo.description}
           />
         </GamedataContext.Provider>

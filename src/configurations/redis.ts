@@ -40,13 +40,30 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
     try {
       let result: FunctionReturn
       const cacheKey = options.cacheKey + args.join("_")
+
+      const callFunctionAndCache = async (): Promise<FunctionReturn> => {
+        try {
+          result = await fn(...args)
+        } catch (error) {
+          console.error("cachable function error", error, fn.name)
+        }
+        await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl)
+        if (result === undefined) {
+          throw new Error("cachable function result is undefined")
+        }
+        return result
+      }
+
       result = await redisClient.get(cacheKey).then(async (redisResult) => {
         if (redisResult !== null) {
-          return JSON.parse(redisResult) as FunctionReturn
+          try {
+            return JSON.parse(redisResult) as FunctionReturn
+          } catch (error) {
+            console.log("cachekey", cacheKey, "redisResult", redisResult)
+            return callFunctionAndCache()
+          }
         } else {
-          result = await fn(...args)
-          await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl)
-          return result
+          return callFunctionAndCache()
         }
       })
       return result

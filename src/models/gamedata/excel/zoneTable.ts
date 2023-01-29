@@ -75,9 +75,7 @@ export const getZoneInfo = async (zoneId: string): Promise<IZoneInfo> => {
 }
 
 export const getCustomZoneInfo = async (zoneId: string): Promise<ICustomZoneInfo> => {
-  const { zones } = await zoneTable()
-
-  const customZoneInfo = zones[zoneId] as ICustomZoneInfo
+  const customZoneInfo = await getZoneInfo(zoneId) as ICustomZoneInfo
 
   if (customZoneInfo.type === "ACTIVITY") {
     customZoneInfo._activity = await getActivityByZoneId(zoneId)
@@ -103,10 +101,11 @@ export const getZones = async (): Promise<IZoneInfo[]> => {
 export const getCustomZones = async (): Promise<ICustomZoneInfo[]> => {
   const _zoneIds = await zoneIds()
 
-  const customZoneInfos = await Promise.all(_zoneIds.map(async (zoneId) => {
-    return getCustomZoneInfo(zoneId)
-  }))
-
+  const customZoneInfos: ICustomZoneInfo[] = []
+  for (const zoneId of _zoneIds) {
+    const customZoneInfo = await getCustomZoneInfo(zoneId)
+    customZoneInfos.push(customZoneInfo)
+  }
   return customZoneInfos
 }
 

@@ -16,7 +16,7 @@ function ErrorComponent (): JSX.Element {
     <Page>
       <Head>
         <title>
-          404 Not Found | Theresa.wiki
+          与神经网络断开连接 | Theresa.wiki
         </title>
       </Head>
 

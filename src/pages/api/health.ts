@@ -5,7 +5,26 @@ import { serialize as serializeUri } from "uri-js"
 import { redisClient } from "@/configurations/redis"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
-import { getZones, isZoneValid } from "@/models/gamedata/excel/zoneTable"
+import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
+import { getZones } from "@/models/gamedata/excel/zoneTable"
+
+const addRevalidatePaths = async (): Promise<void> => {
+  const zones = await getZones()
+
+  const urls: string[] = []
+
+  for (const zone of zones.reverse()) {
+    const stages = await getStagesByZoneId(zone.zoneID)
+
+    const stageUrls = stages.map((stage) => {
+      return `/map/${zone.zoneID}/${stage.stageId}`
+    })
+    urls.push(...stageUrls)
+  }
+
+  const revalidatePaths = ["/map", ...urls]
+  await redisClient.rpush("_revalidatePaths", ...revalidatePaths)
+}
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
@@ -20,38 +39,35 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     const cachedVersion = redisClient.get("_s3Version")
 
-    await Promise.all([s3Version, cachedVersion]).then(async ([s3VersionString, cachedVersionString]) => {
+    const numPendingRevalidation = redisClient.llen("_revalidatePaths")
+
+    await Promise.all([s3Version, cachedVersion, numPendingRevalidation]).then(async ([s3VersionString, cachedVersionString, numPendingRevalidationNumber]) => {
       if (s3VersionString !== cachedVersionString) {
         // purge data
         await redisClient.flushdb()
 
-        redisClient.set("_s3Version", s3VersionString, "EX", timeout)
-          .then(async () => {
-            const zones = await getZones()
-
-            const isZoneValids = await Promise.all(zones.map(async (zone) => {
-              if (zone.type === "ACTIVITY") {
-                return isZoneValid(zone.zoneID)
-              }
-
-              return false
-            }))
-
-            const zonesUrls = zones.filter((_zone, index) => {
-              return isZoneValids[index]
-            }).map((zone) => {
-              return `/map/${zone.zoneID}`
+        await redisClient.set("_s3Version", s3VersionString, "EX", timeout)
+          .then(() => {
+            // trigger revalidtion of all paths
+            addRevalidatePaths().catch((reason) => {
+              console.warn("failed to add revalidate paths", reason)
             })
-
-            const revalidatePaths = ["/map", ...zonesUrls]
-
-            for (const path of revalidatePaths) {
-              await res.revalidate(path)
-            }
           })
           .catch((reason) => {
             console.warn("failed to set s3Version in redis cache", reason)
           })
+        return
+      }
+
+      if (numPendingRevalidationNumber) {
+        // trigger revalidation of all paths
+        const revalidatePath = await redisClient.lpop("_revalidatePaths")
+        if (revalidatePath != null) {
+          console.log("revalidating", revalidatePath)
+          res.revalidate(revalidatePath).catch((reason) => {
+            console.warn("failed to revalidate", revalidatePath, reason)
+          })
+        }
       }
     })
 
@@ -66,4 +82,5 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   }
 }
 
+export { addRevalidatePaths }
 export default health
