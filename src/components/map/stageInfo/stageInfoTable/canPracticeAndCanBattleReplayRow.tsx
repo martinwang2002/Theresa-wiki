@@ -1,53 +1,15 @@
 import React from "react"
 
-import CheckIcon from "@mui/icons-material/Check"
-import CloseIcon from "@mui/icons-material/Close"
 import Divider from "@mui/material/Divider"
+import Typography from "@mui/material/Typography"
 
+import BooleanDescriptor from "@/components/common/booleanDescriptor"
 import { DataTableRowCell } from "@/components/common/dataTable"
 
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo
-}
-
-const canElement = (text: string): JSX.Element => {
-  return (
-    <>
-      <CheckIcon
-        htmlColor="#00c853"
-        sx={{ verticalAlign: "middle" }}
-      />
-
-      <span
-        style={{
-          verticalAlign: "middle"
-        }}
-      >
-        {text}
-      </span>
-    </>
-  )
-}
-
-const notCanElement = (text: string): JSX.Element => {
-  return (
-    <>
-      <CloseIcon
-        htmlColor="#d50000"
-        sx={{ verticalAlign: "middle" }}
-      />
-
-      <span
-        style={{
-          verticalAlign: "middle"
-        }}
-      >
-        {text}
-      </span>
-    </>
-  )
 }
 
 export default class CanPracticeAndCanBattleReplayRow extends React.PureComponent<StageInfoTableProps> {
@@ -57,9 +19,16 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
     return (
       <>
         <DataTableRowCell sx={{ width: "50%" }}>
-          {stageInfo.canPractice
-            ? canElement("演习")
-            : notCanElement("演习")}
+          <BooleanDescriptor value={stageInfo.canPractice} />
+
+          <Typography
+            component="span"
+            sx={{
+              verticalAlign: "middle"
+            }}
+          >
+            演习
+          </Typography>
         </DataTableRowCell>
 
         <Divider
@@ -69,9 +38,16 @@ export default class CanPracticeAndCanBattleReplayRow extends React.PureComponen
         />
 
         <DataTableRowCell sx={{ width: "50%" }}>
-          {stageInfo.canBattleReplay
-            ? canElement("代理指挥")
-            : notCanElement("代理指挥")}
+          <BooleanDescriptor value={stageInfo.canBattleReplay} />
+
+          <Typography
+            component="span"
+            sx={{
+              verticalAlign: "middle"
+            }}
+          >
+            代理指挥
+          </Typography>
         </DataTableRowCell>
       </>
     )
