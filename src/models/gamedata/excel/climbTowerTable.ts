@@ -1,6 +1,6 @@
 import { serialize as serializeUri } from "uri-js"
 
-import cacheable from "@/configurations/redis"
+import cacheable from "@/configurations/cache"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ITowerInfo {

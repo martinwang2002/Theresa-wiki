@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - enemy radar and attributes
+        - lru cache
       changed:
         - widget page ui change
 
