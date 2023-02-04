@@ -59,10 +59,16 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         return
       }
 
+      const batchRevalidate = 20
       if (numPendingRevalidationNumber) {
         // trigger revalidation of all paths
-        const revalidatePath = await redisClient.lpop("_revalidatePaths")
-        if (revalidatePath != null) {
+        const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))
+
+        if (!revalidatePaths) {
+          return
+        }
+
+        for (const revalidatePath of revalidatePaths) {
           console.log("revalidating", revalidatePath)
           res.revalidate(revalidatePath).catch((reason) => {
             console.warn("failed to revalidate", revalidatePath, reason)
