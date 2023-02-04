@@ -1,4 +1,3 @@
-import { Mutex } from "async-mutex"
 import Redis from "ioredis"
 import type { RedisOptions } from "ioredis"
 import LRUCache from "lru-cache"
@@ -41,8 +40,6 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   })
 }
 
-const mutex = new Mutex()
-
 const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
   fn: (...args: FunctionArguments) => FunctionReturn | Promise<FunctionReturn>,
   options: Readonly<ICacheable>
@@ -71,7 +68,6 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
       if (lruCache.has(cacheKey) && lruCache.get(cacheKey) !== undefined) {
         return lruCache.get(cacheKey) as FunctionReturn
       } else {
-        const release = await mutex.acquire()
         result = await redisClient.get(cacheKey).then(async (redisResult) => {
           if (redisResult !== null) {
             try {
@@ -87,10 +83,8 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
           }
         }).catch((error) => {
           console.error("redis get fatal error", error)
-          release()
           return fn(...args)
         })
-        release()
         return result
       }
     } catch (error) {
