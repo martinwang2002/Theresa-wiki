@@ -3,7 +3,7 @@
 // Workbox RuntimeCaching config: https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.RuntimeCachingEntry
 module.exports = [
   {
-    urlPattern: /^https:\/\/static\.(?:theresa)\.wiki\/.*/i,
+    urlPattern: /^https:\/\/static\.theresa\.wiki\/.*/i,
     handler: "CacheFirst",
     options: {
       cacheName: "static-theresa-wiki-assets",
