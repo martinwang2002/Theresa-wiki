@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { serialize as serializeUri } from "uri-js"
 
-import { redisClient } from "@/configurations/redis"
+import { clearAllCache, redisClient } from "@/configurations/cache"
 import { serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import { getStagesByZoneId } from "@/models/gamedata/excel/stageTable"
@@ -44,7 +44,7 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     await Promise.all([s3Version, cachedVersion, numPendingRevalidation]).then(async ([s3VersionString, cachedVersionString, numPendingRevalidationNumber]) => {
       if (s3VersionString !== cachedVersionString) {
         // purge data
-        await redisClient.flushdb()
+        await clearAllCache()
 
         await redisClient.set("_s3Version", s3VersionString, "EX", timeout)
           .then(() => {
@@ -59,10 +59,16 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         return
       }
 
+      const batchRevalidate = 20
       if (numPendingRevalidationNumber) {
         // trigger revalidation of all paths
-        const revalidatePath = await redisClient.lpop("_revalidatePaths")
-        if (revalidatePath != null) {
+        const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))
+
+        if (!revalidatePaths) {
+          return
+        }
+
+        for (const revalidatePath of revalidatePaths) {
           console.log("revalidating", revalidatePath)
           res.revalidate(revalidatePath).catch((reason) => {
             console.warn("failed to revalidate", revalidatePath, reason)

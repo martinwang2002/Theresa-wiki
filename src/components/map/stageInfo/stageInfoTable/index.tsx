@@ -47,7 +47,7 @@ class StageInfoTable extends React.PureComponent<StageInfoTableProps> {
 
         <Divider />
 
-        <DataTableRow>
+        <DataTableRow sx={{ flexWrap: "wrap" }}>
           <SanityRow stageInfo={stageInfo} />
         </DataTableRow>
 

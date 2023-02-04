@@ -3,6 +3,7 @@ import React from "react"
 import { Global } from "@emotion/react"
 import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
 import Paper from "@mui/material/Paper"
 import Snackbar from "@mui/material/Snackbar"
 import { styled } from "@mui/system"
@@ -210,16 +211,17 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
         >
           <Paper
             sx={{
-              bottom: 0,
+              height: "2rem",
               left: 0,
               position: "absolute",
+              top: 0,
               zIndex: 1000
             }}
           >
             <MissionIcon
               sx={{
                 color: "primary.main",
-                fontSize: "3rem",
+                fontSize: "2em",
                 verticalAlign: "middle"
               }}
             />
@@ -227,7 +229,7 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
             <TitleSvg
               sx={{
                 color: "text.primary",
-                height: "1.5rem",
+                height: "0.75em",
                 verticalAlign: "middle",
                 width: "auto"
               }}
@@ -235,7 +237,18 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
           </Paper>
         </Styledlink>
 
-        { children }
+        <Container
+          maxWidth="lg"
+          sx={{
+            "& > *": {
+              maxHeight: "inherit"
+            },
+            marginTop: "2rem",
+            maxHeight: "calc(100vh - 2rem)"
+          }}
+        >
+          {children}
+        </Container>
 
         <Snackbar
           autoHideDuration={6000}

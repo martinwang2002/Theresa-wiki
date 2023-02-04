@@ -76,7 +76,9 @@
                 "@typescript-eslint/no-type-alias": [
                     "error",
                     {
-                        "allowAliases": "in-unions-and-intersections"
+                        "allowAliases": "in-unions-and-intersections",
+                        "allowLiterals": "in-unions-and-intersections",
+                        "allowMappedTypes": "in-unions-and-intersections"
                     }
                 ],
                 "@typescript-eslint/no-use-before-define": "off",

@@ -1,7 +1,16 @@
+import { Mutex } from "async-mutex"
 import Redis from "ioredis"
 import type { RedisOptions } from "ioredis"
+import LRUCache from "lru-cache"
 
 import { serverRuntimeConfig } from "./runtimeConfig"
+
+const oneMinute = 60_000
+
+const lruCache = new LRUCache<string, unknown>({
+  max: 25,
+  ttl: oneMinute
+})
 
 interface ICacheable {
   cacheKey: string
@@ -32,6 +41,8 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   })
 }
 
+const mutex = new Mutex()
+
 const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
   fn: (...args: FunctionArguments) => FunctionReturn | Promise<FunctionReturn>,
   options: Readonly<ICacheable>
@@ -47,32 +58,52 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
         } catch (error) {
           console.error("cachable function error", error, fn.name)
         }
-        await redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl)
+        lruCache.set(cacheKey, result)
+        redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl).catch((error) => {
+          console.error("redis set error", error)
+        })
         if (result === undefined) {
           throw new Error("cachable function result is undefined")
         }
         return result
       }
 
-      result = await redisClient.get(cacheKey).then(async (redisResult) => {
-        if (redisResult !== null) {
-          try {
-            return JSON.parse(redisResult) as FunctionReturn
-          } catch (error) {
-            console.log("cachekey", cacheKey, "redisResult", redisResult)
+      if (lruCache.has(cacheKey) && lruCache.get(cacheKey) !== undefined) {
+        return lruCache.get(cacheKey) as FunctionReturn
+      } else {
+        const release = await mutex.acquire()
+        result = await redisClient.get(cacheKey).then(async (redisResult) => {
+          if (redisResult !== null) {
+            try {
+              const parsedResult = JSON.parse(redisResult) as FunctionReturn
+              lruCache.set(cacheKey, parsedResult)
+              return parsedResult
+            } catch (error) {
+              console.log("cachekey", cacheKey, "redisResult", redisResult)
+              return callFunctionAndCache()
+            }
+          } else {
             return callFunctionAndCache()
           }
-        } else {
-          return callFunctionAndCache()
-        }
-      })
-      return result
+        }).catch((error) => {
+          console.error("redis get fatal error", error)
+          release()
+          return fn(...args)
+        })
+        release()
+        return result
+      }
     } catch (error) {
       // TODO: Record error
       console.log(error)
       return fn(...args)
     }
   }
+}
+
+export const clearAllCache = async (): Promise<void> => {
+  lruCache.clear()
+  await redisClient.flushall()
 }
 
 export default cacheable
