@@ -16,9 +16,11 @@ const addRevalidatePaths = async (): Promise<void> => {
   for (const zone of zones.reverse()) {
     const stages = await getStagesByZoneId(zone.zoneID)
 
-    const stageUrls = stages.map((stage) => {
-      return `/map/${zone.zoneID}/${stage.stageId}`
-    })
+    const stageUrls = stages.filter((stageInfo) => {
+      return "isStoryOnly" in stageInfo ? !stageInfo.isStoryOnly : true
+    }).map((stageInfo) => {
+      return [`/map/${zone.zoneID}/${stageInfo.stageId}`, `/widget/map/${stageInfo.stageId}/scene`]
+    }).flat()
     urls.push(...stageUrls)
   }
 
@@ -59,7 +61,7 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         return
       }
 
-      const batchRevalidate = 20
+      const batchRevalidate = 100
       if (numPendingRevalidationNumber) {
         // trigger revalidation of all paths
         const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))
