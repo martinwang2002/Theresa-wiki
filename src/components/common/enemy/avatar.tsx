@@ -146,11 +146,11 @@ class EnemyAvatar extends React.PureComponent<ItemProps, ItemState> {
 
           {itemBackend === SpriteBackend.STATIC &&
           <Image
-            alt={`Item ${enemyId}`}
+            alt={`Enemy ${enemyId}`}
             fill
             src={serializeUri({
               ...publicRuntimeConfig.THERESA_STATIC,
-              path: `/api/v0/AK/CN/Android/enemy/id/${enemyId}`
+              path: `/api/v0/AK/CN/Android/enemy/avatar/id/${enemyId}`
             })}
             unoptimized
           />}
