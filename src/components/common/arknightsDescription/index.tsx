@@ -14,7 +14,7 @@ const getColorFromAkFormatString = (akFormatString: string): string => {
   return regexMatch[1]
 }
 
-const descriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
+export const descriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
   // replace \\n with \n
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
@@ -67,18 +67,9 @@ const descriptionParser = (description: string, richTextStyles: Readonly<IGameda
   ]
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#2f2f2f",
-        borderRadius: "0.75em",
-        color: "#a9a9a9",
-        ml: 5,
-        px: 1.5,
-        py: 1
-      }}
-    >
+    <span>
       {colorFormattedDescription}
-    </Box>
+    </span>
   )
 }
 
@@ -128,7 +119,20 @@ class ArknightsDescription extends React.PureComponent<DescriptionProps> {
         <GamedataContext.Consumer>
           {(gamedataConst: Readonly<IGamedataConst>): JSX.Element => {
             const { richTextStyles } = gamedataConst
-            return descriptionParser(description, richTextStyles)
+            return (
+              <Box
+                sx={{
+                  backgroundColor: "#2f2f2f",
+                  borderRadius: "0.75em",
+                  color: "#a9a9a9",
+                  ml: 5,
+                  px: 1.5,
+                  py: 1
+                }}
+              >
+                {descriptionParser(description, richTextStyles)}
+              </Box>
+            )
           }}
         </GamedataContext.Consumer>
       </Box>

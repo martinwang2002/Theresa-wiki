@@ -127,7 +127,7 @@ const fourthColumnNameAndKey = [
 class EnemyHandbookAttribute extends React.PureComponent<EnemyHandbookAttributeProps> {
   public render (): React.ReactNode {
     const { enemyDataDefined } = this.props
-    console.log(enemyDataDefined)
+
     return (
       <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
         <DataTableRow

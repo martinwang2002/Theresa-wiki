@@ -54,13 +54,22 @@ export default function home (): React.ReactNode {
       </p>
 
       <p>
-        目前应该只有
+        目前
         <StyledLink
           href="/map"
         >
           地图
         </StyledLink>
-        可以使用。PS：可以查看3D场景。
+        可以查看3D场景。
+      </p>
+
+      <p>
+        <StyledLink
+          href="/enemy"
+        >
+          敌人一览
+        </StyledLink>
+        也可以查看了哦~。
       </p>
 
       <RelativeDiv>
@@ -98,6 +107,32 @@ export default function home (): React.ReactNode {
                       verticalAlign: "-50%"
                     }}
                   />
+                </Typography>
+              </CardActionArea>
+            </Link>
+          </Card>
+
+          <Card
+            elevation={2}
+            sx={{
+              width: "90%"
+            }}
+          >
+            <Link
+              href="/enemy"
+              legacyBehavior
+              passHref
+            >
+              <CardActionArea>
+                <Typography
+                  sx={{
+                    fontFamily: "\"Dream Han Serif CN W27\"",
+                    pl: 2,
+                    py: 1
+                  }}
+                  variant="h3"
+                >
+                  敌人
                 </Typography>
               </CardActionArea>
             </Link>
