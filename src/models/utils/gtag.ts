@@ -24,9 +24,13 @@ interface IGtagEvent {
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const gtagEvent = ({ action, category, label, ...value }: Readonly<IGtagEvent>): void => {
-  window.gtag("event", action, {
-    event_category: category,
-    event_label: label,
-    ...value
-  })
+  if (typeof window !== "undefined") {
+    window.gtag("event", action, {
+      event_category: category,
+      event_label: label,
+      ...value
+    })
+  } else {
+    console.warn("gtagEvent on server side", action, category, label, value)
+  }
 }
