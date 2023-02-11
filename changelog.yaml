@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - revalidate widget scene
+        - enemy race
       fixed:
         - enemy avatar wrong url
 
