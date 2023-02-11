@@ -8,6 +8,7 @@ import Script from "next/script"
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 import createEmotionCache from "@/models/createEmotionCache"
+
 const { GTAG_ID } = publicRuntimeConfig
 
 interface MyDocumentProps {

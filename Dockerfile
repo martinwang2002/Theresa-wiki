@@ -41,8 +41,6 @@ COPY --from=deps /app/public/LICENSES.txt ./public
 
 RUN yarn build
 
-# purge cache for builder
-RUN rm .next/standalone/.next/server/pages/map.json
 
 # Production image, copy all the files and run next
 FROM base AS runner

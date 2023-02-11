@@ -104,6 +104,7 @@
                     }
                 ],
                 "@typescript-eslint/unbound-method": "off",
+                "import/newline-after-import": "error",
                 "import/order": [
                     "error",
                     {

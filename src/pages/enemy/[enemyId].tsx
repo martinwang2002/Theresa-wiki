@@ -131,6 +131,18 @@ class Enemy extends React.PureComponent<EnemyProps> {
             {enemyHandbook.name}
           </span>
 
+          {
+            !!enemyHandbook.enemyRace &&
+            <TopBadge
+              sx={{
+                backgroundColor: "primary.main",
+                ml: 1
+              }}
+            >
+              {enemyHandbook.enemyRace}
+            </TopBadge>
+          }
+
           <TopBadge
             sx={{
               backgroundColor: "warning.main",
