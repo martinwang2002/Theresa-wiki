@@ -2,10 +2,11 @@ import React from "react"
 
 import PlaceIcon from "@mui/icons-material/Place"
 import type { SxProps, Theme } from "@mui/material"
-import { alpha } from "@mui/material"
+import Box from "@mui/material/Box"
 import { grey } from "@mui/material/colors"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
+import { alpha } from "@mui/system"
 
 import type { ITileInfo } from "@/models/gamedata/excel/stageTable"
 import type { IMapDataTiles } from "@/models/gamedata/levels/index"
@@ -23,36 +24,36 @@ interface ITileProps {
 }
 
 const tileElements = {
-  tile_deepsea: <TileDeepSea />,
-  tile_deepwater: <TileDeepWater />,
-  tile_empty: <TileEmpty />,
-  tile_end: <TileEnd />,
-  tile_fence: <TileFence />,
-  tile_fence_bound: <TileFenceBound />,
-  tile_floor: <TileFloor />,
-  tile_flystart: <TileFlystart />,
-  tile_forbidden: <TileForbidden />,
-  tile_hole: <TileHole />,
-  tile_icestr: <TileIcestr />,
-  tile_icetur_lb: <TileIceturLb />,
-  tile_icetur_lt: <TileIceturLt />,
-  tile_icetur_rb: <TileIceturRb />,
-  tile_icetur_rt: <TileIceturRt />,
-  tile_mire: <TileMire />,
+  tile_deepsea: TileDeepSea,
+  tile_deepwater: TileDeepWater,
+  tile_empty: TileEmpty,
+  tile_end: TileEnd,
+  tile_fence: TileFence,
+  tile_fence_bound: TileFenceBound,
+  tile_floor: TileFloor,
+  tile_flystart: TileFlystart,
+  tile_forbidden: TileForbidden,
+  tile_hole: TileHole,
+  tile_icestr: TileIcestr,
+  tile_icetur_lb: TileIceturLb,
+  tile_icetur_lt: TileIceturLt,
+  tile_icetur_rb: TileIceturRb,
+  tile_icetur_rt: TileIceturRt,
+  tile_mire: TileMire,
   // alias in view
-  tile_passable_wall: <TileWall />,
-  tile_passable_wall_forbidden: <TileForbidden />,
+  tile_passable_wall: TileWall,
+  tile_passable_wall_forbidden: TileForbidden,
   // alias in view
-  tile_reed: <TileReed />,
-  tile_reedf: <TileReedFloor />,
-  tile_reedw: <TileReedWall />,
-  tile_road: <TileRoad />,
-  tile_stairs: <TileStairs />,
-  tile_start: <TileStart />,
-  tile_telin: <TileTelin />,
-  tile_telout: <TileTelout />,
-  tile_wall: <TileWall />
-} as Record<string, JSX.Element | undefined>
+  tile_reed: TileReed,
+  tile_reedf: TileReedFloor,
+  tile_reedw: TileReedWall,
+  tile_road: TileRoad,
+  tile_stairs: TileStairs,
+  tile_start: TileStart,
+  tile_telin: TileTelin,
+  tile_telout: TileTelout,
+  tile_wall: TileWall
+} as Record<string, React.Factory<{ sx?: SxProps }> | undefined>
 
 class Tile extends React.PureComponent<ITileProps> {
   private static readonly defaultProps = {
@@ -62,7 +63,8 @@ class Tile extends React.PureComponent<ITileProps> {
   public render (): React.ReactNode {
     const { active, tile } = this.props
 
-    const tileElement = tileElements[tile.tileKey] ?? <TileUndefined />
+    const isTileDefined = tileElements[tile.tileKey] !== undefined
+    const TileElement = tileElements[tile.tileKey] ?? TileUndefined
 
     const activeIconStyles: SxProps<Theme> = theme => ({
       backgroundColor: alpha(theme.palette.primary.light, +"0.5"),
@@ -104,7 +106,7 @@ class Tile extends React.PureComponent<ITileProps> {
                 </Typography>
               </>}
 
-              {tileElement.type === TileUndefined &&
+              {!isTileDefined &&
               <Typography
                 sx={{
                   color: grey[400],
@@ -127,7 +129,7 @@ class Tile extends React.PureComponent<ITileProps> {
               arrow
               onOpen={(): void => {
                 // gtag analytics on opened undefined tile
-                if (tileElement.type === TileUndefined) {
+                if (isTileDefined) {
                   gtagEvent({
                     action: "tileUndefined",
                     category: "map",
@@ -139,11 +141,17 @@ class Tile extends React.PureComponent<ITileProps> {
               placement="top"
               title={tooltipContent}
             >
-              <div style={{ position: "relative" }}>
-                {tileElement}
+              <Box
+                sx={{
+                  aspectRatio: "1",
+                  height: "100%",
+                  width: "100%"
+                }}
+              >
+                <TileElement />
 
                 {active ? <PlaceIcon sx={activeIconStyles} /> : null}
-              </div>
+              </Box>
             </Tooltip>
           )
         }}
