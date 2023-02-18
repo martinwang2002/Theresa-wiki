@@ -63,6 +63,9 @@ class MapScene extends React.PureComponent<IMapSceneProps> {
                     onTileClick(event, tile, index, width, height)
                   }
                 }}
+                sx={{
+                  position: "relative"
+                }}
                 xs={1}
               >
                 <Tile

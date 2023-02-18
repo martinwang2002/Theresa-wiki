@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 5, 3]
+    date: 2023-02-19T08:00:00+0800
+    contents:
+      fixed:
+        - map tile active ui
+
   - version: [0, 5, 2]
     date: 2023-02-12T08:00:00+0800
     contents:
