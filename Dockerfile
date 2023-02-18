@@ -33,11 +33,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 # Copy node modules
 COPY --from=deps /app/node_modules ./node_modules
+# Copy LICENSES.txt
+COPY --from=deps /app/public/LICENSES.txt ./public/LICENSES.txt
 # Copy source code
 COPY . .
-# Copy LICENSES.txt
-COPY --from=deps /app/public/LICENSES.txt ./public
-
 
 RUN yarn build
 
