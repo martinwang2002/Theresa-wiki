@@ -1,0 +1,84 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  - master
+
+variables:
+  registry: us-central1-docker.pkg.dev
+  repository: theresa-wiki/theresa-wiki-docker-registry/theresa-frontend
+
+stages:
+  - stage: Build
+    displayName: Build image
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Checkout git branch
+            inputs:
+              targetType: inline
+              script: |
+                git checkout -b $(Build.SourceBranchName)
+                git branch --show-current
+          - task: Bash@3
+            displayName: Get git hash
+            inputs:
+              targetType: inline
+              script: |
+                GIT_HASH=`git rev-parse --short=7 HEAD`
+                echo "##vso[task.setvariable variable=GIT_HASH]$GIT_HASH"
+          - task: Cache@2
+            displayName: Get docker cache
+            inputs:
+              key: docker | "$(Agent.OS)" | "$(repository)" | $(Build.SourceBranchName)-$(GIT_HASH)
+              path: $(Pipeline.Workspace)/.docker
+              cacheHitVar: DOCKER_CACHE_RESTORED
+              restoreKeys: docker | "$(Agent.OS)" | "$(repository)"
+          - task: Docker@2
+            displayName: Docker login
+            inputs:
+              command: login
+              containerRegistry: GCP
+          - task: Bash@3
+            displayName: Build and Push image
+            inputs:
+              targetType: inline
+              script: |
+                docker version
+                docker buildx version
+                docker buildx create --driver=docker-container --use
+                docker buildx install
+                docker buildx build \
+                  --cache-from=type=local,src=$(Pipeline.Workspace)/.docker \
+                  --cache-to=type=local,dest=$(Pipeline.Workspace)/.docker_new,mode=max \
+                  --tag $(registry)/$(repository):$(Build.SourceBranchName)-$(GIT_HASH) \
+                  --tag $(registry)/$(repository):latest \
+                  --file $(Build.SourcesDirectory)/Dockerfile \
+                  $(Build.SourcesDirectory) \
+                  --output=type=image \
+                  --push
+          - task: Bash@3
+            displayName: Docker cache
+            inputs:
+              targetType: inline
+              script: |
+                rm -rf $(Pipeline.Workspace)/.docker
+                mv $(Pipeline.Workspace)/.docker_new $(Pipeline.Workspace)/.docker
+            condition: and(not(canceled()), ne(variables.DOCKER_CACHE_RESTORED, 'true'))
+          - task: Bash@3
+            displayName: Write version to artifact
+            inputs:
+              targetType: inline
+              script: |
+                cd $(Build.ArtifactStagingDirectory)
+                echo '$(Build.SourceBranchName)-$(GIT_HASH)' > version.txt
+            condition: not(canceled())
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifact
+            inputs:
+              PathtoPublish: $(Build.ArtifactStagingDirectory)
+              ArtifactName: version
+            condition: not(canceled())
