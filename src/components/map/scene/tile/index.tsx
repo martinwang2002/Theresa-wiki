@@ -129,7 +129,7 @@ class Tile extends React.PureComponent<ITileProps> {
               arrow
               onOpen={(): void => {
                 // gtag analytics on opened undefined tile
-                if (isTileDefined) {
+                if (!isTileDefined) {
                   gtagEvent({
                     action: "tileUndefined",
                     category: "map",
