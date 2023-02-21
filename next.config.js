@@ -2,18 +2,14 @@ const nextPwa = require("next-pwa")
 const uriJs = require("uri-js")
 const runtimeCache = require("./src/configurations/serviceWorkerRuntimeCache")
 
-let commitHash, gitBranch
+let commitHash
 
 try {
   commitHash = require("child_process")
     .execSync("git rev-parse --short HEAD")
     .toString().trim() || "unknown"
-  gitBranch = require("child_process")
-    .execSync("git branch --show-current")
-    .toString().trim()
 } catch (e) {
   commitHash = "unknown"
-  gitBranch = "unknown"
 }
 
 let versionString
@@ -25,10 +21,6 @@ try {
 
   const version = changelog.versions[0].version
   versionString = version.join(".")
-
-  if (gitBranch !== "master") {
-    versionString += `+${gitBranch}`
-  }
 } catch (e) {
   versionString = "unknown"
 }
