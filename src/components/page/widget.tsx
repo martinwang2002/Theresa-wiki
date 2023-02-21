@@ -208,6 +208,7 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
 
         <Styledlink
           href="/"
+          target="_blank"
         >
           <Paper
             sx={{
