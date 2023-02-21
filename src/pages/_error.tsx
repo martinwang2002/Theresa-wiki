@@ -6,6 +6,7 @@ import Head from "next/head"
 import Error from "@/components/page/error"
 import Page from "@/components/page/page"
 
+import { gtagEvent } from "@/models/utils/gtag"
 import { sendMessage } from "@/models/utils/messenger"
 
 interface ErrorComponentProps {
@@ -17,7 +18,14 @@ interface ErrorComponentProps {
 function ErrorComponent ({ statusCode, statusMessage, err }: Readonly<ErrorComponentProps>): JSX.Element {
   useEffect(() => {
     sendMessage(window.parent, "*", { reason: "internalServerError", type: "error" }).catch(console.warn)
-  }, [])
+    gtagEvent({
+      action: "exception",
+      category: "error",
+      description: statusMessage,
+      fatal: true,
+      label: "error"
+    })
+  }, [statusMessage])
 
   return (
     <Page>
