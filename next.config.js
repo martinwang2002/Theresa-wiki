@@ -26,10 +26,11 @@ try {
 }
 
 const withPWA = nextPwa({
-  dest: "public",
+  dest: "public/sw/",
   disable: process.env.NODE_ENV === "development",
   register: false,
   skipWaiting: true,
+  sw: `sw-${commitHash}.js`,
   runtimeCaching: runtimeCache
 })
 
