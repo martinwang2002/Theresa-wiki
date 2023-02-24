@@ -4,7 +4,7 @@ const { GTAG_ID } = publicRuntimeConfig
 
 declare global {
   interface Window {
-    gtag: ((command: string, targetId: string, params: Readonly<Record<string, unknown>>) => void)
+    gtag: (command: string, targetId: string, params: Readonly<Record<string, unknown>>) => void
   }
 }
 
