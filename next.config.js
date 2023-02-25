@@ -2,18 +2,14 @@ const nextPwa = require("next-pwa")
 const uriJs = require("uri-js")
 const runtimeCache = require("./src/configurations/serviceWorkerRuntimeCache")
 
-let commitHash, gitBranch
+let commitHash
 
 try {
   commitHash = require("child_process")
     .execSync("git rev-parse --short HEAD")
     .toString().trim() || "unknown"
-  gitBranch = require("child_process")
-    .execSync("git branch --show-current")
-    .toString().trim()
 } catch (e) {
   commitHash = "unknown"
-  gitBranch = "unknown"
 }
 
 let versionString
@@ -25,27 +21,21 @@ try {
 
   const version = changelog.versions[0].version
   versionString = version.join(".")
-
-  if (gitBranch !== "master") {
-    versionString += `+${gitBranch}`
-  }
 } catch (e) {
   versionString = "unknown"
 }
 
 const withPWA = nextPwa({
-  dest: "public",
+  dest: "public/sw/",
   disable: process.env.NODE_ENV === "development",
   register: false,
   skipWaiting: true,
+  sw: `sw-${commitHash}.js`,
   runtimeCaching: runtimeCache
 })
 
 const nextConfig = {
   compress: false,
-  experimental:{
-    isrMemoryCacheSize: 0,
-  },
   images: {
     deviceSizes: [640, 750, 828, 1080],
     domains: [process.env.THERESA_STATIC || "static.theresa.wiki"],

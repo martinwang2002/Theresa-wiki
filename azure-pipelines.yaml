@@ -17,13 +17,6 @@ stages:
           vmImage: ubuntu-latest
         steps:
           - task: Bash@3
-            displayName: Checkout git branch
-            inputs:
-              targetType: inline
-              script: |
-                git checkout -b $(Build.SourceBranchName)
-                git branch --show-current
-          - task: Bash@3
             displayName: Get git hash
             inputs:
               targetType: inline
