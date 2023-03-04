@@ -32,67 +32,62 @@ const addRevalidatePaths = async (): Promise<void> => {
 const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const timeout = 3600
 
-  try {
-    // redis cache handling
-    const s3Version = fetch(serializeUri({
-      ...serverRuntimeConfig.THERESA_S3,
-      path: "/api/v0/AK/CN/Android/version"
-    })).then(async (response) => response.text())
+  // redis cache handling
+  const s3Version = fetch(serializeUri({
+    ...serverRuntimeConfig.THERESA_S3,
+    path: "/api/v0/AK/CN/Android/version"
+  })).then(async (response) => response.text())
 
-    const cachedVersion = redisClient.get("_s3Version")
+  const cachedVersion = redisClient.get("_s3Version")
 
-    const numPendingRevalidation = redisClient.llen("_revalidatePaths")
+  const numPendingRevalidation = redisClient.llen("_revalidatePaths")
 
-    await Promise.all([s3Version, cachedVersion, numPendingRevalidation]).then(async ([s3VersionString, cachedVersionString, numPendingRevalidationNumber]) => {
-      if (s3VersionString !== cachedVersionString) {
-        // purge data
-        await clearAllCache()
+  await Promise.all([s3Version, cachedVersion, numPendingRevalidation]).then(async ([s3VersionString, cachedVersionString, numPendingRevalidationNumber]) => {
+    if (s3VersionString !== cachedVersionString) {
+      // purge data
+      await clearAllCache()
 
-        await redisClient.set("_s3Version", s3VersionString, "EX", timeout)
-          .then(() => {
-            // trigger revalidtion of all paths
-            addRevalidatePaths().catch((reason) => {
-              console.warn("failed to add revalidate paths", reason)
-            })
+      await redisClient.set("_s3Version", s3VersionString, "EX", timeout)
+        .then(() => {
+          // trigger revalidtion of all paths
+          addRevalidatePaths().catch((reason) => {
+            console.warn("failed to add revalidate paths", reason)
           })
-          .catch((reason) => {
-            console.warn("failed to set s3Version in redis cache", reason)
-          })
-        return
-      }
+        })
+        .catch((reason) => {
+          console.warn("failed to set s3Version in redis cache", reason)
+        })
+      return
+    }
 
-      const batchRevalidate = 25
-      if (numPendingRevalidationNumber) {
-        const revalidationPromise = Promise.resolve().then(async () => {
+    const batchRevalidate = 25
+    if (numPendingRevalidationNumber) {
+      const revalidationPromise = Promise.resolve().then(async () => {
         // trigger revalidation of all paths
-          const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))
+        const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))
 
-          if (!revalidatePaths) {
-            return
-          }
+        if (!revalidatePaths) {
+          return
+        }
 
-          for (const revalidatePath of revalidatePaths) {
-            console.log("revalidating", revalidatePath)
-            await res.revalidate(revalidatePath).catch((reason) => {
-              console.warn("failed to revalidate", revalidatePath, reason)
-            })
-          }
-        })
-        revalidationPromise.catch((reason) => {
-          console.warn("failed to revalidate", reason)
-        })
-      }
-    })
+        for (const revalidatePath of revalidatePaths) {
+          console.log("revalidating", revalidatePath)
+          await res.revalidate(revalidatePath).catch((reason) => {
+            console.warn("failed to revalidate", revalidatePath, reason)
+          })
+        }
+      })
+      revalidationPromise.catch((reason) => {
+        console.warn("failed to revalidate", reason)
+      })
+    }
+  }).catch((reason) => {
+    console.warn("failed to check do health check", reason)
+  })
 
-    res.status(StatusCodes.OK).json({
-      health: "ok"
-    })
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error,
-      health: "error"
-    })
-  }
+  res.status(StatusCodes.OK).json({
+    health: "ok"
+  })
 }
 
 export { addRevalidatePaths }

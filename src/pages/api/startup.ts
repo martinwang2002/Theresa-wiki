@@ -6,11 +6,11 @@ import { addRevalidatePaths } from "./health"
 const mustRevalidatePathsAtStartup = ["/map", "/enemy"]
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-const startup = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+const startup = (req: NextApiRequest, res: NextApiResponse): void => {
   // trigger revalidation of must revalidate paths
   for (const revalidatePath of mustRevalidatePathsAtStartup) {
     console.log("revalidating [startup]", revalidatePath)
-    await res.revalidate(revalidatePath).catch((reason) => {
+    res.revalidate(revalidatePath).catch((reason) => {
       console.warn("failed to revalidate", revalidatePath, reason)
     })
   }
