@@ -26,7 +26,7 @@ try {
 }
 
 const withPWA = nextPwa({
-  dest: "public/sw/",
+  dest: "public",
   disable: process.env.NODE_ENV === "development",
   register: false,
   skipWaiting: true,

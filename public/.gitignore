@@ -1,2 +1,6 @@
 LICENSES.txt
-sw/**
+
+# service worker related
+fallback-*.js
+sw-*.js
+workbox-*.js
