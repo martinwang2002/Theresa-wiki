@@ -39,7 +39,7 @@ interface MapProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
   stageId: string
   stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo
-  stageJson: IStageJson
+  stageJson: Pick<IStageJson, "mapData" | "options" | "runes">
   tileInfo: Record<string, ITileInfo>
   gamedataConst: Pick<IGamedataConst, "richTextStyles">
   zoneId: string
@@ -121,7 +121,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
       server: "CN",
       stageId,
       stageInfo,
-      stageJson,
+      stageJson: lodashPick(stageJson, "mapData", "options", "runes"),
       tileInfo,
       zoneId,
       zoneInfo
