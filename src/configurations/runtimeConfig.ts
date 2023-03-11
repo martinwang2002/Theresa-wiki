@@ -11,6 +11,8 @@ interface IPublicRuntimeConfig {
 }
 
 interface IServerRuntimeConfig {
+  CLOUDFLARE_API_TOKEN: string
+  CLOUDFLARE_ZONE_ID: string
   NO_DYNAMIC_ROUTES: boolean
   REDIS_EX_TTL: number
   REDIS_URL: string
@@ -24,6 +26,8 @@ const { publicRuntimeConfig } = getConfig() as {
 const defaultRedisExTtl = 3600
 
 const serverRuntimeConfig = {
+  CLOUDFLARE_API_TOKEN: process.env.CLOUDFLARE_API_TOKEN ?? "",
+  CLOUDFLARE_ZONE_ID: process.env.CLOUDFLARE_ZONE_ID ?? "",
   NO_DYNAMIC_ROUTES: process.env.NODE_ENV === "development" || process.env.THERESA_WIKI_NO_BUILD_DYNAMIC_ROUTES?.toLowerCase() === "true",
   REDIS_EX_TTL: parseInt(process.env.REDIS_EX_TTL ?? "") || defaultRedisExTtl,
   REDIS_URL: process.env.REDIS_URL ?? "",
