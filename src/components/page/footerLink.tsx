@@ -2,9 +2,10 @@ import React from "react"
 
 import { styled } from "@mui/system"
 import Link from "next/link"
+import type { LinkProps } from "next/link"
 
 interface IFooterLinkProps {
-  href: string
+  href: LinkProps["href"]
   icon: JSX.Element
   text: string
 }

@@ -1,5 +1,6 @@
 import React from "react"
 
+import { pick as lodashPick } from "lodash"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 
 import MapScene from "@/components/map/scene/index"
@@ -15,7 +16,7 @@ import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { sendMessage } from "@/models/utils/messenger"
 
 interface MapSceneWidgetProps {
-  stageJson: IStageJson
+  stageJson: Pick<IStageJson, "mapData">
   tileInfo: Record<string, ITileInfo>
 }
 
@@ -51,7 +52,7 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
 
   return {
     props: {
-      stageJson,
+      stageJson: lodashPick(stageJson, "mapData"),
       tileInfo
     },
     revalidate: 86400

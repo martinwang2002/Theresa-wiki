@@ -30,22 +30,23 @@ export default class MyDocument extends Document<MyDocumentProps> {
           />
 
           <Script
-            dangerouslySetInnerHTML={{
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GTAG_ID}', {
-                ${process.env.NODE_ENV === "development" ? "'debug_mode': true," : ""}
-                'page_path': window.location.pathname,
-                'cookie_prefix': 'theresaGa',
-              });
-            `
-            }}
             id="gtag-init"
             strategy="beforeInteractive"
-          />
+          >
+            {(`window.dataLayer=window.dataLayer||[];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag(
+                'config',
+                '${GTAG_ID}',
+                {
+                  ${process.env.NODE_ENV === "development" ? "'debug_mode':true," : ""}
+                  'page_path':window.location.pathname,
+                  'cookie_prefix':'theresaGa',
+                }
+              );
+              `).replace(/\n\s*/g, "")}
+          </Script>
 
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
 
