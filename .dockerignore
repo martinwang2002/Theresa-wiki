@@ -12,3 +12,11 @@ node_modules
 .next
 
 .env.local
+
+# next public folder
+public/LICENSES.txt
+
+# service worker related
+public/fallback-*.js
+public/sw-*.js
+public/workbox-*.js
