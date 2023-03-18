@@ -167,7 +167,7 @@ export const getStagesByZoneId = async (zoneId: string): Promise<(ICustomRogueli
 }
 
 export const getStageByStageId = async (stageId: string): Promise<(ICustomRoguelikeTopicDetailStageInfo | IHandbookInfoTableStageInfo | IStageInfo | undefined)> => {
-  const stageIdToLodashed = stageIdToLodash(stageId)
+  const stageIdToLodashed = stageIdToHash(stageId)
   const { stages } = await stageTable()
 
   if (stageIdToLodashed in stages) {
