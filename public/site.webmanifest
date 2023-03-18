@@ -11,6 +11,12 @@
             "sizes": "512x512",
             "src": "/favicon/android-chrome-512x512.png",
             "type": "image/png"
+        },
+        {
+            "purpose": "any maskable",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "src": "/favicon.svg",
+            "type": "image/svg+xml"
         }
     ],
     "name": "特蕾西娅 Theresa.wiki",
