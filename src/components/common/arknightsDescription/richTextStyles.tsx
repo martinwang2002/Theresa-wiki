@@ -3,7 +3,6 @@ import React from "react"
 import Box from "@mui/material/Box"
 
 import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { gtagEvent } from "@/models/utils/gtag"
 
 const zero = 0
@@ -14,12 +13,12 @@ const getColorFromAkFormatString = (akFormatString: string): string => {
   return regexMatch[1]
 }
 
-export const descriptionParser = (description: string, richTextStyles: Readonly<IGamedataConst["richTextStyles"]>): JSX.Element => {
+export const descriptionParserServerSide = (description: string, gamedataConst: Readonly<IGamedataConst>): string => {
   // replace \\n with \n
   const replacedBackSlashDescription = description.replaceAll("\\n", "\n")
 
-  // recursively replace <@{akFormatStringKey}>{text}</> to <span style={{color: color}}>{text}<span>
-  let colorFormattedDescription: (JSX.Element | string)[]
+  // recursively replace <@{akFormatStringKey}>{text}</> to <color=color>{text}</color>
+  let colorFormattedDescription: string[]
   colorFormattedDescription = []
   let stringSliceIndex
   stringSliceIndex = zero
@@ -31,12 +30,42 @@ export const descriptionParser = (description: string, richTextStyles: Readonly<
     let color: string
     color = "#fff"
     if (regexMatch[1].startsWith("@")) {
-      // use styles defined in richTextStyles
+      // use styles defined in gamedataConst.richTextStyles
       const akFormatStringKey: string = regexMatch[1]
       const akFormatStringKeyIndexWithoutAt = 1
-      const akFormatString = richTextStyles[akFormatStringKey.slice(akFormatStringKeyIndexWithoutAt)]
+      const akFormatString = gamedataConst.richTextStyles[akFormatStringKey.slice(akFormatStringKeyIndexWithoutAt)]
       color = getColorFromAkFormatString(akFormatString)
-    } else if (regexMatch[1].startsWith("color")) {
+    }
+
+    colorFormattedDescription = [
+      ...colorFormattedDescription,
+      replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),
+      `<color=${color}>${regexMatch[2]}</color>`
+    ]
+    stringSliceIndex = (regexMatch.index ?? zero) + regexMatch[0].length
+  }
+  colorFormattedDescription = [
+    ...colorFormattedDescription,
+    replacedBackSlashDescription.slice(stringSliceIndex)
+  ]
+
+  return colorFormattedDescription.join("")
+}
+
+export const descriptionParser = (description: string): JSX.Element => {
+  // recursively replace <@{akFormatStringKey}>{text}</> to <span style={{color: color}}>{text}<span>
+  let colorFormattedDescription: (JSX.Element | string)[]
+  colorFormattedDescription = []
+  let stringSliceIndex
+  stringSliceIndex = zero
+
+  for (const regexMatch of description.matchAll(/<([^>]*)>(.*?)<\/([^>]*)>/g)) {
+    // see https://stackoverflow.com/a/3075532
+    // use reluctant string mode instead of greedy
+
+    let color: string
+    color = "#fff"
+    if (regexMatch[1].startsWith("color")) {
       // use inline color
       // regexMatch[0] gives the whole string
       color = getColorFromAkFormatString(regexMatch[0])
@@ -51,7 +80,7 @@ export const descriptionParser = (description: string, richTextStyles: Readonly<
 
     colorFormattedDescription = [
       ...colorFormattedDescription,
-      replacedBackSlashDescription.slice(stringSliceIndex, regexMatch.index),
+      description.slice(stringSliceIndex, regexMatch.index),
       <span
         key={regexMatch.index}
         style={{ color }}
@@ -63,7 +92,7 @@ export const descriptionParser = (description: string, richTextStyles: Readonly<
   }
   colorFormattedDescription = [
     ...colorFormattedDescription,
-    replacedBackSlashDescription.slice(stringSliceIndex)
+    description.slice(stringSliceIndex)
   ]
 
   return (
@@ -116,25 +145,18 @@ class ArknightsDescription extends React.PureComponent<DescriptionProps> {
           whiteSpace: "pre-line"
         }}
       >
-        <GamedataContext.Consumer>
-          {(gamedataConst: Readonly<IGamedataConst>): JSX.Element => {
-            const { richTextStyles } = gamedataConst
-            return (
-              <Box
-                sx={{
-                  backgroundColor: "#2f2f2f",
-                  borderRadius: "0.75em",
-                  color: "#a9a9a9",
-                  ml: 5,
-                  px: 1.5,
-                  py: 1
-                }}
-              >
-                {descriptionParser(description, richTextStyles)}
-              </Box>
-            )
+        <Box
+          sx={{
+            backgroundColor: "#2f2f2f",
+            borderRadius: "0.75em",
+            color: "#a9a9a9",
+            ml: 5,
+            px: 1.5,
+            py: 1
           }}
-        </GamedataContext.Consumer>
+        >
+          {descriptionParser(description)}
+        </Box>
       </Box>
     )
   }
