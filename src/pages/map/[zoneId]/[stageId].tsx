@@ -5,7 +5,7 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import Head from "next/head"
 
-import ArknightsDescription, { arknightsDescriptionToPlainTextParser } from "@/components/common/arknightsDescription/index"
+import ArknightsDescription, { arknightsDescriptionToPlainTextParser, descriptionParserServerSide } from "@/components/common/arknightsDescription/richTextStyles"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import StyledLink from "@/components/common/styledLink"
@@ -22,7 +22,6 @@ import Page from "@/components/page/page"
 import { getBattleOnGameReadyBgmBankByBgmEventKey } from "@/models/gamedata/excel/audioData"
 import type { IBgmBank } from "@/models/gamedata/excel/audioData"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import type { IHandbookInfoTableStageInfo } from "@/models/gamedata/excel/handbookInfoTable"
 import { getCustomStageInfo, getStageIdsByZoneId, tileInfo as getTileInfo } from "@/models/gamedata/excel/stageTable"
 import type { ICustomRoguelikeTopicDetailStageInfo, ICustomStageInfo, ITileInfo } from "@/models/gamedata/excel/stageTable"
@@ -30,7 +29,6 @@ import { getCustomZoneInfo, zoneIds } from "@/models/gamedata/excel/zoneTable"
 import type { IZoneInfo } from "@/models/gamedata/excel/zoneTable"
 import { stageJson as getStageJson } from "@/models/gamedata/levels/index"
 import type { IStageJson } from "@/models/gamedata/levels/index"
-import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
@@ -41,7 +39,6 @@ interface MapProps {
   stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo
   stageJson: Pick<IStageJson, "mapData" | "options" | "runes">
   tileInfo: Record<string, ITileInfo>
-  gamedataConst: Pick<IGamedataConst, "richTextStyles">
   zoneId: string
   zoneInfo: IZoneInfo
   bgmBank: IBgmBank
@@ -102,11 +99,16 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
     }
   }
 
+  const gamedataConst = await getGamedataConst()
+
+  const patchedStageInfo = {
+    ...stageInfo,
+    description: descriptionParserServerSide(stageInfo.description, gamedataConst)
+  }
+
   const stageJson = await getStageJson(levelId)
 
   const tileInfo = await getTileInfo()
-
-  const gamedataConst = await getGamedataConst()
 
   const zoneInfo = await getCustomZoneInfo(zoneId)
 
@@ -120,7 +122,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
       gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN",
       stageId,
-      stageInfo,
+      stageInfo: patchedStageInfo,
       stageJson: lodashPick(stageJson, "mapData", "options", "runes"),
       tileInfo,
       zoneId,
@@ -132,7 +134,7 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
 
 class Map extends React.PureComponent<MapProps> {
   public render (): React.ReactNode {
-    const { bgmBank, server, stageInfo, stageJson, tileInfo, gamedataConst, stageId, zoneId, zoneInfo } = this.props
+    const { bgmBank, server, stageInfo, stageJson, tileInfo, stageId, zoneId, zoneInfo } = this.props
     const difficulty = "difficulty" in stageInfo ? stageInfo.difficulty : undefined
     const { mapData, options, runes } = stageJson
 
@@ -236,11 +238,9 @@ class Map extends React.PureComponent<MapProps> {
           </TopBadge>
         </Typography>
 
-        <GamedataContext.Provider value={gamedataConst}>
-          <ArknightsDescription
-            description={stageInfo.description}
-          />
-        </GamedataContext.Provider>
+        <ArknightsDescription
+          description={stageInfo.description}
+        />
 
         <WithTableOfContents>
           {
@@ -251,12 +251,9 @@ class Map extends React.PureComponent<MapProps> {
                 text="作战信息"
               />
 
-              <GamedataContext.Provider value={gamedataConst}>
-                <StageInfo
-                  stageInfo={stageInfo}
-                  // stageJsonOptions={stageJson.options}
-                />
-              </GamedataContext.Provider>
+              <StageInfo
+                stageInfo={stageInfo}
+              />
 
               <HeadingAnchor
                 id="stageOptions"

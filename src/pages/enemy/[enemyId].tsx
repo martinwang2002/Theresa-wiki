@@ -1,11 +1,10 @@
 import React from "react"
 
 import Typography from "@mui/material/Typography"
-import { pick as lodashPick } from "lodash"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import Head from "next/head"
 
-import ArknightsDescription, { arknightsDescriptionToPlainTextParser } from "@/components/common/arknightsDescription/index"
+import ArknightsDescription, { arknightsDescriptionToPlainTextParser, descriptionParserServerSide } from "@/components/common/arknightsDescription/richTextStyles"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import EnemyAvatar from "@/components/common/enemy/avatar"
@@ -19,10 +18,8 @@ import Page from "@/components/page/page"
 import { enemyIds, getEnemyHandbookByEnemyId } from "@/models/gamedata/excel/enemyHandbookTable"
 import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { enemyValueByEnemyId, enemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
 import type { IEnemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
-import { GamedataContext } from "@/models/reactContext/gamedataContext"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 interface EnemyProps {
@@ -30,7 +27,6 @@ interface EnemyProps {
   enemyId: string
   enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
   enemyHandbook: IEnemyHandbook
-  gamedataConst: Pick<IGamedataConst, "richTextStyles">
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -57,12 +53,20 @@ export const getStaticProps: GetStaticProps<EnemyProps> = async (context: Readon
 
   const gamedataConst = await getGamedataConst()
 
+  const patchedEnemyHandbook = {
+    ...enemyHandbook,
+    ability: enemyHandbook.ability !== null
+      ? descriptionParserServerSide(
+        enemyHandbook.ability, gamedataConst
+      )
+      : null
+  }
+
   return {
     props: {
       enemyDataDefinedByLevel,
-      enemyHandbook,
+      enemyHandbook: patchedEnemyHandbook,
       enemyId,
-      gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN"
     },
     revalidate: 86400
@@ -71,7 +75,7 @@ export const getStaticProps: GetStaticProps<EnemyProps> = async (context: Readon
 
 class Enemy extends React.PureComponent<EnemyProps> {
   public render (): React.ReactNode {
-    const { enemyDataDefinedByLevel, enemyHandbook, enemyId, gamedataConst, server } = this.props
+    const { enemyDataDefinedByLevel, enemyHandbook, enemyId, server } = this.props
     return (
       <Page>
         <Head>
@@ -153,18 +157,16 @@ class Enemy extends React.PureComponent<EnemyProps> {
           </TopBadge>
         </Typography>
 
-        <GamedataContext.Provider value={gamedataConst}>
-          <ArknightsDescription
-            description={enemyHandbook.description}
-          />
+        <ArknightsDescription
+          description={enemyHandbook.description}
+        />
 
-          {
-            enemyHandbook.ability !== null &&
+        {
+          enemyHandbook.ability !== null &&
             <ArknightsDescription
               description={enemyHandbook.ability}
             />
-          }
-        </GamedataContext.Provider>
+        }
 
         <WithTableOfContents>
           <HeadingAnchor

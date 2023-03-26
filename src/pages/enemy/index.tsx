@@ -16,7 +16,7 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticProps } from "next"
 import Head from "next/head"
 
-import { descriptionParser } from "@/components/common/arknightsDescription/index"
+import { descriptionParser, descriptionParserServerSide } from "@/components/common/arknightsDescription/richTextStyles"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import EnemyAvatar from "@/components/common/enemy/avatar"
@@ -27,12 +27,10 @@ import Page from "@/components/page/page"
 import { enemyHandbookTable } from "@/models/gamedata/excel/enemyHandbookTable"
 import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
-import type { IGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { SettingsContext } from "@/models/reactContext/settingsContext"
 
 interface EnemiesProps {
   server: "CN" | "JP" | "KR" | "TW" | "US"
-  gamedataConst: Pick<Readonly<IGamedataConst>, "richTextStyles">
   enemies: readonly Pick<Readonly<IEnemyHandbook>, "ability" | "attack" | "defence" | "endure" | "enemyId" | "enemyRace" | "name" | "resistance">[]
 }
 
@@ -55,14 +53,19 @@ export const getStaticProps: GetStaticProps<EnemiesProps> = async () => {
     }
   }
   const _enemyHandbookTable = await enemyHandbookTable()
-  const enemies = Object.values(_enemyHandbookTable).map((enemy) => lodashPick(enemy, "ability", "attack", "endure", "enemyId", "enemyRace", "name", "defence", "resistance"))
 
   const gamedataConst = await getGamedataConst()
+
+  const enemies = Object.values(_enemyHandbookTable)
+    .map((enemy) => lodashPick(enemy, "ability", "attack", "endure", "enemyId", "enemyRace", "name", "defence", "resistance"))
+    .map((enemy) => ({
+      ...enemy,
+      ability: enemy.ability !== null ? descriptionParserServerSide(enemy.ability, gamedataConst) : null
+    }))
 
   return {
     props: {
       enemies,
-      gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN"
     },
     revalidate: 86400
@@ -93,10 +96,8 @@ class Enemies extends React.PureComponent<EnemiesProps, EnemiesState> {
   }
 
   public render (): React.ReactNode {
-    const { enemies, gamedataConst, server } = this.props
+    const { enemies, server } = this.props
     const { page, rowsPerPage } = this.state
-
-    const { richTextStyles } = gamedataConst
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const rowsPerPageOptions = [5, 10, 25, 50]
@@ -274,7 +275,7 @@ class Enemies extends React.PureComponent<EnemiesProps, EnemiesState> {
                   </TableCell>
 
                   <TableCell>
-                    {enemy.ability !== null ? descriptionParser(enemy.ability, richTextStyles) : ""}
+                    {enemy.ability !== null ? descriptionParser(enemy.ability) : ""}
                   </TableCell>
                 </TableRow>
               ))}
