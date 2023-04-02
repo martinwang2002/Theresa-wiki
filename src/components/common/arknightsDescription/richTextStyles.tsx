@@ -33,7 +33,7 @@ export const descriptionParserServerSide = (description: string, gamedataConst: 
       // use styles defined in gamedataConst.richTextStyles
       const akFormatStringKey: string = regexMatch[1]
       const akFormatStringKeyIndexWithoutAt = 1
-      const akFormatString = gamedataConst.richTextStyles[akFormatStringKey.slice(akFormatStringKeyIndexWithoutAt)]
+      const akFormatString = gamedataConst.richTextStyles[akFormatStringKey.slice(akFormatStringKeyIndexWithoutAt).toLocaleLowerCase()]
       color = getColorFromAkFormatString(akFormatString)
     }
 

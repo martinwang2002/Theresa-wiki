@@ -119,7 +119,6 @@ export const getStaticProps: GetStaticProps<MapProps> = async (context: Readonly
   return {
     props: {
       bgmBank,
-      gamedataConst: lodashPick(gamedataConst, "richTextStyles"),
       server: "CN",
       stageId,
       stageInfo: patchedStageInfo,
