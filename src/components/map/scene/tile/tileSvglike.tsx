@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react"
 
+import AddIcon from "@mui/icons-material/Add"
 import LoginIcon from "@mui/icons-material/Login"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { lightBlue } from "@mui/material/colors"
@@ -10,6 +11,7 @@ import TileFlystartIcon from "@/components/icon/tile/tileFlystart"
 import TileReedIcon from "@/components/icon/tile/tileReed"
 import TileStairsIcon from "@/components/icon/tile/tileStairs"
 import TileStartEndIcon from "@/components/icon/tile/tileStartEnd"
+import TileVolcanoIcon from "@/components/icon/tile/tileVolcano"
 
 import { TileBase } from "./tileBase"
 import { TileFloor, TileRoad, TileWall } from "./tileRoadlike"
@@ -135,3 +137,27 @@ export const TileStairs = React.forwardRef<HTMLSpanElement>((_props, ref) => (
 ))
 
 TileStairs.displayName = "TileStairs"
+
+export const TileHealing = React.forwardRef<HTMLSpanElement>((_props, ref) => (
+  <TileRoad
+    ref={ref}
+  >
+    <AddIcon
+      sx={{ ...tileSxProps, color: "#0098db" } as SxProps<Theme>}
+    />
+  </TileRoad>
+))
+
+TileHealing.displayName = "TileHealing"
+
+export const TileVolcano = React.forwardRef<HTMLSpanElement>((_props, ref) => (
+  <TileBase
+    ref={ref}
+  >
+    <TileVolcanoIcon
+      sx={tileSxProps}
+    />
+  </TileBase>
+))
+
+TileVolcano.displayName = "TileVolcano"
