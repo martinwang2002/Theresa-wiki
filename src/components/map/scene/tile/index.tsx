@@ -15,7 +15,7 @@ import { gtagEvent } from "@/models/utils/gtag"
 
 import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
 import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
-import { TileEnd, TileFlystart, TileReed, TileReedFloor, TileReedWall, TileStairs, TileStart, TileTelin, TileTelout } from "./tileSvglike"
+import { TileEnd, TileFlystart, TileHealing, TileReed, TileReedFloor, TileReedWall, TileStairs, TileStart, TileTelin, TileTelout, TileVolcano } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
@@ -33,6 +33,7 @@ const tileElements = {
   tile_floor: TileFloor,
   tile_flystart: TileFlystart,
   tile_forbidden: TileForbidden,
+  tile_healing: TileHealing,
   tile_hole: TileHole,
   tile_icestr: TileIcestr,
   tile_icetur_lb: TileIceturLb,
@@ -52,6 +53,7 @@ const tileElements = {
   tile_start: TileStart,
   tile_telin: TileTelin,
   tile_telout: TileTelout,
+  tile_volcano: TileVolcano,
   tile_wall: TileWall
 } as Record<string, React.Factory<{ sx?: SxProps }> | undefined>
 
