@@ -78,7 +78,7 @@ export default class PatchedNumberModeSettings extends React.PureComponent {
                     </li>
 
                     <li>
-                      <PatchedNumber number={{ new: 3, old: "1*2+1" }} />
+                      <PatchedNumber number={{ new: 3, old: "1\u00782+1" }} />
                     </li>
                   </SettingsContext.Provider>
 
@@ -92,7 +92,7 @@ export default class PatchedNumberModeSettings extends React.PureComponent {
                     </li>
 
                     <li>
-                      <PatchedNumber number={{ new: 3, old: "1*2+1" }} />
+                      <PatchedNumber number={{ new: 3, old: "1\u00782+1" }} />
                     </li>
                   </SettingsContext.Provider>
                 </>

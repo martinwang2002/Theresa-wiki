@@ -167,7 +167,7 @@ function getStageOptionsWithRunes (stageOptions: Readonly<IStageJsonOptions>, ru
 
         _stageOptions.costIncreaseTime = {
           new: stageOptions.costIncreaseTime * scale,
-          old: `${stageOptions.costIncreaseTime}*${scale}`
+          old: `${stageOptions.costIncreaseTime}\u0078${scale}`
         } as IPatchedNumber
         break
       }
