@@ -17,6 +17,8 @@ import Page from "@/components/page/page"
 
 import { gtagEvent } from "@/models/utils/gtag"
 
+import type { PurgeResponse } from "@/pages/api/purge"
+
 interface PurgeProps {
   router: NextRouter
 }
@@ -27,11 +29,7 @@ interface PurgeState {
   snackbarOpen: boolean
   isPurgeSuccess: boolean
   purgeError: string
-}
-
-interface PurgeResponse {
-  code: number
-  error?: string
+  resVersion: string
 }
 
 class Purge extends React.PureComponent<PurgeProps, PurgeState> {
@@ -43,6 +41,7 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
       isPurgeSuccess: false,
       path: "",
       purgeError: "",
+      resVersion: "",
       snackbarOpen: false
     }
   }
@@ -127,12 +126,14 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
       method: "POST"
     }).then(async (response): Promise<void> => {
       if (response.ok) {
+        // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
         return response.json().then((data: Readonly<PurgeResponse>): void => {
           const STATUS_OK = 200
           this.setState({
             disablePurgeSubmit: false,
             isPurgeSuccess: data.code === STATUS_OK,
             purgeError: data.error ?? "",
+            resVersion: data.data?.resVersion ?? "",
             snackbarOpen: true
           })
           console.log(data)
@@ -162,7 +163,7 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
   public render (): React.ReactNode {
     const { router } = this.props
 
-    const { disablePurgeSubmit, snackbarOpen, isPurgeSuccess, path, purgeError } = this.state
+    const { disablePurgeSubmit, snackbarOpen, isPurgeSuccess, path, purgeError, resVersion } = this.state
     return (
       <Page>
         <Head>
@@ -232,7 +233,7 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
             severity={isPurgeSuccess ? "success" : "error"}
             sx={{ width: "100%" }}
           >
-            {isPurgeSuccess ? "缓存清除成功" : purgeError}
+            {isPurgeSuccess ? `缓存清除成功。资源版本：${resVersion}` : purgeError}
           </Alert>
         </Snackbar>
       </Page>

@@ -3,6 +3,7 @@ import Ajv from "ajv"
 import { StatusCodes } from "http-status-codes"
 import type { NextApiRequest, NextApiResponse } from "next"
 
+import { redisClient } from "@/configurations/cache"
 import { publicRuntimeConfig, serverRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const ajv = new Ajv()
@@ -33,13 +34,31 @@ interface CloudflarePurgeResponseData {
   }
 }
 
+interface PurgeResponseData {
+  cdnPurge: {
+    error: string | null
+    success: boolean
+  }
+  nextjsPurge: {
+    error: string | null
+    success: boolean
+  }
+  resVersion: string | null
+}
+
+interface PurgeResponse {
+  code: number
+  data?: PurgeResponseData
+  error?: string
+}
+
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method !== "POST") {
     res.status(StatusCodes.METHOD_NOT_ALLOWED).json({
       code: StatusCodes.METHOD_NOT_ALLOWED,
-      error: "Method not allowed"
-    })
+      error: "Method not allowed. Only POST is allowed."
+    } as PurgeResponse)
     return undefined
   }
 
@@ -47,8 +66,8 @@ const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> =
   if (!validate(req.body)) {
     res.status(StatusCodes.BAD_REQUEST).json({
       code: StatusCodes.BAD_REQUEST,
-      error: "Bad request"
-    })
+      error: "Bad request. Request body is not valid."
+    } as PurgeResponse)
     return undefined
   }
 
@@ -57,14 +76,16 @@ const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> =
   if (!path.startsWith("/")) {
     res.status(StatusCodes.BAD_REQUEST).json({
       code: StatusCodes.BAD_REQUEST,
-      error: "Bad request"
-    })
+      error: "Bad request. Path must start with '/'."
+    } as PurgeResponse)
     return undefined
   }
 
   // reCaptcha validation
   // if (process.env.NODE_ENV !== "development") {
   // }
+
+  const resVersion = await redisClient.get("_s3Version")
 
   const [isRevalidateSuccessful, revalidationError] = await res.revalidate(path).then(() => {
     return [true, null]
@@ -83,10 +104,11 @@ const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> =
         nextjsPurge: {
           error: revalidationError?.message,
           success: false
-        }
+        },
+        resVersion
       },
       error: revalidationError?.message
-    })
+    } as PurgeResponse)
     return undefined
   }
 
@@ -119,9 +141,10 @@ const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> =
         nextjsPurge: {
           error: null,
           success: true
-        }
+        },
+        resVersion
       }
-    })
+    } as PurgeResponse)
     return undefined
   })
 
@@ -136,9 +159,12 @@ const purge = async (req: NextApiRequest, res: NextApiResponse): Promise<void> =
       nextjsPurge: {
         error: null,
         success: true
-      }
+      },
+      resVersion
     }
-  })
+  } as PurgeResponse)
 }
 
 export default purge
+
+export type { PurgeResponse }
