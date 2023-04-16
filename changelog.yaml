@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 5, 11]
+    date: 2023-04-17T08:00:00+0800
+    contents:
+      added:
+        - resVersion info for purge api
+
   - version: [0, 5, 10]
     date: 2023-04-10T08:00:00+0800
     contents:
