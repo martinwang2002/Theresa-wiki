@@ -1,4 +1,3 @@
-
 import { serialize as serializeUri } from "uri-js"
 
 import cacheable from "@/configurations/cache"

@@ -8,6 +8,7 @@ import type { IHandbookInfoTableStageInfo } from "./handbookInfoTable"
 import { retroTable } from "./retroTable"
 import type { IRoguelikeTopicDetailStageInfo } from "./roguelikeTopicTable"
 import { roguelikeTopicTable } from "./roguelikeTopicTable"
+import type { DropType } from "./stageTable.common"
 
 interface IStageTable {
   [key: string]: unknown
@@ -23,13 +24,13 @@ interface IUnlockCondition {
 interface IDisplayReward {
   type: string
   id: string
-  dropType: number
+  dropType: DropType
 }
 
 interface IDisplayDetailReward {
   type: string
   id: string
-  dropType: number
+  dropType: DropType
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   occPercent: 0 | 1 | 2 | 3 | 4
 }

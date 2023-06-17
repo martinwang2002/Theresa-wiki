@@ -5,19 +5,12 @@ import { isEmpty } from "lodash"
 import { DataTableRowCell } from "@/components/common/dataTable"
 
 import type { IDisplayDetailReward, IStageInfo } from "@/models/gamedata/excel/stageTable"
+import { DropType } from "@/models/gamedata/excel/stageTable.common"
 
 import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
 
 interface StageInfoTableProps {
   stageInfo: IStageInfo
-}
-
-enum DropType {
-  firstPass = 1,
-  normal = 2,
-  special = 3,
-  extra = 4,
-  diamond = 8
 }
 
 // const numberReg = /^[0-9]+$/
