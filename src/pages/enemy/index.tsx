@@ -56,11 +56,16 @@ export const getStaticProps: GetStaticProps<EnemiesProps> = async () => {
 
   const gamedataConst = await getGamedataConst()
 
+  // FIXME: remove this
+  descriptionParserServerSide("", gamedataConst)
+
   const enemies = Object.values(_enemyHandbookTable)
     .map((enemy) => lodashPick(enemy, "ability", "attack", "endure", "enemyId", "enemyRace", "name", "defence", "resistance"))
     .map((enemy) => ({
       ...enemy,
-      ability: enemy.ability !== null ? descriptionParserServerSide(enemy.ability, gamedataConst) : null
+      // ability: enemy.ability !== null ? descriptionParserServerSide(enemy.ability, gamedataConst) : null
+      // FIXME：new ability format
+      ability: null
     }))
 
   return {

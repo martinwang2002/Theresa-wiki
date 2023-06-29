@@ -1,12 +1,12 @@
 import Redis from "ioredis"
 import type { RedisOptions } from "ioredis"
-import LRUCache from "lru-cache"
+import { LRUCache } from "lru-cache"
 
 import { serverRuntimeConfig } from "./runtimeConfig"
 
 const oneMinute = 60_000
 
-const lruCache = new LRUCache<string, unknown>({
+const lruCache = new LRUCache({
   max: 25,
   ttl: oneMinute
 })
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "development" || process.env.npm_lifecycle_event ==
   })
 }
 
-const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
+const cacheable = <FunctionArguments extends unknown[], FunctionReturn extends object | undefined>(
   fn: (...args: FunctionArguments) => FunctionReturn | Promise<FunctionReturn>,
   options: Readonly<ICacheable>
 ) => {
@@ -55,13 +55,13 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
         } catch (error) {
           console.error("cachable function error", error, fn.name)
         }
+        if (result === undefined) {
+          throw new Error("cachable function result is undefined")
+        }
         lruCache.set(cacheKey, result)
         redisClient.set(cacheKey, JSON.stringify(result), options.expiryMode, options.ttl).catch((error) => {
           console.error("redis set error", error)
         })
-        if (result === undefined) {
-          throw new Error("cachable function result is undefined")
-        }
         return result
       }
 
@@ -71,7 +71,7 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
         result = await redisClient.get(cacheKey).then(async (redisResult) => {
           if (redisResult !== null) {
             try {
-              const parsedResult = JSON.parse(redisResult) as FunctionReturn
+              const parsedResult = JSON.parse(redisResult) as Exclude<FunctionReturn, undefined>
               lruCache.set(cacheKey, parsedResult)
               return parsedResult
             } catch (error) {
@@ -81,7 +81,7 @@ const cacheable = <FunctionArguments extends unknown[], FunctionReturn>(
           } else {
             return callFunctionAndCache()
           }
-        }).catch((error) => {
+        }).catch(async (error) => {
           console.error("redis get fatal error", error)
           return fn(...args)
         })
