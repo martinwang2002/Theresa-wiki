@@ -1,4 +1,8 @@
-import { green, grey, lightBlue, orange } from "@mui/material/colors"
+/* eslint-disable react/no-multi-comp */
+import React from "react"
+
+import ScaleIcon from "@mui/icons-material/Scale"
+import { amber, green, grey, lightBlue, orange } from "@mui/material/colors"
 import { styled } from "@mui/system"
 
 import { TileBase } from "./tileBase"
@@ -53,3 +57,57 @@ export const TileIceturRb = styled(TileIcestr)({
 export const TileMire = styled(TileRoadlike)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? green[500] : green[900]
 }))
+
+export const TileRistarRoad = styled(TileRoadlike)({
+  background: `linear-gradient(to bottom, ${amber[200]} 0, ${amber[800]} 33%, ${amber[200]} 34%, ${amber[800]} 66%, ${amber[200]} 67%, ${amber[800]} 100%)`
+})
+
+export const RistarRoadForbiddenCross = styled("span")({
+  backgroundColor: "black",
+  borderRadius: "1px",
+  height: "5%",
+  left: "0",
+  position: "absolute",
+  top: "50%",
+  width: "100%"
+})
+
+const TileRistarRoadForbidden = React.forwardRef<HTMLSpanElement>((_props, ref) => (
+  <TileRistarRoad
+    ref={ref}
+  >
+    <RistarRoadForbiddenCross
+      sx={{
+        transform: "rotate(45deg)"
+      }}
+    />
+
+    <RistarRoadForbiddenCross
+      sx={{
+        top: "50%",
+        transform: "rotate(-45deg)"
+      }}
+    />
+  </TileRistarRoad>
+))
+
+TileRistarRoadForbidden.displayName = "TileRistarRoadForbidden"
+
+const TileGrvtyBtn = React.forwardRef<HTMLSpanElement>((_props, ref) => (
+  <TileRoad
+    ref={ref}
+  >
+    <ScaleIcon
+      sx={{
+        color: "black",
+        height: "75%",
+        margin: "auto",
+        width: "75%"
+      }}
+    />
+  </TileRoad>
+))
+
+TileGrvtyBtn.displayName = "TileGrvtyBtn"
+
+export { TileRistarRoadForbidden, TileGrvtyBtn }
