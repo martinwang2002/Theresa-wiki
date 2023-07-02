@@ -317,6 +317,18 @@ export const tileInfo = async (): Promise<Record<string, ITileInfo>> => {
       isFunctional: false,
       name: "玉门天灾工事（不可部署）",
       tileKey: "tile_empty"
+    },
+    tile_ristar_road: {
+      description: "行星碎屑会在上面滚动",
+      isFunctional: false,
+      name: "行星碎屑地面",
+      tileKey: "tile_ristar_road"
+    },
+    tile_ristar_road_forbidden: {
+      description: "行星碎屑会在上面滚动（不可部署）",
+      isFunctional: false,
+      name: "行星碎屑地面（不可部署）",
+      tileKey: "tile_ristar_road_forbidden"
     }
   } as Record<string, ITileInfo>
 

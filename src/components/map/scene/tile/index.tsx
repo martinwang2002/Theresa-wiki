@@ -13,8 +13,8 @@ import type { IMapDataTiles } from "@/models/gamedata/levels/index"
 import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { gtagEvent } from "@/models/utils/gtag"
 
-import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole } from "./tileNonRoadlike"
-import { TileFence, TileFenceBound, TileFloor, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRoad, TileWall } from "./tileRoadlike"
+import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole, TileWoodRd } from "./tileNonRoadlike"
+import { TileFence, TileFenceBound, TileFloor, TileGrvtyBtn, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRistarRoad, TileRistarRoadForbidden, TileRoad, TileWall } from "./tileRoadlike"
 import { TileEnd, TileFlystart, TileHealing, TileReed, TileReedFloor, TileReedWall, TileStairs, TileStart, TileTelin, TileTelout, TileVolcano } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
@@ -33,6 +33,7 @@ const tileElements = {
   tile_floor: TileFloor,
   tile_flystart: TileFlystart,
   tile_forbidden: TileForbidden,
+  tile_grvtybtn: TileGrvtyBtn,
   tile_healing: TileHealing,
   tile_hole: TileHole,
   tile_icestr: TileIcestr,
@@ -48,13 +49,16 @@ const tileElements = {
   tile_reed: TileReed,
   tile_reedf: TileReedFloor,
   tile_reedw: TileReedWall,
+  tile_ristar_road: TileRistarRoad,
+  tile_ristar_road_forbidden: TileRistarRoadForbidden,
   tile_road: TileRoad,
   tile_stairs: TileStairs,
   tile_start: TileStart,
   tile_telin: TileTelin,
   tile_telout: TileTelout,
   tile_volcano: TileVolcano,
-  tile_wall: TileWall
+  tile_wall: TileWall,
+  tile_woodrd: TileWoodRd
 } as Record<string, React.Factory<{ sx?: SxProps }> | undefined>
 
 class Tile extends React.PureComponent<ITileProps> {
