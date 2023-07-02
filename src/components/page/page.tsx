@@ -321,12 +321,12 @@ class Page extends React.PureComponent<PageProps, PageState> {
           }}
         >
           {/* FIXME */}
-          <Alert
+          {/* <Alert
             severity="error"
             sx={{ width: "100%" }}
           >
             由于技术原因，解包程序失效了。请等待解包程序更新。()
-          </Alert>
+          </Alert> */}
 
           {children}
         </Container>
