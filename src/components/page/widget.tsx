@@ -1,11 +1,13 @@
 import React from "react"
 
 import { Global } from "@emotion/react"
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble"
 import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import Paper from "@mui/material/Paper"
 import Snackbar from "@mui/material/Snackbar"
+import Typography from "@mui/material/Typography"
 import { styled } from "@mui/system"
 import Head from "next/head"
 import type { Workbox } from "workbox-window"
@@ -235,6 +237,39 @@ class PageWidget extends React.PureComponent<WidgetProps, WidgetState> {
                 width: "auto"
               }}
             />
+          </Paper>
+        </Styledlink>
+
+        <Styledlink
+          href="/about/contact"
+          target="_blank"
+        >
+          <Paper
+            sx={{
+              bottom: 0,
+              position: "absolute",
+              right: 0,
+              zIndex: 1000
+            }}
+          >
+            <Typography
+              sx={{
+                margin: "0.3em",
+                verticalAlign: "middle"
+              }}
+              variant="subtitle1"
+            >
+              <ChatBubbleIcon
+                sx={{
+                  fill: "#00B3FD",
+                  height: "0.75em",
+                  verticalAlign: "-0.1em",
+                  width: "0.75em"
+                }}
+              />
+
+              反馈
+            </Typography>
           </Paper>
         </Styledlink>
 

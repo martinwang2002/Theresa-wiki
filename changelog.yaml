@@ -6,6 +6,7 @@ versions:
     contents:
       added:
         - widget scene title
+        - widget feedback button
       fixed:
         - widget map width and height undefined
 
