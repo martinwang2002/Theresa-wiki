@@ -15,10 +15,8 @@ interface IMapDataTiles {
 }
 
 interface IMapData {
-  height: number
   map: [number[]]
   tiles: [IMapDataTiles]
-  width: number
 }
 
 interface IWaveFragmentAction {
