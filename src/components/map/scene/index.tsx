@@ -38,7 +38,10 @@ class MapScene extends React.PureComponent<IMapSceneProps> {
 
   public render (): React.ReactNode {
     const { activeTiles, mapData, onTileClick } = this.props
-    const { tiles, width, height } = mapData
+    const { tiles, map } = mapData
+
+    const width = map[0].length
+    const height = map.length
 
     return (
       <MapSceneContainer>

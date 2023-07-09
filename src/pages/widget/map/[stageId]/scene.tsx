@@ -2,6 +2,7 @@ import React from "react"
 
 import { pick as lodashPick } from "lodash"
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
+import Head from "next/head"
 
 import MapScene from "@/components/map/scene/index"
 import PageWidget from "@/components/page/widget"
@@ -18,6 +19,7 @@ import { sendMessage } from "@/models/utils/messenger"
 interface MapSceneWidgetProps {
   stageJson: Pick<IStageJson, "mapData">
   tileInfo: Record<string, ITileInfo>
+  name: string
 }
 
 interface MapSceneWidgetState {
@@ -44,7 +46,7 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
     return { notFound: true }
   }
 
-  const { levelId } = stageInfo
+  const { levelId, name } = stageInfo
 
   const stageJson = await getStageJson(levelId)
 
@@ -52,6 +54,7 @@ export const getStaticProps: GetStaticProps<MapSceneWidgetProps> = async (contex
 
   return {
     props: {
+      name,
       stageJson: lodashPick(stageJson, "mapData"),
       tileInfo
     },
@@ -74,13 +77,19 @@ class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps, MapSceneWi
   }
 
   public render (): React.ReactNode {
-    const { stageJson, tileInfo } = this.props
+    const { stageJson, tileInfo, name } = this.props
     const { activeTiles } = this.state
 
     const { mapData } = stageJson
 
     return (
       <PageWidget>
+        <Head>
+          <title>
+            {`${name} | Theresa Widget`}
+          </title>
+        </Head>
+
         <TileInfoContext.Provider value={tileInfo}>
           <MapSceneWidgetAdapter
             mapData={mapData}
