@@ -4,6 +4,8 @@ versions:
   - version: [0, 5, 14]
     date: 2023-07-10T08:00:00+0800
     contents:
+      added:
+        - widget scene title
       fixed:
         - widget map width and height undefined
 
