@@ -23,7 +23,7 @@ declare global {
 }
 
 interface WidgetProps {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }
 
 interface WidgetState {

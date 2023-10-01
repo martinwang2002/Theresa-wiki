@@ -30,8 +30,8 @@ import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamed
 import { SettingsContext } from "@/models/reactContext/settingsContext"
 
 interface EnemiesProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  enemies: readonly Pick<Readonly<IEnemyHandbook>, "ability" | "attack" | "defence" | "endure" | "enemyId" | "enemyRace" | "name" | "resistance">[]
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly enemies: readonly Pick<Readonly<IEnemyHandbook>, "ability" | "attack" | "defence" | "endure" | "enemyId" | "enemyRace" | "name" | "resistance">[]
 }
 
 interface EnemiesState {

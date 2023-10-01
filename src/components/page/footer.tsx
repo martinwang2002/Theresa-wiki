@@ -21,25 +21,23 @@ const FooterVersion = styled("div")({
   textTransform: "uppercase"
 })
 
-class Footer extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <FooterDiv
-        data-elastic-exclude
-        data-nosnippet
-      >
-        <FooterAbout />
+function Footer (): React.ReactNode {
+  return (
+    <FooterDiv
+      data-elastic-exclude
+      data-nosnippet
+    >
+      <FooterAbout />
 
-        <FooterVersion>
-          {publicRuntimeConfig.THERESA_WIKI_VERSION}
+      <FooterVersion>
+        {publicRuntimeConfig.THERESA_WIKI_VERSION}
 
-          {" "}
+        {" "}
 
-          {publicRuntimeConfig.GIT_COMMIT}
-        </FooterVersion>
-      </FooterDiv>
-    )
-  }
+        {publicRuntimeConfig.GIT_COMMIT}
+      </FooterVersion>
+    </FooterDiv>
+  )
 }
 
 export default Footer

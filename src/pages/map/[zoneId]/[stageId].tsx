@@ -34,14 +34,14 @@ import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
 interface MapProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  stageId: string
-  stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo
-  stageJson: Pick<IStageJson, "mapData" | "options" | "runes">
-  tileInfo: Record<string, ITileInfo>
-  zoneId: string
-  zoneInfo: IZoneInfo
-  bgmBank: IBgmBank
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly stageId: string
+  readonly stageInfo: ICustomRoguelikeTopicDetailStageInfo | ICustomStageInfo | IHandbookInfoTableStageInfo
+  readonly stageJson: Pick<IStageJson, "mapData" | "options" | "runes">
+  readonly tileInfo: Record<string, ITileInfo>
+  readonly zoneId: string
+  readonly zoneInfo: IZoneInfo
+  readonly bgmBank: IBgmBank
 }
 
 export const getStaticPaths: GetStaticPaths = () => {

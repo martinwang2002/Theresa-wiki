@@ -43,7 +43,7 @@ function ErrorComponent ({ statusCode, statusMessage, err }: Readonly<ErrorCompo
       <Error
         errorMessage={(statusCode != null)
           ? `An error ${statusCode} ${statusMessage ?? ""} occurred on server`
-          : err !== undefined ? err : "An error occurred on client"}
+          : err ?? "An error occurred on client"}
       />
 
     </Page>

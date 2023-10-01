@@ -61,7 +61,9 @@ const health = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     }
 
     const batchRevalidate = 25
-    if (numPendingRevalidationNumber) {
+    const zero = 0
+    if (numPendingRevalidationNumber > zero) {
+      console.log("numPendingRevalidationNumber", numPendingRevalidationNumber)
       const revalidationPromise = Promise.resolve().then(async () => {
         // trigger revalidation of all paths
         const revalidatePaths = await redisClient.lpop("_revalidatePaths", Math.min(batchRevalidate, numPendingRevalidationNumber))

@@ -14,10 +14,10 @@ import LifePointIcon from "@/components/icon/lifePointIcon"
 import type { IRunes, IStageJsonOptions } from "@/models/gamedata/levels/index"
 
 interface StageInfoTableProps {
-  difficulty: string
-  diffGroup: string
-  stageOptions: IStageJsonOptions
-  runes: IRunes[] | null
+  readonly difficulty: string
+  readonly diffGroup: string
+  readonly stageOptions: IStageJsonOptions
+  readonly runes: IRunes[] | null
 }
 
 const StageOptionsTableRow = styled("div")({

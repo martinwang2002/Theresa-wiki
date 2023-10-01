@@ -143,10 +143,10 @@ export const enemyValueEnemyDataDefined = (enemyValueEnemyData: IEnemyValueEnemy
     _enemyValueEnemyDataDefined = mergeWith(_enemyValueEnemyDataDefined, currentEnemyDataValueDefined, (objValue: number | string | null, srcValue: number | string | null, key: string) => {
       if (key === "attributes") {
         return mergeWith(objValue, srcValue, (_objValue: number | string | null, _srcValue: number | string | null) => {
-          return _srcValue === null ? _objValue : _srcValue
+          return _srcValue ?? _objValue
         })
       }
-      return srcValue === null ? objValue : srcValue
+      return srcValue ?? objValue
     }) as IEnemyValueEnemyDataDefined
   }
   return _enemyValueEnemyDataDefined

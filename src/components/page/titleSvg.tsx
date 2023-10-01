@@ -4,7 +4,7 @@ import { SvgIcon } from "@mui/material"
 import type { SxProps } from "@mui/system"
 
 interface TitleSvgProps {
-  sx?: SxProps
+  readonly sx?: SxProps
 }
 
 export default class TitleSvg extends React.PureComponent<TitleSvgProps> {

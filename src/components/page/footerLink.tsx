@@ -5,9 +5,9 @@ import Link from "next/link"
 import type { LinkProps } from "next/link"
 
 interface IFooterLinkProps {
-  href: LinkProps["href"]
-  icon: JSX.Element
-  text: string
+  readonly href: LinkProps["href"]
+  readonly icon: JSX.Element
+  readonly text: string
 }
 
 const LinkItem = styled("span")({

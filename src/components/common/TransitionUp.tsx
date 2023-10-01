@@ -5,7 +5,7 @@ import type { TransitionProps } from "@mui/material/transitions"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-readonly-parameter-types
 function TransitionUp (props: TransitionProps & {
-  children: React.ReactElement
+  readonly children: React.ReactElement
 },
 ref: React.Ref<unknown>): React.ReactElement {
   return (

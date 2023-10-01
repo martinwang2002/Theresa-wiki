@@ -10,8 +10,8 @@ import type { SxProps } from "@mui/system"
 import { default as NextLink } from "next/link"
 
 interface IStyledLinkProps extends Omit<MuiLinkProps, "href"> {
-  href: UrlObject | string
-  sx?: SxProps
+  readonly href: UrlObject | string
+  readonly sx?: SxProps
 }
 
 export default class StyledLink extends React.PureComponent<IStyledLinkProps> {

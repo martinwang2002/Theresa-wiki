@@ -15,7 +15,7 @@ import { DataTableRow, DataTableRowCell } from "@/components/common/dataTable"
 import type { IEnemyValueEnemyData, IEnemyValueEnemyDataDefined, IEnemyValueEnemyDataPrototype } from "@/models/gamedata/levels/enemyDatabase"
 
 interface EnemyHandbookAttributeProps {
-  enemyDataDefined: IEnemyValueEnemyDataDefined
+  readonly enemyDataDefined: IEnemyValueEnemyDataDefined
 }
 
 const TableCellCustomized = styled(TableCell)({

@@ -14,116 +14,114 @@ import MissionIcon from "@/components/icon/missionIcon"
 import BattleIcon from "@/components/icon/ui_home/battleIcon"
 import Page from "@/components/page/page"
 
-export default class SvgShare extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <Page>
-        <Head>
+export default function SvgShare (): React.ReactNode {
+  return (
+    <Page>
+      <Head>
 
-          <title>
-            SVG图标共享计划 | Theresa.wiki
-          </title>
+        <title>
+          SVG图标共享计划 | Theresa.wiki
+        </title>
 
-        </Head>
+      </Head>
 
-        <Typography
-          sx={{
-            fontFamily: "\"Dream Han Serif CN W27\"",
-            my: 2
-          }}
-          variant="h3"
+      <Typography
+        sx={{
+          fontFamily: "\"Dream Han Serif CN W27\"",
+          my: 2
+        }}
+        variant="h3"
+      >
+        SVG 共享计划
+      </Typography>
+
+      <Typography
+        variant="subtitle1"
+      >
+        为何要重新绘制 SVG 图标？请参考
+        <StyledLink
+          href="https://github.blog/2016-02-22-delivering-octicons-with-svg/"
         >
-          SVG 共享计划
-        </Typography>
+          Delivering Octicons with SVG | The Github Blog
+        </StyledLink>
+      </Typography>
 
-        <Typography
-          variant="subtitle1"
+      <Typography
+        variant="subtitle1"
+      >
+        图标源代码以及 illustrator 文件 请前往
+        <StyledLink
+          href="https://github.com/martinwang2002/Theresa-wiki/tree/master/src/arts"
         >
-          为何要重新绘制 SVG 图标？请参考
-          <StyledLink
-            href="https://github.blog/2016-02-22-delivering-octicons-with-svg/"
-          >
-            Delivering Octicons with SVG | The Github Blog
-          </StyledLink>
-        </Typography>
+          martinwang2002/Theresa-wiki/tree/master/src/arts
+        </StyledLink>
+      </Typography>
 
-        <Typography
-          variant="subtitle1"
+      <Grid
+        columns={{ md: 12, sm: 8, xs: 4 }}
+        container
+        spacing={2}
+      >
+        <Grid
+          item
+          xs={3}
         >
-          图标源代码以及 illustrator 文件 请前往
-          <StyledLink
-            href="https://github.com/martinwang2002/Theresa-wiki/tree/master/src/arts"
-          >
-            martinwang2002/Theresa-wiki/tree/master/src/arts
-          </StyledLink>
-        </Typography>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <MissionIcon sx={{ color: "primary.main", fontSize: "h3.fontSize" }} />
+
+              <Typography>
+                三星通关
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
 
         <Grid
-          columns={{ md: 12, sm: 8, xs: 4 }}
-          container
-          spacing={2}
+          item
+          xs={3}
         >
-          <Grid
-            item
-            xs={3}
-          >
-            <Card>
-              <CardContent sx={{ textAlign: "center" }}>
-                <MissionIcon sx={{ color: "primary.main", fontSize: "h3.fontSize" }} />
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <CostIcon sx={{ fontSize: "h3.fontSize" }} />
 
-                <Typography>
-                  三星通关
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid
-            item
-            xs={3}
-          >
-            <Card>
-              <CardContent sx={{ textAlign: "center" }}>
-                <CostIcon sx={{ fontSize: "h3.fontSize" }} />
-
-                <Typography>
-                  费用
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid
-            item
-            xs={3}
-          >
-            <Card>
-              <CardContent sx={{ textAlign: "center" }}>
-                <LifePointIcon sx={{ fontSize: "h3.fontSize" }} />
-
-                <Typography>
-                  生命值
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid
-            item
-            xs={3}
-          >
-            <Card>
-              <CardContent sx={{ textAlign: "center" }}>
-                <BattleIcon sx={{ fontSize: "h3.fontSize" }} />
-
-                <Typography>
-                  作战
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+              <Typography>
+                费用
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
-      </Page>
-    )
-  }
+
+        <Grid
+          item
+          xs={3}
+        >
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <LifePointIcon sx={{ fontSize: "h3.fontSize" }} />
+
+              <Typography>
+                生命值
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid
+          item
+          xs={3}
+        >
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <BattleIcon sx={{ fontSize: "h3.fontSize" }} />
+
+              <Typography>
+                作战
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Page>
+  )
 }

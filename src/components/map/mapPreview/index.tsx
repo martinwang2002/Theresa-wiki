@@ -17,7 +17,7 @@ import TransitionUpRef from "@/components/common/TransitionUp"
 import MapPreviewImage from "./mapPreviewImage"
 
 interface MapPreviewProps {
-  stageId: string
+  readonly stageId: string
 }
 
 interface MapPreviewState {

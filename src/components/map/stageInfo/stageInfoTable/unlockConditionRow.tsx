@@ -13,7 +13,7 @@ import MissionIcon from "@/components/icon/missionIcon"
 import type { ICustomStageInfo, IUnlockCondition } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
-  stageInfo: ICustomStageInfo
+  readonly stageInfo: ICustomStageInfo
 }
 
 export default class UnlockConditionRow extends React.PureComponent<StageInfoTableProps> {

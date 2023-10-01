@@ -9,9 +9,9 @@ import type { IMapData, IMapDataTiles } from "@/models/gamedata/levels/index"
 import Tile from "./tile"
 
 interface IMapSceneProps {
-  activeTiles?: readonly number[] | undefined
-  mapData: IMapData
-  onTileClick?: (
+  readonly activeTiles?: readonly number[] | undefined
+  readonly mapData: IMapData
+  readonly onTileClick?: (
     // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
     event: Readonly<React.MouseEvent<HTMLDivElement>>,
     tile: Readonly<IMapDataTiles>,

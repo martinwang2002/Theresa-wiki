@@ -129,7 +129,7 @@ export const arknightsDescriptionToPlainTextParser = (description: string): stri
 }
 
 interface DescriptionProps {
-  description: string
+  readonly description: string
 }
 
 class ArknightsDescription extends React.PureComponent<DescriptionProps> {

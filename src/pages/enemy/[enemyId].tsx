@@ -23,10 +23,10 @@ import type { IEnemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemy
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 interface EnemyProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  enemyId: string
-  enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
-  enemyHandbook: IEnemyHandbook
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly enemyId: string
+  readonly enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
+  readonly enemyHandbook: IEnemyHandbook
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -76,6 +76,8 @@ export const getStaticProps: GetStaticProps<EnemyProps> = async (context: Readon
 class Enemy extends React.PureComponent<EnemyProps> {
   public render (): React.ReactNode {
     const { enemyDataDefinedByLevel, enemyHandbook, enemyId, server } = this.props
+
+    console.log(enemyDataDefinedByLevel)
     return (
       <Page>
         <Head>
@@ -183,6 +185,10 @@ class Enemy extends React.PureComponent<EnemyProps> {
                   id={`enemyLevel${level}`}
                   text={`等级${level}`}
                 />
+
+                <Typography>
+                  {enemyDataDefined.description}
+                </Typography>
 
                 <EnemyHandbookAttribute enemyDataDefined={enemyDataDefined} />
               </React.Fragment>

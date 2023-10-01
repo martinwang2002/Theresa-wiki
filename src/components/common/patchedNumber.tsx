@@ -13,7 +13,7 @@ type IPatchedNumber = number | {
 }
 
 interface PatchedNumberProps {
-  number: IPatchedNumber
+  readonly number: IPatchedNumber
 }
 
 const Span = styled(Typography)({

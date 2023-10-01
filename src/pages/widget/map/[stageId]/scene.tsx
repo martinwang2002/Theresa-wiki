@@ -17,9 +17,9 @@ import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { sendMessage } from "@/models/utils/messenger"
 
 interface MapSceneWidgetProps {
-  stageJson: Pick<IStageJson, "mapData">
-  tileInfo: Record<string, ITileInfo>
-  name: string
+  readonly stageJson: Pick<IStageJson, "mapData">
+  readonly tileInfo: Record<string, ITileInfo>
+  readonly name: string
 }
 
 interface MapSceneWidgetState {
@@ -72,7 +72,7 @@ class MapSceneWidget extends React.PureComponent<MapSceneWidgetProps, MapSceneWi
     }
   }
 
-  public componentDidMount (): void {
+  public static componentDidMount (): void {
     sendMessage<MapReadyMessage>(window.parent, "*", { type: "mapReady" }).catch(console.warn)
   }
 

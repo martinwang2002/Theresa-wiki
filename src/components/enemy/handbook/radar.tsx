@@ -9,7 +9,7 @@ import { DataTableRow, DataTableRowCell } from "@/components/common/dataTable"
 import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
 
 interface EnemyHandbookProps {
-  enemyHandbook: IEnemyHandbook
+  readonly enemyHandbook: IEnemyHandbook
 }
 
 class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {

@@ -5,7 +5,7 @@ import type { ICustomStageInfo } from "@/models/gamedata/excel/stageTable"
 import StageInfoTable from "./stageInfoTable/index"
 
 interface StageInfoProps {
-  stageInfo: ICustomStageInfo
+  readonly stageInfo: ICustomStageInfo
   // stageJsonOptions: Record<string, string> | null
 }
 

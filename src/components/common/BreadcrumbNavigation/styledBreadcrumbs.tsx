@@ -7,7 +7,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs"
 import StyledLink from "@/components/common/styledLink"
 
 interface StyledBreadcrumbsProps {
-  children: React.ReactNode | React.ReactNode[]
+  readonly children: React.ReactNode | React.ReactNode[]
 }
 
 export default class StyledBreadcrumbs extends React.PureComponent<StyledBreadcrumbsProps> {

@@ -30,22 +30,20 @@ const WorldViewTipDescription = styled("div")({
   width: "80%"
 })
 
-class WorldViewTip extends React.PureComponent {
-  public render (): React.ReactNode {
-    const worldViewTipSample = sample(tipTable.worldViewTips)
+function WorldViewTip (): React.ReactNode {
+  const worldViewTipSample = sample(tipTable.worldViewTips)
 
-    return (
-      <WorldViewTipDiv>
-        <WorldViewTipTitle>
-          {worldViewTipSample?.title}
-        </WorldViewTipTitle>
+  return (
+    <WorldViewTipDiv>
+      <WorldViewTipTitle>
+        {worldViewTipSample?.title}
+      </WorldViewTipTitle>
 
-        <WorldViewTipDescription>
-          {worldViewTipSample?.description}
-        </WorldViewTipDescription>
-      </WorldViewTipDiv>
-    )
-  }
+      <WorldViewTipDescription>
+        {worldViewTipSample?.description}
+      </WorldViewTipDescription>
+    </WorldViewTipDiv>
+  )
 }
 
 export default WorldViewTip

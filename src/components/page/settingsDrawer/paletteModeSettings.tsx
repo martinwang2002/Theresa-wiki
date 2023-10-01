@@ -12,53 +12,51 @@ import { setLocalStorage } from "@/models/utils/localStorage"
 import Heading from "./heading"
 import StyledToggleButton from "./styledToggleButton"
 
-export default class PaletteModeSettings extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "space-between", pl: 2, pr: 2 }}>
-        <Heading>
-          颜色模式
-        </Heading>
+export default function PaletteModeSettings (): React.ReactNode {
+  return (
+    <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "space-between", pl: 2, pr: 2 }}>
+      <Heading>
+        颜色模式
+      </Heading>
 
-        <SettingsContext.Consumer>
-          {({ paletteMode, setPaletteMode }): React.ReactNode => {
-            return (
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                onChange={(event, value: string): void => {
-                  if (value === "light" || value === "dark" || value === "system") {
-                    setPaletteMode(value)
-                    setLocalStorage("paletteMode", value)
-                  }
-                }}
-                sx={{
-                  width: "100%"
-                }}
-                value={paletteMode}
-              >
-                <StyledToggleButton value="system">
-                  <BrightnessAutoIcon fontSize="small" />
+      <SettingsContext.Consumer>
+        {({ paletteMode, setPaletteMode }): React.ReactNode => {
+          return (
+            <ToggleButtonGroup
+              color="primary"
+              exclusive
+              onChange={(event, value: string): void => {
+                if (value === "light" || value === "dark" || value === "system") {
+                  setPaletteMode(value)
+                  setLocalStorage("paletteMode", value)
+                }
+              }}
+              sx={{
+                width: "100%"
+              }}
+              value={paletteMode}
+            >
+              <StyledToggleButton value="system">
+                <BrightnessAutoIcon fontSize="small" />
 
-                  系统
-                </StyledToggleButton>
+                跟随系统
+              </StyledToggleButton>
 
-                <StyledToggleButton value="light">
-                  <LightModeIcon fontSize="small" />
+              <StyledToggleButton value="light">
+                <LightModeIcon fontSize="small" />
 
-                  亮色
-                </StyledToggleButton>
+                亮色
+              </StyledToggleButton>
 
-                <StyledToggleButton value="dark">
-                  <DarkModeIcon fontSize="small" />
+              <StyledToggleButton value="dark">
+                <DarkModeIcon fontSize="small" />
 
-                  暗色
-                </StyledToggleButton>
-              </ToggleButtonGroup>
-            )
-          }}
-        </SettingsContext.Consumer>
-      </Box>
-    )
-  }
+                暗色
+              </StyledToggleButton>
+            </ToggleButtonGroup>
+          )
+        }}
+      </SettingsContext.Consumer>
+    </Box>
+  )
 }

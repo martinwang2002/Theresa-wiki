@@ -19,7 +19,7 @@ import { getLocalStorage } from "@/models/utils/localStorage"
 const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
+  readonly emotionCache?: EmotionCache
 }
 
 type TPaletteMode = "dark" | "light" | "system"

@@ -11,9 +11,9 @@ import StyledLink from "@/components/common/styledLink"
 import { gtagEvent } from "@/models/utils/gtag"
 
 interface HeadingAnchorProps {
-  id: string
-  text: string
-  sx?: SxProps
+  readonly id: string
+  readonly text: string
+  readonly sx?: SxProps
   // variant: string
 }
 

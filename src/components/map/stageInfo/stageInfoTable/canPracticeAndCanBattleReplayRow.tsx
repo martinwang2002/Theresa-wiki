@@ -9,7 +9,7 @@ import { DataTableRowCell } from "@/components/common/dataTable"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
-  stageInfo: IStageInfo
+  readonly stageInfo: IStageInfo
 }
 
 export default class CanPracticeAndCanBattleReplayRow extends React.PureComponent<StageInfoTableProps> {

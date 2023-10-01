@@ -10,7 +10,7 @@ import { DropType } from "@/models/gamedata/excel/stageTable.common"
 import StageDropInfoRowRewardsRow from "./stageDropInfoRowRewardsRow"
 
 interface StageInfoTableProps {
-  stageInfo: IStageInfo
+  readonly stageInfo: IStageInfo
 }
 
 // const numberReg = /^[0-9]+$/

@@ -19,8 +19,8 @@ import { TileEnd, TileFlystart, TileHealing, TileReed, TileReedFloor, TileReedWa
 import { TileUndefined } from "./tileUndefined"
 
 interface ITileProps {
-  active?: boolean
-  tile: IMapDataTiles
+  readonly active?: boolean
+  readonly tile: IMapDataTiles
 }
 
 const tileElements = {

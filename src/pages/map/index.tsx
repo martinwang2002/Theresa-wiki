@@ -23,8 +23,8 @@ import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
 interface ZoneProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  zones: ICustomZoneInfo[]
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly zones: ICustomZoneInfo[]
 }
 
 export const getStaticProps: GetStaticProps<ZoneProps> = async () => {

@@ -9,7 +9,7 @@ import Item from "@/components/common/Item"
 import type { IStageInfo } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
-  stageInfo: IStageInfo
+  readonly stageInfo: IStageInfo
 }
 
 export default class SanityRow extends React.PureComponent<StageInfoTableProps> {
