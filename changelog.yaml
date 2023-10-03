@@ -1,6 +1,12 @@
 # The format is based on https://keepachangelog.com/en/1.0.0/
 # eslint-disable max-lines
 versions:
+  - version: [0, 5, 16]
+    date: 2023-10-08T08:00:00+0800
+    contents:
+      fixed:
+        - enemy hand book data upgrade
+
   - version: [0, 5, 15]
     date: 2023-07-10T08:00:00+0800
     contents:

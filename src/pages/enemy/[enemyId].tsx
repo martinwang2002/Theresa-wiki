@@ -16,7 +16,7 @@ import EnemyHandbookRadar from "@/components/enemy/handbook/radar"
 import Page from "@/components/page/page"
 
 import { enemyIds, getEnemyHandbookByEnemyId } from "@/models/gamedata/excel/enemyHandbookTable"
-import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
+import type { IEnemyHandbookEnemyData } from "@/models/gamedata/excel/enemyHandbookTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { enemyValueByEnemyId, enemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
 import type { IEnemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
@@ -26,7 +26,7 @@ interface EnemyProps {
   readonly server: "CN" | "JP" | "KR" | "TW" | "US"
   readonly enemyId: string
   readonly enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
-  readonly enemyHandbook: IEnemyHandbook
+  readonly enemyHandbook: IEnemyHandbookEnemyData
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -77,7 +77,6 @@ class Enemy extends React.PureComponent<EnemyProps> {
   public render (): React.ReactNode {
     const { enemyDataDefinedByLevel, enemyHandbook, enemyId, server } = this.props
 
-    console.log(enemyDataDefinedByLevel)
     return (
       <Page>
         <Head>
@@ -136,18 +135,6 @@ class Enemy extends React.PureComponent<EnemyProps> {
           <span>
             {enemyHandbook.name}
           </span>
-
-          {
-            !!enemyHandbook.enemyRace &&
-            <TopBadge
-              sx={{
-                backgroundColor: "primary.main",
-                ml: 1
-              }}
-            >
-              {enemyHandbook.enemyRace}
-            </TopBadge>
-          }
 
           <TopBadge
             sx={{
