@@ -20,7 +20,7 @@ import { gtagEvent } from "@/models/utils/gtag"
 import type { PurgeResponse } from "@/pages/api/purge"
 
 interface PurgeProps {
-  router: NextRouter
+  readonly router: NextRouter
 }
 
 interface PurgeState {
@@ -30,6 +30,16 @@ interface PurgeState {
   isPurgeSuccess: boolean
   purgeError: string
   resVersion: string
+}
+
+const deleteCacheByCacheName = async (cacheName: string): Promise<void> => {
+  await caches.open(cacheName).then(async (cache): Promise<void> => {
+    await cache.keys().then(async (keys): Promise<void> => {
+      await Promise.all(keys.map(async (key): Promise<void> => {
+        await cache.delete(key)
+      }))
+    })
+  })
 }
 
 class Purge extends React.PureComponent<PurgeProps, PurgeState> {
@@ -67,16 +77,6 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
     }
   }
 
-  private async deleteCacheByCacheName (cacheName: string): Promise<void> {
-    await caches.open(cacheName).then(async (cache): Promise<void> => {
-      await cache.keys().then(async (keys): Promise<void> => {
-        await Promise.all(keys.map(async (key): Promise<void> => {
-          await cache.delete(key)
-        }))
-      })
-    })
-  }
-
   private readonly handlePurgeLocalCache = (): void => {
     this.setState({
       disablePurgeSubmit: true,
@@ -84,7 +84,7 @@ class Purge extends React.PureComponent<PurgeProps, PurgeState> {
       purgeError: ""
     })
 
-    this.deleteCacheByCacheName("next-data").then((): void => {
+    deleteCacheByCacheName("next-data").then((): void => {
       this.setState({
         disablePurgeSubmit: false,
         isPurgeSuccess: true,

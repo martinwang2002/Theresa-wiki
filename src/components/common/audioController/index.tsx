@@ -13,8 +13,8 @@ import Slider from "@mui/material/Slider"
 import Typography from "@mui/material/Typography"
 
 interface AudioControllerProps {
-  src: readonly string[]
-  loop?: boolean
+  readonly src: readonly string[]
+  readonly loop?: boolean
 }
 
 interface AudioControllerState {

@@ -9,9 +9,9 @@ import { serialize as serializeUri } from "uri-js"
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ItemProps {
-  itemId: number | string
-  count?: number | string
-  sx?: SxProps
+  readonly itemId: number | string
+  readonly count?: number | string
+  readonly sx?: SxProps
 }
 
 enum ItemBackend {

@@ -14,7 +14,7 @@ const GrowingDiv = styled("div")({
 })
 
 interface HeaderProps {
-  forwardRef?: React.Ref<HTMLDivElement>
+  readonly forwardRef?: React.Ref<HTMLDivElement>
 }
 
 interface HeaderState {

@@ -10,8 +10,8 @@ import PaletteModeSettings from "./paletteModeSettings"
 import PatchedNumberModeSettings from "./patchedNumberModeSettings"
 
 interface ISettingsDrawerProps {
-  open: boolean
-  onClose: () => void
+  readonly open: boolean
+  readonly onClose: () => void
 }
 
 export default class SettingsDrawer extends React.PureComponent<ISettingsDrawerProps, Record<string, never>> {

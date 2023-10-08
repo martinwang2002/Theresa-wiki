@@ -9,49 +9,47 @@ import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 const { CRISP_WEBSITE_ID } = publicRuntimeConfig
 
-export default class Contact extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <Page>
-        <Script
-          dangerouslySetInnerHTML={{
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            __html: `
+export default function Contact (): React.ReactNode {
+  return (
+    <Page>
+      <Script
+        dangerouslySetInnerHTML={{
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          __html: `
               window.$crisp=[]
               window.CRISP_WEBSITE_ID="${CRISP_WEBSITE_ID}"
               window.$crisp.push(['do', 'chat:open'])
             `
-          }}
-          id="crisp"
-          strategy="afterInteractive"
-        />
+        }}
+        id="crisp"
+        strategy="afterInteractive"
+      />
 
-        <Script
-          src="https://client.crisp.chat/l.js"
-          strategy="afterInteractive"
-        />
+      <Script
+        src="https://client.crisp.chat/l.js"
+        strategy="afterInteractive"
+      />
 
-        <Head>
+      <Head>
 
-          <title>
-            联系站长 | Theresa.wiki
-          </title>
+        <title>
+          联系站长 | Theresa.wiki
+        </title>
 
-        </Head>
+      </Head>
 
-        <div style={{ marginTop: "1rem", overflow: "hidden" }}>
-          呼哈。您可以使用crisp对话框。
+      <div style={{ marginTop: "1rem", overflow: "hidden" }}>
+        呼哈。您可以使用crisp对话框。
 
-          <br />
+        <br />
 
-          也可以去企鹅群里找菜马丁~。
+        也可以去企鹅群里找菜马丁~。
 
-          <br />
+        <br />
 
-          什么？你连企鹅群都不知道？(https://penguin-stats.io/)
-        </div>
+        什么？你连企鹅群都不知道？(https://penguin-stats.io/)
+      </div>
 
-      </Page>
-    )
-  }
+    </Page>
+  )
 }

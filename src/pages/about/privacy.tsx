@@ -8,27 +8,25 @@ import Page from "@/components/page/page"
 
 import privacyMarkdown from "PRIVACY.md"
 
-export default class Privacy extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
+export default function Privacy (): React.ReactNode {
+  return (
 
-      <Page>
-        <Head>
+    <Page>
+      <Head>
 
-          <title>
-            隐私权政策 | Theresa.wiki
-          </title>
+        <title>
+          隐私权政策 | Theresa.wiki
+        </title>
 
-        </Head>
+      </Head>
 
-        <div style={{ overflow: "hidden" }}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {privacyMarkdown}
-          </ReactMarkdown>
-        </div>
+      <div style={{ overflow: "hidden" }}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {privacyMarkdown}
+        </ReactMarkdown>
+      </div>
 
-      </Page>
+    </Page>
 
-    )
-  }
+  )
 }

@@ -16,17 +16,17 @@ import EnemyHandbookRadar from "@/components/enemy/handbook/radar"
 import Page from "@/components/page/page"
 
 import { enemyIds, getEnemyHandbookByEnemyId } from "@/models/gamedata/excel/enemyHandbookTable"
-import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
+import type { IEnemyHandbookEnemyData } from "@/models/gamedata/excel/enemyHandbookTable"
 import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
 import { enemyValueByEnemyId, enemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
 import type { IEnemyValueEnemyDataDefined } from "@/models/gamedata/levels/enemyDatabase"
 import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 
 interface EnemyProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  enemyId: string
-  enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
-  enemyHandbook: IEnemyHandbook
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly enemyId: string
+  readonly enemyDataDefinedByLevel: Record<number, IEnemyValueEnemyDataDefined>
+  readonly enemyHandbook: IEnemyHandbookEnemyData
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -76,6 +76,7 @@ export const getStaticProps: GetStaticProps<EnemyProps> = async (context: Readon
 class Enemy extends React.PureComponent<EnemyProps> {
   public render (): React.ReactNode {
     const { enemyDataDefinedByLevel, enemyHandbook, enemyId, server } = this.props
+
     return (
       <Page>
         <Head>
@@ -135,18 +136,6 @@ class Enemy extends React.PureComponent<EnemyProps> {
             {enemyHandbook.name}
           </span>
 
-          {
-            !!enemyHandbook.enemyRace &&
-            <TopBadge
-              sx={{
-                backgroundColor: "primary.main",
-                ml: 1
-              }}
-            >
-              {enemyHandbook.enemyRace}
-            </TopBadge>
-          }
-
           <TopBadge
             sx={{
               backgroundColor: "warning.main",
@@ -183,6 +172,10 @@ class Enemy extends React.PureComponent<EnemyProps> {
                   id={`enemyLevel${level}`}
                   text={`等级${level}`}
                 />
+
+                <Typography>
+                  {enemyDataDefined.description}
+                </Typography>
 
                 <EnemyHandbookAttribute enemyDataDefined={enemyDataDefined} />
               </React.Fragment>

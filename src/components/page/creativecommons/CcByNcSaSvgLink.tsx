@@ -18,33 +18,31 @@ const LinkItem = styled("a")({
   transition: "color 500ms ease"
 })
 
-class CcByNcSaSvgLink extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <LinkItem
-        aria-label="CC BY-NC-SA License"
-        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-        rel="noreferrer"
-        sx={{
-          "& svg": {
-            marginLeft: "0.05em",
-            marginRight: "0.05em"
-          },
-          margin: "auto"
+function CcByNcSaSvgLink (): React.ReactNode {
+  return (
+    <LinkItem
+      aria-label="CC BY-NC-SA License"
+      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      rel="noreferrer"
+      sx={{
+        "& svg": {
+          marginLeft: "0.05em",
+          marginRight: "0.05em"
+        },
+        margin: "auto"
 
-        }}
-        target="_blank"
-      >
-        <CcIcon />
+      }}
+      target="_blank"
+    >
+      <CcIcon />
 
-        <ByIcon />
+      <ByIcon />
 
-        <NcIcon />
+      <NcIcon />
 
-        <SaIcon />
-      </LinkItem>
-    )
-  }
+      <SaIcon />
+    </LinkItem>
+  )
 }
 
 export default CcByNcSaSvgLink

@@ -16,7 +16,6 @@ import { pick as lodashPick } from "lodash"
 import type { GetStaticProps } from "next"
 import Head from "next/head"
 
-import { descriptionParser, descriptionParserServerSide } from "@/components/common/arknightsDescription/richTextStyles"
 import TopBadge from "@/components/common/badge/topBadge"
 import StyledBreadcrumbs from "@/components/common/BreadcrumbNavigation/styledBreadcrumbs"
 import EnemyAvatar from "@/components/common/enemy/avatar"
@@ -25,13 +24,12 @@ import TablePaginationActions from "@/components/common/tablePaginationActions"
 import Page from "@/components/page/page"
 
 import { enemyHandbookTable } from "@/models/gamedata/excel/enemyHandbookTable"
-import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
-import { gamedataConst as getGamedataConst } from "@/models/gamedata/excel/gamedataConst"
+import type { IEnemyHandbookEnemyData } from "@/models/gamedata/excel/enemyHandbookTable"
 import { SettingsContext } from "@/models/reactContext/settingsContext"
 
 interface EnemiesProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  enemies: readonly Pick<Readonly<IEnemyHandbook>, "ability" | "attack" | "defence" | "endure" | "enemyId" | "enemyRace" | "name" | "resistance">[]
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly enemies: readonly Pick<Readonly<IEnemyHandbookEnemyData>, "description" | "enemyId" | "name">[]
 }
 
 interface EnemiesState {
@@ -54,13 +52,8 @@ export const getStaticProps: GetStaticProps<EnemiesProps> = async () => {
   }
   const _enemyHandbookTable = await enemyHandbookTable()
 
-  const gamedataConst = await getGamedataConst()
-
-  // FIXME: remove this
-  descriptionParserServerSide("", gamedataConst)
-
-  const enemies = Object.values(_enemyHandbookTable)
-    .map((enemy) => lodashPick(enemy, "ability", "attack", "endure", "enemyId", "enemyRace", "name", "defence", "resistance"))
+  const enemies = Object.values(_enemyHandbookTable.enemyData)
+    .map((enemy) => lodashPick(enemy, ["description", "enemyId", "name"]))
     .map((enemy) => ({
       ...enemy,
       // ability: enemy.ability !== null ? descriptionParserServerSide(enemy.ability, gamedataConst) : null
@@ -177,48 +170,8 @@ class Enemies extends React.PureComponent<EnemiesProps, EnemiesState> {
                   名字
                 </TableCell>
 
-                <TableCell
-                  sx={{
-                    minWidth: "4em"
-                  }}
-                >
-                  种族
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    minWidth: "4em"
-                  }}
-                >
-                  耐久
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    minWidth: "4em"
-                  }}
-                >
-                  攻击力
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    minWidth: "4em"
-                  }}
-                >
-                  防御力
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    minWidth: "4em"
-                  }}
-                >
-                  法术抗性
-                </TableCell>
-
                 <TableCell>
-                  能力
+                  描述
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -260,28 +213,9 @@ class Enemies extends React.PureComponent<EnemiesProps, EnemiesState> {
                   </TableCell>
 
                   <TableCell>
-                    {enemy.enemyRace}
+                    {enemy.description}
                   </TableCell>
 
-                  <TableCell>
-                    {enemy.endure}
-                  </TableCell>
-
-                  <TableCell>
-                    {enemy.attack}
-                  </TableCell>
-
-                  <TableCell>
-                    {enemy.defence}
-                  </TableCell>
-
-                  <TableCell>
-                    {enemy.resistance}
-                  </TableCell>
-
-                  <TableCell>
-                    {enemy.ability !== null ? descriptionParser(enemy.ability) : ""}
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

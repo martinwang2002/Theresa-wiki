@@ -6,15 +6,16 @@ import Typography from "@mui/material/Typography"
 
 import { DataTableRow, DataTableRowCell } from "@/components/common/dataTable"
 
-import type { IEnemyHandbook } from "@/models/gamedata/excel/enemyHandbookTable"
+import type { IEnemyHandbookEnemyData } from "@/models/gamedata/excel/enemyHandbookTable"
 
 interface EnemyHandbookProps {
-  enemyHandbook: IEnemyHandbook
+  readonly enemyHandbook: IEnemyHandbookEnemyData
 }
 
 class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {
   public render (): React.ReactNode {
     const { enemyHandbook } = this.props
+    console.log(enemyHandbook)
 
     return (
       <Paper sx={{ margin: "auto", maxWidth: "100%", width: "max-content" }}>
@@ -27,7 +28,8 @@ class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {
             <Typography
               variant="h3"
             >
-              {enemyHandbook.endure}
+              /
+              {/* {enemyHandbook.endure} */}
             </Typography>
           </DataTableRowCell>
 
@@ -45,7 +47,8 @@ class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {
             <Typography
               variant="h3"
             >
-              {enemyHandbook.attack}
+              /
+              {/* {enemyHandbook.attack} */}
             </Typography>
           </DataTableRowCell>
 
@@ -63,7 +66,8 @@ class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {
             <Typography
               variant="h3"
             >
-              {enemyHandbook.defence}
+              /
+              {/* {enemyHandbook.defence} */}
             </Typography>
           </DataTableRowCell>
 
@@ -81,7 +85,8 @@ class EnemyHandbookRadar extends React.PureComponent<EnemyHandbookProps> {
             <Typography
               variant="h3"
             >
-              {enemyHandbook.resistance}
+              /
+              {/* {enemyHandbook.resistance} */}
             </Typography>
           </DataTableRowCell>
         </DataTableRow>

@@ -8,7 +8,7 @@ import HeadingAnchor from "./headingAnchor"
 import type { HeadingAnchorProps } from "./headingAnchor"
 
 interface WithTableOfContentsProps {
-  children: React.ReactNode[]
+  readonly children: React.ReactNode[]
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types

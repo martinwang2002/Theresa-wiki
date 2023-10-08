@@ -24,12 +24,12 @@ import { serialize as serializeUri } from "uri-js"
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface Map3DProps {
-  stageId: string
+  readonly stageId: string
 }
 
 interface Map3DPropsWithPhase extends Map3DProps {
-  onLoadScenePhaseChange: (phase: number) => void
-  onLoadSceneDataProgressChange: (progress: number) => void
+  readonly onLoadScenePhaseChange: (phase: number) => void
+  readonly onLoadSceneDataProgressChange: (progress: number) => void
 }
 
 // interface LightmapConfigs {

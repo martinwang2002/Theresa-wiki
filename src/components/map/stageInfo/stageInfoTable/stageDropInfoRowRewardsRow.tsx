@@ -9,9 +9,9 @@ import Item from "@/components/common/Item"
 import type { IDisplayDetailReward } from "@/models/gamedata/excel/stageTable"
 
 interface StageInfoTableProps {
-  displayDetailRewards: IDisplayDetailReward[]
-  info: string
-  isSpecial?: boolean
+  readonly displayDetailRewards: IDisplayDetailReward[]
+  readonly info: string
+  readonly isSpecial?: boolean
 }
 
 const occPercent = {

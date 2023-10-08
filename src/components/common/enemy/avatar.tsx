@@ -11,10 +11,10 @@ import { serialize as serializeUri } from "uri-js"
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface ItemProps {
-  badgeSx?: SxProps
-  boxSx?: SxProps
-  enemyId: number | string
-  enemyIndex?: string
+  readonly badgeSx?: SxProps
+  readonly boxSx?: SxProps
+  readonly enemyId: number | string
+  readonly enemyIndex?: string
 }
 
 enum SpriteBackend {

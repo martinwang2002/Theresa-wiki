@@ -30,7 +30,7 @@ const BreatheMissionStar = styled("div")({
 })
 
 interface IError {
-  errorMessage: string
+  readonly errorMessage: string
 }
 
 class Error extends React.PureComponent<IError> {

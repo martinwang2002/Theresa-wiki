@@ -22,8 +22,8 @@ declare global {
 }
 
 interface PageProps {
-  children: React.ReactNode
-  router: NextRouter
+  readonly children: React.ReactNode
+  readonly router: NextRouter
 }
 
 interface PageState {

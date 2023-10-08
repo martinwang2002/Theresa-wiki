@@ -13,7 +13,7 @@ import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 import type { IBgmBank } from "@/models/gamedata/excel/audioData"
 
 interface BgmBankProps {
-  bgmBank: IBgmBank
+  readonly bgmBank: IBgmBank
 }
 
 class BgmBank extends React.PureComponent<BgmBankProps> {

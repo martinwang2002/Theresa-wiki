@@ -16,25 +16,23 @@ const TitleSpan = styled("span")(({ theme }) => ({
   }
 }))
 
-class Title extends React.PureComponent {
-  public render (): React.ReactNode {
-    return (
-      <Link
-        href="/"
-        passHref
-      >
-        <TitleSpan>
-          <TitleSvg
-            sx={{
-              color: "text.primary",
-              height: "32px",
-              width: "260px"
-            }}
-          />
-        </TitleSpan>
-      </Link>
-    )
-  }
+function Title (): React.ReactNode {
+  return (
+    <Link
+      href="/"
+      passHref
+    >
+      <TitleSpan>
+        <TitleSvg
+          sx={{
+            color: "text.primary",
+            height: "32px",
+            width: "260px"
+          }}
+        />
+      </TitleSpan>
+    </Link>
+  )
 }
 
 export default Title

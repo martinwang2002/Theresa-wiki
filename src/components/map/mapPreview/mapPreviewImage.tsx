@@ -6,7 +6,7 @@ import { serialize } from "uri-js"
 import { publicRuntimeConfig } from "@/configurations/runtimeConfig"
 
 interface MapPreviewImageProps {
-  stageId: string
+  readonly stageId: string
 }
 
 class MapPreviewImage extends React.PureComponent<MapPreviewImageProps> {

@@ -13,7 +13,7 @@ import StageDropInfoRow from "./stageDropInfoRow"
 import UnlockConditionRow from "./unlockConditionRow"
 
 interface StageInfoTableProps {
-  stageInfo: ICustomStageInfo
+  readonly stageInfo: ICustomStageInfo
 }
 
 class StageInfoTable extends React.PureComponent<StageInfoTableProps> {

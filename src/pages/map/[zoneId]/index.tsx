@@ -29,10 +29,10 @@ import { arknightsNameByServer } from "@/models/utils/arknightsNameByServer"
 import { getDisplayZoneName } from "@/models/utils/getDisplayZoneName"
 
 interface ZoneProps {
-  server: "CN" | "JP" | "KR" | "TW" | "US"
-  zoneId: string
-  zoneInfo: IZoneInfo
-  stages: Pick<ICustomRoguelikeTopicDetailStageInfo, "code" | "difficulty" | "name" | "stageId">[] | Pick<IStageInfo, "code" | "diffGroup" | "difficulty" | "name" | "stageId">[]
+  readonly server: "CN" | "JP" | "KR" | "TW" | "US"
+  readonly zoneId: string
+  readonly zoneInfo: IZoneInfo
+  readonly stages: Pick<ICustomRoguelikeTopicDetailStageInfo, "code" | "difficulty" | "name" | "stageId">[] | Pick<IStageInfo, "code" | "diffGroup" | "difficulty" | "name" | "stageId">[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
