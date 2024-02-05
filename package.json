@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NEXT_MANUAL_SIG_HANDLE=true next start",
     "lint": "next lint",
     "gen-license": "yarn licenses generate-disclaimer > public/LICENSES.txt",
     "postinstall": "husky"
