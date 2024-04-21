@@ -13,7 +13,7 @@
     "overrides": [
         {
             "extends": [
-                "plugin:@typescript-eslint/all",
+                "plugin:@typescript-eslint/recommended",
                 "plugin:react/all",
                 "plugin:@next/next/recommended",
                 "next/core-web-vitals",

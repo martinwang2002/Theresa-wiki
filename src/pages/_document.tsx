@@ -15,6 +15,19 @@ interface MyDocumentProps {
   emotionStyleTags: JSX.Element[]
 }
 
+if (process.env.NEXT_MANUAL_SIG_HANDLE != null) {
+  process.on("SIGTERM", () => {
+    console.log("Received SIGTERM: cleaning up")
+    const SIGTERM_EXIT_CODE = 143
+    process.exit(SIGTERM_EXIT_CODE)
+  })
+  process.on("SIGINT", () => {
+    console.log("Received SIGINT: cleaning up")
+    const SIGINT_EXIT_CODE = 130
+    process.exit(SIGINT_EXIT_CODE)
+  })
+}
+
 // setup emotion cache
 // see https://github.com/mui/material-ui/tree/298627c7339d1a5809518b0dbc212fe95c40a4e9/examples/nextjs-with-typescript
 
