@@ -4,8 +4,8 @@ trigger:
   - master
 
 variables:
-  registry: us-central1-docker.pkg.dev
-  repository: theresa-wiki/theresa-wiki-docker-registry/theresa-frontend
+  registry: cr.theresa.wiki
+  repository: theresa-wiki/theresa-frontend
 
 stages:
   - stage: Build
@@ -34,7 +34,7 @@ stages:
             displayName: Docker login
             inputs:
               command: login
-              containerRegistry: GCP
+              containerRegistry: cr.theresa.wiki
           - task: Bash@3
             displayName: Build and Push image
             inputs:
@@ -47,6 +47,7 @@ stages:
                 docker buildx build \
                   --cache-from=type=local,src=$(Pipeline.Workspace)/.docker \
                   --cache-to=type=local,dest=$(Pipeline.Workspace)/.docker_new,mode=max \
+                  --platform linux/amd64,linux/arm64 \
                   --tag $(registry)/$(repository):$(Build.SourceBranchName)-$(GIT_HASH) \
                   --tag $(registry)/$(repository):latest \
                   --file $(Build.SourcesDirectory)/Dockerfile \
