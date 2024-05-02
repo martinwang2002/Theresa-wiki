@@ -27,12 +27,19 @@ interface IDisplayReward {
   dropType: DropType
 }
 
+enum OccPercent {
+  ALWAYS = "ALWAYS",
+  OFTEN = "OFTEN",
+  ALMOST = "ALMOST",
+  USUAL = "USUAL",
+  SOMETIMES = "SOMETIMES",
+}
+
 interface IDisplayDetailReward {
   type: string
   id: string
   dropType: DropType
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  occPercent: 0 | 1 | 2 | 3 | 4
+  occPercent: OccPercent
 }
 
 interface IStageDropInfo {
