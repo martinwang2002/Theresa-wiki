@@ -25,12 +25,12 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
     const { stageInfo } = this.props
     const { displayDetailRewards } = stageInfo.stageDropInfo
 
-    const diamondRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === DropType.diamond
+    const completeRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
+      return displayDetailReward.dropType === DropType.complete
     })
 
-    const firstPassRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === DropType.firstPass
+    const onceRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
+      return displayDetailReward.dropType === DropType.once
     })
 
     const normalRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
@@ -41,15 +41,15 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
       return displayDetailReward.dropType === DropType.special
     })
 
-    const extraRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
-      return displayDetailReward.dropType === DropType.extra
+    const additionalRewards = displayDetailRewards.filter((displayDetailReward: Readonly<IDisplayDetailReward>) => {
+      return displayDetailReward.dropType === DropType.additional
     })
 
     return (
       <DataTableRowCell sx={{ width: "100%" }}>
-        {!isEmpty([...diamondRewards, ...firstPassRewards]) &&
+        {!isEmpty([...completeRewards, ...onceRewards]) &&
           <StageDropInfoRowRewardsRow
-            displayDetailRewards={[...diamondRewards, ...firstPassRewards]}
+            displayDetailRewards={[...completeRewards, ...onceRewards]}
             info="首次掉落"
           />}
 
@@ -66,9 +66,9 @@ export default class StageDropInfoRow extends React.PureComponent<StageInfoTable
             isSpecial
           />}
 
-        {!isEmpty(extraRewards) &&
+        {!isEmpty(additionalRewards) &&
           <StageDropInfoRowRewardsRow
-            displayDetailRewards={extraRewards}
+            displayDetailRewards={additionalRewards}
             info="额外物资"
           />}
       </DataTableRowCell>

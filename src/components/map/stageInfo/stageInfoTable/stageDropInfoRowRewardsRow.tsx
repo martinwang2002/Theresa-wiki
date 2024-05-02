@@ -15,11 +15,11 @@ interface StageInfoTableProps {
 }
 
 const occPercent = {
-  0: "固定掉落",
-  1: "大概率",
-  2: "概率掉落",
-  3: "小概率",
-  4: "罕见"
+  ALMOST: "大概率",
+  ALWAYS: "固定掉落",
+  OFTEN: "概率掉落",
+  SOMETIMES: "小概率",
+  USUAL: "概率掉落"
 }
 
 const occPercentSpecial = {
