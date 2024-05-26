@@ -153,7 +153,7 @@ export function FooterAbout (): JSX.Element {
           href={{
             pathname: "/about/purge",
             query: {
-              path: router.asPath
+              path: router.asPath.split("?")[0].split("#")[0]
             }
           }}
           icon={<RefreshIcon sx={iconSx} />}

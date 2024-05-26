@@ -110,4 +110,16 @@ const TileGrvtyBtn = React.forwardRef<HTMLSpanElement>((_props, ref) => (
 
 TileGrvtyBtn.displayName = "TileGrvtyBtn"
 
-export { TileRistarRoadForbidden, TileGrvtyBtn }
+export const TileMeRope = styled(TileRoad)(({ theme }) => ({
+  background: theme.palette.mode === "light"
+    ? `repeating-linear-gradient(-10deg, ${orange[100]}, ${orange[100]} 17.5%, ${grey[200]} 17.5%, ${grey[200]} 35%)`
+    : `repeating-linear-gradient(-10deg, ${orange[300]}, ${orange[300]} 17.5%, ${grey[800]} 17.5%, ${grey[800]} 35%)`
+}))
+
+export const TileRaRope = styled(TileWall)(({ theme }) => ({
+  background: theme.palette.mode === "light"
+    ? `repeating-linear-gradient(-10deg, ${orange[200]}, ${orange[200]} 17.5%, ${grey[200]} 17.5%, ${grey[200]} 35%)`
+    : `repeating-linear-gradient(-10deg, ${orange[600]}, ${orange[600]} 17.5%, ${grey[800]} 17.5%, ${grey[800]} 35%)`
+}))
+
+export { TileGrvtyBtn, TileRistarRoadForbidden }
