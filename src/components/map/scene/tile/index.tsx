@@ -14,7 +14,7 @@ import { TileInfoContext } from "@/models/reactContext/tileInfoContext"
 import { gtagEvent } from "@/models/utils/gtag"
 
 import { TileDeepSea, TileDeepWater, TileEmpty, TileForbidden, TileHole, TileWoodRd } from "./tileNonRoadlike"
-import { TileFence, TileFenceBound, TileFloor, TileGrvtyBtn, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMire, TileRistarRoad, TileRistarRoadForbidden, TileRoad, TileWall } from "./tileRoadlike"
+import { TileFence, TileFenceBound, TileFloor, TileGrvtyBtn, TileIcestr, TileIceturLb, TileIceturLt, TileIceturRb, TileIceturRt, TileMeRope, TileMire, TileRaRope, TileRistarRoad, TileRistarRoadForbidden, TileRoad, TileWall } from "./tileRoadlike"
 import { TileEnd, TileFlystart, TileHealing, TileReed, TileReedFloor, TileReedWall, TileStairs, TileStart, TileTelin, TileTelout, TileVolcano } from "./tileSvglike"
 import { TileUndefined } from "./tileUndefined"
 
@@ -41,11 +41,13 @@ const tileElements = {
   tile_icetur_lt: TileIceturLt,
   tile_icetur_rb: TileIceturRb,
   tile_icetur_rt: TileIceturRt,
+  tile_merope: TileMeRope,
   tile_mire: TileMire,
   // alias in view
   tile_passable_wall: TileWall,
   tile_passable_wall_forbidden: TileForbidden,
   // alias in view
+  tile_rarope: TileRaRope,
   tile_reed: TileReed,
   tile_reedf: TileReedFloor,
   tile_reedw: TileReedWall,
